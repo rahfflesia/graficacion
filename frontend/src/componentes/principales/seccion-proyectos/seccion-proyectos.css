@@ -1,0 +1,45 @@
+section {
+  padding: 1.5rem;
+  height: 100%;
+}
+
+header {
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  gap: 1rem;
+}
+
+.grid > div {
+  border: 2px solid lightgray;
+  border-radius: 0.6rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.bottom-info,
+.project-header,
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-header,
+header {
+  align-items: center;
+}
+
+.project-header > img {
+  width: 25px;
+  height: 25px;
+}
+
+header button {
+  border: 2px solid lightgray;
+  background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
