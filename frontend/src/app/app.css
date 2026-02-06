@@ -1,0 +1,7 @@
+.wrapper {
+  display: flex;
+}
+
+seccion-proyectos {
+  flex: 1;
+}
