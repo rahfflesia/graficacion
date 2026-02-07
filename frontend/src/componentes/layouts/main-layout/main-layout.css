@@ -1,0 +1,12 @@
+.main-layout {
+  padding: 1.5rem;
+  background-color: var(--body-bg-color);
+}
+
+navbar {
+  position: fixed;
+}
+
+main {
+  margin-left: calc(265px + 1.5rem);
+}
