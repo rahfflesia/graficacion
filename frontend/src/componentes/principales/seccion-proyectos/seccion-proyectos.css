@@ -1,10 +1,6 @@
 section {
-  padding: 1.5rem;
   height: 100%;
-}
-
-header {
-  margin-bottom: 1.5rem;
+  border-radius: var(--border-radius);
 }
 
 .grid {
@@ -12,9 +8,8 @@ header {
 }
 
 .grid > div {
-  border: 2px solid lightgray;
   border-radius: 0.6rem;
-  padding: 1rem;
+  padding: 1.5rem;
   cursor: pointer;
 }
 
@@ -35,11 +30,76 @@ header {
   height: 25px;
 }
 
-header button {
-  border: 2px solid lightgray;
+header,
+.section-header,
+.projects-section {
   background-color: var(--primary-color);
+  padding: 1.5rem;
+}
+
+.section-header,
+.projects-section {
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}
+
+header {
+  border-radius: 5rem;
+}
+
+.hamburger-menu,
+.modo,
+.notificaciones {
+  width: 24px;
+  height: 24px;
+}
+
+.foto {
+  width: 40px;
+  height: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-options {
+  display: flex;
+  gap: 2rem;
+}
+
+.info-perfil {
+  display: flex;
+  gap: 1rem;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.role {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.datos-usuario {
+  gap: 0.25rem;
+}
+
+.search-input {
+  border-radius: var(--border-radius);
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
+  border: 1px solid lightgray;
+}
+
+.section-title {
+  font-weight: bolder;
+  font-size: 1.4rem;
+}
+
+.section-description {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgb(128, 128, 128);
 }

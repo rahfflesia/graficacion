@@ -1,16 +1,16 @@
 nav {
   background-color: var(--primary-color);
-  max-width: 310px;
+  max-width: 270px;
   padding: 1.5rem;
-  height: 100dvh;
-  border-right: 1px solid lightgray;
+  height: calc(100dvh - 3rem);
   box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
 }
 
-h1 {
-  font-size: 1.5rem;
-  font-weight: 900;
+h4 {
+  font-size: 1.4rem;
   margin-bottom: 2.5rem;
+  font-weight: 600;
 }
 
 ul {
@@ -34,4 +34,12 @@ li > img {
 
 ul > li:hover {
   background-color: rgba(41, 41, 41, 0.5);
+}
+
+span {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #111c2d;
+  opacity: 0.5;
+  text-transform: uppercase;
 }

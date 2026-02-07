@@ -4,18 +4,36 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', Helvetica, Arial, sans-serif;
+  color: var(--font-color);
 }
 
 :root {
   --primary-color: #fff;
   --secondary-color: #0f0f0f;
-  --box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  --box-shadow:
+    rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
+    rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
+    rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+  --border-radius: 0.75rem;
+  --body-bg-color: #f0f5f9;
+  --font-color: #111c2d;
+  --blue: #0085db;
+  --lightgreen: rgb(223, 255, 243);
+  --grayish: rgb(231, 236, 240);
+  --lightblue: rgb(229, 243, 251);
+  --yellowish: rgb(255, 246, 234);
 }
 
 .flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .md-gap {
@@ -34,4 +52,34 @@ img {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.default-button {
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  background-color: var(--blue);
+  padding: 0.5rem 1rem;
+  color: var(--primary-color);
+  font-size: 1.05rem;
+}
+
+.default-button:hover {
+  cursor: pointer;
+}
+
+.gray-background {
+  background-color: var(--grayish);
+}
+
+.blue-background {
+  background-color: var(--lightblue);
+}
+
+.green-background {
+  background-color: var(--lightgreen);
+}
+
+.yellow-background {
+  background-color: var(--yellowish);
 }
