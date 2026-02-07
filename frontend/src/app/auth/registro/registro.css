@@ -31,7 +31,7 @@
 }
 
 .form-group input {
-    padding: 0.6rem 0.75rem;
+    padding: 0.6rem 1rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--grayish);
     font-size: 0.95rem;
