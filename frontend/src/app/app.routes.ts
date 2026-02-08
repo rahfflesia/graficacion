@@ -7,6 +7,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [{ path: 'proyectos', component: SeccionProyectos }],
-    
+
+
   },
 ];
