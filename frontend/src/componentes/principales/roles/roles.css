@@ -1,47 +1,48 @@
 .roles-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background-color: var(--body-bg-color);
 }
 
 .roles-container h2 {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .roles-form {
-  background-color: var(--primary-color);
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  margin-bottom: 2rem;
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
 }
 
 .form-group label {
-  font-weight: 600;
-  font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .form-group input {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 .roles-form button {
-  margin-top: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--blue);
-  color: white;
-  font-weight: 600;
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--blue);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .roles-list h3 {
@@ -49,24 +50,25 @@
 }
 
 .roles-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--primary-color);
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 0.75rem;
 }
 
 .acciones {
-  display: flex;
-  gap: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .acciones button {
   padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: transparent;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    cursor: pointer;
 }
