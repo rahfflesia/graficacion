@@ -5,8 +5,8 @@ import { SeccionProyectos } from '../componentes/principales/seccion-proyectos/s
 import { MainLayout } from '../componentes/layouts/main-layout/main-layout';
 import { ProcesosPrincipales } from '../componentes/principales/procesos-principales/procesos-principales';
 
-export const routes: Routes = [{ path: 'login', component: Login},
-  
+export const routes: Routes = [
+  { path: 'login', component: Login},
   { path: 'registro', component: Registro },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,6 +17,7 @@ export const routes: Routes = [{ path: 'login', component: Login},
     path: '',
     component: MainLayout,
     children: [{ path: 'proyectos', component: SeccionProyectos }],
-
   },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
+
