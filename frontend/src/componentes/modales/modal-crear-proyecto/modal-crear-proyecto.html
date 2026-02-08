@@ -1,0 +1,39 @@
+<div class="overlay">
+  <form action="">
+    <header class="header-modal">
+      <div>
+        <h3>Crea un nuevo proyecto</h3>
+        <span class="description-font"
+          >Llena los siguiente campos para crear un nuevo proyecto</span
+        >
+      </div>
+      <div class="close-button" (click)="cerrarModalCrearProyecto()">X</div>
+    </header>
+    <div class="flex-column">
+      <section class="flex-column">
+        <div class="input-wrapper flex-column">
+          <label for="">Nombre del proyecto</label>
+          <input
+            type="text"
+            placeholder="Ingresa el nombre del proyecto"
+            required
+            class="search-input"
+          />
+        </div>
+        <div class="input-wrapper flex-column">
+          <label for="">Descripción del proyecto</label>
+          <textarea
+            name=""
+            placeholder="Ingresa una breve descripción del proyecto"
+            required
+            class="search-input"
+          ></textarea>
+        </div>
+      </section>
+      <div class="buttons">
+        <button class="gray-button">Cancelar</button>
+        <button type="submit" class="default-button">Crear proyecto</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -87,12 +87,6 @@ header {
   gap: 0.25rem;
 }
 
-.search-input {
-  border-radius: var(--border-radius);
-  padding: 0.5rem 1rem;
-  border: 1px solid lightgray;
-}
-
 .section-title {
   font-weight: bolder;
   font-size: 1.4rem;

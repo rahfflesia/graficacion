@@ -1,5 +1,41 @@
 <div class="overlay">
-  <div>
-    <h1>Configuración de proyecto</h1>
+  <div class="modal">
+    <header class="header-modal">
+      <div>
+        <h3>Configuración de proyecto</h3>
+        <span class="description-font">Ajusta tus proyectos a tus necesidades</span>
+      </div>
+      <div class="close-button" (click)="cerrarModalConfigurarProyecto()">X</div>
+    </header>
+    <main>
+      <div class="menu-configuracion">
+        <ul class="flex-column sm-gap">
+          <li>Proyecto</li>
+          <li>Procesos</li>
+          <li>Subprocesos</li>
+          <li>Roles</li>
+          <li>Requerimientos</li>
+        </ul>
+      </div>
+      <div class="area-principal flex-column md-gap">
+        <h4>Ajusta tu proyecto</h4>
+        <div class="input-wrapper flex-column">
+          <label for="">Nombre del proyecto</label>
+          <input type="text" class="search-input" placeholder="Edita el nombre de tu proyecto" />
+        </div>
+        <div class="input-wrapper flex-column">
+          <label for="">Descripción del proyecto</label>
+          <textarea
+            name=""
+            id=""
+            class="search-input"
+            placeholder="Edita la descripción de tu proyecto"
+          ></textarea>
+        </div>
+        <div>
+          <button class="default-button">Aceptar</button>
+        </div>
+      </div>
+    </main>
   </div>
 </div>

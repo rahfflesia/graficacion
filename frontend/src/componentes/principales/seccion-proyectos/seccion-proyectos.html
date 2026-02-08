@@ -1,3 +1,12 @@
+<!--Acá tengo planeado agregar algunas transiciones, por mientras lo dejo así-->
+@if (esCrearProyectoModalVisible) {
+  <modal-crear-proyecto (cerrar)="cerrarModalCrearProyecto()"></modal-crear-proyecto>
+}
+@if (esConfigurarProyectoModalVisible) {
+  <modal-configuracion-proyecto
+    (cerrar)="cerrarModalConfigurarProyecto()"
+  ></modal-configuracion-proyecto>
+}
 <section class="flex-column md-gap">
   <div class="section-header flex-center">
     <div class="hamburger-menu">
@@ -21,7 +30,7 @@
         />
       </div>
       <div class="info-perfil">
-        <div class="foto">
+        <div class="foto" (click)="mostrarModalConfigurarProyecto()">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
             alt="default-pfp"
@@ -39,7 +48,9 @@
       <h4 class="section-title">Mis proyectos</h4>
       <span class="section-description">Gestiona y organiza tus proyectos de manera rápida</span>
     </div>
-    <button class="default-button">Crear nuevo proyecto +</button>
+    <button class="default-button" (click)="mostrarModalCrearProyecto()">
+      Crear nuevo proyecto +
+    </button>
   </header>
   <div class="grid projects-section">
     <div class="project-card flex-column sm-gap blue-background">
