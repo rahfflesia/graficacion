@@ -6,6 +6,7 @@ import { MainLayout } from '../componentes/layouts/main-layout/main-layout';
 import { ProcesosPrincipales } from '../componentes/principales/procesos-principales/procesos-principales';
 import { Home } from '../componentes/principales/home/home';
 import { Roles } from '../componentes/principales/roles/roles';
+import { Stakeholders } from '../componentes/principales/stakeholders/stakeholders';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'registro', component: Registro },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'roles', component: Roles },
+  { path: 'stakeholders', component: Stakeholders },
   { path : 'procesos', component: ProcesosPrincipales},
 
   {
