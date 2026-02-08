@@ -1,0 +1,53 @@
+.home-container {
+    min-height: 100vh;
+    background-color: var(--body-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-content {
+    max-width: 900px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}   
+
+.home-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--font-color);
+}
+
+.home-subtitle {
+    font-size: 1.15rem;
+    color: #4a5568;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.home-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.secondary-button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    font-size: 1.05rem;
+    background-color: transparent;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.secondary-button:hover {
+    cursor: pointer;
+    background-color: var(--lightblue);
+}
