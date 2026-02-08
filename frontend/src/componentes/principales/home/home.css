@@ -1,53 +1,71 @@
 .home-container {
     min-height: 100vh;
     background-color: var(--body-bg-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.home-content {
-    max-width: 900px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}   
-
-.home-title {
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: var(--font-color);
-}
-
-.home-subtitle {
-    font-size: 1.15rem;
-    color: #4a5568;
-    max-width: 700px;
+.hero {
+    max-width: 1100px;
     margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
 }
 
-.home-actions {
+.hero h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin-bottom: 2.5rem;
+}
+
+.hero-actions {
     display: flex;
-    justify-content: center;
     gap: 1rem;
-    margin-top: 1rem;
 }
 
-.secondary-button {
-    padding: 0.5rem 1rem;
+.primary-btn {
+    background-color: var(--blue);
+    color: white;
+    padding: 0.75rem 1.5rem;
     border-radius: var(--border-radius);
-    font-weight: bold;
-    font-size: 1.05rem;
-    background-color: transparent;
-    border: 1px solid var(--blue);
-    color: var(--blue);
+    font-weight: 600;
     text-decoration: none;
-    cursor: pointer;
 }
 
-.secondary-button:hover {
-    cursor: pointer;
-    background-color: var(--lightblue);
+.secondary-btn {
+    background-color: var(--grayish);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.features {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+.feature-item {
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 1.25rem;
+}
+
+.feature-item legend {
+    padding: 0 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    color: #555;
 }
