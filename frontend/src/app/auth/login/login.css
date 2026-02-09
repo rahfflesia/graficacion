@@ -4,24 +4,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  isolation: isolate;
 }
 
 .login_form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .login-card {
   width: 100%;
-  max-width: 380px;
   padding: 2rem;
+  max-width: 1200px;
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  position: relative;
+  z-index: 1;
 }
 
 .login-card h2 {
-  text-align: center;
   font-weight: 700;
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -53,11 +56,70 @@
 
 .login-link {
   text-align: center;
-  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .login-link a {
   color: var(--blue);
   text-decoration: none;
   margin: 0 0.3rem;
+}
+
+.titulo-login {
+  font-size: 1.5rem;
+}
+
+section {
+  display: flex;
+  gap: 5rem;
+  padding: 2.5rem;
+}
+
+section > * {
+  flex: 1;
+}
+
+.imagen {
+  display: grid;
+  place-items: center;
+}
+
+.circulo-naranja {
+  background-color: rgb(255, 175, 146);
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.circulo-azul {
+  background-color: rgb(81, 162, 255);
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.form-group label {
+  font-weight: 700;
+}
+
+.recordar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.crear-cuenta {
+  text-align: left;
 }
