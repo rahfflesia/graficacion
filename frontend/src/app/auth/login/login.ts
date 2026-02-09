@@ -13,14 +13,13 @@ export class Login {
   password = '';
   error = false;
 
-constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
-login() {
-  console.log('LOGIN CLICK', this.email, this.password);
+  login() {
+    console.log('LOGIN CLICK', this.email, this.password);
 
-  if (this.email === 'admin@demo.com' && this.password === '123456') {
-    console.log('NAVEGANDO A PROYECTOS');
-    this.router.navigate(['/proyectos']);
-  }
+    if (this.email === 'admin@demo.com' && this.password === '123456') {
+      this.router.navigate(['/proyectos']);
+    }
   }
 }

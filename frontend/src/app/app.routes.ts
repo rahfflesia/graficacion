@@ -15,13 +15,11 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'roles', component: Roles },
   { path: 'stakeholders', component: Stakeholders },
-  { path : 'procesos', component: ProcesosPrincipales},
-
+  { path: 'procesos', component: ProcesosPrincipales },
   {
     path: '',
     component: MainLayout,
     children: [{ path: 'proyectos', component: SeccionProyectos }],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
-
