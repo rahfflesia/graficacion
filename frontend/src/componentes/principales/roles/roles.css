@@ -1,7 +1,7 @@
 .roles-container {
+    background-color: var(--body-bg-color);
     margin: 0 auto;
     padding: 2rem 1.5rem;
-    background-color: var(--body-bg-color);
 }
 
 .roles-container h2 {
