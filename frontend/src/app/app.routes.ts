@@ -8,9 +8,9 @@ import { Subprocesos } from '../componentes/principales/subprocesos/subprocesos'
 import { Tecnicas } from '../componentes/principales/tecnicas/tecnicas';
 
 export const routes: Routes = [
-  { path: 'login', component: Login},
+  { path: '', component: Home },
+  { path: 'login', component: Login },
   { path: 'registro', component: Registro },
-
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   {
@@ -24,6 +24,5 @@ export const routes: Routes = [
     ],
 
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
-

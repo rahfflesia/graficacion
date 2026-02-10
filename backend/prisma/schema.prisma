@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model metodossubprocesos {
+  idmetodosubproceso    Int @id @default(autoincrement())
+  idsubproceso          Int
+  idtecnicarecopilacion Int
+}
+
+model procesos {
+  idproceso   Int     @id @default(autoincrement())
+  nombre      String  @db.VarChar(255)
+  descripcion String?
+  creador     String  @db.VarChar(255)
+}
+
+model proyectos {
+  idproyecto  Int    @id @default(autoincrement())
+  nombre      String @db.VarChar(255)
+  descripcion String
+}
+
+model roles {
+  idrol      Int     @id @default(autoincrement())
+  idproyecto Int
+  nombrerol  String  @db.VarChar(255)
+  tipo       tiporol
+}
+
+model rolesusuario {
+  idrolusuario          Int    @id @default(autoincrement())
+  nombrepersonaasignada String @db.VarChar(255)
+  idproyecto            Int
+  idrol                 Int
+}
+
+model tecnicasrecoleccion {
+  idtecnicarecoleccion Int    @id @default(autoincrement())
+  nombre               String @db.VarChar(128)
+  descripcion          String
+}
+
+enum tiporol {
+  Interno
+  Externo
+}
