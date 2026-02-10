@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Procesos, Usuario } from '../../../models/proceso.interface';
 import { ProcesosService } from '../../../services/procesos.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-procesos-principales',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './procesos-principales.html',
   styleUrl: './procesos-principales.css',
 })
