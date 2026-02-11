@@ -1,6 +1,6 @@
 <!--Acá tengo planeado agregar algunas transiciones, por mientras lo dejo así-->
 @if (esCrearProyectoModalVisible) {
-  <modal-crear-proyecto (cerrar)="cerrarModalCrearProyecto()"></modal-crear-proyecto>
+  <modal-crear-proyecto (cerrar)="cerrarModalCrearProyecto($event)"></modal-crear-proyecto>
 }
 @if (esConfigurarProyectoModalVisible) {
   <modal-configuracion-proyecto

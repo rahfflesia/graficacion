@@ -1,15 +1,41 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Api } from '../../../servicios/api';
 
 @Component({
   selector: 'modal-crear-proyecto',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './modal-crear-proyecto.html',
   styleUrl: './modal-crear-proyecto.css',
 })
 export class ModalCrearProyecto {
-  @Output() cerrar = new EventEmitter<void>();
+  private formBuilder = inject(FormBuilder);
+  private api = inject(Api);
+  formularioCrearPoyecto = this.formBuilder.group({
+    nombre: [''],
+    descripcion: [''],
+  });
+
+  @Output() cerrar = new EventEmitter<any>();
 
   cerrarModalCrearProyecto() {
     this.cerrar.emit();
+  }
+
+  crearProyecto() {
+    const proyecto = {
+      nombre: this.formularioCrearPoyecto.value.nombre,
+      descripcion: this.formularioCrearPoyecto.value.descripcion,
+    };
+    this.api.crearProyecto(proyecto).subscribe({
+      next: (respuesta) => {
+        alert('Proyecto creado correctamente');
+        this.cerrar.emit(respuesta);
+      },
+      error: (error) => {
+        alert(JSON.stringify(error));
+      },
+    });
   }
 }
