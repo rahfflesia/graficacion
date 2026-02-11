@@ -1,37 +1,57 @@
-<<<<<<< HEAD
-import express from 'express';
+import express from "express";
+import { prisma } from "../db/db.js";
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Lista de roles' });
+router.get("/", async (req, res) => {
+  const roles = await prisma.roles.findMany();
+  res.json(roles);
 });
 
-router.post('/', (req, res) => {
-  res.json({ message: 'Rol creado' });
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const rol = await prisma.roles.findUnique({
+    where: { id: Number(id) },
+  });
+  res.json(rol);
 });
 
-router.put('/:id', (req, res) => {
-  res.json({ message: 'Rol actualizado' });
+router.post("/", async (req, res) => {
+  const { nombre, descripcion } = req.body;
+
+  const nuevoRol = await prisma.roles.create({
+    data: {
+      nombre,
+      descripcion,
+    },
+  });
+
+  res.json(nuevoRol);
 });
 
-router.delete('/:id', (req, res) => {
-  res.json({ message: 'Rol eliminado' });
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { nombre, descripcion } = req.body;
+
+  const rolActualizado = await prisma.roles.update({
+    where: { id: Number(id) },
+    data: {
+      nombre,
+      descripcion,
+    },
+  });
+
+  res.json(rolActualizado);
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await prisma.roles.delete({
+    where: { id: Number(id) },
+  });
+
+  res.json({ message: "Rol eliminado" });
 });
 
 export default router;
-=======
-import { prisma } from "../lib/prisma.ts";
-import { Router } from "express";
-
-const roles = Router();
-
-roles.get("/obtener", async () => {});
-
-roles.post("/crear", async () => {});
-
-roles.put("/editar", async () => {});
-
-roles.delete("/eliminar", async () => {});
-
-export default roles;
->>>>>>> main
