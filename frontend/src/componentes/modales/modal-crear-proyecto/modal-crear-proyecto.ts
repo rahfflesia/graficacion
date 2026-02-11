@@ -17,7 +17,7 @@ export class ModalCrearProyecto {
     descripcion: [''],
   });
 
-  @Output() cerrar = new EventEmitter<void>();
+  @Output() cerrar = new EventEmitter<any>();
 
   cerrarModalCrearProyecto() {
     this.cerrar.emit();
@@ -31,7 +31,7 @@ export class ModalCrearProyecto {
     this.api.crearProyecto(proyecto).subscribe({
       next: (respuesta) => {
         alert('Proyecto creado correctamente');
-        this.cerrar.emit();
+        this.cerrar.emit(respuesta);
       },
       error: (error) => {
         alert(JSON.stringify(error));
