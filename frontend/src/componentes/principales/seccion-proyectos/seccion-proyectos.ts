@@ -9,6 +9,7 @@ import { ModalConfiguracionProyecto } from '../../modales/modal-configuracion-pr
   styleUrl: './seccion-proyectos.css',
 })
 export class SeccionProyectos {
+  proyectos = [];
   esCrearProyectoModalVisible: boolean = false;
   esConfigurarProyectoModalVisible: boolean = false;
 

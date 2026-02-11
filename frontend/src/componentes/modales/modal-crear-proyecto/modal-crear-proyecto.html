@@ -1,5 +1,5 @@
 <div class="overlay">
-  <form action="">
+  <form action="" [formGroup]="formularioCrearPoyecto" (submit)="crearProyecto()">
     <header class="header-modal">
       <div>
         <h3>Crea un nuevo proyecto</h3>
@@ -18,6 +18,7 @@
             placeholder="Ingresa el nombre del proyecto"
             required
             class="search-input"
+            formControlName="nombre"
           />
         </div>
         <div class="input-wrapper flex-column">
@@ -27,6 +28,7 @@
             placeholder="Ingresa una breve descripción del proyecto"
             required
             class="search-input"
+            formControlName="descripcion"
           ></textarea>
         </div>
       </section>
