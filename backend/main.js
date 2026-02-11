@@ -4,9 +4,13 @@ import tecnicasRecoleccion from "./rutas/tecnicasRecoleccion";
 import roles from "./rutas/roles";
 import procesos from "./rutas/procesos";
 import subprocesos from "./rutas/subprocesos";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
+app.use(express.json());
 
 app.use("/proyectos", proyectos);
 app.use("/tecnicasrecoleccion", tecnicasRecoleccion);
