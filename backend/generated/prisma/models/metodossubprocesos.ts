@@ -29,31 +29,31 @@ export type AggregateMetodossubprocesos = {
 export type MetodossubprocesosAvgAggregateOutputType = {
   idmetodosubproceso: number | null
   idsubproceso: number | null
-  idtecnicarecopilacion: number | null
+  idtecnicarecoleccion: number | null
 }
 
 export type MetodossubprocesosSumAggregateOutputType = {
   idmetodosubproceso: number | null
   idsubproceso: number | null
-  idtecnicarecopilacion: number | null
+  idtecnicarecoleccion: number | null
 }
 
 export type MetodossubprocesosMinAggregateOutputType = {
   idmetodosubproceso: number | null
   idsubproceso: number | null
-  idtecnicarecopilacion: number | null
+  idtecnicarecoleccion: number | null
 }
 
 export type MetodossubprocesosMaxAggregateOutputType = {
   idmetodosubproceso: number | null
   idsubproceso: number | null
-  idtecnicarecopilacion: number | null
+  idtecnicarecoleccion: number | null
 }
 
 export type MetodossubprocesosCountAggregateOutputType = {
   idmetodosubproceso: number
   idsubproceso: number
-  idtecnicarecopilacion: number
+  idtecnicarecoleccion: number
   _all: number
 }
 
@@ -61,31 +61,31 @@ export type MetodossubprocesosCountAggregateOutputType = {
 export type MetodossubprocesosAvgAggregateInputType = {
   idmetodosubproceso?: true
   idsubproceso?: true
-  idtecnicarecopilacion?: true
+  idtecnicarecoleccion?: true
 }
 
 export type MetodossubprocesosSumAggregateInputType = {
   idmetodosubproceso?: true
   idsubproceso?: true
-  idtecnicarecopilacion?: true
+  idtecnicarecoleccion?: true
 }
 
 export type MetodossubprocesosMinAggregateInputType = {
   idmetodosubproceso?: true
   idsubproceso?: true
-  idtecnicarecopilacion?: true
+  idtecnicarecoleccion?: true
 }
 
 export type MetodossubprocesosMaxAggregateInputType = {
   idmetodosubproceso?: true
   idsubproceso?: true
-  idtecnicarecopilacion?: true
+  idtecnicarecoleccion?: true
 }
 
 export type MetodossubprocesosCountAggregateInputType = {
   idmetodosubproceso?: true
   idsubproceso?: true
-  idtecnicarecopilacion?: true
+  idtecnicarecoleccion?: true
   _all?: true
 }
 
@@ -178,7 +178,7 @@ export type metodossubprocesosGroupByArgs<ExtArgs extends runtime.Types.Extensio
 export type MetodossubprocesosGroupByOutputType = {
   idmetodosubproceso: number
   idsubproceso: number
-  idtecnicarecopilacion: number
+  idtecnicarecoleccion: number
   _count: MetodossubprocesosCountAggregateOutputType | null
   _avg: MetodossubprocesosAvgAggregateOutputType | null
   _sum: MetodossubprocesosSumAggregateOutputType | null
@@ -207,13 +207,17 @@ export type metodossubprocesosWhereInput = {
   NOT?: Prisma.metodossubprocesosWhereInput | Prisma.metodossubprocesosWhereInput[]
   idmetodosubproceso?: Prisma.IntFilter<"metodossubprocesos"> | number
   idsubproceso?: Prisma.IntFilter<"metodossubprocesos"> | number
-  idtecnicarecopilacion?: Prisma.IntFilter<"metodossubprocesos"> | number
+  idtecnicarecoleccion?: Prisma.IntFilter<"metodossubprocesos"> | number
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
+  tecnicasrecoleccion?: Prisma.XOR<Prisma.TecnicasrecoleccionScalarRelationFilter, Prisma.tecnicasrecoleccionWhereInput>
 }
 
 export type metodossubprocesosOrderByWithRelationInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
+  subprocesos?: Prisma.subprocesosOrderByWithRelationInput
+  tecnicasrecoleccion?: Prisma.tecnicasrecoleccionOrderByWithRelationInput
 }
 
 export type metodossubprocesosWhereUniqueInput = Prisma.AtLeast<{
@@ -222,13 +226,15 @@ export type metodossubprocesosWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.metodossubprocesosWhereInput[]
   NOT?: Prisma.metodossubprocesosWhereInput | Prisma.metodossubprocesosWhereInput[]
   idsubproceso?: Prisma.IntFilter<"metodossubprocesos"> | number
-  idtecnicarecopilacion?: Prisma.IntFilter<"metodossubprocesos"> | number
+  idtecnicarecoleccion?: Prisma.IntFilter<"metodossubprocesos"> | number
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
+  tecnicasrecoleccion?: Prisma.XOR<Prisma.TecnicasrecoleccionScalarRelationFilter, Prisma.tecnicasrecoleccionWhereInput>
 }, "idmetodosubproceso">
 
 export type metodossubprocesosOrderByWithAggregationInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
   _count?: Prisma.metodossubprocesosCountOrderByAggregateInput
   _avg?: Prisma.metodossubprocesosAvgOrderByAggregateInput
   _max?: Prisma.metodossubprocesosMaxOrderByAggregateInput
@@ -242,76 +248,85 @@ export type metodossubprocesosScalarWhereWithAggregatesInput = {
   NOT?: Prisma.metodossubprocesosScalarWhereWithAggregatesInput | Prisma.metodossubprocesosScalarWhereWithAggregatesInput[]
   idmetodosubproceso?: Prisma.IntWithAggregatesFilter<"metodossubprocesos"> | number
   idsubproceso?: Prisma.IntWithAggregatesFilter<"metodossubprocesos"> | number
-  idtecnicarecopilacion?: Prisma.IntWithAggregatesFilter<"metodossubprocesos"> | number
+  idtecnicarecoleccion?: Prisma.IntWithAggregatesFilter<"metodossubprocesos"> | number
 }
 
 export type metodossubprocesosCreateInput = {
-  idsubproceso: number
-  idtecnicarecopilacion: number
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutMetodossubprocesosInput
+  tecnicasrecoleccion: Prisma.tecnicasrecoleccionCreateNestedOneWithoutMetodossubprocesosInput
 }
 
 export type metodossubprocesosUncheckedCreateInput = {
   idmetodosubproceso?: number
   idsubproceso: number
-  idtecnicarecopilacion: number
+  idtecnicarecoleccion: number
 }
 
 export type metodossubprocesosUpdateInput = {
-  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
-  idtecnicarecopilacion?: Prisma.IntFieldUpdateOperationsInput | number
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutMetodossubprocesosNestedInput
+  tecnicasrecoleccion?: Prisma.tecnicasrecoleccionUpdateOneRequiredWithoutMetodossubprocesosNestedInput
 }
 
 export type metodossubprocesosUncheckedUpdateInput = {
   idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
   idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
-  idtecnicarecopilacion?: Prisma.IntFieldUpdateOperationsInput | number
+  idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type metodossubprocesosCreateManyInput = {
   idmetodosubproceso?: number
   idsubproceso: number
-  idtecnicarecopilacion: number
+  idtecnicarecoleccion: number
 }
 
 export type metodossubprocesosUpdateManyMutationInput = {
-  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
-  idtecnicarecopilacion?: Prisma.IntFieldUpdateOperationsInput | number
+
 }
 
 export type metodossubprocesosUncheckedUpdateManyInput = {
   idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
   idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
-  idtecnicarecopilacion?: Prisma.IntFieldUpdateOperationsInput | number
+  idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type metodossubprocesosCountOrderByAggregateInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
 }
 
 export type metodossubprocesosAvgOrderByAggregateInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
 }
 
 export type metodossubprocesosMaxOrderByAggregateInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
 }
 
 export type metodossubprocesosMinOrderByAggregateInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
 }
 
 export type metodossubprocesosSumOrderByAggregateInput = {
   idmetodosubproceso?: Prisma.SortOrder
   idsubproceso?: Prisma.SortOrder
-  idtecnicarecopilacion?: Prisma.SortOrder
+  idtecnicarecoleccion?: Prisma.SortOrder
+}
+
+export type MetodossubprocesosListRelationFilter = {
+  every?: Prisma.metodossubprocesosWhereInput
+  some?: Prisma.metodossubprocesosWhereInput
+  none?: Prisma.metodossubprocesosWhereInput
+}
+
+export type metodossubprocesosOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -322,41 +337,263 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type metodossubprocesosCreateNestedManyWithoutTecnicasrecoleccionInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput> | Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput[]
+  createMany?: Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInputEnvelope
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+}
+
+export type metodossubprocesosUncheckedCreateNestedManyWithoutTecnicasrecoleccionInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput> | Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput[]
+  createMany?: Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInputEnvelope
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+}
+
+export type metodossubprocesosUpdateManyWithoutTecnicasrecoleccionNestedInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput> | Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput[]
+  upsert?: Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutTecnicasrecoleccionInput[]
+  createMany?: Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInputEnvelope
+  set?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  disconnect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  delete?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  update?: Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutTecnicasrecoleccionInput[]
+  updateMany?: Prisma.metodossubprocesosUpdateManyWithWhereWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpdateManyWithWhereWithoutTecnicasrecoleccionInput[]
+  deleteMany?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+}
+
+export type metodossubprocesosUncheckedUpdateManyWithoutTecnicasrecoleccionNestedInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput> | Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput[]
+  upsert?: Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutTecnicasrecoleccionInput[]
+  createMany?: Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInputEnvelope
+  set?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  disconnect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  delete?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  update?: Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutTecnicasrecoleccionInput[]
+  updateMany?: Prisma.metodossubprocesosUpdateManyWithWhereWithoutTecnicasrecoleccionInput | Prisma.metodossubprocesosUpdateManyWithWhereWithoutTecnicasrecoleccionInput[]
+  deleteMany?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+}
+
+export type metodossubprocesosCreateNestedManyWithoutSubprocesosInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput> | Prisma.metodossubprocesosCreateWithoutSubprocesosInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput | Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput[]
+  createMany?: Prisma.metodossubprocesosCreateManySubprocesosInputEnvelope
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+}
+
+export type metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput> | Prisma.metodossubprocesosCreateWithoutSubprocesosInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput | Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput[]
+  createMany?: Prisma.metodossubprocesosCreateManySubprocesosInputEnvelope
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+}
+
+export type metodossubprocesosUpdateManyWithoutSubprocesosNestedInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput> | Prisma.metodossubprocesosCreateWithoutSubprocesosInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput | Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput[]
+  upsert?: Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutSubprocesosInput | Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutSubprocesosInput[]
+  createMany?: Prisma.metodossubprocesosCreateManySubprocesosInputEnvelope
+  set?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  disconnect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  delete?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  update?: Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutSubprocesosInput | Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutSubprocesosInput[]
+  updateMany?: Prisma.metodossubprocesosUpdateManyWithWhereWithoutSubprocesosInput | Prisma.metodossubprocesosUpdateManyWithWhereWithoutSubprocesosInput[]
+  deleteMany?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+}
+
+export type metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput = {
+  create?: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput> | Prisma.metodossubprocesosCreateWithoutSubprocesosInput[] | Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput[]
+  connectOrCreate?: Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput | Prisma.metodossubprocesosCreateOrConnectWithoutSubprocesosInput[]
+  upsert?: Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutSubprocesosInput | Prisma.metodossubprocesosUpsertWithWhereUniqueWithoutSubprocesosInput[]
+  createMany?: Prisma.metodossubprocesosCreateManySubprocesosInputEnvelope
+  set?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  disconnect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  delete?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  connect?: Prisma.metodossubprocesosWhereUniqueInput | Prisma.metodossubprocesosWhereUniqueInput[]
+  update?: Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutSubprocesosInput | Prisma.metodossubprocesosUpdateWithWhereUniqueWithoutSubprocesosInput[]
+  updateMany?: Prisma.metodossubprocesosUpdateManyWithWhereWithoutSubprocesosInput | Prisma.metodossubprocesosUpdateManyWithWhereWithoutSubprocesosInput[]
+  deleteMany?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+}
+
+export type metodossubprocesosCreateWithoutTecnicasrecoleccionInput = {
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutMetodossubprocesosInput
+}
+
+export type metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput = {
+  idmetodosubproceso?: number
+  idsubproceso: number
+}
+
+export type metodossubprocesosCreateOrConnectWithoutTecnicasrecoleccionInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  create: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput>
+}
+
+export type metodossubprocesosCreateManyTecnicasrecoleccionInputEnvelope = {
+  data: Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInput | Prisma.metodossubprocesosCreateManyTecnicasrecoleccionInput[]
+  skipDuplicates?: boolean
+}
+
+export type metodossubprocesosUpsertWithWhereUniqueWithoutTecnicasrecoleccionInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  update: Prisma.XOR<Prisma.metodossubprocesosUpdateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedUpdateWithoutTecnicasrecoleccionInput>
+  create: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedCreateWithoutTecnicasrecoleccionInput>
+}
+
+export type metodossubprocesosUpdateWithWhereUniqueWithoutTecnicasrecoleccionInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  data: Prisma.XOR<Prisma.metodossubprocesosUpdateWithoutTecnicasrecoleccionInput, Prisma.metodossubprocesosUncheckedUpdateWithoutTecnicasrecoleccionInput>
+}
+
+export type metodossubprocesosUpdateManyWithWhereWithoutTecnicasrecoleccionInput = {
+  where: Prisma.metodossubprocesosScalarWhereInput
+  data: Prisma.XOR<Prisma.metodossubprocesosUpdateManyMutationInput, Prisma.metodossubprocesosUncheckedUpdateManyWithoutTecnicasrecoleccionInput>
+}
+
+export type metodossubprocesosScalarWhereInput = {
+  AND?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+  OR?: Prisma.metodossubprocesosScalarWhereInput[]
+  NOT?: Prisma.metodossubprocesosScalarWhereInput | Prisma.metodossubprocesosScalarWhereInput[]
+  idmetodosubproceso?: Prisma.IntFilter<"metodossubprocesos"> | number
+  idsubproceso?: Prisma.IntFilter<"metodossubprocesos"> | number
+  idtecnicarecoleccion?: Prisma.IntFilter<"metodossubprocesos"> | number
+}
+
+export type metodossubprocesosCreateWithoutSubprocesosInput = {
+  tecnicasrecoleccion: Prisma.tecnicasrecoleccionCreateNestedOneWithoutMetodossubprocesosInput
+}
+
+export type metodossubprocesosUncheckedCreateWithoutSubprocesosInput = {
+  idmetodosubproceso?: number
+  idtecnicarecoleccion: number
+}
+
+export type metodossubprocesosCreateOrConnectWithoutSubprocesosInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  create: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput>
+}
+
+export type metodossubprocesosCreateManySubprocesosInputEnvelope = {
+  data: Prisma.metodossubprocesosCreateManySubprocesosInput | Prisma.metodossubprocesosCreateManySubprocesosInput[]
+  skipDuplicates?: boolean
+}
+
+export type metodossubprocesosUpsertWithWhereUniqueWithoutSubprocesosInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  update: Prisma.XOR<Prisma.metodossubprocesosUpdateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedUpdateWithoutSubprocesosInput>
+  create: Prisma.XOR<Prisma.metodossubprocesosCreateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedCreateWithoutSubprocesosInput>
+}
+
+export type metodossubprocesosUpdateWithWhereUniqueWithoutSubprocesosInput = {
+  where: Prisma.metodossubprocesosWhereUniqueInput
+  data: Prisma.XOR<Prisma.metodossubprocesosUpdateWithoutSubprocesosInput, Prisma.metodossubprocesosUncheckedUpdateWithoutSubprocesosInput>
+}
+
+export type metodossubprocesosUpdateManyWithWhereWithoutSubprocesosInput = {
+  where: Prisma.metodossubprocesosScalarWhereInput
+  data: Prisma.XOR<Prisma.metodossubprocesosUpdateManyMutationInput, Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosInput>
+}
+
+export type metodossubprocesosCreateManyTecnicasrecoleccionInput = {
+  idmetodosubproceso?: number
+  idsubproceso: number
+}
+
+export type metodossubprocesosUpdateWithoutTecnicasrecoleccionInput = {
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutMetodossubprocesosNestedInput
+}
+
+export type metodossubprocesosUncheckedUpdateWithoutTecnicasrecoleccionInput = {
+  idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type metodossubprocesosUncheckedUpdateManyWithoutTecnicasrecoleccionInput = {
+  idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type metodossubprocesosCreateManySubprocesosInput = {
+  idmetodosubproceso?: number
+  idtecnicarecoleccion: number
+}
+
+export type metodossubprocesosUpdateWithoutSubprocesosInput = {
+  tecnicasrecoleccion?: Prisma.tecnicasrecoleccionUpdateOneRequiredWithoutMetodossubprocesosNestedInput
+}
+
+export type metodossubprocesosUncheckedUpdateWithoutSubprocesosInput = {
+  idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type metodossubprocesosUncheckedUpdateManyWithoutSubprocesosInput = {
+  idmetodosubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 
 
 export type metodossubprocesosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idmetodosubproceso?: boolean
   idsubproceso?: boolean
-  idtecnicarecopilacion?: boolean
+  idtecnicarecoleccion?: boolean
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["metodossubprocesos"]>
 
 export type metodossubprocesosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idmetodosubproceso?: boolean
   idsubproceso?: boolean
-  idtecnicarecopilacion?: boolean
+  idtecnicarecoleccion?: boolean
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["metodossubprocesos"]>
 
 export type metodossubprocesosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idmetodosubproceso?: boolean
   idsubproceso?: boolean
-  idtecnicarecopilacion?: boolean
+  idtecnicarecoleccion?: boolean
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["metodossubprocesos"]>
 
 export type metodossubprocesosSelectScalar = {
   idmetodosubproceso?: boolean
   idsubproceso?: boolean
-  idtecnicarecopilacion?: boolean
+  idtecnicarecoleccion?: boolean
 }
 
-export type metodossubprocesosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idmetodosubproceso" | "idsubproceso" | "idtecnicarecopilacion", ExtArgs["result"]["metodossubprocesos"]>
+export type metodossubprocesosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idmetodosubproceso" | "idsubproceso" | "idtecnicarecoleccion", ExtArgs["result"]["metodossubprocesos"]>
+export type metodossubprocesosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
+}
+export type metodossubprocesosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
+}
+export type metodossubprocesosIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
+  tecnicasrecoleccion?: boolean | Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>
+}
 
 export type $metodossubprocesosPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "metodossubprocesos"
-  objects: {}
+  objects: {
+    subprocesos: Prisma.$subprocesosPayload<ExtArgs>
+    tecnicasrecoleccion: Prisma.$tecnicasrecoleccionPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idmetodosubproceso: number
     idsubproceso: number
-    idtecnicarecopilacion: number
+    idtecnicarecoleccion: number
   }, ExtArgs["result"]["metodossubprocesos"]>
   composites: {}
 }
@@ -751,6 +988,8 @@ readonly fields: metodossubprocesosFieldRefs;
  */
 export interface Prisma__metodossubprocesosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tecnicasrecoleccion<T extends Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tecnicasrecoleccionDefaultArgs<ExtArgs>>): Prisma.Prisma__tecnicasrecoleccionClient<runtime.Types.Result.GetResult<Prisma.$tecnicasrecoleccionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -782,7 +1021,7 @@ export interface Prisma__metodossubprocesosClient<T, Null = never, ExtArgs exten
 export interface metodossubprocesosFieldRefs {
   readonly idmetodosubproceso: Prisma.FieldRef<"metodossubprocesos", 'Int'>
   readonly idsubproceso: Prisma.FieldRef<"metodossubprocesos", 'Int'>
-  readonly idtecnicarecopilacion: Prisma.FieldRef<"metodossubprocesos", 'Int'>
+  readonly idtecnicarecoleccion: Prisma.FieldRef<"metodossubprocesos", 'Int'>
 }
     
 
@@ -799,6 +1038,10 @@ export type metodossubprocesosFindUniqueArgs<ExtArgs extends runtime.Types.Exten
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
   /**
    * Filter, which metodossubprocesos to fetch.
    */
@@ -818,6 +1061,10 @@ export type metodossubprocesosFindUniqueOrThrowArgs<ExtArgs extends runtime.Type
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
+  /**
    * Filter, which metodossubprocesos to fetch.
    */
   where: Prisma.metodossubprocesosWhereUniqueInput
@@ -835,6 +1082,10 @@ export type metodossubprocesosFindFirstArgs<ExtArgs extends runtime.Types.Extens
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
   /**
    * Filter, which metodossubprocesos to fetch.
    */
@@ -884,6 +1135,10 @@ export type metodossubprocesosFindFirstOrThrowArgs<ExtArgs extends runtime.Types
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
+  /**
    * Filter, which metodossubprocesos to fetch.
    */
   where?: Prisma.metodossubprocesosWhereInput
@@ -932,6 +1187,10 @@ export type metodossubprocesosFindManyArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
+  /**
    * Filter, which metodossubprocesos to fetch.
    */
   where?: Prisma.metodossubprocesosWhereInput
@@ -975,6 +1234,10 @@ export type metodossubprocesosCreateArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
+  /**
    * The data needed to create a metodossubprocesos.
    */
   data: Prisma.XOR<Prisma.metodossubprocesosCreateInput, Prisma.metodossubprocesosUncheckedCreateInput>
@@ -1008,6 +1271,10 @@ export type metodossubprocesosCreateManyAndReturnArgs<ExtArgs extends runtime.Ty
    */
   data: Prisma.metodossubprocesosCreateManyInput | Prisma.metodossubprocesosCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1022,6 +1289,10 @@ export type metodossubprocesosUpdateArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
   /**
    * The data needed to update a metodossubprocesos.
    */
@@ -1074,6 +1345,10 @@ export type metodossubprocesosUpdateManyAndReturnArgs<ExtArgs extends runtime.Ty
    * Limit how many metodossubprocesos to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1088,6 +1363,10 @@ export type metodossubprocesosUpsertArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
   /**
    * The filter to search for the metodossubprocesos to update in case it exists.
    */
@@ -1114,6 +1393,10 @@ export type metodossubprocesosDeleteArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
   /**
    * Filter which metodossubprocesos to delete.
    */
@@ -1146,4 +1429,8 @@ export type metodossubprocesosDefaultArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the metodossubprocesos
    */
   omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
 }

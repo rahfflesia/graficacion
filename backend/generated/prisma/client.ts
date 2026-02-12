@@ -60,12 +60,27 @@ export type proyectos = Prisma.proyectosModel
  */
 export type roles = Prisma.rolesModel
 /**
- * Model rolesusuario
- * 
- */
-export type rolesusuario = Prisma.rolesusuarioModel
-/**
  * Model tecnicasrecoleccion
  * 
  */
 export type tecnicasrecoleccion = Prisma.tecnicasrecoleccionModel
+/**
+ * Model personas
+ * 
+ */
+export type personas = Prisma.personasModel
+/**
+ * Model rolespersonasproyecto
+ * 
+ */
+export type rolespersonasproyecto = Prisma.rolespersonasproyectoModel
+/**
+ * Model subprocesos
+ * 
+ */
+export type subprocesos = Prisma.subprocesosModel
+/**
+ * Model usuarios
+ * 
+ */
+export type usuarios = Prisma.usuariosModel

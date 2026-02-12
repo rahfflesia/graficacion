@@ -10,7 +10,6 @@ import { ProyectoCard } from '../../cards/proyecto-card/proyecto-card';
   styleUrl: './seccion-proyectos.css',
 })
 export class SeccionProyectos {
-  proyectos: any = [];
   esCrearProyectoModalVisible: boolean = false;
   esConfigurarProyectoModalVisible: boolean = false;
 
@@ -24,7 +23,6 @@ export class SeccionProyectos {
 
   cerrarModalCrearProyecto(nuevoProyecto: any) {
     this.esCrearProyectoModalVisible = false;
-    this.proyectos = [this.proyectos, ...nuevoProyecto];
   }
 
   cerrarModalConfigurarProyecto() {

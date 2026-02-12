@@ -18,7 +18,7 @@ proyectos.post("/crear", async (req, res) => {
         descripcion: proyecto.descripcion,
       },
     });
-    return res.json({ mensaje: "Proyecto creado satisfactoriamente" });
+    return res.json(nuevoProyecto);
   } catch (error) {
     console.error(error);
     console.log(error);
