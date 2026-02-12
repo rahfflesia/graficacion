@@ -8,45 +8,97 @@ datasource db {
 }
 
 model metodossubprocesos {
-  idmetodosubproceso    Int @id @default(autoincrement())
-  idsubproceso          Int
-  idtecnicarecopilacion Int
+  idmetodosubproceso   Int                 @id @default(autoincrement())
+  idsubproceso         Int
+  idtecnicarecoleccion Int
+  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_subprocesos")
+  tecnicasrecoleccion  tecnicasrecoleccion @relation(fields: [idtecnicarecoleccion], references: [idtecnicarecoleccion], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_tecnicarsecoleccion")
 }
 
 model procesos {
-  idproceso   Int     @id @default(autoincrement())
-  nombre      String  @db.VarChar(255)
-  descripcion String?
-  creador     String  @db.VarChar(255)
+  idproceso     Int           @id @default(autoincrement())
+  nombre        String        @db.VarChar(255)
+  descripcion   String
+  fechacreacion DateTime      @default(now()) @db.Timestamptz(6)
+  subprocesos   subprocesos[]
 }
 
 model proyectos {
-  idproyecto  Int    @id @default(autoincrement())
-  nombre      String @db.VarChar(255)
-  descripcion String
+  idproyecto            Int                     @id @default(autoincrement())
+  nombre                String                  @db.VarChar(255)
+  descripcion           String
+  fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)
+  idusuario             Int
+  usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
+  roles                 roles[]
+  rolespersonasproyecto rolespersonasproyecto[]
 }
 
 model roles {
-  idrol      Int     @id @default(autoincrement())
-  idproyecto Int
-  nombrerol  String  @db.VarChar(255)
-  tipo       tiporol
-}
-
-model rolesusuario {
-  idrolusuario          Int    @id @default(autoincrement())
-  nombrepersonaasignada String @db.VarChar(255)
+  idrol                 Int                     @id @default(autoincrement())
   idproyecto            Int
-  idrol                 Int
+  nombre                String?                 @db.VarChar(255)
+  tipo                  tiporol
+  proyectos             proyectos               @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_roles_proyecto")
+  rolespersonasproyecto rolespersonasproyecto[]
 }
 
 model tecnicasrecoleccion {
-  idtecnicarecoleccion Int    @id @default(autoincrement())
-  nombre               String @db.VarChar(128)
+  idtecnicarecoleccion Int                  @id @default(autoincrement())
+  nombre               String               @db.VarChar(128)
   descripcion          String
+  metodossubprocesos   metodossubprocesos[]
+}
+
+model personas {
+  idpersona             Int                     @id @default(autoincrement())
+  nombre                String                  @db.VarChar(255)
+  apellidouno           String                  @db.VarChar(255)
+  apellidodos           String?                 @db.VarChar(255)
+  correo                String?                 @db.VarChar(255)
+  telefono              String?                 @db.VarChar(255)
+  rolespersonasproyecto rolespersonasproyecto[]
+}
+
+model rolespersonasproyecto {
+  idrolpersonaproyecto Int         @id @default(autoincrement())
+  idpersona            Int
+  idrol                Int
+  idproyecto           Int
+  tipo                 tipousuario
+  personas             personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_persona")
+  proyectos            proyectos   @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_proyecto")
+  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_rol")
+
+  @@unique([idpersona, idproyecto])
+}
+
+model subprocesos {
+  idsubproceso       Int                  @id @default(autoincrement())
+  idproceso          Int
+  nombre             String               @db.VarChar(255)
+  descripcion        String
+  fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
+  metodossubprocesos metodossubprocesos[]
+  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+}
+
+model usuarios {
+  idusuario           Int         @id @default(autoincrement())
+  nombre              String      @db.VarChar(255)
+  hashcontrasena      String      @db.VarChar(255)
+  fechacreacioncuenta DateTime    @default(now()) @db.Timestamptz(6)
+  correo              String      @db.VarChar(255)
+  pfp                 String?     @default("https://pbs.twimg.com/media/FeToVEqX0Acjv0i.png") @db.VarChar(255)
+  proyectos           proyectos[]
 }
 
 enum tiporol {
   Interno
   Externo
+}
+
+enum tipousuario {
+  Persona
+  Usuario
 }
