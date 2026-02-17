@@ -98,6 +98,14 @@ enum tiporol {
   Externo
 }
 
+model stakeholders {
+  idstakeholder Int      @id @default(autoincrement())
+  nombre        String   @db.VarChar(255)
+  influencia    String   @db.VarChar(100)
+  interes       String   @db.VarChar(100)
+  idproyecto    Int
+}
+
 enum tipousuario {
   Persona
   Usuario
