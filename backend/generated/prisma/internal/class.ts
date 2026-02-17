@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel metodossubprocesos {\n  idmetodosubproceso    Int @id @default(autoincrement())\n  idsubproceso          Int\n  idtecnicarecopilacion Int\n}\n\nmodel procesos {\n  idproceso   Int     @id @default(autoincrement())\n  nombre      String  @db.VarChar(255)\n  descripcion String?\n  creador     String  @db.VarChar(255)\n}\n\nmodel proyectos {\n  idproyecto  Int    @id @default(autoincrement())\n  nombre      String @db.VarChar(255)\n  descripcion String\n}\n\nmodel roles {\n  idrol      Int     @id @default(autoincrement())\n  idproyecto Int\n  nombrerol  String  @db.VarChar(255)\n  tipo       tiporol\n}\n\nmodel rolesusuario {\n  idrolusuario          Int    @id @default(autoincrement())\n  nombrepersonaasignada String @db.VarChar(255)\n  idproyecto            Int\n  idrol                 Int\n}\n\nmodel tecnicasrecoleccion {\n  idtecnicarecoleccion Int    @id @default(autoincrement())\n  nombre               String @db.VarChar(128)\n  descripcion          String\n}\n\nenum tiporol {\n  Interno\n  Externo\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel metodossubprocesos {\n  idmetodosubproceso   Int                 @id @default(autoincrement())\n  idsubproceso         Int\n  idtecnicarecoleccion Int\n  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction, map: \"fk_metodossubprocesos_subprocesos\")\n  tecnicasrecoleccion  tecnicasrecoleccion @relation(fields: [idtecnicarecoleccion], references: [idtecnicarecoleccion], onDelete: NoAction, onUpdate: NoAction, map: \"fk_metodossubprocesos_tecnicarsecoleccion\")\n}\n\nmodel procesos {\n  idproceso     Int           @id @default(autoincrement())\n  nombre        String        @db.VarChar(255)\n  descripcion   String\n  fechacreacion DateTime      @default(now()) @db.Timestamptz(6)\n  subprocesos   subprocesos[]\n}\n\nmodel proyectos {\n  idproyecto            Int                     @id @default(autoincrement())\n  nombre                String                  @db.VarChar(255)\n  descripcion           String\n  fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)\n  idusuario             Int\n  usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: \"fk_proyectos_usuarios\")\n  roles                 roles[]\n  rolespersonasproyecto rolespersonasproyecto[]\n}\n\nmodel roles {\n  idrol                 Int                     @id @default(autoincrement())\n  idproyecto            Int\n  nombre                String?                 @db.VarChar(255)\n  tipo                  tiporol\n  proyectos             proyectos               @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: \"fk_roles_proyecto\")\n  rolespersonasproyecto rolespersonasproyecto[]\n}\n\nmodel tecnicasrecoleccion {\n  idtecnicarecoleccion Int                  @id @default(autoincrement())\n  nombre               String               @db.VarChar(128)\n  descripcion          String\n  metodossubprocesos   metodossubprocesos[]\n}\n\nmodel personas {\n  idpersona             Int                     @id @default(autoincrement())\n  nombre                String                  @db.VarChar(255)\n  apellidouno           String                  @db.VarChar(255)\n  apellidodos           String?                 @db.VarChar(255)\n  correo                String?                 @db.VarChar(255)\n  telefono              String?                 @db.VarChar(255)\n  rolespersonasproyecto rolespersonasproyecto[]\n}\n\nmodel rolespersonasproyecto {\n  idrolpersonaproyecto Int         @id @default(autoincrement())\n  idpersona            Int\n  idrol                Int\n  idproyecto           Int\n  tipo                 tipousuario\n  personas             personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction, map: \"fk_rolespersonasproyecto_persona\")\n  proyectos            proyectos   @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: \"fk_rolespersonasproyecto_proyecto\")\n  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: NoAction, onUpdate: NoAction, map: \"fk_rolespersonasproyecto_rol\")\n\n  @@unique([idpersona, idproyecto])\n}\n\nmodel subprocesos {\n  idsubproceso       Int                  @id @default(autoincrement())\n  idproceso          Int\n  nombre             String               @db.VarChar(255)\n  descripcion        String\n  fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)\n  metodossubprocesos metodossubprocesos[]\n  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: \"fk_subprocesos_procesos\")\n}\n\nmodel usuarios {\n  idusuario           Int         @id @default(autoincrement())\n  nombre              String      @db.VarChar(255)\n  hashcontrasena      String      @db.VarChar(255)\n  fechacreacioncuenta DateTime    @default(now()) @db.Timestamptz(6)\n  correo              String      @db.VarChar(255)\n  pfp                 String?     @default(\"https://pbs.twimg.com/media/FeToVEqX0Acjv0i.png\") @db.VarChar(255)\n  proyectos           proyectos[]\n}\n\nenum tiporol {\n  Interno\n  Externo\n}\n\nenum tipousuario {\n  Persona\n  Usuario\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"metodossubprocesos\":{\"fields\":[{\"name\":\"idmetodosubproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idsubproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idtecnicarecopilacion\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"procesos\":{\"fields\":[{\"name\":\"idproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creador\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"proyectos\":{\"fields\":[{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"roles\":{\"fields\":[{\"name\":\"idrol\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombrerol\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tipo\",\"kind\":\"enum\",\"type\":\"tiporol\"}],\"dbName\":null},\"rolesusuario\":{\"fields\":[{\"name\":\"idrolusuario\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombrepersonaasignada\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idrol\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"tecnicasrecoleccion\":{\"fields\":[{\"name\":\"idtecnicarecoleccion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"metodossubprocesos\":{\"fields\":[{\"name\":\"idmetodosubproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idsubproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idtecnicarecoleccion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subprocesos\",\"kind\":\"object\",\"type\":\"subprocesos\",\"relationName\":\"metodossubprocesosTosubprocesos\"},{\"name\":\"tecnicasrecoleccion\",\"kind\":\"object\",\"type\":\"tecnicasrecoleccion\",\"relationName\":\"metodossubprocesosTotecnicasrecoleccion\"}],\"dbName\":null},\"procesos\":{\"fields\":[{\"name\":\"idproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechacreacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"subprocesos\",\"kind\":\"object\",\"type\":\"subprocesos\",\"relationName\":\"procesosTosubprocesos\"}],\"dbName\":null},\"proyectos\":{\"fields\":[{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechacreacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"idusuario\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"usuarios\",\"kind\":\"object\",\"type\":\"usuarios\",\"relationName\":\"proyectosTousuarios\"},{\"name\":\"roles\",\"kind\":\"object\",\"type\":\"roles\",\"relationName\":\"proyectosToroles\"},{\"name\":\"rolespersonasproyecto\",\"kind\":\"object\",\"type\":\"rolespersonasproyecto\",\"relationName\":\"proyectosTorolespersonasproyecto\"}],\"dbName\":null},\"roles\":{\"fields\":[{\"name\":\"idrol\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tipo\",\"kind\":\"enum\",\"type\":\"tiporol\"},{\"name\":\"proyectos\",\"kind\":\"object\",\"type\":\"proyectos\",\"relationName\":\"proyectosToroles\"},{\"name\":\"rolespersonasproyecto\",\"kind\":\"object\",\"type\":\"rolespersonasproyecto\",\"relationName\":\"rolesTorolespersonasproyecto\"}],\"dbName\":null},\"tecnicasrecoleccion\":{\"fields\":[{\"name\":\"idtecnicarecoleccion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metodossubprocesos\",\"kind\":\"object\",\"type\":\"metodossubprocesos\",\"relationName\":\"metodossubprocesosTotecnicasrecoleccion\"}],\"dbName\":null},\"personas\":{\"fields\":[{\"name\":\"idpersona\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apellidouno\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apellidodos\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"correo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"telefono\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rolespersonasproyecto\",\"kind\":\"object\",\"type\":\"rolespersonasproyecto\",\"relationName\":\"personasTorolespersonasproyecto\"}],\"dbName\":null},\"rolespersonasproyecto\":{\"fields\":[{\"name\":\"idrolpersonaproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idpersona\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idrol\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idproyecto\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"tipo\",\"kind\":\"enum\",\"type\":\"tipousuario\"},{\"name\":\"personas\",\"kind\":\"object\",\"type\":\"personas\",\"relationName\":\"personasTorolespersonasproyecto\"},{\"name\":\"proyectos\",\"kind\":\"object\",\"type\":\"proyectos\",\"relationName\":\"proyectosTorolespersonasproyecto\"},{\"name\":\"roles\",\"kind\":\"object\",\"type\":\"roles\",\"relationName\":\"rolesTorolespersonasproyecto\"}],\"dbName\":null},\"subprocesos\":{\"fields\":[{\"name\":\"idsubproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idproceso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechacreacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"metodossubprocesos\",\"kind\":\"object\",\"type\":\"metodossubprocesos\",\"relationName\":\"metodossubprocesosTosubprocesos\"},{\"name\":\"procesos\",\"kind\":\"object\",\"type\":\"procesos\",\"relationName\":\"procesosTosubprocesos\"}],\"dbName\":null},\"usuarios\":{\"fields\":[{\"name\":\"idusuario\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hashcontrasena\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechacreacioncuenta\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"correo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pfp\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"proyectos\",\"kind\":\"object\",\"type\":\"proyectos\",\"relationName\":\"proyectosTousuarios\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -217,16 +217,6 @@ export interface PrismaClient<
   get roles(): Prisma.rolesDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.rolesusuario`: Exposes CRUD operations for the **rolesusuario** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Rolesusuarios
-    * const rolesusuarios = await prisma.rolesusuario.findMany()
-    * ```
-    */
-  get rolesusuario(): Prisma.rolesusuarioDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.tecnicasrecoleccion`: Exposes CRUD operations for the **tecnicasrecoleccion** model.
     * Example usage:
     * ```ts
@@ -235,6 +225,46 @@ export interface PrismaClient<
     * ```
     */
   get tecnicasrecoleccion(): Prisma.tecnicasrecoleccionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.personas`: Exposes CRUD operations for the **personas** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Personas
+    * const personas = await prisma.personas.findMany()
+    * ```
+    */
+  get personas(): Prisma.personasDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.rolespersonasproyecto`: Exposes CRUD operations for the **rolespersonasproyecto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rolespersonasproyectos
+    * const rolespersonasproyectos = await prisma.rolespersonasproyecto.findMany()
+    * ```
+    */
+  get rolespersonasproyecto(): Prisma.rolespersonasproyectoDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.subprocesos`: Exposes CRUD operations for the **subprocesos** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Subprocesos
+    * const subprocesos = await prisma.subprocesos.findMany()
+    * ```
+    */
+  get subprocesos(): Prisma.subprocesosDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.usuarios`: Exposes CRUD operations for the **usuarios** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Usuarios
+    * const usuarios = await prisma.usuarios.findMany()
+    * ```
+    */
+  get usuarios(): Prisma.usuariosDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

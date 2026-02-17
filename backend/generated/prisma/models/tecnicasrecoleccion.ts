@@ -200,12 +200,14 @@ export type tecnicasrecoleccionWhereInput = {
   idtecnicarecoleccion?: Prisma.IntFilter<"tecnicasrecoleccion"> | number
   nombre?: Prisma.StringFilter<"tecnicasrecoleccion"> | string
   descripcion?: Prisma.StringFilter<"tecnicasrecoleccion"> | string
+  metodossubprocesos?: Prisma.MetodossubprocesosListRelationFilter
 }
 
 export type tecnicasrecoleccionOrderByWithRelationInput = {
   idtecnicarecoleccion?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
+  metodossubprocesos?: Prisma.metodossubprocesosOrderByRelationAggregateInput
 }
 
 export type tecnicasrecoleccionWhereUniqueInput = Prisma.AtLeast<{
@@ -215,6 +217,7 @@ export type tecnicasrecoleccionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.tecnicasrecoleccionWhereInput | Prisma.tecnicasrecoleccionWhereInput[]
   nombre?: Prisma.StringFilter<"tecnicasrecoleccion"> | string
   descripcion?: Prisma.StringFilter<"tecnicasrecoleccion"> | string
+  metodossubprocesos?: Prisma.MetodossubprocesosListRelationFilter
 }, "idtecnicarecoleccion">
 
 export type tecnicasrecoleccionOrderByWithAggregationInput = {
@@ -240,23 +243,27 @@ export type tecnicasrecoleccionScalarWhereWithAggregatesInput = {
 export type tecnicasrecoleccionCreateInput = {
   nombre: string
   descripcion: string
+  metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutTecnicasrecoleccionInput
 }
 
 export type tecnicasrecoleccionUncheckedCreateInput = {
   idtecnicarecoleccion?: number
   nombre: string
   descripcion: string
+  metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutTecnicasrecoleccionInput
 }
 
 export type tecnicasrecoleccionUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutTecnicasrecoleccionNestedInput
 }
 
 export type tecnicasrecoleccionUncheckedUpdateInput = {
   idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutTecnicasrecoleccionNestedInput
 }
 
 export type tecnicasrecoleccionCreateManyInput = {
@@ -274,6 +281,11 @@ export type tecnicasrecoleccionUncheckedUpdateManyInput = {
   idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type TecnicasrecoleccionScalarRelationFilter = {
+  is?: Prisma.tecnicasrecoleccionWhereInput
+  isNot?: Prisma.tecnicasrecoleccionWhereInput
 }
 
 export type tecnicasrecoleccionCountOrderByAggregateInput = {
@@ -302,12 +314,95 @@ export type tecnicasrecoleccionSumOrderByAggregateInput = {
   idtecnicarecoleccion?: Prisma.SortOrder
 }
 
+export type tecnicasrecoleccionCreateNestedOneWithoutMetodossubprocesosInput = {
+  create?: Prisma.XOR<Prisma.tecnicasrecoleccionCreateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedCreateWithoutMetodossubprocesosInput>
+  connectOrCreate?: Prisma.tecnicasrecoleccionCreateOrConnectWithoutMetodossubprocesosInput
+  connect?: Prisma.tecnicasrecoleccionWhereUniqueInput
+}
+
+export type tecnicasrecoleccionUpdateOneRequiredWithoutMetodossubprocesosNestedInput = {
+  create?: Prisma.XOR<Prisma.tecnicasrecoleccionCreateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedCreateWithoutMetodossubprocesosInput>
+  connectOrCreate?: Prisma.tecnicasrecoleccionCreateOrConnectWithoutMetodossubprocesosInput
+  upsert?: Prisma.tecnicasrecoleccionUpsertWithoutMetodossubprocesosInput
+  connect?: Prisma.tecnicasrecoleccionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.tecnicasrecoleccionUpdateToOneWithWhereWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUpdateWithoutMetodossubprocesosInput>, Prisma.tecnicasrecoleccionUncheckedUpdateWithoutMetodossubprocesosInput>
+}
+
+export type tecnicasrecoleccionCreateWithoutMetodossubprocesosInput = {
+  nombre: string
+  descripcion: string
+}
+
+export type tecnicasrecoleccionUncheckedCreateWithoutMetodossubprocesosInput = {
+  idtecnicarecoleccion?: number
+  nombre: string
+  descripcion: string
+}
+
+export type tecnicasrecoleccionCreateOrConnectWithoutMetodossubprocesosInput = {
+  where: Prisma.tecnicasrecoleccionWhereUniqueInput
+  create: Prisma.XOR<Prisma.tecnicasrecoleccionCreateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedCreateWithoutMetodossubprocesosInput>
+}
+
+export type tecnicasrecoleccionUpsertWithoutMetodossubprocesosInput = {
+  update: Prisma.XOR<Prisma.tecnicasrecoleccionUpdateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedUpdateWithoutMetodossubprocesosInput>
+  create: Prisma.XOR<Prisma.tecnicasrecoleccionCreateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedCreateWithoutMetodossubprocesosInput>
+  where?: Prisma.tecnicasrecoleccionWhereInput
+}
+
+export type tecnicasrecoleccionUpdateToOneWithWhereWithoutMetodossubprocesosInput = {
+  where?: Prisma.tecnicasrecoleccionWhereInput
+  data: Prisma.XOR<Prisma.tecnicasrecoleccionUpdateWithoutMetodossubprocesosInput, Prisma.tecnicasrecoleccionUncheckedUpdateWithoutMetodossubprocesosInput>
+}
+
+export type tecnicasrecoleccionUpdateWithoutMetodossubprocesosInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type tecnicasrecoleccionUncheckedUpdateWithoutMetodossubprocesosInput = {
+  idtecnicarecoleccion?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type TecnicasrecoleccionCountOutputType
+ */
+
+export type TecnicasrecoleccionCountOutputType = {
+  metodossubprocesos: number
+}
+
+export type TecnicasrecoleccionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  metodossubprocesos?: boolean | TecnicasrecoleccionCountOutputTypeCountMetodossubprocesosArgs
+}
+
+/**
+ * TecnicasrecoleccionCountOutputType without action
+ */
+export type TecnicasrecoleccionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TecnicasrecoleccionCountOutputType
+   */
+  select?: Prisma.TecnicasrecoleccionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TecnicasrecoleccionCountOutputType without action
+ */
+export type TecnicasrecoleccionCountOutputTypeCountMetodossubprocesosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.metodossubprocesosWhereInput
+}
 
 
 export type tecnicasrecoleccionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idtecnicarecoleccion?: boolean
   nombre?: boolean
   descripcion?: boolean
+  metodossubprocesos?: boolean | Prisma.tecnicasrecoleccion$metodossubprocesosArgs<ExtArgs>
+  _count?: boolean | Prisma.TecnicasrecoleccionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tecnicasrecoleccion"]>
 
 export type tecnicasrecoleccionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -329,10 +424,18 @@ export type tecnicasrecoleccionSelectScalar = {
 }
 
 export type tecnicasrecoleccionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idtecnicarecoleccion" | "nombre" | "descripcion", ExtArgs["result"]["tecnicasrecoleccion"]>
+export type tecnicasrecoleccionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  metodossubprocesos?: boolean | Prisma.tecnicasrecoleccion$metodossubprocesosArgs<ExtArgs>
+  _count?: boolean | Prisma.TecnicasrecoleccionCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type tecnicasrecoleccionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type tecnicasrecoleccionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $tecnicasrecoleccionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "tecnicasrecoleccion"
-  objects: {}
+  objects: {
+    metodossubprocesos: Prisma.$metodossubprocesosPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idtecnicarecoleccion: number
     nombre: string
@@ -731,6 +834,7 @@ readonly fields: tecnicasrecoleccionFieldRefs;
  */
 export interface Prisma__tecnicasrecoleccionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  metodossubprocesos<T extends Prisma.tecnicasrecoleccion$metodossubprocesosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tecnicasrecoleccion$metodossubprocesosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$metodossubprocesosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -780,6 +884,10 @@ export type tecnicasrecoleccionFindUniqueArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * Filter, which tecnicasrecoleccion to fetch.
    */
   where: Prisma.tecnicasrecoleccionWhereUniqueInput
@@ -798,6 +906,10 @@ export type tecnicasrecoleccionFindUniqueOrThrowArgs<ExtArgs extends runtime.Typ
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * Filter, which tecnicasrecoleccion to fetch.
    */
   where: Prisma.tecnicasrecoleccionWhereUniqueInput
@@ -815,6 +927,10 @@ export type tecnicasrecoleccionFindFirstArgs<ExtArgs extends runtime.Types.Exten
    * Omit specific fields from the tecnicasrecoleccion
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
   /**
    * Filter, which tecnicasrecoleccion to fetch.
    */
@@ -864,6 +980,10 @@ export type tecnicasrecoleccionFindFirstOrThrowArgs<ExtArgs extends runtime.Type
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * Filter, which tecnicasrecoleccion to fetch.
    */
   where?: Prisma.tecnicasrecoleccionWhereInput
@@ -912,6 +1032,10 @@ export type tecnicasrecoleccionFindManyArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * Filter, which tecnicasrecoleccions to fetch.
    */
   where?: Prisma.tecnicasrecoleccionWhereInput
@@ -954,6 +1078,10 @@ export type tecnicasrecoleccionCreateArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the tecnicasrecoleccion
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
   /**
    * The data needed to create a tecnicasrecoleccion.
    */
@@ -1002,6 +1130,10 @@ export type tecnicasrecoleccionUpdateArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the tecnicasrecoleccion
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
   /**
    * The data needed to update a tecnicasrecoleccion.
    */
@@ -1069,6 +1201,10 @@ export type tecnicasrecoleccionUpsertArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * The filter to search for the tecnicasrecoleccion to update in case it exists.
    */
   where: Prisma.tecnicasrecoleccionWhereUniqueInput
@@ -1095,6 +1231,10 @@ export type tecnicasrecoleccionDeleteArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
+  /**
    * Filter which tecnicasrecoleccion to delete.
    */
   where: Prisma.tecnicasrecoleccionWhereUniqueInput
@@ -1115,6 +1255,30 @@ export type tecnicasrecoleccionDeleteManyArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
+ * tecnicasrecoleccion.metodossubprocesos
+ */
+export type tecnicasrecoleccion$metodossubprocesosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the metodossubprocesos
+   */
+  select?: Prisma.metodossubprocesosSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the metodossubprocesos
+   */
+  omit?: Prisma.metodossubprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.metodossubprocesosInclude<ExtArgs> | null
+  where?: Prisma.metodossubprocesosWhereInput
+  orderBy?: Prisma.metodossubprocesosOrderByWithRelationInput | Prisma.metodossubprocesosOrderByWithRelationInput[]
+  cursor?: Prisma.metodossubprocesosWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MetodossubprocesosScalarFieldEnum | Prisma.MetodossubprocesosScalarFieldEnum[]
+}
+
+/**
  * tecnicasrecoleccion without action
  */
 export type tecnicasrecoleccionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1126,4 +1290,8 @@ export type tecnicasrecoleccionDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the tecnicasrecoleccion
    */
   omit?: Prisma.tecnicasrecoleccionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tecnicasrecoleccionInclude<ExtArgs> | null
 }

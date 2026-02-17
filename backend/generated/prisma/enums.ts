@@ -15,3 +15,11 @@ export const tiporol = {
 } as const
 
 export type tiporol = (typeof tiporol)[keyof typeof tiporol]
+
+
+export const tipousuario = {
+  Persona: 'Persona',
+  Usuario: 'Usuario'
+} as const
+
+export type tipousuario = (typeof tipousuario)[keyof typeof tipousuario]

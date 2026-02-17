@@ -38,21 +38,21 @@ export type ProcesosMinAggregateOutputType = {
   idproceso: number | null
   nombre: string | null
   descripcion: string | null
-  creador: string | null
+  fechacreacion: Date | null
 }
 
 export type ProcesosMaxAggregateOutputType = {
   idproceso: number | null
   nombre: string | null
   descripcion: string | null
-  creador: string | null
+  fechacreacion: Date | null
 }
 
 export type ProcesosCountAggregateOutputType = {
   idproceso: number
   nombre: number
   descripcion: number
-  creador: number
+  fechacreacion: number
   _all: number
 }
 
@@ -69,21 +69,21 @@ export type ProcesosMinAggregateInputType = {
   idproceso?: true
   nombre?: true
   descripcion?: true
-  creador?: true
+  fechacreacion?: true
 }
 
 export type ProcesosMaxAggregateInputType = {
   idproceso?: true
   nombre?: true
   descripcion?: true
-  creador?: true
+  fechacreacion?: true
 }
 
 export type ProcesosCountAggregateInputType = {
   idproceso?: true
   nombre?: true
   descripcion?: true
-  creador?: true
+  fechacreacion?: true
   _all?: true
 }
 
@@ -176,8 +176,8 @@ export type procesosGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type ProcesosGroupByOutputType = {
   idproceso: number
   nombre: string
-  descripcion: string | null
-  creador: string
+  descripcion: string
+  fechacreacion: Date
   _count: ProcesosCountAggregateOutputType | null
   _avg: ProcesosAvgAggregateOutputType | null
   _sum: ProcesosSumAggregateOutputType | null
@@ -206,15 +206,17 @@ export type procesosWhereInput = {
   NOT?: Prisma.procesosWhereInput | Prisma.procesosWhereInput[]
   idproceso?: Prisma.IntFilter<"procesos"> | number
   nombre?: Prisma.StringFilter<"procesos"> | string
-  descripcion?: Prisma.StringNullableFilter<"procesos"> | string | null
-  creador?: Prisma.StringFilter<"procesos"> | string
+  descripcion?: Prisma.StringFilter<"procesos"> | string
+  fechacreacion?: Prisma.DateTimeFilter<"procesos"> | Date | string
+  subprocesos?: Prisma.SubprocesosListRelationFilter
 }
 
 export type procesosOrderByWithRelationInput = {
   idproceso?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
-  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
-  creador?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrder
+  fechacreacion?: Prisma.SortOrder
+  subprocesos?: Prisma.subprocesosOrderByRelationAggregateInput
 }
 
 export type procesosWhereUniqueInput = Prisma.AtLeast<{
@@ -223,15 +225,16 @@ export type procesosWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.procesosWhereInput[]
   NOT?: Prisma.procesosWhereInput | Prisma.procesosWhereInput[]
   nombre?: Prisma.StringFilter<"procesos"> | string
-  descripcion?: Prisma.StringNullableFilter<"procesos"> | string | null
-  creador?: Prisma.StringFilter<"procesos"> | string
+  descripcion?: Prisma.StringFilter<"procesos"> | string
+  fechacreacion?: Prisma.DateTimeFilter<"procesos"> | Date | string
+  subprocesos?: Prisma.SubprocesosListRelationFilter
 }, "idproceso">
 
 export type procesosOrderByWithAggregationInput = {
   idproceso?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
-  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
-  creador?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrder
+  fechacreacion?: Prisma.SortOrder
   _count?: Prisma.procesosCountOrderByAggregateInput
   _avg?: Prisma.procesosAvgOrderByAggregateInput
   _max?: Prisma.procesosMaxOrderByAggregateInput
@@ -245,61 +248,65 @@ export type procesosScalarWhereWithAggregatesInput = {
   NOT?: Prisma.procesosScalarWhereWithAggregatesInput | Prisma.procesosScalarWhereWithAggregatesInput[]
   idproceso?: Prisma.IntWithAggregatesFilter<"procesos"> | number
   nombre?: Prisma.StringWithAggregatesFilter<"procesos"> | string
-  descripcion?: Prisma.StringNullableWithAggregatesFilter<"procesos"> | string | null
-  creador?: Prisma.StringWithAggregatesFilter<"procesos"> | string
+  descripcion?: Prisma.StringWithAggregatesFilter<"procesos"> | string
+  fechacreacion?: Prisma.DateTimeWithAggregatesFilter<"procesos"> | Date | string
 }
 
 export type procesosCreateInput = {
   nombre: string
-  descripcion?: string | null
-  creador: string
+  descripcion: string
+  fechacreacion?: Date | string
+  subprocesos?: Prisma.subprocesosCreateNestedManyWithoutProcesosInput
 }
 
 export type procesosUncheckedCreateInput = {
   idproceso?: number
   nombre: string
-  descripcion?: string | null
-  creador: string
+  descripcion: string
+  fechacreacion?: Date | string
+  subprocesos?: Prisma.subprocesosUncheckedCreateNestedManyWithoutProcesosInput
 }
 
 export type procesosUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creador?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subprocesos?: Prisma.subprocesosUpdateManyWithoutProcesosNestedInput
 }
 
 export type procesosUncheckedUpdateInput = {
   idproceso?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creador?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subprocesos?: Prisma.subprocesosUncheckedUpdateManyWithoutProcesosNestedInput
 }
 
 export type procesosCreateManyInput = {
   idproceso?: number
   nombre: string
-  descripcion?: string | null
-  creador: string
+  descripcion: string
+  fechacreacion?: Date | string
 }
 
 export type procesosUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creador?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type procesosUncheckedUpdateManyInput = {
   idproceso?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creador?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type procesosCountOrderByAggregateInput = {
   idproceso?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
-  creador?: Prisma.SortOrder
+  fechacreacion?: Prisma.SortOrder
 }
 
 export type procesosAvgOrderByAggregateInput = {
@@ -310,68 +317,168 @@ export type procesosMaxOrderByAggregateInput = {
   idproceso?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
-  creador?: Prisma.SortOrder
+  fechacreacion?: Prisma.SortOrder
 }
 
 export type procesosMinOrderByAggregateInput = {
   idproceso?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   descripcion?: Prisma.SortOrder
-  creador?: Prisma.SortOrder
+  fechacreacion?: Prisma.SortOrder
 }
 
 export type procesosSumOrderByAggregateInput = {
   idproceso?: Prisma.SortOrder
 }
 
+export type ProcesosScalarRelationFilter = {
+  is?: Prisma.procesosWhereInput
+  isNot?: Prisma.procesosWhereInput
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
+export type procesosCreateNestedOneWithoutSubprocesosInput = {
+  create?: Prisma.XOR<Prisma.procesosCreateWithoutSubprocesosInput, Prisma.procesosUncheckedCreateWithoutSubprocesosInput>
+  connectOrCreate?: Prisma.procesosCreateOrConnectWithoutSubprocesosInput
+  connect?: Prisma.procesosWhereUniqueInput
+}
+
+export type procesosUpdateOneRequiredWithoutSubprocesosNestedInput = {
+  create?: Prisma.XOR<Prisma.procesosCreateWithoutSubprocesosInput, Prisma.procesosUncheckedCreateWithoutSubprocesosInput>
+  connectOrCreate?: Prisma.procesosCreateOrConnectWithoutSubprocesosInput
+  upsert?: Prisma.procesosUpsertWithoutSubprocesosInput
+  connect?: Prisma.procesosWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.procesosUpdateToOneWithWhereWithoutSubprocesosInput, Prisma.procesosUpdateWithoutSubprocesosInput>, Prisma.procesosUncheckedUpdateWithoutSubprocesosInput>
+}
+
+export type procesosCreateWithoutSubprocesosInput = {
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+}
+
+export type procesosUncheckedCreateWithoutSubprocesosInput = {
+  idproceso?: number
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+}
+
+export type procesosCreateOrConnectWithoutSubprocesosInput = {
+  where: Prisma.procesosWhereUniqueInput
+  create: Prisma.XOR<Prisma.procesosCreateWithoutSubprocesosInput, Prisma.procesosUncheckedCreateWithoutSubprocesosInput>
+}
+
+export type procesosUpsertWithoutSubprocesosInput = {
+  update: Prisma.XOR<Prisma.procesosUpdateWithoutSubprocesosInput, Prisma.procesosUncheckedUpdateWithoutSubprocesosInput>
+  create: Prisma.XOR<Prisma.procesosCreateWithoutSubprocesosInput, Prisma.procesosUncheckedCreateWithoutSubprocesosInput>
+  where?: Prisma.procesosWhereInput
+}
+
+export type procesosUpdateToOneWithWhereWithoutSubprocesosInput = {
+  where?: Prisma.procesosWhereInput
+  data: Prisma.XOR<Prisma.procesosUpdateWithoutSubprocesosInput, Prisma.procesosUncheckedUpdateWithoutSubprocesosInput>
+}
+
+export type procesosUpdateWithoutSubprocesosInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type procesosUncheckedUpdateWithoutSubprocesosInput = {
+  idproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type ProcesosCountOutputType
+ */
+
+export type ProcesosCountOutputType = {
+  subprocesos: number
+}
+
+export type ProcesosCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subprocesos?: boolean | ProcesosCountOutputTypeCountSubprocesosArgs
+}
+
+/**
+ * ProcesosCountOutputType without action
+ */
+export type ProcesosCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProcesosCountOutputType
+   */
+  select?: Prisma.ProcesosCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProcesosCountOutputType without action
+ */
+export type ProcesosCountOutputTypeCountSubprocesosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.subprocesosWhereInput
+}
 
 
 export type procesosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idproceso?: boolean
   nombre?: boolean
   descripcion?: boolean
-  creador?: boolean
+  fechacreacion?: boolean
+  subprocesos?: boolean | Prisma.procesos$subprocesosArgs<ExtArgs>
+  _count?: boolean | Prisma.ProcesosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["procesos"]>
 
 export type procesosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idproceso?: boolean
   nombre?: boolean
   descripcion?: boolean
-  creador?: boolean
+  fechacreacion?: boolean
 }, ExtArgs["result"]["procesos"]>
 
 export type procesosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idproceso?: boolean
   nombre?: boolean
   descripcion?: boolean
-  creador?: boolean
+  fechacreacion?: boolean
 }, ExtArgs["result"]["procesos"]>
 
 export type procesosSelectScalar = {
   idproceso?: boolean
   nombre?: boolean
   descripcion?: boolean
-  creador?: boolean
+  fechacreacion?: boolean
 }
 
-export type procesosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idproceso" | "nombre" | "descripcion" | "creador", ExtArgs["result"]["procesos"]>
+export type procesosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idproceso" | "nombre" | "descripcion" | "fechacreacion", ExtArgs["result"]["procesos"]>
+export type procesosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subprocesos?: boolean | Prisma.procesos$subprocesosArgs<ExtArgs>
+  _count?: boolean | Prisma.ProcesosCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type procesosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type procesosIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $procesosPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "procesos"
-  objects: {}
+  objects: {
+    subprocesos: Prisma.$subprocesosPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idproceso: number
     nombre: string
-    descripcion: string | null
-    creador: string
+    descripcion: string
+    fechacreacion: Date
   }, ExtArgs["result"]["procesos"]>
   composites: {}
 }
@@ -766,6 +873,7 @@ readonly fields: procesosFieldRefs;
  */
 export interface Prisma__procesosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  subprocesos<T extends Prisma.procesos$subprocesosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.procesos$subprocesosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -798,7 +906,7 @@ export interface procesosFieldRefs {
   readonly idproceso: Prisma.FieldRef<"procesos", 'Int'>
   readonly nombre: Prisma.FieldRef<"procesos", 'String'>
   readonly descripcion: Prisma.FieldRef<"procesos", 'String'>
-  readonly creador: Prisma.FieldRef<"procesos", 'String'>
+  readonly fechacreacion: Prisma.FieldRef<"procesos", 'DateTime'>
 }
     
 
@@ -815,6 +923,10 @@ export type procesosFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the procesos
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
   /**
    * Filter, which procesos to fetch.
    */
@@ -834,6 +946,10 @@ export type procesosFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
+  /**
    * Filter, which procesos to fetch.
    */
   where: Prisma.procesosWhereUniqueInput
@@ -851,6 +967,10 @@ export type procesosFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the procesos
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
   /**
    * Filter, which procesos to fetch.
    */
@@ -900,6 +1020,10 @@ export type procesosFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
+  /**
    * Filter, which procesos to fetch.
    */
   where?: Prisma.procesosWhereInput
@@ -948,6 +1072,10 @@ export type procesosFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
+  /**
    * Filter, which procesos to fetch.
    */
   where?: Prisma.procesosWhereInput
@@ -990,6 +1118,10 @@ export type procesosCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the procesos
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
   /**
    * The data needed to create a procesos.
    */
@@ -1038,6 +1170,10 @@ export type procesosUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the procesos
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
   /**
    * The data needed to update a procesos.
    */
@@ -1105,6 +1241,10 @@ export type procesosUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
+  /**
    * The filter to search for the procesos to update in case it exists.
    */
   where: Prisma.procesosWhereUniqueInput
@@ -1131,6 +1271,10 @@ export type procesosDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
+  /**
    * Filter which procesos to delete.
    */
   where: Prisma.procesosWhereUniqueInput
@@ -1151,6 +1295,30 @@ export type procesosDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * procesos.subprocesos
+ */
+export type procesos$subprocesosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the subprocesos
+   */
+  select?: Prisma.subprocesosSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the subprocesos
+   */
+  omit?: Prisma.subprocesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.subprocesosInclude<ExtArgs> | null
+  where?: Prisma.subprocesosWhereInput
+  orderBy?: Prisma.subprocesosOrderByWithRelationInput | Prisma.subprocesosOrderByWithRelationInput[]
+  cursor?: Prisma.subprocesosWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubprocesosScalarFieldEnum | Prisma.SubprocesosScalarFieldEnum[]
+}
+
+/**
  * procesos without action
  */
 export type procesosDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1162,4 +1330,8 @@ export type procesosDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the procesos
    */
   omit?: Prisma.procesosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.procesosInclude<ExtArgs> | null
 }
