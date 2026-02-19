@@ -21,12 +21,13 @@
   </form>
 
   <div class="stakeholders-list">
-    <h3>Listado de stakeholders</h3>
+    <h2>Lista de Stakeholders</h2>
 
-    <div class="stakeholder-item">
-      <span>Cliente principal</span>
-      <span>Alta influencia</span>
-    </div>
+    <ul>
+      <li *ngFor="let s of stakeholders">
+        {{ s.nombre }} - Influencia: {{ s.influencia }} - Interés: {{ s.interes }}
+      </li>
+    </ul>
 
     <div class="stakeholder-item">
       <span>Usuario final</span>
