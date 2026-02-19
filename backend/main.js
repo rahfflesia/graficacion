@@ -1,9 +1,9 @@
 import express from "express";
-import proyectos from "./rutas/proyectos.js";
-import tecnicasRecoleccion from "./rutas/tecnicasRecoleccion.js";
-import roles from "./rutas/roles.js";
-import procesos from "./rutas/procesos.js";
-import subprocesos from "./rutas/subprocesos.js";
+import proyectos from "./rutas/proyectos";
+import tecnicasRecoleccion from "./rutas/tecnicasRecoleccion";
+import roles from "./rutas/roles";
+import procesos from "./rutas/procesos";
+import subprocesos from "./rutas/subprocesos";
 import cors from "cors";
 
 const app = express();
@@ -21,3 +21,8 @@ app.use("/subprocesos", subprocesos);
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });
+
+app.use(express.json());
+
+app.use("/roles", rolesRoutes);
+app.use("/stakeholders", stakeholdersRoutes);
