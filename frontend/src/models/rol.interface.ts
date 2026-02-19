@@ -1,5 +1,8 @@
+export type TipoRol = 'Interno' | 'Externo';
+
 export interface Rol {
-  id?: number;
+  idrol?: number;
   nombre: string;
-  descripcion: string;
+  tipo: TipoRol;
+  idproyecto: number;
 }

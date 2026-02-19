@@ -1,6 +1,8 @@
 export interface Stakeholder {
-  id?: number;
+  idstakeholder?: number;
   nombre: string;
-  rol: string;
+  influencia: string;
   interes: string;
+  contacto: string;
+  idproyecto: number;
 }

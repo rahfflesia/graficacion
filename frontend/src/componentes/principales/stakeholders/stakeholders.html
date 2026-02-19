@@ -8,29 +8,37 @@
     </div>
 
     <div class="form-group">
-      <label>Rol</label>
-      <input type="text" placeholder="Ej. Cliente, Usuario final">
+      <label>Influencia</label>
+      <input type="text" placeholder="Nivel de influencia">
     </div>
 
     <div class="form-group">
-      <label>Interes</label>
-      <input type="text" placeholder="Nivel de interés o influencia">
+      <label>Interés</label>
+      <input type="text" placeholder="Nivel de interés">
+    </div>
+
+    <div class="form-group">
+      <label>Contacto</label>
+      <input type="text" placeholder="Correo o número telefónico">
     </div>
 
     <button type="button">Agregar stakeholder</button>
   </form>
 
   <div class="stakeholders-list">
-    <h3>Listado de stakeholders</h3>
+    <h2>Lista de Stakeholders</h2>
 
-    <div class="stakeholder-item">
-      <span>Cliente principal</span>
-      <span>Alta influencia</span>
-    </div>
+    @if (stakeholders.length === 0) {
+      <p>No hay stakeholders registrados.</p>
+    }
 
-    <div class="stakeholder-item">
-      <span>Usuario final</span>
-      <span>Interes medio</span>
-    </div>
+    @for (s of stakeholders; track s.idstakeholder) {
+      <div class="stakeholder-item">
+        <span>{{ s.nombre }}</span>
+        <span>Influencia: {{ s.influencia }}</span>
+        <span>Interés: {{ s.interes }}</span>
+        <span>Contacto: {{ s.contacto }}</span>
+      </div>
+    }
   </div>
 </div>
