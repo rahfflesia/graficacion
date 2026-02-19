@@ -48,4 +48,10 @@ export class Roles implements OnInit {
         this.loadRoles();
       });
   }
+
+  delete(id: number) {
+  this.rolesService.deleteRol(id)
+    .subscribe(() => this.loadRoles());
+  }
+
 }
