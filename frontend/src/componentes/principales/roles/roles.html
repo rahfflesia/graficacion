@@ -8,8 +8,11 @@
     </div>
 
     <div class="form-group">
-      <label>Descripción</label>
-      <input type="text" placeholder="Permisos y responsabilidades">
+      <label>Tipo</label>
+      <select>
+        <option value="Interno">Interno</option>
+        <option value="Externo">Externo</option>
+      </select>
     </div>
 
     <button type="button">Crear rol</button>
@@ -18,20 +21,18 @@
   <div class="roles-list">
     <h3>Roles existentes</h3>
 
-    <div class="roles-item">
-      <span>Administrador</span>
-      <div class="acciones">
-        <button>Editar</button>
-        <button>Eliminar</button>
-      </div>
-    </div>
+    @if (roles.length === 0) {
+      <p>No hay roles registrados.</p>
+    }
 
-    <div class="roles-item">
-      <span>Usuario</span>
-      <div class="acciones">
-        <button>Editar</button>
-        <button>Eliminar</button>
+    @for (r of roles; track r.idrol) {
+      <div class="roles-item">
+        <span>{{ r.nombre }} ({{ r.tipo }})</span>
+        <div class="acciones">
+          <button>Editar</button>
+          <button>Eliminar</button>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

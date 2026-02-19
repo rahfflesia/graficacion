@@ -3,5 +3,6 @@ export interface Stakeholder {
   nombre: string;
   influencia: string;
   interes: string;
+  contacto: string;
   idproyecto: number;
 }
