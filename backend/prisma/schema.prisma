@@ -31,6 +31,7 @@ model proyectos {
   idusuario             Int
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
+  stakeholders          stakeholders[]
   rolespersonasproyecto rolespersonasproyecto[]
 }
 
@@ -99,11 +100,14 @@ enum tiporol {
 }
 
 model stakeholders {
-  idstakeholder Int      @id @default(autoincrement())
-  nombre        String   @db.VarChar(255)
-  influencia    String   @db.VarChar(100)
-  interes       String   @db.VarChar(100)
-  idproyecto    Int
+  idstakeholder Int    @id @default(autoincrement())
+  nombre        String @db.VarChar(255)
+  influencia    String @db.VarChar(100)
+  interes       String @db.VarChar(100)
+  contacto      String @db.VarChar(255)
+
+  idproyecto Int
+  proyectos  proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_stakeholders_proyecto")
 }
 
 enum tipousuario {
