@@ -1,20 +1,20 @@
-import express from 'express';
-const router = express.Router();
+import express from "express";
+const stakeholders = express.Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Lista de stakeholders' });
+stakeholders.get("/", (req, res) => {
+  res.json({ message: "Lista de stakeholders" });
 });
 
-router.post('/', (req, res) => {
-  res.json({ message: 'Stakeholder creado' });
+stakeholders.post("/", (req, res) => {
+  res.json({ message: "Stakeholder creado" });
 });
 
-router.put('/:id', (req, res) => {
-  res.json({ message: 'Stakeholder actualizado' });
+stakeholders.put("/:id", (req, res) => {
+  res.json({ message: "Stakeholder actualizado" });
 });
 
-router.delete('/:id', (req, res) => {
-  res.json({ message: 'Stakeholder eliminado' });
+stakeholders.delete("/:id", (req, res) => {
+  res.json({ message: "Stakeholder eliminado" });
 });
 
-export default router;
+export default stakeholders;
