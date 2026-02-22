@@ -13,17 +13,29 @@ export interface Procesos {
   nombre: string;
   descripcion: string;
   creador: number;
-  fechaCreacion: Date;
+  fechacreacion: Date;
   subprocesos: Subprocesos[];
 }
 
 export interface Proyectos {
-  id: number;
+  idproyecto: number;
   nombre: string;
   descripcion: string;
-  creador: number;
   fechaCreacion: Date;
-  procesos: Procesos[];
+  idUsuario: number;
+}
+
+// Esta es la interfaz que utilizo para crear el proyecto en el modal
+export interface ProyectoCreado {
+  nombre: string;
+  descripcion: string;
+  idUsuario: number;
+}
+
+// Interfaz que envío al editar el proyecto
+export interface ProyectoEditar {
+  nombre: string;
+  descripcion: string;
 }
 
 export interface Roles {

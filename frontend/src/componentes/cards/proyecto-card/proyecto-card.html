@@ -1,4 +1,4 @@
-<div class="project-card flex-column sm-gap blue-background">
+<div class="project-card flex-column sm-gap">
   <div class="project-header">
     <h3>{{ datosProyecto.nombre }}</h3>
     <img
@@ -8,4 +8,11 @@
     />
   </div>
   <p>{{ datosProyecto.descripcion }}</p>
+  <div class="fecha-creacion">
+    <span>{{ datosProyecto.fechaCreacion | date }}</span>
+  </div>
+  <div class="opciones-proyecto">
+    <button (click)="editarProyecto()">Editar</button>
+    <button (click)="eliminarProyecto()">Eliminar</button>
+  </div>
 </div>

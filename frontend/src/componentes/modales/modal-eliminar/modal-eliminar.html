@@ -1,0 +1,12 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal-component flex-column md-gap modal" [class.animar]="toggler">
+    <header>
+      <h1>¿Seguro que deseas eliminar este proyecto?</h1>
+      <button class="close-button" (click)="cancelarAccion()">X</button>
+    </header>
+    <div class="opciones flex-column sm-gap">
+      <button (click)="eliminarProyecto()">Sí</button>
+      <button class="gray-button" (click)="cancelarAccion()">No</button>
+    </div>
+  </div>
+</div>
