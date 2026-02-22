@@ -1,0 +1,26 @@
+.modal-wrapper {
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  background-color: var(--primary-color);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input,
+textarea {
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+}

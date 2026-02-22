@@ -1,8 +1,8 @@
-<div class="overlay">
-  <form action="" [formGroup]="formularioCrearPoyecto" (submit)="crearProyecto()">
+<div class="overlay" [class.animar]="toggler">
+  <form action="" [formGroup]="formularioCrearPoyecto" class="modal" [class.animar]="toggler">
     <header class="header-modal">
       <div>
-        <h3>Crea un nuevo proyecto</h3>
+        <h1>Crea un nuevo proyecto</h1>
         <span class="description-font"
           >Llena los siguiente campos para crear un nuevo proyecto</span
         >
@@ -20,6 +20,40 @@
             class="search-input"
             formControlName="nombre"
           />
+          @if (
+            formularioCrearPoyecto.get('nombre')?.hasError('required') &&
+            formularioCrearPoyecto.get('nombre')?.touched &&
+            formularioCrearPoyecto.get('nombre')?.dirty
+          ) {
+            <span class="error-span">El nombre del proyecto no puede quedar vacío</span>
+          }
+          @if (
+            formularioCrearPoyecto.get('nombre')?.hasError('minlength') &&
+            formularioCrearPoyecto.get('nombre')?.touched &&
+            formularioCrearPoyecto.get('nombre')?.dirty
+          ) {
+            <span class="error-span"
+              >El nombre del proyecto debe contener al menos 5 caracteres</span
+            >
+          }
+          @if (
+            formularioCrearPoyecto.get('nombre')?.hasError('maxlength') &&
+            formularioCrearPoyecto.get('nombre')?.touched &&
+            formularioCrearPoyecto.get('nombre')?.dirty
+          ) {
+            <span class="error-span"
+              >El nombre del proyecto no puede exceder los 255 caracteres</span
+            >
+          }
+          @if (
+            formularioCrearPoyecto.get('nombre')?.hasError('pattern') &&
+            formularioCrearPoyecto.get('nombre')?.touched &&
+            formularioCrearPoyecto.get('nombre')?.dirty
+          ) {
+            <span class="error-span"
+              >El nombre del proyecto no puede contener solo espacios en blanco</span
+            >
+          }
         </div>
         <div class="input-wrapper flex-column">
           <label for="">Descripción del proyecto</label>
@@ -30,11 +64,42 @@
             class="search-input"
             formControlName="descripcion"
           ></textarea>
+          @if (
+            formularioCrearPoyecto.get('descripcion')?.hasError('required') &&
+            formularioCrearPoyecto.get('descripcion')?.touched &&
+            formularioCrearPoyecto.get('descripcion')?.dirty
+          ) {
+            <span class="error-span"> La descripción del proyecto no puede quedar vacía </span>
+          }
+          @if (
+            formularioCrearPoyecto.get('descripcion')?.hasError('minlength') &&
+            formularioCrearPoyecto.get('descripcion')?.touched &&
+            formularioCrearPoyecto.get('descripcion')?.dirty
+          ) {
+            <span class="error-span"
+              >La descripción del proyecto debe de tener al menos 10 caracteres</span
+            >
+          }
+          @if (
+            formularioCrearPoyecto.get('descripcion')?.hasError('pattern') &&
+            formularioCrearPoyecto.get('descripcion')?.touched &&
+            formularioCrearPoyecto.get('descripcion')?.dirty
+          ) {
+            <span class="error-span">
+              La descripción del proyecto no puede contener únicamente espacios en blanco
+            </span>
+          }
         </div>
       </section>
       <div class="buttons">
-        <button class="gray-button">Cancelar</button>
-        <button type="submit" class="default-button">Crear proyecto</button>
+        <button class="gray-button" (click)="cerrarModalCrearProyecto()">Cancelar</button>
+        <button
+          class="default-button"
+          (click)="crearProyecto()"
+          [disabled]="formularioCrearPoyecto.invalid"
+        >
+          Crear proyecto
+        </button>
       </div>
     </div>
   </form>

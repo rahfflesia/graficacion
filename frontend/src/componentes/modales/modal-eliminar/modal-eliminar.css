@@ -1,0 +1,27 @@
+.modal-component {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.opciones > button {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.opciones > button:first-child {
+  background-color: rgb(255, 0, 0);
+  border: none;
+  color: var(--primary-color);
+  font-size: 1rem;
+}

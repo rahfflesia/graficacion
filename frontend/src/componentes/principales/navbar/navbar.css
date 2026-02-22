@@ -2,9 +2,9 @@ nav {
   background-color: var(--primary-color);
   max-width: 270px;
   padding: 1.5rem;
-  height: calc(100dvh - 3rem);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius);
+  height: 100dvh;
+  border-right: 1px solid lightgray;
+  position: fixed;
 }
 
 h4 {
