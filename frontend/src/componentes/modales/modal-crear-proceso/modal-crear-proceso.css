@@ -1,0 +1,17 @@
+form {
+  position: absolute;
+  z-index: 2;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+section {
+  gap: 1rem;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}

@@ -6,6 +6,7 @@ import { MainLayout } from '../componentes/layouts/main-layout/main-layout';
 import { ProcesosPrincipales } from '../componentes/principales/procesos-principales/procesos-principales';
 import { Subprocesos } from '../componentes/principales/subprocesos/subprocesos';
 import { Tecnicas } from '../componentes/principales/tecnicas/tecnicas';
+import { Home } from '../componentes/principales/home/home';
 
 export const routes: Routes = [
   { path: '', component: Home },
