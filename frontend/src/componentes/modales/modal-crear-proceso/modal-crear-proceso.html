@@ -1,0 +1,61 @@
+<div class="overlay">
+  <form (ngSubmit)="guardar()">
+    
+    <header class="header-modal">
+      <div>
+        <h3>@if (procesoAEditar) { Editar proceso } @else { Crea un nuevo proceso }</h3>
+        <span class="description-font">
+          @if (procesoAEditar) { Modifica los campos que necesites } @else { Llena los siguientes campos }
+        </span>
+      </div>
+      <div class="close-button" (click)="cerrarModal()">X</div>
+    </header>
+
+    <div class="flex-column">
+      <section class="flex-column">
+        
+        <div class="input-wrapper flex-column">
+          <label>Nombre del proceso</label>
+          <input
+            type="text"
+            name="nombre"
+            [(ngModel)]="nuevoProceso.nombre"
+            placeholder="Ingresa el nombre del proceso"
+            required
+            class="search-input"
+          />
+        </div>
+
+        <div class="input-wrapper flex-column">
+          <label>Descripción del proceso</label>
+          <textarea
+            name="descripcion"
+            [(ngModel)]="nuevoProceso.descripcion"
+            placeholder="Ingresa una breve descripción"
+            required
+            class="search-input"
+          ></textarea>
+        </div>
+
+        <div class="input-wrapper flex-column">
+          <label>Creador</label>
+          <input
+            type="text"
+            name="creador"
+            [(ngModel)]="nuevoProceso.creador"
+            placeholder="Nombre del responsable"
+            required
+            class="search-input"
+          />
+        </div>
+
+      </section>
+
+      <div class="buttons">
+        <button type="button" class="gray-button" (click)="cerrarModal()">Cancelar</button>
+        
+        <button type="submit" class="default-button">@if (procesoAEditar) { Guardar cambios } @else { Crear proceso }</button>
+      </div>
+    </div>
+  </form>
+</div>
