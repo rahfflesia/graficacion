@@ -22,6 +22,7 @@
   box-shadow: var(--box-shadow);
   position: relative;
   z-index: 1;
+  margin: 2rem;
 }
 
 .login-card h2 {

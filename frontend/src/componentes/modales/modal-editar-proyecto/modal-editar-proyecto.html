@@ -1,0 +1,93 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal-wrapper modal" [class.animar]="toggler">
+    <header>
+      <div>
+        <h1>Edición del proyecto</h1>
+        <span class="description-font">Edita los datos necesarios</span>
+      </div>
+      <button class="close-button" (click)="cancelarEdicion()">X</button>
+    </header>
+    <form action="" class="flex-column sm-gap" [formGroup]="formularioEditarProyecto">
+      <div class="input-wrapper flex-column">
+        <label for="">Nombre del proyecto</label>
+        <input
+          type="text"
+          placeholder="Ingresa el nuevo nombre del proyecto"
+          formControlName="nombre"
+        />
+        @if (
+          formularioEditarProyecto.get('nombre')?.hasError('required') &&
+          formularioEditarProyecto.get('nombre')?.touched &&
+          formularioEditarProyecto.get('nombre')?.dirty
+        ) {
+          <span class="error-span">El nombre del proyecto no puede quedar vacío</span>
+        }
+        @if (
+          formularioEditarProyecto.get('nombre')?.hasError('minlength') &&
+          formularioEditarProyecto.get('nombre')?.touched &&
+          formularioEditarProyecto.get('nombre')?.dirty
+        ) {
+          <span class="error-span">El nombre del proyecto debe contener al menos 5 caracteres</span>
+        }
+        @if (
+          formularioEditarProyecto.get('nombre')?.hasError('maxlength') &&
+          formularioEditarProyecto.get('nombre')?.touched &&
+          formularioEditarProyecto.get('nombre')?.dirty
+        ) {
+          <span class="error-span">El nombre del proyecto no puede exceder los 255 caracteres</span>
+        }
+        @if (
+          formularioEditarProyecto.get('nombre')?.hasError('pattern') &&
+          formularioEditarProyecto.get('nombre')?.touched &&
+          formularioEditarProyecto.get('nombre')?.dirty
+        ) {
+          <span class="error-span"
+            >El nombre del proyecto no puede contener solo espacios en blanco</span
+          >
+        }
+      </div>
+      <div class="input-wrapper flex-column">
+        <label for="">Descripcion del proyecto</label>
+        <textarea
+          placeholder="Ingresa la nueva descripción del proyecto"
+          formControlName="descripcion"
+        ></textarea>
+        @if (
+          formularioEditarProyecto.get('descripcion')?.hasError('required') &&
+          formularioEditarProyecto.get('descripcion')?.touched &&
+          formularioEditarProyecto.get('descripcion')?.dirty
+        ) {
+          <span class="error-span"> La descripción del proyecto no puede quedar vacía </span>
+        }
+        @if (
+          formularioEditarProyecto.get('descripcion')?.hasError('minlength') &&
+          formularioEditarProyecto.get('descripcion')?.touched &&
+          formularioEditarProyecto.get('descripcion')?.dirty
+        ) {
+          <span class="error-span"
+            >La descripción del proyecto debe de tener al menos 10 caracteres</span
+          >
+        }
+        @if (
+          formularioEditarProyecto.get('descripcion')?.hasError('pattern') &&
+          formularioEditarProyecto.get('descripcion')?.touched &&
+          formularioEditarProyecto.get('descripcion')?.dirty
+        ) {
+          <span class="error-span">
+            La descripción del proyecto no puede contener únicamente espacios en blanco
+          </span>
+        }
+      </div>
+      <div class="botones">
+        <button class="gray-button" (click)="cancelarEdicion()">Cancelar</button>
+        <button
+          class="default-button"
+          (click)="editarProyecto()"
+          [disabled]="formularioEditarProyecto.invalid"
+        >
+          Editar proyecto
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,13 +1,25 @@
-<!--Acá tengo planeado agregar algunas transiciones, por mientras lo dejo así-->
-@if (esCrearProyectoModalVisible) {
-  <modal-crear-proyecto (cerrar)="cerrarModalCrearProyecto()"></modal-crear-proyecto>
-}
-@if (esConfigurarProyectoModalVisible) {
-  <modal-configuracion-proyecto
-    (cerrar)="cerrarModalConfigurarProyecto()"
-  ></modal-configuracion-proyecto>
-}
-<section class="flex-column md-gap">
+<modal-eliminar
+  (cancelar)="cerrarModalEliminarProyecto()"
+  (confirmar)="eliminarProyecto($event)"
+  [proyectoAEliminar]="proyectoSeleccionado()"
+  [toggler]="esEliminarProyectoModalVisible"
+></modal-eliminar>
+<modal-crear-proyecto
+  (cerrar)="cerrarModalCrearProyecto()"
+  (crearNuevoProyecto)="crearNuevoProyecto($event)"
+  [toggler]="esCrearProyectoModalVisible"
+></modal-crear-proyecto>
+<modal-configuracion-proyecto
+  (cerrar)="cerrarModalConfigurarProyecto()"
+  [toggler]="esConfigurarProyectoModalVisible"
+></modal-configuracion-proyecto>
+<modal-editar-proyecto
+  (cancelar)="cerrarModalEditarProyecto()"
+  [proyectoEditar]="proyectoSeleccionado()"
+  (editar)="editarProyecto($event)"
+  [toggler]="esEditarProyectoModalVisible()"
+></modal-editar-proyecto>
+<section class="flex-column">
   <div class="section-header flex-center">
     <div class="hamburger-menu">
       <img
@@ -52,105 +64,37 @@
       Crear nuevo proyecto +
     </button>
   </header>
-  <div class="grid projects-section">
-    <div class="project-card flex-column sm-gap blue-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-          class="config-icon"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
+  @if (estaCargando()) {
+    <div class="content-loading-wrapper">
+      <div class="content-loading">
+        <div class="loading-wrapper">
+          <div class="seccion-carga">
+            <div class="bola-1"></div>
+            <div class="bola-2"></div>
+            <div class="bola-3"></div>
+            <div class="bola-4"></div>
+          </div>
+          <p>Obteniendo proyectos...</p>
+        </div>
       </div>
     </div>
-    <div class="project-card flex-column sm-gap gray-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
+  }
+  @if (!estaCargando() && proyectos().length > 0) {
+    <div class="grid projects-section">
+      @for (proyecto of proyectos(); track $index) {
+        <proyecto-card
+          [datosProyecto]="proyecto"
+          (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
+          (editar)="seleccionarProyecto(proyecto); mostrarModalEditarProyecto()"
+        ></proyecto-card>
+      }
+    </div>
+  }
+  @if (!estaCargando() && proyectos().length === 0) {
+    <div class="no-results-wrapper">
+      <div class="no-results">
+        <span>Aún no has creado ningún proyecto</span>
       </div>
     </div>
-    <div class="project-card flex-column sm-gap yellow-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
-      </div>
-    </div>
-    <div class="project-card flex-column sm-gap green-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
-      </div>
-    </div>
-    <div class="project-card flex-column sm-gap blue-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
-      </div>
-    </div>
-    <div class="project-card flex-column sm-gap gray-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
-      </div>
-    </div>
-    <div class="project-card flex-column sm-gap yellow-background">
-      <div class="project-header">
-        <h3>Proyecto 1</h3>
-        <img
-          src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-          alt="icono-configuracion"
-        />
-      </div>
-      <p>Pequeña descripción del proyecto</p>
-      <div class="bottom-info">
-        <span>Creado por xPeenPapi</span>
-        <span>15 personas involucradas</span>
-      </div>
-    </div>
-  </div>
+  }
 </section>

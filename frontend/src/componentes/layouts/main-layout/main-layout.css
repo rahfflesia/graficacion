@@ -1,12 +1,16 @@
 .main-layout {
-  padding: 1.5rem;
-  background-color: var(--body-bg-color);
-}
-
-navbar {
-  position: fixed;
+  display: flex;
+  min-height: 100dvh;
 }
 
 main {
-  margin-left: calc(265px + 1.5rem);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: calc(255px + 1rem);
+}
+
+main > *:not(router-outlet) {
+  display: flex;
+  flex: 1;
 }

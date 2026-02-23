@@ -1,0 +1,18 @@
+<div class="project-card flex-column sm-gap">
+  <div class="project-header">
+    <h3>{{ datosProyecto.nombre }}</h3>
+    <img
+      src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
+      alt="icono-configuracion"
+      class="config-icon"
+    />
+  </div>
+  <p>{{ datosProyecto.descripcion }}</p>
+  <div class="fecha-creacion">
+    <span>{{ datosProyecto.fechaCreacion | date }}</span>
+  </div>
+  <div class="opciones-proyecto">
+    <button (click)="editarProyecto()">Editar</button>
+    <button (click)="eliminarProyecto()">Eliminar</button>
+  </div>
+</div>

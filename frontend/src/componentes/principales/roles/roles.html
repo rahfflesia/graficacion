@@ -1,37 +1,46 @@
 <div class="roles-container">
   <h2>Gestión de Roles</h2>
 
-  <form class="roles-form">
+  <form class="roles-form" [formGroup]="form" (ngSubmit)="save()">
     <div class="form-group">
       <label>Nombre del rol</label>
-      <input type="text" placeholder="Ej. Administrador">
+      <input 
+        type="text"
+        placeholder="Ej. Administrador"
+        formControlName="nombre"
+      >
     </div>
 
     <div class="form-group">
-      <label>Descripción</label>
-      <input type="text" placeholder="Permisos y responsabilidades">
+      <label>Tipo</label>
+      <select formControlName="tipo">
+        <option value="Interno">Interno</option>
+        <option value="Externo">Externo</option>
+      </select>
     </div>
 
-    <button type="button">Crear rol</button>
+    <button type="submit" [disabled]="form.invalid">
+      Crear rol
+    </button>
   </form>
 
   <div class="roles-list">
     <h3>Roles existentes</h3>
 
-    <div class="roles-item">
-      <span>Administrador</span>
-      <div class="acciones">
-        <button>Editar</button>
-        <button>Eliminar</button>
-      </div>
-    </div>
+    @if (roles.length === 0) {
+      <p>No hay roles registrados.</p>
+    }
 
-    <div class="roles-item">
-      <span>Usuario</span>
-      <div class="acciones">
-        <button>Editar</button>
-        <button>Eliminar</button>
+    @for (r of roles; track r.idrol) {
+      <div class="roles-item">
+        <span>{{ r.nombre }} ({{ r.tipo }})</span>
+        <div class="acciones">
+          <button type="button">Editar</button>
+          <button type="button" (click)="delete(r.idrol!)">
+            Eliminar
+          </button>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

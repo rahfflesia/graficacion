@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './modal-configuracion-proyecto.css',
 })
 export class ModalConfiguracionProyecto {
+  @Input() toggler: boolean = false;
   @Output() cerrar = new EventEmitter<void>();
 
   cerrarModalConfigurarProyecto() {

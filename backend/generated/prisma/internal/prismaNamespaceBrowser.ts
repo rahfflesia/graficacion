@@ -55,8 +55,11 @@ export const ModelName = {
   procesos: 'procesos',
   proyectos: 'proyectos',
   roles: 'roles',
-  rolesusuario: 'rolesusuario',
-  tecnicasrecoleccion: 'tecnicasrecoleccion'
+  tecnicasrecoleccion: 'tecnicasrecoleccion',
+  personas: 'personas',
+  rolespersonasproyecto: 'rolespersonasproyecto',
+  subprocesos: 'subprocesos',
+  usuarios: 'usuarios'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +81,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const MetodossubprocesosScalarFieldEnum = {
   idmetodosubproceso: 'idmetodosubproceso',
   idsubproceso: 'idsubproceso',
-  idtecnicarecopilacion: 'idtecnicarecopilacion'
+  idtecnicarecoleccion: 'idtecnicarecoleccion'
 } as const
 
 export type MetodossubprocesosScalarFieldEnum = (typeof MetodossubprocesosScalarFieldEnum)[keyof typeof MetodossubprocesosScalarFieldEnum]
@@ -88,7 +91,7 @@ export const ProcesosScalarFieldEnum = {
   idproceso: 'idproceso',
   nombre: 'nombre',
   descripcion: 'descripcion',
-  creador: 'creador'
+  fechacreacion: 'fechacreacion'
 } as const
 
 export type ProcesosScalarFieldEnum = (typeof ProcesosScalarFieldEnum)[keyof typeof ProcesosScalarFieldEnum]
@@ -97,7 +100,9 @@ export type ProcesosScalarFieldEnum = (typeof ProcesosScalarFieldEnum)[keyof typ
 export const ProyectosScalarFieldEnum = {
   idproyecto: 'idproyecto',
   nombre: 'nombre',
-  descripcion: 'descripcion'
+  descripcion: 'descripcion',
+  fechacreacion: 'fechacreacion',
+  idusuario: 'idusuario'
 } as const
 
 export type ProyectosScalarFieldEnum = (typeof ProyectosScalarFieldEnum)[keyof typeof ProyectosScalarFieldEnum]
@@ -106,21 +111,11 @@ export type ProyectosScalarFieldEnum = (typeof ProyectosScalarFieldEnum)[keyof t
 export const RolesScalarFieldEnum = {
   idrol: 'idrol',
   idproyecto: 'idproyecto',
-  nombrerol: 'nombrerol',
+  nombre: 'nombre',
   tipo: 'tipo'
 } as const
 
 export type RolesScalarFieldEnum = (typeof RolesScalarFieldEnum)[keyof typeof RolesScalarFieldEnum]
-
-
-export const RolesusuarioScalarFieldEnum = {
-  idrolusuario: 'idrolusuario',
-  nombrepersonaasignada: 'nombrepersonaasignada',
-  idproyecto: 'idproyecto',
-  idrol: 'idrol'
-} as const
-
-export type RolesusuarioScalarFieldEnum = (typeof RolesusuarioScalarFieldEnum)[keyof typeof RolesusuarioScalarFieldEnum]
 
 
 export const TecnicasrecoleccionScalarFieldEnum = {
@@ -130,6 +125,52 @@ export const TecnicasrecoleccionScalarFieldEnum = {
 } as const
 
 export type TecnicasrecoleccionScalarFieldEnum = (typeof TecnicasrecoleccionScalarFieldEnum)[keyof typeof TecnicasrecoleccionScalarFieldEnum]
+
+
+export const PersonasScalarFieldEnum = {
+  idpersona: 'idpersona',
+  nombre: 'nombre',
+  apellidouno: 'apellidouno',
+  apellidodos: 'apellidodos',
+  correo: 'correo',
+  telefono: 'telefono'
+} as const
+
+export type PersonasScalarFieldEnum = (typeof PersonasScalarFieldEnum)[keyof typeof PersonasScalarFieldEnum]
+
+
+export const RolespersonasproyectoScalarFieldEnum = {
+  idrolpersonaproyecto: 'idrolpersonaproyecto',
+  idpersona: 'idpersona',
+  idrol: 'idrol',
+  idproyecto: 'idproyecto',
+  tipo: 'tipo'
+} as const
+
+export type RolespersonasproyectoScalarFieldEnum = (typeof RolespersonasproyectoScalarFieldEnum)[keyof typeof RolespersonasproyectoScalarFieldEnum]
+
+
+export const SubprocesosScalarFieldEnum = {
+  idsubproceso: 'idsubproceso',
+  idproceso: 'idproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type SubprocesosScalarFieldEnum = (typeof SubprocesosScalarFieldEnum)[keyof typeof SubprocesosScalarFieldEnum]
+
+
+export const UsuariosScalarFieldEnum = {
+  idusuario: 'idusuario',
+  nombre: 'nombre',
+  hashcontrasena: 'hashcontrasena',
+  fechacreacioncuenta: 'fechacreacioncuenta',
+  correo: 'correo',
+  pfp: 'pfp'
+} as const
+
+export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
 
 
 export const SortOrder = {

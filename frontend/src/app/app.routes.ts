@@ -17,13 +17,14 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-    children: [{ path: 'proyectos', component: SeccionProyectos},
-      {path : 'procesos', component: ProcesosPrincipales},
-      {path : 'subprocesos', component: Subprocesos},
-      {path : 'tecnicas', component: Tecnicas}
-
+    children: [
+      { path: 'proyectos', component: SeccionProyectos },
+      { path: 'procesos', component: ProcesosPrincipales },
+      { path: 'subprocesos', component: Subprocesos },
+      { path: 'tecnicas', component: Tecnicas },
+      { path: 'roles', component: Roles },
+      { path: 'stakeholders', component: Stakeholders },
     ],
-
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
