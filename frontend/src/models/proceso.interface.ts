@@ -51,3 +51,23 @@ export interface TecnicasRecoleccion {
   nombre: string;
   descripcion: string;
 }
+
+// Esta interfaz la utilizo para enviar los datos al registrar al usuario
+export interface RegistroUsuario {
+  nombre: string;
+  contrasena: string;
+  correo: string;
+}
+
+export interface SesionUsuario {
+  correo: string;
+  contrasena: string;
+}
+
+// Interfaz que utilizo para guardar los datos del usuario en el servicio
+export interface DatosUsuario {
+  idusuario: number;
+  nombre: string;
+  correo: string;
+  pfp: string;
+}

@@ -1,3 +1,4 @@
+<modal-carga [mensaje]="'Registrando cuenta...'" [toggler]="esModalCargaVisible()"></modal-carga>
 <div class="login-container">
   <div class="circulo-naranja"></div>
   <div class="circulo-azul"></div>
@@ -12,28 +13,86 @@
           alt="gente-negociando"
         />
       </div>
-      <form class="login_form">
+      <form class="login_form" [formGroup]="formularioRegistro">
         <div class="flex-column sm-gap">
           <h2>Bienvenido a gestor de proyectos</h2>
           <span>Tu gestor de proyectos favorito</span>
         </div>
         <div class="form-group">
           <label for="username">Nombre de usuario</label>
-          <input type="text" />
+          <input type="text" formControlName="nombre" />
+          @if (
+            formularioRegistro.get('nombre')?.hasError('required') &&
+            formularioRegistro.get('nombre')?.touched &&
+            formularioRegistro.get('nombre')?.dirty
+          ) {
+            <span class="error-span"> El nombre de usuario no puede quedar vacío </span>
+          }
         </div>
         <div class="form-group">
           <label for="email">Correo electrónico</label>
-          <input id="email" type="email" name="email" />
+          <input id="email" type="email" name="email" formControlName="correo" />
+          @if (
+            formularioRegistro.get('correo')?.hasError('required') &&
+            formularioRegistro.get('correo')?.touched &&
+            formularioRegistro.get('correo')?.dirty
+          ) {
+            <span class="error-span"> El correo no puede quedar vacío </span>
+          }
+          @if (
+            formularioRegistro.get('correo')?.hasError('pattern') &&
+            formularioRegistro.get('correo')?.touched &&
+            formularioRegistro.get('correo')?.dirty
+          ) {
+            <span class="error-span">El correo electrónico es inválido</span>
+          }
         </div>
         <div class="form-group">
           <label for="password">Contraseña</label>
-          <input id="password" type="password" name="password" />
+          <input id="password" type="password" name="password" formControlName="contrasena" />
+          @if (
+            formularioRegistro.get('contrasena')?.hasError('required') &&
+            formularioRegistro.get('contrasena')?.touched &&
+            formularioRegistro.get('contrasena')?.dirty
+          ) {
+            <span class="error-span">La contraseña no puede quedar vacía</span>
+          }
+          @if (
+            formularioRegistro.get('contrasena')?.hasError('minlength') &&
+            formularioRegistro.get('contasena')?.touched &&
+            formularioRegistro.get('contrasena')?.dirty
+          ) {
+            <span class="error-span"
+              >La contraseña debe de tener una longitud mínima de 8 caracteres</span
+            >
+          }
         </div>
         <div class="form-group">
           <label for="confirm-password">Confirmar contraseña</label>
-          <input type="password" name="confirm-password" />
+          <input type="password" name="confirm-password" formControlName="confirmarContrasena" />
+          @if (
+            formularioRegistro.get('confirmarContrasena')?.hasError('required') &&
+            formularioRegistro.get('confirmarContrasena')?.touched &&
+            formularioRegistro.get('confirmarContrasena')?.dirty
+          ) {
+            <span class="error-span">El campo de confirmar contraseña no puede quedar vacío</span>
+          }
+          @if (
+            formularioRegistro.get('confirmarContrasena')?.hasError('contrasenasDiferentes') &&
+            formularioRegistro.get('confirmarContrasena')?.touched &&
+            formularioRegistro.get('confirmarContrasena')?.dirty
+          ) {
+            <span class="error-span">Las contraseñas no coinciden</span>
+          }
         </div>
-        <button type="submit" class="login-button">Crear cuenta</button>
+        <button
+          type="submit"
+          class="login-button"
+          (click)="registrarUsuario()"
+          [disabled]="formularioRegistro.invalid"
+        >
+          Crear cuenta
+        </button>
         <p class="login-link crear-cuenta">
           <span>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></span>
         </p>

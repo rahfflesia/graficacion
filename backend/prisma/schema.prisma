@@ -31,7 +31,6 @@ model proyectos {
   idusuario             Int
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
-  stakeholders          stakeholders[]
   rolespersonasproyecto rolespersonasproyecto[]
 }
 
@@ -86,10 +85,10 @@ model subprocesos {
 
 model usuarios {
   idusuario           Int         @id @default(autoincrement())
-  nombre              String      @db.VarChar(255)
+  nombre              String      @unique(map: "nombre_unico") @db.VarChar(255)
   hashcontrasena      String      @db.VarChar(255)
   fechacreacioncuenta DateTime    @default(now()) @db.Timestamptz(6)
-  correo              String      @db.VarChar(255)
+  correo              String      @unique(map: "correo_unico") @db.VarChar(255)
   pfp                 String?     @default("https://pbs.twimg.com/media/FeToVEqX0Acjv0i.png") @db.VarChar(255)
   proyectos           proyectos[]
 }
@@ -97,17 +96,6 @@ model usuarios {
 enum tiporol {
   Interno
   Externo
-}
-
-model stakeholders {
-  idstakeholder Int    @id @default(autoincrement())
-  nombre        String @db.VarChar(255)
-  influencia    String @db.VarChar(100)
-  interes       String @db.VarChar(100)
-  contacto      String @db.VarChar(255)
-
-  idproyecto Int
-  proyectos  proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_stakeholders_proyecto")
 }
 
 enum tipousuario {

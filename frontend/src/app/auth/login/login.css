@@ -124,3 +124,7 @@ section > * {
 .crear-cuenta {
   text-align: left;
 }
+
+.login-button:disabled {
+  background-color: rgba(0, 133, 219, 0.4);
+}
