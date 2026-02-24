@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Usuario } from '../../../servicios/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -6,4 +8,12 @@ import { Component } from '@angular/core';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {}
+export class Navbar {
+  private ServicioUsuario = inject(Usuario);
+  private router = inject(Router);
+
+  cerrarSesion() {
+    this.ServicioUsuario.borrarUsuario();
+    this.router.navigate(['/login']);
+  }
+}

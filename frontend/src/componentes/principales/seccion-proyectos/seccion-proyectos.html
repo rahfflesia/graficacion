@@ -43,13 +43,10 @@
       </div>
       <div class="info-perfil">
         <div class="foto" (click)="mostrarModalConfigurarProyecto()">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
-            alt="default-pfp"
-          />
+          <img src="{{ usuario()?.pfp }}" alt="default-pfp" />
         </div>
         <div class="datos-usuario flex-column">
-          <span class="username">Julio Lugo</span>
+          <span class="username">{{ usuario()?.nombre }}</span>
           <span class="role">Rol</span>
         </div>
       </div>

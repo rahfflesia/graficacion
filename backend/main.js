@@ -6,6 +6,8 @@ import procesos from "./rutas/procesos";
 import subprocesos from "./rutas/subprocesos";
 import cors from "cors";
 import stakeholders from "./rutas/stakeholders";
+import registro from "./auth/registro";
+import login from "./auth/login";
 
 const app = express();
 const port = 3000;
@@ -19,9 +21,9 @@ app.use("/roles", roles);
 app.use("/procesos", procesos);
 app.use("/subprocesos", subprocesos);
 app.use("/stakeholders", stakeholders);
+app.use("/registro", registro);
+app.use("/login", login);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });
-
-app.use(express.json());

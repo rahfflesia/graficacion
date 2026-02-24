@@ -239,16 +239,16 @@ export type usuariosOrderByWithRelationInput = {
 
 export type usuariosWhereUniqueInput = Prisma.AtLeast<{
   idusuario?: number
+  nombre?: string
+  correo?: string
   AND?: Prisma.usuariosWhereInput | Prisma.usuariosWhereInput[]
   OR?: Prisma.usuariosWhereInput[]
   NOT?: Prisma.usuariosWhereInput | Prisma.usuariosWhereInput[]
-  nombre?: Prisma.StringFilter<"usuarios"> | string
   hashcontrasena?: Prisma.StringFilter<"usuarios"> | string
   fechacreacioncuenta?: Prisma.DateTimeFilter<"usuarios"> | Date | string
-  correo?: Prisma.StringFilter<"usuarios"> | string
   pfp?: Prisma.StringNullableFilter<"usuarios"> | string | null
   proyectos?: Prisma.ProyectosListRelationFilter
-}, "idusuario">
+}, "idusuario" | "nombre" | "correo">
 
 export type usuariosOrderByWithAggregationInput = {
   idusuario?: Prisma.SortOrder

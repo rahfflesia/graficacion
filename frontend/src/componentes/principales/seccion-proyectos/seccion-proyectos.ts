@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ModalCrearProyecto } from '../../modales/modal-crear-proyecto/modal-crear-proyecto';
 import { ModalConfiguracionProyecto } from '../../modales/modal-configuracion-proyecto/modal-configuracion-proyecto';
 import { ProyectoCard } from '../../cards/proyecto-card/proyecto-card';
-import { Proyectos } from '../../../models/proceso.interface';
+import { DatosUsuario, Proyectos } from '../../../models/proceso.interface';
 import { Api } from '../../../servicios/api';
 import { ModalEliminar } from '../../modales/modal-eliminar/modal-eliminar';
 import { ModalEditarProyecto } from '../../modales/modal-editar-proyecto/modal-editar-proyecto';
+import { Usuario } from '../../../servicios/usuario';
 
 @Component({
   selector: 'seccion-proyectos',
@@ -19,8 +20,9 @@ import { ModalEditarProyecto } from '../../modales/modal-editar-proyecto/modal-e
   templateUrl: './seccion-proyectos.html',
   styleUrl: './seccion-proyectos.css',
 })
-export class SeccionProyectos {
+export class SeccionProyectos implements OnInit {
   private api = inject(Api);
+  private ServicioUsuario = inject(Usuario);
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
   esConfigurarProyectoModalVisible: boolean = false;
@@ -28,10 +30,14 @@ export class SeccionProyectos {
   esEditarProyectoModalVisible = signal<boolean>(false);
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
+  usuario = signal<DatosUsuario | null>(null);
 
   ngOnInit(): void {
-    const idTemporal = 1;
-    this.api.obtenerProyectos(idTemporal).subscribe({
+    this.usuario.set(this.ServicioUsuario.obtenerUsuario());
+
+    if (this.usuario() === null) return;
+
+    this.api.obtenerProyectos(this.usuario()?.idusuario!).subscribe({
       next: (proyectos: Proyectos[]) => {
         this.proyectos.set(proyectos);
         this.estaCargando.set(false);
