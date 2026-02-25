@@ -7,6 +7,8 @@ import { ProcesosPrincipales } from '../componentes/principales/procesos-princip
 import { Subprocesos } from '../componentes/principales/subprocesos/subprocesos';
 import { Tecnicas } from '../componentes/principales/tecnicas/tecnicas';
 import { Home } from '../componentes/principales/home/home';
+import { Roles } from '../componentes/principales/roles/roles';
+import { Stakeholders } from '../componentes/principales/stakeholders/stakeholders';
 
 export const routes: Routes = [
   { path: '', component: Home },

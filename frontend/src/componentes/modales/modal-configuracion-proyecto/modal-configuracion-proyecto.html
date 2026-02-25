@@ -1,6 +1,6 @@
 <div class="overlay" [class.animar]="toggler">
   <div class="modal" [class.animar]="toggler">
-    <header class="header-modal">
+    <header class="header-modal main-header">
       <div>
         <h3>Configuración de proyecto</h3>
         <span class="description-font">Ajusta tus proyectos a tus necesidades</span>
@@ -10,31 +10,56 @@
     <main>
       <div class="menu-configuracion">
         <ul class="flex-column sm-gap">
-          <li>Proyecto</li>
-          <li>Procesos</li>
-          <li>Subprocesos</li>
-          <li>Roles</li>
-          <li>Requerimientos</li>
+          <li (click)="seleccionarProcesos()">Procesos</li>
+          <li (click)="seleccionarSubprocesos()">Subprocesos</li>
+          <li (click)="seleccionarRoles()">Roles</li>
         </ul>
       </div>
       <div class="area-principal flex-column md-gap">
-        <h4>Ajusta tu proyecto</h4>
-        <div class="input-wrapper flex-column">
-          <label for="">Nombre del proyecto</label>
-          <input type="text" class="search-input" placeholder="Edita el nombre de tu proyecto" />
-        </div>
-        <div class="input-wrapper flex-column">
-          <label for="">Descripción del proyecto</label>
-          <textarea
-            name=""
-            id=""
-            class="search-input"
-            placeholder="Edita la descripción de tu proyecto"
-          ></textarea>
-        </div>
-        <div>
-          <button class="default-button">Aceptar</button>
-        </div>
+        @switch (opcionSeleccionada()) {
+          @case ('Procesos') {
+            <div class="procesos-wrapper flex-column">
+              <header class="header-config">
+                <h3>Procesos</h3>
+                <button class="default-button">Crear proceso +</button>
+              </header>
+              @for (proceso of procesos; track $index) {
+                <div>Proceso {{ $index }}</div>
+              } @empty {
+                <p class="empty sin-procesos">Aún no has creado ningún proceso</p>
+              }
+            </div>
+          }
+          @case ('Subprocesos') {
+            <div class="procesos-wrapper flex-column">
+              <header class="header-config">
+                <h3>Subprocesos</h3>
+                <button class="default-button">Crear proceso subproceso +</button>
+              </header>
+              @for (subproceso of subprocesos; track $index) {
+                <div>Proceso {{ $index }}</div>
+              } @empty {
+                <p class="empty sin-procesos">Aún no has creado ningún subproceso</p>
+              }
+            </div>
+          }
+          @case ('Roles') {
+            <div class="procesos-wrapper flex-column">
+              <header class="header-config">
+                <h3>Roles</h3>
+                <button class="default-button">Crear nuevo rol +</button>
+              </header>
+              @for (subproceso of subprocesos; track $index) {
+                <div>Proceso {{ $index }}</div>
+              } @empty {
+                <p class="empty sin-procesos">Aún no has creado ningún rol</p>
+              }
+            </div>
+          }
+          @default {
+            <p>Opción inválida</p>
+          }
+        }
       </div>
     </main>
   </div>

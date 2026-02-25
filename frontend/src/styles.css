@@ -171,7 +171,6 @@ img {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  margin-bottom: 2rem;
 }
 
 .slide-in {
@@ -200,4 +199,9 @@ img {
   border-radius: var(--border-radius);
   padding: 1.5rem;
   font-weight: 700;
+}
+
+.empty {
+  font-weight: 700;
+  font-size: 1.1rem;
 }
