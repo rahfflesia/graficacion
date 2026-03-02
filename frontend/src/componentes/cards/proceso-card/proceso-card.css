@@ -1,0 +1,88 @@
+.configuracion-component {
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+}
+
+.descripcion {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.menu-borrado-proceso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-borrado-proceso > span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+}
+
+.opciones-proceso {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.opciones-proceso button:first-child {
+  background-color: red;
+  color: var(--primary-color);
+  font-weight: 700;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+}
+
+.opciones-proceso > button {
+  font-size: 0.75rem;
+}
+
+.fecha-creacion {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.opciones-configuracion-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.opciones-configuracion {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.opciones-configuracion > * {
+  font-size: 0.65rem;
+}
+
+.conf-component-content {
+  gap: 0.5rem;
+}
+
+.botones-edicion {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.botones-edicion > button {
+  font-size: 0.75rem;
+  flex: 1;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form,
+.nombre-proyecto {
+  flex: 1;
+}

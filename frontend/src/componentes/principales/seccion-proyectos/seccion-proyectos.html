@@ -12,6 +12,7 @@
 <modal-configuracion-proyecto
   (cerrar)="cerrarModalConfigurarProyecto()"
   [toggler]="esConfigurarProyectoModalVisible"
+  [proyectoSeleccionado]="proyectoSeleccionado()"
 ></modal-configuracion-proyecto>
 <modal-editar-proyecto
   (cancelar)="cerrarModalEditarProyecto()"
@@ -42,7 +43,7 @@
         />
       </div>
       <div class="info-perfil">
-        <div class="foto" (click)="mostrarModalConfigurarProyecto()">
+        <div class="foto">
           <img src="{{ usuario()?.pfp }}" alt="default-pfp" />
         </div>
         <div class="datos-usuario flex-column">
@@ -83,6 +84,7 @@
           [datosProyecto]="proyecto"
           (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
           (editar)="seleccionarProyecto(proyecto); mostrarModalEditarProyecto()"
+          (configurar)="mostrarModalConfigurarProyecto(); seleccionarProyecto(proyecto)"
         ></proyecto-card>
       }
     </div>

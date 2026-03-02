@@ -205,3 +205,12 @@ img {
   font-weight: 700;
   font-size: 1.1rem;
 }
+
+.custom-select {
+  background-color: var(--primary-color);
+  border: 1px solid lightgray;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: var(--border-radius);
+  color: rgb(136, 136, 136);
+}

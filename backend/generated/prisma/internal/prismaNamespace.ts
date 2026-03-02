@@ -1130,7 +1130,8 @@ export const ProcesosScalarFieldEnum = {
   idproceso: 'idproceso',
   nombre: 'nombre',
   descripcion: 'descripcion',
-  fechacreacion: 'fechacreacion'
+  fechacreacion: 'fechacreacion',
+  idproyecto: 'idproyecto'
 } as const
 
 export type ProcesosScalarFieldEnum = (typeof ProcesosScalarFieldEnum)[keyof typeof ProcesosScalarFieldEnum]

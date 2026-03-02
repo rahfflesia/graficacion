@@ -23,7 +23,75 @@ proyectos.get("/obtenertodos/:id", async (req, res) => {
 });
 
 // Id del proyecto
-proyectos.get("/obteneruno/:id", async (req, res) => {});
+proyectos.get("/obtenerdatos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const datosProyecto = await prisma.proyectos.findUnique({
+      where: {
+        idproyecto: parseInt(id),
+      },
+      select: {
+        procesos: {
+          select: {
+            subprocesos: true,
+            nombre: true,
+            fechacreacion: true,
+            idproceso: true,
+            descripcion: true,
+          },
+        },
+        roles: true,
+        rolespersonasproyecto: {
+          select: {
+            personas: true,
+            roles: true,
+          },
+        },
+      },
+    });
+
+    let subprocesos = [];
+    for (let i = 0; i < datosProyecto.procesos.length; i++) {
+      for (let j = 0; j < datosProyecto.procesos[i].subprocesos.length; j++) {
+        const datosProceso = datosProyecto.procesos[i];
+        const datosSubproceso = datosProyecto.procesos[i].subprocesos[j];
+        let nuevoSubproceso = {
+          nombreproceso: datosProceso.nombre,
+          nombresubproceso: datosSubproceso.nombre,
+          descripcionsubproceso: datosSubproceso.descripcion,
+          fechacreacion: datosSubproceso.fechacreacion,
+          idproceso: datosSubproceso.idproceso,
+          idsubproceso: datosSubproceso.idsubproceso,
+        };
+        subprocesos.push(nuevoSubproceso);
+      }
+    }
+
+    let procesos = [];
+    for (let i = 0; i < datosProyecto.procesos.length; i++) {
+      const procesoAntiguo = datosProyecto.procesos[i];
+      let nuevoProceso = {
+        nombre: procesoAntiguo.nombre,
+        descripcion: procesoAntiguo.descripcion,
+        idproceso: procesoAntiguo.idproceso,
+        fechacreacion: procesoAntiguo.fechacreacion,
+      };
+      procesos.push(nuevoProceso);
+    }
+
+    const datosFormateadosProyecto = {
+      roles: datosProyecto.roles,
+      rolesparticipantesproyecto: datosProyecto.rolespersonasproyecto,
+      procesos,
+      subprocesos,
+    };
+    return res.status(200).json(datosFormateadosProyecto);
+  } catch (error) {
+    console.error(error);
+    return res.json(error);
+  }
+});
 
 proyectos.post("/crear", async (req, res) => {
   try {
@@ -32,7 +100,7 @@ proyectos.post("/crear", async (req, res) => {
       data: {
         nombre: proyecto.nombre,
         descripcion: proyecto.descripcion,
-        idusuario: proyecto.idUsuario,
+        idusuario: proyecto.idusuario,
       },
     });
 

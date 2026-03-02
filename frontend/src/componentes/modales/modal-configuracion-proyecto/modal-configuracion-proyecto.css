@@ -1,6 +1,8 @@
 .modal {
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
+  max-height: 95dvh;
+  overflow-y: auto;
 }
 
 ul {
@@ -11,6 +13,8 @@ ul {
 
 ul > li {
   cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
 }
 
 .main-header {
@@ -37,6 +41,10 @@ main {
   flex: 1;
 }
 
+.area-principal {
+  padding-left: 1.5rem;
+}
+
 .sin-procesos {
   display: grid;
   place-items: center;
@@ -47,5 +55,16 @@ header.header-config {
   justify-content: space-between;
   border: none;
   align-items: center;
-  padding-left: 1.5rem;
 }
+
+.seleccionado {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.formulario {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+}
+
+/* */

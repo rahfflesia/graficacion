@@ -29,7 +29,7 @@ export interface Proyectos {
 export interface ProyectoCreado {
   nombre: string;
   descripcion: string;
-  idUsuario: number;
+  idusuario: number;
 }
 
 // Interfaz que envío al editar el proyecto

@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Api } from '../../../servicios/api';
 import { Proyectos } from '../../../models/proceso.interface';
 import { ToastrService } from 'ngx-toastr';
+import { Usuario } from '../../../servicios/usuario';
 
 @Component({
   selector: 'modal-crear-proyecto',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ModalCrearProyecto {
   @Input() toggler: boolean = false;
   private formBuilder = inject(FormBuilder);
+  private ServicioUsuario = inject(Usuario);
   private api = inject(Api);
   private espaciosEnBlancoRegex: RegExp = /\S/;
   private toastr = inject(ToastrService);
@@ -46,8 +48,9 @@ export class ModalCrearProyecto {
   }
 
   crearProyecto() {
+    const usuario = this.ServicioUsuario.obtenerUsuario();
     const proyecto = {
-      idUsuario: 1,
+      idusuario: usuario?.idusuario!,
       nombre: this.formularioCrearPoyecto.value.nombre ?? 'Proyecto',
       descripcion: this.formularioCrearPoyecto.value.descripcion ?? 'Descripcion del proyecto',
     };
@@ -59,7 +62,7 @@ export class ModalCrearProyecto {
         this.crearNuevoProyecto.emit(respuesta);
       },
       error: (error) => {
-        this.toastr.error('No se pudo eliminar el proyecto', '', {
+        this.toastr.error('No se pudo crear el proyecto', '', {
           toastClass: 'toastr-error',
         });
         console.error(error);

@@ -13,6 +13,7 @@ export class ProyectoCard {
 
   @Output() eliminar = new EventEmitter<void>();
   @Output() editar = new EventEmitter<void>();
+  @Output() configurar = new EventEmitter<void>();
 
   eliminarProyecto() {
     this.eliminar.emit();
@@ -20,5 +21,9 @@ export class ProyectoCard {
 
   editarProyecto() {
     this.editar.emit();
+  }
+
+  configurarProyecto() {
+    this.configurar.emit();
   }
 }
