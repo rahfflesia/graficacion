@@ -20,6 +20,8 @@ model procesos {
   nombre        String        @db.VarChar(255)
   descripcion   String
   fechacreacion DateTime      @default(now()) @db.Timestamptz(6)
+  idproyecto    Int
+  proyectos     proyectos     @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyecto_procesos")
   subprocesos   subprocesos[]
 }
 
@@ -29,6 +31,7 @@ model proyectos {
   descripcion           String
   fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)
   idusuario             Int
+  procesos              procesos[]
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
   rolespersonasproyecto rolespersonasproyecto[]

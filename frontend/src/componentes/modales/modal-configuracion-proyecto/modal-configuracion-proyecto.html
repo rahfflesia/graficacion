@@ -10,51 +10,187 @@
     <main>
       <div class="menu-configuracion">
         <ul class="flex-column sm-gap">
-          <li (click)="seleccionarProcesos()">Procesos</li>
-          <li (click)="seleccionarSubprocesos()">Subprocesos</li>
-          <li (click)="seleccionarRoles()">Roles</li>
+          <li
+            (click)="seleccionarSeccion('Procesos')"
+            [class.seleccionado]="opcionSeleccionada() === 'Procesos'"
+          >
+            Procesos
+          </li>
+          <li
+            (click)="seleccionarSeccion('Subprocesos')"
+            [class.seleccionado]="opcionSeleccionada() === 'Subprocesos'"
+          >
+            Subprocesos
+          </li>
+          <li
+            (click)="seleccionarSeccion('Roles')"
+            [class.seleccionado]="opcionSeleccionada() === 'Roles'"
+          >
+            Roles
+          </li>
+          <li
+            (click)="seleccionarSeccion('Participantes')"
+            [class.seleccionado]="opcionSeleccionada() === 'Participantes'"
+          >
+            Participantes
+          </li>
+          <li
+            (click)="seleccionarSeccion('Detalles')"
+            [class.seleccionado]="opcionSeleccionada() === 'Detalles'"
+          >
+            Detalles
+          </li>
         </ul>
       </div>
       <div class="area-principal flex-column md-gap">
         @switch (opcionSeleccionada()) {
           @case ('Procesos') {
-            <div class="procesos-wrapper flex-column">
+            <div class="procesos-wrapper flex-column sm-gap">
               <header class="header-config">
-                <h3>Procesos</h3>
-                <button class="default-button">Crear proceso +</button>
+                <h2>Procesos</h2>
               </header>
-              @for (proceso of procesos; track $index) {
-                <div>Proceso {{ $index }}</div>
+              <form
+                action=""
+                class="flex-column sm-gap formulario"
+                [formGroup]="formularioProcesos"
+              >
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Nombre del proceso</label>
+                  <input
+                    type="text"
+                    placeholder="Ingresa el nombre"
+                    class="search-input"
+                    formControlName="nombreProceso"
+                  />
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Descripción del proceso</label>
+                  <textarea
+                    placeholder="Ingresa la descripción"
+                    class="search-input"
+                    formControlName="descripcionProceso"
+                  ></textarea>
+                </div>
+                <div>
+                  <button
+                    class="default-button"
+                    [disabled]="formularioProcesos.invalid"
+                    (click)="crearProceso()"
+                  >
+                    Crear proceso
+                  </button>
+                </div>
+              </form>
+              <h3>Procesos del proyecto</h3>
+              @for (proceso of procesos(); track $index) {
+                <proceso-card
+                  [proceso]="proceso"
+                  (borrarProceso)="borrarProceso($event)"
+                  (editarProceso)="editarProceso($event)"
+                ></proceso-card>
               } @empty {
-                <p class="empty sin-procesos">Aún no has creado ningún proceso</p>
+                <div class="sin-procesos formulario">
+                  <p class="empty">Aún no has creado ningún proceso</p>
+                </div>
               }
             </div>
           }
           @case ('Subprocesos') {
-            <div class="procesos-wrapper flex-column">
+            <div class="procesos-wrapper flex-column sm-gap">
               <header class="header-config">
-                <h3>Subprocesos</h3>
-                <button class="default-button">Crear proceso subproceso +</button>
+                <h2>Subprocesos</h2>
               </header>
-              @for (subproceso of subprocesos; track $index) {
-                <div>Proceso {{ $index }}</div>
+              <form
+                action=""
+                class="flex-column sm-gap formulario"
+                [formGroup]="formularioSubprocesos"
+              >
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Nombre del subproceso</label>
+                  <input type="text" placeholder="Ingresa el nombre" class="search-input" />
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Descripción del subproceso</label>
+                  <textarea placeholder="Ingresa la descripción" class="search-input"></textarea>
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Proceso asociado</label>
+                  <select class="custom-select">
+                    @for (proceso of procesos(); track proceso.idproceso) {
+                      <option value="{{ proceso.idproceso }}">{{ proceso.nombre }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Técnica de recolección utilizada</label>
+                  <select class="custom-select">
+                    <option value="">Entrevista</option>
+                    <option value="">Observación</option>
+                    <option value="">Cuestionarios</option>
+                    <option value="">Historias de usuario</option>
+                    <option value="">Focus group</option>
+                    <option value="">Análisis de documentos</option>
+                    <option value="">Seguimiento transaccional</option>
+                  </select>
+                </div>
+                <div>
+                  <button class="default-button" [disabled]="formularioSubprocesos.invalid">
+                    Crear subproceso
+                  </button>
+                </div>
+              </form>
+              <h3>Subprocesos del proyecto</h3>
+              @for (subproceso of datosGeneralesProyecto()?.subprocesos; track $index) {
+                <div>
+                  <div>
+                    <h3>Placeholder</h3>
+                  </div>
+                </div>
               } @empty {
-                <p class="empty sin-procesos">Aún no has creado ningún subproceso</p>
+                <div class="sin-procesos formulario">
+                  <p class="empty">Aún no has creado ningún subproceso</p>
+                </div>
               }
             </div>
           }
           @case ('Roles') {
-            <div class="procesos-wrapper flex-column">
+            <div class="procesos-wrapper flex-column sm-gap">
               <header class="header-config">
-                <h3>Roles</h3>
-                <button class="default-button">Crear nuevo rol +</button>
+                <h2>Roles</h2>
               </header>
-              @for (subproceso of subprocesos; track $index) {
+              <form action="" class="flex-column sm-gap formulario" [formGroup]="formularioRoles">
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Nombre del rol</label>
+                  <input type="text" placeholder="Ingresa el nombre" class="search-input" />
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Tipo de rol</label>
+                  <select class="custom-select">
+                    <option value="">Interno</option>
+                    <option value="">Externo</option>
+                  </select>
+                </div>
+                <div>
+                  <button class="default-button" [disabled]="formularioRoles.invalid">
+                    Crear rol
+                  </button>
+                </div>
+              </form>
+              <h3>Roles del proyecto</h3>
+              @for (rol of datosGeneralesProyecto()?.roles; track $index) {
                 <div>Proceso {{ $index }}</div>
               } @empty {
-                <p class="empty sin-procesos">Aún no has creado ningún rol</p>
+                <div class="sin-procesos formulario">
+                  <p class="empty">Aún no has creado ningún rol</p>
+                </div>
               }
             </div>
+          }
+          @case ('Participantes') {
+            <p>Sección de participantes</p>
+          }
+          @case ('Detalles') {
+            <p>Sección de detalles</p>
           }
           @default {
             <p>Opción inválida</p>

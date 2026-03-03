@@ -1,0 +1,67 @@
+<!--Sé que son muchos condicionales, no pude pensar en una mejor manera de hacerlo-->
+<div class="configuracion-component">
+  <div class="flex-column conf-component-content">
+    <div class="opciones-configuracion-wrapper">
+      @if (!estaEditando) {
+        <h4>{{ proceso?.nombre }}</h4>
+      }
+      @if (!estaBorrando && !estaEditando) {
+        <div class="opciones-configuracion">
+          <button class="gray-button" (click)="mostrarMenuEdicion()">Editar</button>
+          <button class="gray-button" (click)="mostrarMenuBorrarProceso()">Eliminar</button>
+        </div>
+      }
+      @if (estaEditando) {
+        <form
+          action="
+        "
+          class="flex-column sm-gap formulario-edicion"
+          [formGroup]="formularioEdicionProceso"
+        >
+          <div class="form-header">
+            <div class="input-wrapper nombre-proyecto flex-column sm-gap">
+              <label for="">Nombre del proyecto</label>
+              <input
+                type="text"
+                placeholder="Ingresa el nuevo título"
+                class="search-input"
+                formControlName="nombre"
+              />
+            </div>
+          </div>
+          <div class="input-wrapper flex-column sm-gap">
+            <label for="">Descripción del proyecto</label>
+            <textarea
+              name=""
+              id=""
+              placeholder="Ingresa la nueva descripción"
+              class="search-input"
+              formControlName="descripcion"
+            ></textarea>
+            <div class="botones-edicion">
+              <button class="default-button" (click)="editar()">Editar</button>
+              <button class="gray-button" (click)="ocultarMenuEdicion()">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      }
+    </div>
+    @if (!estaEditando) {
+      <span class="descripcion">{{ proceso?.descripcion }}</span>
+    }
+    @if (estaBorrando) {
+      <div class="menu-borrado-proceso">
+        <span>¿Seguro que deseas eliminar este proceso?</span>
+        <div class="opciones-proceso">
+          <button (click)="eliminarProceso()">Sí</button>
+          <button (click)="ocultarMenuBorrarProceso()" class="gray-button">No</button>
+        </div>
+      </div>
+    }
+    @if (!estaEditando) {
+      <div class="fecha-creacion">
+        <span>Creado en {{ proceso?.fechacreacion | date }}</span>
+      </div>
+    }
+  </div>
+</div>
