@@ -1,0 +1,51 @@
+<div class="rol-card">
+  <div>
+    @if (!estaEditando) {
+      <h4>{{ rol?.nombre }}</h4>
+    }
+    @if (!estaBorrando && !estaEditando) {
+      <div class="botones">
+        <button class="gray-button" (click)="mostarMenuEdicion()">Editar</button>
+        <button class="gray-button" (click)="mostarMenuBorrado()">Eliminar</button>
+      </div>
+    }
+    @if (estaEditando) {
+      <form action="" [formGroup]="formularioRoles" class="flex-column sm-gap">
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Nombre del rol</label>
+          <input
+            type="text"
+            placeholder="Ingresa el nombre del rol"
+            formControlName="nombreRol"
+            class="search-input"
+          />
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Tipo del rol</label>
+          <select formControlName="tipoRol" class="custom-select">
+            <option value="Interno">Interno</option>
+            <option value="Externo">Externo</option>
+          </select>
+        </div>
+        <div class="botones-edicion">
+          <button class="default-button" [disabled]="formularioRoles.invalid" (click)="editarRol()">
+            Editar
+          </button>
+          <button (click)="ocultarMenuEdicion()" class="gray-button">Cancelar</button>
+        </div>
+      </form>
+    }
+  </div>
+  @if (estaBorrando) {
+    <div>
+      <span class="mensaje-confirmacion">¿Seguro que deseas eliminar este rol?</span>
+      <div class="botones-eliminar">
+        <button (click)="borrarRol()" class="boton-confirmacion">Sí</button>
+        <button (click)="ocultarMenuBorrado()" class="gray-button">No</button>
+      </div>
+    </div>
+  }
+  @if (!estaBorrando && !estaEditando) {
+    <span><span class="tipo">Tipo:</span> {{ rol?.tipo | lowercase }}</span>
+  }
+</div>

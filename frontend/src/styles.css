@@ -214,3 +214,12 @@ img {
   border-radius: var(--border-radius);
   color: rgb(136, 136, 136);
 }
+
+/* Estilos del botón de confirmación */
+.boton-confirmacion {
+  background-color: red;
+  color: var(--primary-color);
+  font-weight: 700;
+  border-radius: var(--border-radius);
+  border: none;
+}
