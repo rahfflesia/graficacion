@@ -12,6 +12,7 @@ import {
 } from '../models/proceso.interface';
 import { DatosEditarProceso, DatosProceso, Proceso } from '../models/procesos.interface';
 import { DatosGeneralesProyecto } from '../models/datosGeneralesProyecto.interface';
+import { DatosFormularioRol, Rol } from '../models/rol.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,12 @@ export class Api {
   private procesosCrearUrl = 'crear/';
   private procesosEliminarUrl = 'eliminar/';
   private procesosEditarUrl = 'editar/';
+
+  private rolesUrl = 'roles/';
+  private rolesObtenerRolesProyectoUrl = 'obtener/';
+  private rolesCrearUrl = 'crear/';
+  private rolesEliminarUrl = 'eliminar/';
+  private rolesEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -101,6 +108,26 @@ export class Api {
     return this.http.put<Proceso>(
       this.baseUrl + this.procesosUrl + this.procesosEditarUrl + idProceso,
       proceso,
+    );
+  }
+
+  crearRol(datosCrearRol: DatosFormularioRol): Observable<Rol> {
+    return this.http.post<Rol>(this.baseUrl + this.rolesUrl + this.rolesCrearUrl, datosCrearRol);
+  }
+
+  obtenerRolesProyecto(idProyecto: number): Observable<Rol[]> {
+    return this.http.get<Rol[]>(this.baseUrl + this.rolesObtenerRolesProyectoUrl + idProyecto);
+  }
+
+  eliminarRol(idRol: number): Observable<Rol> {
+    return this.http.delete<Rol>(this.baseUrl + this.rolesUrl + this.rolesEliminarUrl + idRol);
+  }
+
+  editarRol(idRol: number, datosEditarRol: DatosFormularioRol): Observable<Rol> {
+    console.log(datosEditarRol);
+    return this.http.put<Rol>(
+      this.baseUrl + this.rolesUrl + this.rolesEditarUrl + idRol,
+      datosEditarRol,
     );
   }
 }

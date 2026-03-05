@@ -1,0 +1,65 @@
+.rol-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  gap: 0.25rem;
+}
+
+.rol-card > span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tipo {
+  font-weight: 700;
+}
+
+.botones {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.botones > button {
+  font-size: 0.75rem;
+}
+
+.rol-card > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.botones-eliminar {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.botones-eliminar > button {
+  padding: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.mensaje-confirmacion {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+form,
+.botones-edicion > * {
+  flex: 1;
+}
+
+.botones-edicion {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.botones-edicion > * {
+  font-size: 0.8rem;
+}

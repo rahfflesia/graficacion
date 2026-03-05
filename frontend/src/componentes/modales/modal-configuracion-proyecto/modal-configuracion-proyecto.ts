@@ -13,13 +13,13 @@ import { Api } from '../../../servicios/api';
 import { Proyectos } from '../../../models/proceso.interface';
 import { ToastrService } from 'ngx-toastr';
 import { DatosProceso, Proceso } from '../../../models/procesos.interface';
-import { DatosGeneralesProyecto } from '../../../models/datosGeneralesProyecto.interface';
 import { ProcesoCard } from '../../cards/proceso-card/proceso-card';
-import { AsyncPipe } from '@angular/common';
+import { DatosFormularioRol, Rol } from '../../../models/rol.interface';
+import { RolCard } from '../../cards/rol-card/rol-card';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
-  imports: [ReactiveFormsModule, ProcesoCard, AsyncPipe],
+  imports: [ReactiveFormsModule, ProcesoCard, RolCard],
   templateUrl: './modal-configuracion-proyecto.html',
   styleUrl: './modal-configuracion-proyecto.css',
 })
@@ -46,11 +46,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
   });
   formularioRoles = this.formBuilder.group({
     nombreRol: ['', Validators.required],
-    tipoRol: ['', Validators.required],
+    tipoRol: ['Interno', Validators.required],
   });
 
-  datosGeneralesProyecto = signal<DatosGeneralesProyecto | null>(null);
   procesos = signal<Proceso[]>([]);
+  roles = signal<Rol[]>([]);
 
   opcionSeleccionada = signal<'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles'>(
     'Procesos',
@@ -65,8 +65,8 @@ export class ModalConfiguracionProyecto implements OnChanges {
             'Intentando obtener datos del siguiente proyecto ' +
               JSON.stringify(this.proyectoSeleccionado),
           );
-          this.datosGeneralesProyecto.set(datosProyecto);
           this.procesos.set(datosProyecto.procesos);
+          this.roles.set(datosProyecto.roles);
         },
         error: (error) => {
           console.error(error);
@@ -76,8 +76,6 @@ export class ModalConfiguracionProyecto implements OnChanges {
         },
       });
     }
-    console.log(this.datosGeneralesProyecto());
-    console.log(this.datosGeneralesProyecto()?.procesos);
   }
 
   cerrarModalConfigurarProyecto() {
@@ -136,6 +134,46 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
       // Igual acá no supe muy bien que poner lol
       console.log('No se encontró un proceso con ese id');
+      return;
+    });
+  }
+
+  crearRol() {
+    const rol: DatosFormularioRol = {
+      nombre: this.formularioRoles.get('nombreRol')?.value!,
+      tipo: this.formularioRoles.get('tipoRol')?.value! as 'Interno' | 'Externo',
+      idproyecto: this.proyectoSeleccionado?.idproyecto!,
+    };
+    this.api.crearRol(rol).subscribe({
+      next: (rolCreado) => {
+        this.toastr.success('Rol creado correctamente');
+        this.roles.update((roles) => [rolCreado, ...roles]);
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Hubo un error al crear el rol', '', {
+          toastClass: 'toastr-error',
+        });
+      },
+    });
+    this.formularioRoles.reset();
+    this.formularioRoles.get('tipoRol')?.setValue('Interno');
+  }
+
+  eliminarRol(rolEliminado: Rol) {
+    this.roles.update((roles) => roles.filter((rol) => rol.idrol !== rolEliminado.idrol));
+  }
+
+  // Hay mucha lógica duplicada con esto de los cruds, después le haré un refactor
+  editarRol(rolEditado: Rol) {
+    this.roles().map((rol, index) => {
+      if (rolEditado.idrol === rol.idrol) {
+        this.roles()[index] = rolEditado;
+        return;
+      }
+
+      // Igual acá no supe muy bien que poner lol
+      console.log('No se encontró un rol con ese id');
       return;
     });
   }

@@ -140,7 +140,7 @@
                 </div>
               </form>
               <h3>Subprocesos del proyecto</h3>
-              @for (subproceso of datosGeneralesProyecto()?.subprocesos; track $index) {
+              @for (subproceso of []; track $index) {
                 <div>
                   <div>
                     <h3>Placeholder</h3>
@@ -161,24 +161,37 @@
               <form action="" class="flex-column sm-gap formulario" [formGroup]="formularioRoles">
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Nombre del rol</label>
-                  <input type="text" placeholder="Ingresa el nombre" class="search-input" />
+                  <input
+                    type="text"
+                    placeholder="Ingresa el nombre"
+                    class="search-input"
+                    formControlName="nombreRol"
+                  />
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Tipo de rol</label>
-                  <select class="custom-select">
-                    <option value="">Interno</option>
-                    <option value="">Externo</option>
+                  <select class="custom-select" formControlName="tipoRol">
+                    <option value="Interno" [defaultSelected]="true">Interno</option>
+                    <option value="Externo">Externo</option>
                   </select>
                 </div>
                 <div>
-                  <button class="default-button" [disabled]="formularioRoles.invalid">
+                  <button
+                    class="default-button"
+                    (click)="crearRol()"
+                    [disabled]="formularioRoles.invalid"
+                  >
                     Crear rol
                   </button>
                 </div>
               </form>
               <h3>Roles del proyecto</h3>
-              @for (rol of datosGeneralesProyecto()?.roles; track $index) {
-                <div>Proceso {{ $index }}</div>
+              @for (rol of roles(); track $index) {
+                <rol-card
+                  [rol]="rol"
+                  (eliminarRol)="eliminarRol($event)"
+                  (modificarRol)="editarRol($event)"
+                ></rol-card>
               } @empty {
                 <div class="sin-procesos formulario">
                   <p class="empty">Aún no has creado ningún rol</p>
