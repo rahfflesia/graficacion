@@ -3,7 +3,6 @@ import { prisma } from "../db/db.js";
 
 const roles = express.Router();
 
-// Obtener todos los roles asociados a un proyecto
 roles.get("/obtener/:idproyecto", async (req, res) => {
   try {
     const { idproyecto } = req.params;
@@ -18,15 +17,6 @@ roles.get("/obtener/:idproyecto", async (req, res) => {
     return res.json(error);
   }
 });
-
-// Este creo que de momento no lo vamos a utilizar
-/*roles.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const rol = await prisma.roles.findUnique({
-    where: { id: Number(id) },
-  });
-  res.json(rol);
-});*/
 
 roles.post("/crear", async (req, res) => {
   try {
