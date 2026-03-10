@@ -33,7 +33,9 @@ export class Stakeholders implements OnInit {
 
   loadStakeholders() {
     this.stakeholdersService.getStakeholders()
-      .subscribe(data => this.stakeholders = data);
+      .subscribe((data: Stakeholder[]) => {
+        this.stakeholders = data;
+      });
   }
 
   save() {
@@ -41,7 +43,7 @@ export class Stakeholders implements OnInit {
 
     const stakeholder: Stakeholder = {
       ...this.form.value,
-      idproyecto: 1 
+      idproyecto: 1
     };
 
     this.stakeholdersService.createStakeholder(stakeholder)

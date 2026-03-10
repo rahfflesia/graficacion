@@ -1,20 +1,38 @@
 import express from "express";
-const stakeholders = express.Router();
+import prisma from "../lib/prisma.js";
 
-stakeholders.get("/", (req, res) => {
-  res.json({ message: "Lista de stakeholders" });
+const router = express.Router();
+
+router.get("/", async (req, res) => {
+  const personas = await prisma.personas.findMany();
+
+  res.json(personas);
 });
 
-stakeholders.post("/", (req, res) => {
-  res.json({ message: "Stakeholder creado" });
+router.post("/", async (req, res) => {
+  const { nombre, apellidouno, apellidodos, correo, telefono } = req.body;
+
+  const persona = await prisma.personas.create({
+    data: {
+      nombre,
+      apellidouno,
+      apellidodos,
+      correo,
+      telefono
+    }
+  });
+
+  res.json(persona);
 });
 
-stakeholders.put("/:id", (req, res) => {
-  res.json({ message: "Stakeholder actualizado" });
+router.delete("/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  await prisma.personas.delete({
+    where: { idpersona: id }
+  });
+
+  res.json({ mensaje: "Persona eliminada" });
 });
 
-stakeholders.delete("/:id", (req, res) => {
-  res.json({ message: "Stakeholder eliminado" });
-});
-
-export default stakeholders;
+export default router;
