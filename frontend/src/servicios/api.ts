@@ -13,6 +13,12 @@ import {
 import { DatosEditarProceso, DatosProceso, Proceso } from '../models/procesos.interface';
 import { DatosGeneralesProyecto } from '../models/datosGeneralesProyecto.interface';
 import { DatosFormularioRol, Rol } from '../models/rol.interface';
+import {
+  DatosEditarParticipante,
+  DatosFormularioParticipante,
+  Participante,
+  RolParticipanteProyecto,
+} from '../models/participantesProyecto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +50,12 @@ export class Api {
   private rolesCrearUrl = 'crear/';
   private rolesEliminarUrl = 'eliminar/';
   private rolesEditarUrl = 'editar/';
+
+  private participantesUrl = 'participantes/';
+  private participantesRegistrarUrl = 'registrar/';
+  private participantesObtenerUrl = 'obtener/';
+  private participantesEliminarUrl = 'eliminar/';
+  private participantesEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -128,6 +140,35 @@ export class Api {
     return this.http.put<Rol>(
       this.baseUrl + this.rolesUrl + this.rolesEditarUrl + idRol,
       datosEditarRol,
+    );
+  }
+
+  obtenerParticipantesProyecto(idProyecto: number): Observable<Participante[]> {
+    return this.http.get<Participante[]>(
+      this.baseUrl + this.participantesUrl + this.participantesObtenerUrl + idProyecto,
+    );
+  }
+
+  registrarParticipante(datosParticipante: DatosFormularioParticipante): Observable<Participante> {
+    return this.http.post<Participante>(
+      this.baseUrl + this.participantesUrl + this.participantesRegistrarUrl,
+      datosParticipante,
+    );
+  }
+
+  eliminarParticipante(idParticipanteProyecto: number): Observable<RolParticipanteProyecto> {
+    return this.http.delete<RolParticipanteProyecto>(
+      this.baseUrl + this.participantesUrl + this.participantesEliminarUrl + idParticipanteProyecto,
+    );
+  }
+
+  editarParticipante(
+    idParticipanteProyecto: number,
+    datosParticipanteEditar: DatosEditarParticipante,
+  ): Observable<Participante> {
+    return this.http.put<Participante>(
+      this.baseUrl + this.participantesUrl + this.participantesEditarUrl + idParticipanteProyecto,
+      datosParticipanteEditar,
     );
   }
 }

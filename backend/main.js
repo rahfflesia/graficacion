@@ -8,6 +8,7 @@ import cors from "cors";
 import stakeholders from "./rutas/stakeholders";
 import registro from "./auth/registro";
 import login from "./auth/login";
+import participantes from "./rutas/participantes";
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,7 @@ app.use("/subprocesos", subprocesos);
 app.use("/stakeholders", stakeholders);
 app.use("/registro", registro);
 app.use("/login", login);
+app.use("/participantes", participantes);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);

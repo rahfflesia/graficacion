@@ -200,7 +200,97 @@
             </div>
           }
           @case ('Participantes') {
-            <p>Sección de participantes</p>
+            <div class="procesos-wrapper flex-column sm-gap">
+              <header class="header-config">
+                <h2>Participantes</h2>
+              </header>
+              <form
+                action=""
+                class="flex-column sm-gap formulario"
+                [formGroup]="formularioParticipantes"
+              >
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Nombre del participante</label>
+                  <input
+                    type="text"
+                    placeholder="Ingresa el nombre"
+                    class="search-input"
+                    formControlName="nombre"
+                  />
+                </div>
+                <div class="apellidos-wrapper">
+                  <div class="input-wrapper flex-column sm-gap">
+                    <label for="">Apellido uno</label>
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Ingresa el apellido uno"
+                      formControlName="apellidoUno"
+                    />
+                  </div>
+                  <div class="input-wrapper flex-column sm-gap">
+                    <label for="">Apellidos dos</label>
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Ingresa el apellido dos"
+                      formControlName="apellidoDos"
+                    />
+                  </div>
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Correo electrónico</label>
+                  <input
+                    type="email"
+                    class="search-input"
+                    placeholder="Ingresa el correo electrónico"
+                    formControlName="correo"
+                  />
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Teléfono</label>
+                  <input
+                    type="tel"
+                    placeholder="Ingresa el teléfono"
+                    class="search-input"
+                    formControlName="telefono"
+                  />
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Selecciona el rol a asignar</label>
+                  <select class="custom-select" formControlName="idrol">
+                    @for (rol of roles(); track rol.idrol) {
+                      <option value="{{ rol.idrol }}">{{ rol.nombre }}</option>
+                    } @empty {
+                      <div>
+                        <p>No se encontraron roles</p>
+                      </div>
+                    }
+                  </select>
+                </div>
+                <div>
+                  <button
+                    class="default-button"
+                    (click)="registrarParticipante()"
+                    [disabled]="formularioParticipantes.invalid"
+                  >
+                    Registrar participante
+                  </button>
+                </div>
+              </form>
+              <h3>Participantes del proyecto</h3>
+              @for (participante of participantes(); track $index) {
+                <participante-card
+                  [participante]="participante"
+                  [roles]="roles()"
+                  (borrarParticipante)="eliminarParticipante($event)"
+                ></participante-card>
+              } @empty {
+                <div class="sin-procesos formulario">
+                  <p class="empty">Aún no has registrado ningún participante</p>
+                </div>
+              }
+            </div>
           }
           @case ('Detalles') {
             <p>Sección de detalles</p>

@@ -1,0 +1,103 @@
+<div class="participante-card flex-column sm-gap">
+  <div class="flex-between">
+    <h3>
+      {{ participante?.nombre }} {{ participante?.apellidouno }} {{ participante?.apellidodos }}
+    </h3>
+    @if (!estaBorrando && !estaEditando) {
+      <div class="botones">
+        <button class="gray-button" (click)="mostrarMenuEditar()">Editar</button>
+        <button class="gray-button" (click)="mostrarMenuBorrar()">Eliminar</button>
+      </div>
+    }
+  </div>
+  @if (estaEditando) {
+    <form action="" [formGroup]="formularioEditarParticipante" class="flex-column sm-gap">
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Nombre del participante</label>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Ingresa el nombre del participante"
+          formControlName="nombre"
+        />
+      </div>
+      <div class="apellidos-wrapper">
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Apellido uno</label>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Ingresa el apellido uno"
+            formControlName="apellidouno"
+          />
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Apellidos dos</label>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Ingresa el apellido dos"
+            formControlName="apellidodos"
+          />
+        </div>
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Correo</label>
+        <input
+          type="email"
+          placeholder="Ingresa el correo"
+          formControlName="correo"
+          class="search-input"
+        />
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Teléfono</label>
+        <input
+          type="text"
+          placeholder="Ingresa el teléfono"
+          formControlName="telefono"
+          class="search-input"
+        />
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Selecciona el rol a asignar</label>
+        <select class="custom-select" formControlName="idrol">
+          @for (rol of roles; track rol.idrol) {
+            <option value="{{ rol.idrol }}">{{ rol.nombre }}</option>
+          }
+        </select>
+      </div>
+      <div class="botones-formulario-edicion">
+        <button class="default-button" (click)="editarParticipante()">Editar</button>
+        <button (click)="ocultarMenuEditar()" class="gray-button">Cancelar</button>
+      </div>
+    </form>
+  }
+  @if (estaBorrando) {
+    <div class="mensaje-confirmacion-borrado flex-between">
+      <span>¿Seguro que deseas eliminar a este participante?</span>
+      <div class="botones-borrado">
+        <button (click)="eliminarParticipante()">Sí</button>
+        <button class="gray-button" (click)="ocultarMenuBorrar()">No</button>
+      </div>
+    </div>
+  }
+  @if (!estaEditando && !estaBorrando) {
+    <div class="flex-between datos-participante">
+      <div class="correo-telefono">
+        <span>
+          <div class="light-dot"></div>
+          Correo: {{ participante?.correo }}
+        </span>
+        <span>
+          <div class="light-dot"></div>
+          Teléfono: {{ participante?.telefono }}
+        </span>
+      </div>
+      <div class="rol">
+        <div class="dark-dot"></div>
+        Rol: {{ participante?.nombrerol }}
+      </div>
+    </div>
+  }
+</div>

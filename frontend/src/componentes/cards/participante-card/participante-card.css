@@ -1,0 +1,114 @@
+.participante-card {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.correo-telefono > span {
+  color: var(--primary-color);
+  background-color: var(--blue);
+  border-radius: var(--border-radius);
+}
+
+.rol {
+  border: 1px solid var(--font-color);
+  border-radius: var(--border-radius);
+  color: var(--font-color);
+}
+
+.rol,
+.correo-telefono > span {
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.botones > .gray-button {
+  font-size: 0.7rem;
+}
+
+.correo-telefono {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.datos-participante {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.light-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.dark-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--font-color);
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.apellidos-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.apellidos-wrapper > * {
+  flex: 1;
+}
+
+.botones-formulario-edicion {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.botones-formulario-edicion > * {
+  flex: 1;
+  font-size: 0.8rem;
+}
+
+.botones-borrado {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.botones-borrado > * {
+  flex: 1 0 50%;
+}
+
+.botones-borrado > button:first-child {
+  background-color: red;
+  color: var(--primary-color);
+  border: none;
+}
+
+.botones-borrado button {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mensaje-confirmacion-borrado > span {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
