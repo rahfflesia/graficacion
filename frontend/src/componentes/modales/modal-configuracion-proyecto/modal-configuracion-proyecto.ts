@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   EventEmitter,
   inject,
   Input,
@@ -16,10 +17,16 @@ import { DatosProceso, Proceso } from '../../../models/procesos.interface';
 import { ProcesoCard } from '../../cards/proceso-card/proceso-card';
 import { DatosFormularioRol, Rol } from '../../../models/rol.interface';
 import { RolCard } from '../../cards/rol-card/rol-card';
+import {
+  DatosFormularioParticipante,
+  Participante,
+  RolParticipanteProyecto,
+} from '../../../models/participantesProyecto.interface';
+import { ParticipanteCard } from '../../cards/participante-card/participante-card';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
-  imports: [ReactiveFormsModule, ProcesoCard, RolCard],
+  imports: [ReactiveFormsModule, ProcesoCard, RolCard, ParticipanteCard],
   templateUrl: './modal-configuracion-proyecto.html',
   styleUrl: './modal-configuracion-proyecto.css',
 })
@@ -35,6 +42,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
   // Me parece mejor que terminar como con 20 modales por todos los cruds
   sonOpcionesBorrarProcesoVisibles = false;
 
+  procesos = signal<Proceso[]>([]);
+  roles = signal<Rol[]>([]);
+  participantes = signal<Participante[]>([]);
+  primerRol = computed(() => this.roles()[0].idrol.toString());
+
   formularioProcesos = this.formBuilder.group({
     nombreProceso: ['', Validators.required],
     descripcionProceso: ['', Validators.required],
@@ -48,9 +60,14 @@ export class ModalConfiguracionProyecto implements OnChanges {
     nombreRol: ['', Validators.required],
     tipoRol: ['Interno', Validators.required],
   });
-
-  procesos = signal<Proceso[]>([]);
-  roles = signal<Rol[]>([]);
+  formularioParticipantes = this.formBuilder.group({
+    nombre: ['', [Validators.required]],
+    apellidoUno: ['', [Validators.required]],
+    apellidoDos: ['', [Validators.required]],
+    correo: ['', [Validators.required]],
+    telefono: ['', [Validators.required]],
+    idrol: ['', [Validators.required]],
+  });
 
   opcionSeleccionada = signal<'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles'>(
     'Procesos',
@@ -61,12 +78,10 @@ export class ModalConfiguracionProyecto implements OnChanges {
     if (proyecto && this.proyectoSeleccionado !== undefined) {
       this.api.obtenerDatosGeneralesProyecto(this.proyectoSeleccionado?.idproyecto!).subscribe({
         next: (datosProyecto) => {
-          console.log(
-            'Intentando obtener datos del siguiente proyecto ' +
-              JSON.stringify(this.proyectoSeleccionado),
-          );
           this.procesos.set(datosProyecto.procesos);
           this.roles.set(datosProyecto.roles);
+          this.participantes.set(datosProyecto.participantes);
+          this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
         },
         error: (error) => {
           console.error(error);
@@ -84,6 +99,10 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
   seleccionarSeccion(opcion: 'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles') {
     this.opcionSeleccionada.update((opcionPrevia) => (opcionPrevia = opcion));
+
+    // Opción para actualizar el valor del select de los roles
+    if (opcion === 'Participantes')
+      this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
   }
 
   limpiarFormularioProceso() {
@@ -148,6 +167,8 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (rolCreado) => {
         this.toastr.success('Rol creado correctamente');
         this.roles.update((roles) => [rolCreado, ...roles]);
+        console.log(this.primerRol());
+        console.log(this.roles()[0]);
       },
       error: (error) => {
         console.error(error);
@@ -176,5 +197,37 @@ export class ModalConfiguracionProyecto implements OnChanges {
       console.log('No se encontró un rol con ese id');
       return;
     });
+  }
+
+  registrarParticipante() {
+    const datosParticipante: DatosFormularioParticipante = {
+      ...this.formularioParticipantes.value,
+      idrol: Number(this.formularioParticipantes.get('idrol')?.value),
+      idproyecto: this.proyectoSeleccionado?.idproyecto,
+    } as DatosFormularioParticipante;
+
+    this.api.registrarParticipante(datosParticipante).subscribe({
+      next: (participanteRegistrado) => {
+        this.toastr.success('Participante registrado exitosamente');
+        this.participantes.update((participantes) => [participanteRegistrado, ...participantes]);
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Ha ocurrido un error al registrar el participante', '', {
+          toastClass: 'toastr-error',
+        });
+      },
+    });
+    this.formularioParticipantes.reset();
+    this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
+  }
+
+  eliminarParticipante(participanteEliminado: RolParticipanteProyecto) {
+    this.participantes.update((participantes) =>
+      participantes.filter(
+        (participante) =>
+          participante.idrolpersonaproyecto !== participanteEliminado.idrolpersonaproyecto,
+      ),
+    );
   }
 }

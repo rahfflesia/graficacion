@@ -67,4 +67,13 @@ header.header-config {
   border: 1px solid lightgray;
 }
 
+.apellidos-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.apellidos-wrapper > * {
+  flex: 1;
+}
+
 /* */

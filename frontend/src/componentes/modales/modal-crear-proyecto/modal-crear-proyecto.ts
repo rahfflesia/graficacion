@@ -58,7 +58,6 @@ export class ModalCrearProyecto {
     this.api.crearProyecto(proyecto).subscribe({
       next: (respuesta) => {
         this.toastr.success('Proyecto creado correctamente');
-        this.cerrar.emit();
         this.crearNuevoProyecto.emit(respuesta);
       },
       error: (error) => {
@@ -66,9 +65,9 @@ export class ModalCrearProyecto {
           toastClass: 'toastr-error',
         });
         console.error(error);
-        this.cerrar.emit();
       },
     });
     this.formularioCrearPoyecto.reset(); // Lo necesito para que queden vacíos los campos al crear un nuevo proyecto
+    this.cerrar.emit();
   }
 }

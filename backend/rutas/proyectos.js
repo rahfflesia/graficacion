@@ -26,7 +26,6 @@ proyectos.get("/obtenertodos/:id", async (req, res) => {
 proyectos.get("/obtenerdatos/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
     const datosProyecto = await prisma.proyectos.findUnique({
       where: {
         idproyecto: parseInt(id),
@@ -46,6 +45,8 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
           select: {
             personas: true,
             roles: true,
+            idrolpersonaproyecto: true,
+            idrol: true,
           },
         },
       },
@@ -80,9 +81,19 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
       procesos.push(nuevoProceso);
     }
 
+    const datosParticipantesFormateados =
+      datosProyecto.rolespersonasproyecto.map(function (objeto) {
+        return {
+          ...objeto.personas,
+          nombrerol: objeto.roles.nombre,
+          idrolpersonaproyecto: objeto.idrolpersonaproyecto,
+          idrol: objeto.idrol,
+        };
+      });
+
     const datosFormateadosProyecto = {
       roles: datosProyecto.roles,
-      rolesparticipantesproyecto: datosProyecto.rolespersonasproyecto,
+      participantes: datosParticipantesFormateados,
       procesos,
       subprocesos,
     };
@@ -96,15 +107,28 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
 proyectos.post("/crear", async (req, res) => {
   try {
     const proyecto = req.body;
-    const nuevoProyecto = await prisma.proyectos.create({
-      data: {
-        nombre: proyecto.nombre,
-        descripcion: proyecto.descripcion,
-        idusuario: proyecto.idusuario,
-      },
+    await prisma.$transaction(async (tx) => {
+      const nuevoProyecto = await tx.proyectos.create({
+        data: {
+          nombre: proyecto.nombre,
+          descripcion: proyecto.descripcion,
+          idusuario: proyecto.idusuario,
+        },
+      });
+      const idProyecto = nuevoProyecto.idproyecto;
+      const rolesPorDefecto = [
+        {
+          nombre: "Product owner",
+          tipo: "Externo",
+          idproyecto: idProyecto,
+        },
+        { nombre: "Tech lead", tipo: "Interno", idproyecto: idProyecto },
+      ];
+      await tx.roles.createMany({
+        data: rolesPorDefecto,
+      });
+      return res.status(201).json(nuevoProyecto);
     });
-
-    if (nuevoProyecto) return res.json(nuevoProyecto);
   } catch (error) {
     console.error(error);
     return res.json(error);
