@@ -16,19 +16,11 @@ export class StakeholdersService {
     return this.http.get<Stakeholder[]>(this.apiUrl);
   }
 
-  getStakeholder(id: number): Observable<Stakeholder> {
-    return this.http.get<Stakeholder>(`${this.apiUrl}/${id}`);
-  }
-
   createStakeholder(stakeholder: Stakeholder): Observable<Stakeholder> {
     return this.http.post<Stakeholder>(this.apiUrl, stakeholder);
   }
 
-  updateStakeholder(id: number, stakeholder: Stakeholder): Observable<Stakeholder> {
-    return this.http.put<Stakeholder>(`${this.apiUrl}/${id}`, stakeholder);
-  }
-
-  deleteStakeholder(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteStakeholder(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
