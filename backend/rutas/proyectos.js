@@ -23,6 +23,7 @@ proyectos.get("/obtenertodos/:id", async (req, res) => {
 });
 
 // Id del proyecto
+// Este endpoint está muy desordenado porque no me acordaba que en prisma se usaba 'include', una disculpa
 proyectos.get("/obtenerdatos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -33,7 +34,26 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
       select: {
         procesos: {
           select: {
-            subprocesos: true,
+            subprocesos: {
+              select: {
+                nombre: true,
+                idproceso: true,
+                idsubproceso: true,
+                descripcion: true,
+                fechacreacion: true,
+                metodossubprocesos: {
+                  select: {
+                    tecnicasrecoleccion: {
+                      select: {
+                        idtecnicarecoleccion: true,
+                        nombre: true,
+                        descripcion: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
             nombre: true,
             fechacreacion: true,
             idproceso: true,
@@ -64,6 +84,11 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
           fechacreacion: datosSubproceso.fechacreacion,
           idproceso: datosSubproceso.idproceso,
           idsubproceso: datosSubproceso.idsubproceso,
+          // Necesito las tecnicas asociadas para mostrar en la ui, otra para comparar cuando vaya a editar el subproceso
+          // y seleccionar las que tenía asociadas anteriormente el subproceso
+          tecnicasasociadas: datosSubproceso.metodossubprocesos.map(
+            (tecnicaRecoleccion) => tecnicaRecoleccion.tecnicasrecoleccion,
+          ),
         };
         subprocesos.push(nuevoSubproceso);
       }
@@ -91,11 +116,18 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
         };
       });
 
+    const tecnicasRecoleccion = await prisma.tecnicasrecoleccion.findMany({
+      orderBy: {
+        idtecnicarecoleccion: "asc",
+      },
+    });
+
     const datosFormateadosProyecto = {
       roles: datosProyecto.roles,
       participantes: datosParticipantesFormateados,
       procesos,
       subprocesos,
+      tecnicasRecoleccion,
     };
     return res.status(200).json(datosFormateadosProyecto);
   } catch (error) {

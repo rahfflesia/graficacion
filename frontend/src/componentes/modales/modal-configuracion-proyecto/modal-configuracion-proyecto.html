@@ -107,45 +107,57 @@
               >
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Nombre del subproceso</label>
-                  <input type="text" placeholder="Ingresa el nombre" class="search-input" />
+                  <input
+                    type="text"
+                    placeholder="Ingresa el nombre"
+                    class="search-input"
+                    formControlName="nombreSubproceso"
+                  />
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Descripción del subproceso</label>
-                  <textarea placeholder="Ingresa la descripción" class="search-input"></textarea>
+                  <textarea
+                    placeholder="Ingresa la descripción"
+                    class="search-input"
+                    formControlName="descripcionSubproceso"
+                  ></textarea>
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Proceso asociado</label>
-                  <select class="custom-select">
+                  <select class="custom-select" formControlName="idProcesoAsociado">
                     @for (proceso of procesos(); track proceso.idproceso) {
                       <option value="{{ proceso.idproceso }}">{{ proceso.nombre }}</option>
                     }
                   </select>
                 </div>
-                <div class="input-wrapper flex-column sm-gap">
+                <div class="input-wrapper flex-column sm-gap" formArrayName="tecnicasAsociadas">
                   <label for="">Técnica de recolección utilizada</label>
-                  <select class="custom-select">
-                    <option value="">Entrevista</option>
-                    <option value="">Observación</option>
-                    <option value="">Cuestionarios</option>
-                    <option value="">Historias de usuario</option>
-                    <option value="">Focus group</option>
-                    <option value="">Análisis de documentos</option>
-                    <option value="">Seguimiento transaccional</option>
-                  </select>
+                  <div class="checkbox-outer-wrapper">
+                    <!-- Ciclo para renderizar los componentes -->
+                    <!-- Los utilizo para saber que tecnicas asociadas seleccionó el usuario -->
+                    @for (tecnica of tecnicasAsociadas.controls; track $index; let i = $index) {
+                      <div class="checkbox-wrapper">
+                        <input type="checkbox" [formControlName]="i" />
+                        <span>{{ obtenerNombreCheckbox(i) }}</span>
+                      </div>
+                    }
+                  </div>
                 </div>
                 <div>
-                  <button class="default-button" [disabled]="formularioSubprocesos.invalid">
+                  <button class="default-button" (click)="crearSubproceso()">
                     Crear subproceso
                   </button>
                 </div>
               </form>
               <h3>Subprocesos del proyecto</h3>
-              @for (subproceso of []; track $index) {
-                <div>
-                  <div>
-                    <h3>Placeholder</h3>
-                  </div>
-                </div>
+              @for (subproceso of subprocesos(); track $index) {
+                <subproceso-card
+                  [subproceso]="subproceso"
+                  [procesosProyecto]="procesos()"
+                  [tecnicasRecoleccion]="tecnicasRecoleccion()"
+                  (eliminar)="eliminarSubproceso($event)"
+                  (editar)="editarSubproceso($event)"
+                ></subproceso-card>
               } @empty {
                 <div class="sin-procesos formulario">
                   <p class="empty">Aún no has creado ningún subproceso</p>

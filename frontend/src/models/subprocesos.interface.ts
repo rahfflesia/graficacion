@@ -1,12 +1,20 @@
-interface DatosSubproceso {}
+import { TecnicaRecoleccion } from './tecnicasRecoleccion.interface';
+
+interface DatosFormularioSubproceso {
+  nombreSubproceso: string;
+  descripcionSubproceso: string;
+  idProcesoAsociado: number;
+  tecnicasSeleccionadas: TecnicaRecoleccion[];
+}
 
 interface Subproceso {
-  nombreproceso: string;
   nombresubproceso: string;
+  nombreproceso: string;
   descripcionsubproceso: string;
   fechacreacion: Date;
   idproceso: number;
   idsubproceso: number;
+  tecnicasasociadas: TecnicaRecoleccion[];
 }
 
-export type { DatosSubproceso, Subproceso };
+export type { DatosFormularioSubproceso, Subproceso };
