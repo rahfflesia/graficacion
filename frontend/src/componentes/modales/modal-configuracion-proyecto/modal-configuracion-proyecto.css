@@ -76,4 +76,17 @@ header.header-config {
   flex: 1;
 }
 
+.checkbox-outer-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.checkbox-wrapper > span {
+  font-size: 0.8rem;
+}
 /* */

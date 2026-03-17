@@ -1,0 +1,66 @@
+.subproceso-card {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.botones,
+.botones-borrar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.botones > button {
+  font-size: 0.7rem;
+}
+
+.descripcion-subproceso {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.opciones-borrar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.opciones-borrar-wrapper > span {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.botones-borrar button:first-child {
+  padding: 0.1rem 0.5rem;
+}
+
+.botones-borrar button {
+  font-size: 0.7rem;
+  flex: 1;
+  cursor: pointer;
+}
+
+.botones-formulario-edicion,
+.checkbox-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.botones-formulario-edicion > * {
+  flex: 1;
+}
+
+.checkbox-inner-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.checkbox-inner-wrapper > span {
+  font-size: 0.8rem;
+}

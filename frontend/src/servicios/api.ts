@@ -19,6 +19,8 @@ import {
   Participante,
   RolParticipanteProyecto,
 } from '../models/participantesProyecto.interface';
+import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
+import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +58,14 @@ export class Api {
   private participantesObtenerUrl = 'obtener/';
   private participantesEliminarUrl = 'eliminar/';
   private participantesEditarUrl = 'editar/';
+
+  private tecnicasRecoleccionUrl = 'tecnicasrecoleccion/';
+  private tecnicasRecoleccionObtenerUrl = 'obtener/';
+
+  private subprocesosUrl = 'subprocesos/';
+  private subprocesosCrearUrl = 'crear/';
+  private subprocesosEliminarUrl = 'eliminar/';
+  private subprocesosEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -169,6 +179,35 @@ export class Api {
     return this.http.put<Participante>(
       this.baseUrl + this.participantesUrl + this.participantesEditarUrl + idParticipanteProyecto,
       datosParticipanteEditar,
+    );
+  }
+
+  obtenerTecnicasRecoleccion(): Observable<TecnicaRecoleccion> {
+    return this.http.get<TecnicaRecoleccion>(
+      this.baseUrl + this.tecnicasRecoleccionUrl + this.tecnicasRecoleccionObtenerUrl,
+    );
+  }
+
+  crearSubproceso(datosSubproceso: DatosFormularioSubproceso): Observable<Subproceso> {
+    return this.http.post<Subproceso>(
+      this.baseUrl + this.subprocesosUrl + this.subprocesosCrearUrl,
+      datosSubproceso,
+    );
+  }
+
+  eliminarSubproceso(idSubproceso: number): Observable<Subproceso> {
+    return this.http.delete<Subproceso>(
+      this.baseUrl + this.subprocesosUrl + this.subprocesosEliminarUrl + idSubproceso,
+    );
+  }
+
+  editarSubproceso(
+    idSubproceso: number,
+    datosSubproceso: DatosFormularioSubproceso,
+  ): Observable<Subproceso> {
+    return this.http.put<Subproceso>(
+      this.baseUrl + this.subprocesosUrl + this.subprocesosEditarUrl + idSubproceso,
+      datosSubproceso,
     );
   }
 }

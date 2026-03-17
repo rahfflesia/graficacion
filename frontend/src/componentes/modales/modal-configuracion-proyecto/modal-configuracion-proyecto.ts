@@ -9,7 +9,13 @@ import {
   signal,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Api } from '../../../servicios/api';
 import { Proyectos } from '../../../models/proceso.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -23,10 +29,14 @@ import {
   RolParticipanteProyecto,
 } from '../../../models/participantesProyecto.interface';
 import { ParticipanteCard } from '../../cards/participante-card/participante-card';
+import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
+import { single } from 'rxjs';
+import { Subproceso } from '../../../models/subprocesos.interface';
+import { SubprocesoCard } from '../../cards/subproceso-card/subproceso-card';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
-  imports: [ReactiveFormsModule, ProcesoCard, RolCard, ParticipanteCard],
+  imports: [ReactiveFormsModule, ProcesoCard, RolCard, ParticipanteCard, SubprocesoCard],
   templateUrl: './modal-configuracion-proyecto.html',
   styleUrl: './modal-configuracion-proyecto.css',
 })
@@ -46,6 +56,8 @@ export class ModalConfiguracionProyecto implements OnChanges {
   roles = signal<Rol[]>([]);
   participantes = signal<Participante[]>([]);
   primerRol = computed(() => this.roles()[0].idrol.toString());
+  tecnicasRecoleccion = signal<TecnicaRecoleccion[]>([]);
+  subprocesos = signal<Subproceso[]>([]);
 
   formularioProcesos = this.formBuilder.group({
     nombreProceso: ['', Validators.required],
@@ -54,7 +66,8 @@ export class ModalConfiguracionProyecto implements OnChanges {
   formularioSubprocesos = this.formBuilder.group({
     nombreSubproceso: ['', Validators.required],
     descripcionSubproceso: ['', Validators.required],
-    subprocesoAsociado: ['', Validators.required],
+    idProcesoAsociado: ['', Validators.required],
+    tecnicasAsociadas: this.formBuilder.array([]),
   });
   formularioRoles = this.formBuilder.group({
     nombreRol: ['', Validators.required],
@@ -73,6 +86,10 @@ export class ModalConfiguracionProyecto implements OnChanges {
     'Procesos',
   );
 
+  get tecnicasAsociadas() {
+    return this.formularioSubprocesos.get('tecnicasAsociadas') as FormArray;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     const proyecto = changes['proyectoSeleccionado'];
     if (proyecto && this.proyectoSeleccionado !== undefined) {
@@ -82,6 +99,9 @@ export class ModalConfiguracionProyecto implements OnChanges {
           this.roles.set(datosProyecto.roles);
           this.participantes.set(datosProyecto.participantes);
           this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
+          this.tecnicasRecoleccion.set(datosProyecto.tecnicasRecoleccion);
+          this.subprocesos.set(datosProyecto.subprocesos);
+          this.cargarTecnicas();
         },
         error: (error) => {
           console.error(error);
@@ -229,5 +249,78 @@ export class ModalConfiguracionProyecto implements OnChanges {
           participante.idrolpersonaproyecto !== participanteEliminado.idrolpersonaproyecto,
       ),
     );
+  }
+
+  cargarTecnicas() {
+    if (this.tecnicasAsociadas.length < 1) {
+      const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
+      controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
+    }
+  }
+
+  obtenerTecnicasSeleccionadas() {
+    let tecnicasSeleccionadas: TecnicaRecoleccion[] = [];
+    const checkboxesTecnicasAsociadas = this.formularioSubprocesos.value
+      .tecnicasAsociadas as Boolean[];
+    checkboxesTecnicasAsociadas.forEach((boolean, index) => {
+      if (boolean) tecnicasSeleccionadas.push(this.tecnicasRecoleccion()[index]);
+    });
+    return tecnicasSeleccionadas;
+  }
+
+  obtenerNombreCheckbox(indice: number) {
+    return this.tecnicasRecoleccion()[indice].nombre;
+  }
+
+  crearSubproceso() {
+    const { nombreSubproceso, descripcionSubproceso, idProcesoAsociado } =
+      this.formularioSubprocesos.value;
+    const tecnicasSeleccionadas = this.obtenerTecnicasSeleccionadas();
+
+    if (!idProcesoAsociado || !nombreSubproceso || !descripcionSubproceso) {
+      console.error('Alguna propiedad del formulario no está definida');
+      return;
+    }
+
+    const datosSubproceso = {
+      nombreSubproceso,
+      descripcionSubproceso,
+      idProcesoAsociado: parseInt(idProcesoAsociado),
+      tecnicasSeleccionadas,
+    };
+
+    this.api.crearSubproceso(datosSubproceso).subscribe({
+      next: (subprocesoCreado) => {
+        this.toastr.success('Subproceso creado correctamente');
+        this.subprocesos.update((subproceso) => [...subproceso, subprocesoCreado]);
+        console.log(this.subprocesos());
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Ha ocurrido un error al crear el subproceso', '', {
+          toastClass: 'toastr-error',
+        });
+      },
+    });
+
+    this.formularioSubprocesos.reset();
+  }
+
+  eliminarSubproceso(subprocesoEliminado: Subproceso) {
+    this.subprocesos.update((subprocesos) =>
+      subprocesos.filter(
+        (subproceso) => subproceso.idsubproceso !== subprocesoEliminado.idsubproceso,
+      ),
+    );
+  }
+
+  editarSubproceso(subprocesoEditado: Subproceso) {
+    this.subprocesos().map((subproceso, index) => {
+      if (subprocesoEditado.idsubproceso === subproceso.idsubproceso) {
+        this.subprocesos()[index] = subprocesoEditado;
+        console.log('Subproceso editado');
+        return;
+      }
+    });
   }
 }

@@ -148,12 +148,12 @@ img {
   display: grid;
   place-items: center;
   opacity: 0;
-  transition: opacity ease-in 300ms 0ms;
+  transition: opacity ease 200ms 0ms;
   pointer-events: none;
 }
 
 .modal {
-  transition: transform ease-in 300ms 0ms;
+  transition: transform ease 200ms 0ms;
   transform: translateY(100%);
   min-width: 750px;
 }

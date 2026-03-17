@@ -1,0 +1,71 @@
+<div class="subproceso-card flex-column sm-gap">
+  <header>
+    @if (!estaEditando) {
+      <h4>{{ subproceso?.nombresubproceso }}</h4>
+    }
+    @if (!estaBorrando && !estaEditando) {
+      <div class="botones">
+        <button class="gray-button" (click)="mostrarMenuEditar()">Editar</button>
+        <button class="gray-button" (click)="mostrarMenuBorrar()">Eliminar</button>
+      </div>
+    }
+  </header>
+  @if (estaBorrando) {
+    <div class="opciones-borrar-wrapper">
+      <span>¿Seguro que deseas eliminar este subproceso?</span>
+      <div class="botones-borrar">
+        <button (click)="eliminarSubproceso()" class="boton-confirmacion">Sí</button>
+        <button (click)="cerrarMenuBorrar()" class="gray-button">No</button>
+      </div>
+    </div>
+  }
+  @if (estaEditando) {
+    <form [formGroup]="formularioEditarSubproceso" class="flex-column sm-gap">
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Nombre del subproceso</label>
+        <input
+          type="text"
+          formControlName="nombreSubproceso"
+          placeholder="Ingresa el nombre"
+          class="search-input"
+        />
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Descripción del subproceso</label>
+        <textarea
+          formControlName="descripcionSubproceso"
+          class="search-input"
+          placeholder="Descripción del subproceso"
+        ></textarea>
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Proceso asociado</label>
+        <select formControlName="procesoAsociado" class="custom-select">
+          @for (proceso of procesosProyecto; track proceso.idproceso) {
+            <option value="{{ proceso.idproceso }}">{{ proceso.nombre }}</option>
+          }
+        </select>
+      </div>
+      <div class="input-wrapper flex-column sm-gap" formArrayName="tecnicasAsociadas">
+        <label for="">Técnicas de recolección utilizadas</label>
+        <div class="checkbox-wrapper">
+          @for (tecnica of tecnicasAsociadasSubproceso.controls; track $index; let i = $index) {
+            <div class="checkbox-inner-wrapper">
+              <input type="checkbox" [formControlName]="i" />
+              <span>{{ obtenerNombreTecnica($index) }}</span>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="botones-formulario-edicion">
+        <button class="default-button" (click)="editarSubproceso()">Editar</button>
+        <button class="gray-button" (click)="cerrarMenuEditar()">Cancelar</button>
+      </div>
+    </form>
+  }
+  @if (!estaBorrando && !estaEditando) {
+    <div class="descripcion-subproceso">
+      <p>{{ subproceso?.descripcionsubproceso }}</p>
+    </div>
+  }
+</div>
