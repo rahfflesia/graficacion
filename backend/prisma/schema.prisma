@@ -35,6 +35,7 @@ model proyectos {
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
   rolespersonasproyecto rolespersonasproyecto[]
+  stakeholders          stakeholders[]
 }
 
 model roles {
@@ -104,4 +105,16 @@ enum tiporol {
 enum tipousuario {
   Persona
   Usuario
+}
+
+model stakeholders {
+  idstakeholder Int      @id @default(autoincrement())
+  nombre        String   @db.VarChar(255)
+  influencia    String   @db.VarChar(100)
+  interes       String   @db.VarChar(100)
+  contacto      String   @db.VarChar(255)
+  fechacreacion DateTime @default(now()) @db.Timestamptz(6)
+  idproyecto    Int
+
+  proyectos     proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_stakeholders_proyectos")
 }
