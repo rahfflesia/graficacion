@@ -16,16 +16,12 @@ export class StakeholdersService {
     return this.http.get<Stakeholder[]>(this.apiUrl);
   }
 
-  getStakeholder(id: number): Observable<Stakeholder> {
-    return this.http.get<Stakeholder>(`${this.apiUrl}/${id}`);
+  getStakeholdersByProyecto(idproyecto: number): Observable<Stakeholder[]> {
+    return this.http.get<Stakeholder[]>(`${this.apiUrl}/proyecto/${idproyecto}`);
   }
 
   createStakeholder(stakeholder: Stakeholder): Observable<Stakeholder> {
     return this.http.post<Stakeholder>(this.apiUrl, stakeholder);
-  }
-
-  updateStakeholder(id: number, stakeholder: Stakeholder): Observable<Stakeholder> {
-    return this.http.put<Stakeholder>(`${this.apiUrl}/${id}`, stakeholder);
   }
 
   deleteStakeholder(id: number): Observable<any> {

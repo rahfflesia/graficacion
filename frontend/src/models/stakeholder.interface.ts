@@ -5,4 +5,5 @@ export interface Stakeholder {
   interes: string;
   contacto: string;
   idproyecto: number;
+  fechacreacion?: string;
 }

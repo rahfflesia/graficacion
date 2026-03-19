@@ -1,41 +1,58 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "tiporol" AS ENUM ('Interno', 'Externo');
 
-  - You are about to drop the column `idtecnicarecopilacion` on the `metodossubprocesos` table. All the data in the column will be lost.
-  - You are about to drop the column `creador` on the `procesos` table. All the data in the column will be lost.
-  - You are about to drop the column `nombrerol` on the `roles` table. All the data in the column will be lost.
-  - You are about to drop the `rolesusuario` table. If the table is not empty, all the data it contains will be lost.
-  - Added the required column `idtecnicarecoleccion` to the `metodossubprocesos` table without a default value. This is not possible if the table is not empty.
-  - Made the column `descripcion` on table `procesos` required. This step will fail if there are existing NULL values in that column.
-  - Added the required column `idusuario` to the `proyectos` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `contacto` to the `stakeholders` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "tipousuario" AS ENUM ('Persona', 'Usuario');
 
--- AlterTable
-ALTER TABLE "metodossubprocesos" DROP COLUMN "idtecnicarecopilacion",
-ADD COLUMN     "idtecnicarecoleccion" INTEGER NOT NULL;
+-- CreateTable
+CREATE TABLE "metodossubprocesos" (
+    "idmetodosubproceso" SERIAL NOT NULL,
+    "idsubproceso" INTEGER NOT NULL,
+    "idtecnicarecoleccion" INTEGER NOT NULL,
 
--- AlterTable
-ALTER TABLE "procesos" DROP COLUMN "creador",
-ADD COLUMN     "fechacreacion" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ALTER COLUMN "descripcion" SET NOT NULL;
+    CONSTRAINT "metodossubprocesos_pkey" PRIMARY KEY ("idmetodosubproceso")
+);
 
--- AlterTable
-ALTER TABLE "proyectos" ADD COLUMN     "fechacreacion" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "idusuario" INTEGER NOT NULL;
+-- CreateTable
+CREATE TABLE "procesos" (
+    "idproceso" SERIAL NOT NULL,
+    "nombre" VARCHAR(255) NOT NULL,
+    "descripcion" TEXT NOT NULL,
+    "fechacreacion" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "idproyecto" INTEGER NOT NULL,
 
--- AlterTable
-ALTER TABLE "roles" DROP COLUMN "nombrerol",
-ADD COLUMN     "nombre" VARCHAR(255);
+    CONSTRAINT "procesos_pkey" PRIMARY KEY ("idproceso")
+);
 
--- AlterTable
-ALTER TABLE "stakeholders" ADD COLUMN     "contacto" VARCHAR(255) NOT NULL;
+-- CreateTable
+CREATE TABLE "proyectos" (
+    "idproyecto" SERIAL NOT NULL,
+    "nombre" VARCHAR(255) NOT NULL,
+    "descripcion" TEXT NOT NULL,
+    "fechacreacion" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "idusuario" INTEGER NOT NULL,
 
--- DropTable
-DROP TABLE "rolesusuario";
+    CONSTRAINT "proyectos_pkey" PRIMARY KEY ("idproyecto")
+);
+
+-- CreateTable
+CREATE TABLE "roles" (
+    "idrol" SERIAL NOT NULL,
+    "idproyecto" INTEGER NOT NULL,
+    "nombre" VARCHAR(255),
+    "tipo" "tiporol" NOT NULL,
+
+    CONSTRAINT "roles_pkey" PRIMARY KEY ("idrol")
+);
+
+-- CreateTable
+CREATE TABLE "tecnicasrecoleccion" (
+    "idtecnicarecoleccion" SERIAL NOT NULL,
+    "nombre" VARCHAR(128) NOT NULL,
+    "descripcion" TEXT NOT NULL,
+
+    CONSTRAINT "tecnicasrecoleccion_pkey" PRIMARY KEY ("idtecnicarecoleccion")
+);
 
 -- CreateTable
 CREATE TABLE "personas" (
@@ -83,14 +100,36 @@ CREATE TABLE "usuarios" (
     CONSTRAINT "usuarios_pkey" PRIMARY KEY ("idusuario")
 );
 
+-- CreateTable
+CREATE TABLE "stakeholders" (
+    "idstakeholder" SERIAL NOT NULL,
+    "nombre" VARCHAR(255) NOT NULL,
+    "influencia" VARCHAR(100) NOT NULL,
+    "interes" VARCHAR(100) NOT NULL,
+    "contacto" VARCHAR(255) NOT NULL,
+    "fechacreacion" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "idproyecto" INTEGER NOT NULL,
+
+    CONSTRAINT "stakeholders_pkey" PRIMARY KEY ("idstakeholder")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "rolespersonasproyecto_idpersona_idproyecto_key" ON "rolespersonasproyecto"("idpersona", "idproyecto");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "nombre_unico" ON "usuarios"("nombre");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "correo_unico" ON "usuarios"("correo");
 
 -- AddForeignKey
 ALTER TABLE "metodossubprocesos" ADD CONSTRAINT "fk_metodossubprocesos_subprocesos" FOREIGN KEY ("idsubproceso") REFERENCES "subprocesos"("idsubproceso") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "metodossubprocesos" ADD CONSTRAINT "fk_metodossubprocesos_tecnicarsecoleccion" FOREIGN KEY ("idtecnicarecoleccion") REFERENCES "tecnicasrecoleccion"("idtecnicarecoleccion") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "procesos" ADD CONSTRAINT "fk_proyecto_procesos" FOREIGN KEY ("idproyecto") REFERENCES "proyectos"("idproyecto") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "proyectos" ADD CONSTRAINT "fk_proyectos_usuarios" FOREIGN KEY ("idusuario") REFERENCES "usuarios"("idusuario") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -111,4 +150,4 @@ ALTER TABLE "rolespersonasproyecto" ADD CONSTRAINT "fk_rolespersonasproyecto_rol
 ALTER TABLE "subprocesos" ADD CONSTRAINT "fk_subprocesos_procesos" FOREIGN KEY ("idproceso") REFERENCES "procesos"("idproceso") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "stakeholders" ADD CONSTRAINT "fk_stakeholders_proyecto" FOREIGN KEY ("idproyecto") REFERENCES "proyectos"("idproyecto") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "stakeholders" ADD CONSTRAINT "fk_stakeholders_proyectos" FOREIGN KEY ("idproyecto") REFERENCES "proyectos"("idproyecto") ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -14,6 +14,7 @@ export class Stakeholders implements OnInit {
 
   form!: FormGroup;
   stakeholders: Stakeholder[] = [];
+  idProyecto = 2; // temporal para pruebas
 
   constructor(
     private fb: FormBuilder,
@@ -31,23 +32,47 @@ export class Stakeholders implements OnInit {
     this.loadStakeholders();
   }
 
-  loadStakeholders() {
-    this.stakeholdersService.getStakeholders()
-      .subscribe(data => this.stakeholders = data);
+  loadStakeholders(): void {
+    this.stakeholdersService.getStakeholdersByProyecto(this.idProyecto)
+      .subscribe({
+        next: (data) => {
+          this.stakeholders = data;
+        },
+        error: (error) => {
+          console.error('Error al cargar stakeholders:', error);
+        }
+      });
   }
 
-  save() {
+  save(): void {
     if (this.form.invalid) return;
 
     const stakeholder: Stakeholder = {
       ...this.form.value,
-      idproyecto: 1 
+      idproyecto: this.idProyecto
     };
 
     this.stakeholdersService.createStakeholder(stakeholder)
-      .subscribe(() => {
-        this.form.reset();
-        this.loadStakeholders();
+      .subscribe({
+        next: () => {
+          this.form.reset();
+          this.loadStakeholders();
+        },
+        error: (error) => {
+          console.error('Error al guardar stakeholder:', error);
+        }
+      });
+  }
+
+  deleteStakeholder(id: number): void {
+    this.stakeholdersService.deleteStakeholder(id)
+      .subscribe({
+        next: () => {
+          this.loadStakeholders();
+        },
+        error: (error) => {
+          console.error('Error al eliminar stakeholder:', error);
+        }
       });
   }
 }

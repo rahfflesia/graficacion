@@ -392,7 +392,8 @@ export const ModelName = {
   personas: 'personas',
   rolespersonasproyecto: 'rolespersonasproyecto',
   subprocesos: 'subprocesos',
-  usuarios: 'usuarios'
+  usuarios: 'usuarios',
+  stakeholders: 'stakeholders'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios"
+    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios" | "stakeholders"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    stakeholders: {
+      payload: Prisma.$stakeholdersPayload<ExtArgs>
+      fields: Prisma.stakeholdersFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.stakeholdersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.stakeholdersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        findFirst: {
+          args: Prisma.stakeholdersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.stakeholdersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        findMany: {
+          args: Prisma.stakeholdersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>[]
+        }
+        create: {
+          args: Prisma.stakeholdersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        createMany: {
+          args: Prisma.stakeholdersCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.stakeholdersCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>[]
+        }
+        delete: {
+          args: Prisma.stakeholdersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        update: {
+          args: Prisma.stakeholdersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        deleteMany: {
+          args: Prisma.stakeholdersDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.stakeholdersUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.stakeholdersUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>[]
+        }
+        upsert: {
+          args: Prisma.stakeholdersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$stakeholdersPayload>
+        }
+        aggregate: {
+          args: Prisma.StakeholdersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStakeholders>
+        }
+        groupBy: {
+          args: Prisma.stakeholdersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StakeholdersGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.stakeholdersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StakeholdersCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1211,6 +1286,19 @@ export const UsuariosScalarFieldEnum = {
 } as const
 
 export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
+
+
+export const StakeholdersScalarFieldEnum = {
+  idstakeholder: 'idstakeholder',
+  nombre: 'nombre',
+  influencia: 'influencia',
+  interes: 'interes',
+  contacto: 'contacto',
+  fechacreacion: 'fechacreacion',
+  idproyecto: 'idproyecto'
+} as const
+
+export type StakeholdersScalarFieldEnum = (typeof StakeholdersScalarFieldEnum)[keyof typeof StakeholdersScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1430,6 +1518,7 @@ export type GlobalOmitConfig = {
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOmit
   subprocesos?: Prisma.subprocesosOmit
   usuarios?: Prisma.usuariosOmit
+  stakeholders?: Prisma.stakeholdersOmit
 }
 
 /* Types for Logging */

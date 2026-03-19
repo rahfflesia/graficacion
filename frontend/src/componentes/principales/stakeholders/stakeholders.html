@@ -1,28 +1,46 @@
 <div class="stakeholders-container">
   <h2>Stakeholders</h2>
 
-  <form class="stakeholder-form">
+  <form class="stakeholder-form" [formGroup]="form" (ngSubmit)="save()">
     <div class="form-group">
       <label>Nombre</label>
-      <input type="text" placeholder="Nombre del stakeholder">
+      <input
+        type="text"
+        placeholder="Nombre del stakeholder"
+        formControlName="nombre"
+      >
     </div>
 
     <div class="form-group">
       <label>Influencia</label>
-      <input type="text" placeholder="Nivel de influencia">
+      <input
+        type="text"
+        placeholder="Nivel de influencia"
+        formControlName="influencia"
+      >
     </div>
 
     <div class="form-group">
       <label>Interés</label>
-      <input type="text" placeholder="Nivel de interés">
+      <input
+        type="text"
+        placeholder="Nivel de interés"
+        formControlName="interes"
+      >
     </div>
 
     <div class="form-group">
       <label>Contacto</label>
-      <input type="text" placeholder="Correo o número telefónico">
+      <input
+        type="text"
+        placeholder="Correo o número telefónico"
+        formControlName="contacto"
+      >
     </div>
 
-    <button type="button">Agregar stakeholder</button>
+    <button type="submit" [disabled]="form.invalid">
+      Agregar stakeholder
+    </button>
   </form>
 
   <div class="stakeholders-list">
@@ -38,6 +56,10 @@
         <span>Influencia: {{ s.influencia }}</span>
         <span>Interés: {{ s.interes }}</span>
         <span>Contacto: {{ s.contacto }}</span>
+
+        <button type="button" (click)="deleteStakeholder(s.idstakeholder!)">
+          Eliminar
+        </button>
       </div>
     }
   </div>

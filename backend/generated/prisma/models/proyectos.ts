@@ -224,6 +224,7 @@ export type proyectosWhereInput = {
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   roles?: Prisma.RolesListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
+  stakeholders?: Prisma.StakeholdersListRelationFilter
 }
 
 export type proyectosOrderByWithRelationInput = {
@@ -236,6 +237,7 @@ export type proyectosOrderByWithRelationInput = {
   usuarios?: Prisma.usuariosOrderByWithRelationInput
   roles?: Prisma.rolesOrderByRelationAggregateInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOrderByRelationAggregateInput
+  stakeholders?: Prisma.stakeholdersOrderByRelationAggregateInput
 }
 
 export type proyectosWhereUniqueInput = Prisma.AtLeast<{
@@ -251,6 +253,7 @@ export type proyectosWhereUniqueInput = Prisma.AtLeast<{
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   roles?: Prisma.RolesListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
+  stakeholders?: Prisma.StakeholdersListRelationFilter
 }, "idproyecto">
 
 export type proyectosOrderByWithAggregationInput = {
@@ -285,6 +288,7 @@ export type proyectosCreateInput = {
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUncheckedCreateInput = {
@@ -296,6 +300,7 @@ export type proyectosUncheckedCreateInput = {
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersUncheckedCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUpdateInput = {
@@ -306,6 +311,7 @@ export type proyectosUpdateInput = {
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateInput = {
@@ -317,6 +323,7 @@ export type proyectosUncheckedUpdateInput = {
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUncheckedUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosCreateManyInput = {
@@ -474,6 +481,20 @@ export type proyectosUncheckedUpdateManyWithoutUsuariosNestedInput = {
   deleteMany?: Prisma.proyectosScalarWhereInput | Prisma.proyectosScalarWhereInput[]
 }
 
+export type proyectosCreateNestedOneWithoutStakeholdersInput = {
+  create?: Prisma.XOR<Prisma.proyectosCreateWithoutStakeholdersInput, Prisma.proyectosUncheckedCreateWithoutStakeholdersInput>
+  connectOrCreate?: Prisma.proyectosCreateOrConnectWithoutStakeholdersInput
+  connect?: Prisma.proyectosWhereUniqueInput
+}
+
+export type proyectosUpdateOneRequiredWithoutStakeholdersNestedInput = {
+  create?: Prisma.XOR<Prisma.proyectosCreateWithoutStakeholdersInput, Prisma.proyectosUncheckedCreateWithoutStakeholdersInput>
+  connectOrCreate?: Prisma.proyectosCreateOrConnectWithoutStakeholdersInput
+  upsert?: Prisma.proyectosUpsertWithoutStakeholdersInput
+  connect?: Prisma.proyectosWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.proyectosUpdateToOneWithWhereWithoutStakeholdersInput, Prisma.proyectosUpdateWithoutStakeholdersInput>, Prisma.proyectosUncheckedUpdateWithoutStakeholdersInput>
+}
+
 export type proyectosCreateWithoutProcesosInput = {
   nombre: string
   descripcion: string
@@ -481,6 +502,7 @@ export type proyectosCreateWithoutProcesosInput = {
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUncheckedCreateWithoutProcesosInput = {
@@ -491,6 +513,7 @@ export type proyectosUncheckedCreateWithoutProcesosInput = {
   idusuario: number
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersUncheckedCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosCreateOrConnectWithoutProcesosInput = {
@@ -516,6 +539,7 @@ export type proyectosUpdateWithoutProcesosInput = {
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateWithoutProcesosInput = {
@@ -526,6 +550,7 @@ export type proyectosUncheckedUpdateWithoutProcesosInput = {
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUncheckedUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosCreateWithoutRolesInput = {
@@ -535,6 +560,7 @@ export type proyectosCreateWithoutRolesInput = {
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUncheckedCreateWithoutRolesInput = {
@@ -545,6 +571,7 @@ export type proyectosUncheckedCreateWithoutRolesInput = {
   idusuario: number
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersUncheckedCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosCreateOrConnectWithoutRolesInput = {
@@ -570,6 +597,7 @@ export type proyectosUpdateWithoutRolesInput = {
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateWithoutRolesInput = {
@@ -580,6 +608,7 @@ export type proyectosUncheckedUpdateWithoutRolesInput = {
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUncheckedUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosCreateWithoutRolespersonasproyectoInput = {
@@ -589,6 +618,7 @@ export type proyectosCreateWithoutRolespersonasproyectoInput = {
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUncheckedCreateWithoutRolespersonasproyectoInput = {
@@ -599,6 +629,7 @@ export type proyectosUncheckedCreateWithoutRolespersonasproyectoInput = {
   idusuario: number
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersUncheckedCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosCreateOrConnectWithoutRolespersonasproyectoInput = {
@@ -624,6 +655,7 @@ export type proyectosUpdateWithoutRolespersonasproyectoInput = {
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateWithoutRolespersonasproyectoInput = {
@@ -634,6 +666,7 @@ export type proyectosUncheckedUpdateWithoutRolespersonasproyectoInput = {
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUncheckedUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosCreateWithoutUsuariosInput = {
@@ -643,6 +676,7 @@ export type proyectosCreateWithoutUsuariosInput = {
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosUncheckedCreateWithoutUsuariosInput = {
@@ -653,6 +687,7 @@ export type proyectosUncheckedCreateWithoutUsuariosInput = {
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
+  stakeholders?: Prisma.stakeholdersUncheckedCreateNestedManyWithoutProyectosInput
 }
 
 export type proyectosCreateOrConnectWithoutUsuariosInput = {
@@ -692,6 +727,64 @@ export type proyectosScalarWhereInput = {
   idusuario?: Prisma.IntFilter<"proyectos"> | number
 }
 
+export type proyectosCreateWithoutStakeholdersInput = {
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+  procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
+  usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
+  roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
+}
+
+export type proyectosUncheckedCreateWithoutStakeholdersInput = {
+  idproyecto?: number
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+  idusuario: number
+  procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
+  roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
+}
+
+export type proyectosCreateOrConnectWithoutStakeholdersInput = {
+  where: Prisma.proyectosWhereUniqueInput
+  create: Prisma.XOR<Prisma.proyectosCreateWithoutStakeholdersInput, Prisma.proyectosUncheckedCreateWithoutStakeholdersInput>
+}
+
+export type proyectosUpsertWithoutStakeholdersInput = {
+  update: Prisma.XOR<Prisma.proyectosUpdateWithoutStakeholdersInput, Prisma.proyectosUncheckedUpdateWithoutStakeholdersInput>
+  create: Prisma.XOR<Prisma.proyectosCreateWithoutStakeholdersInput, Prisma.proyectosUncheckedCreateWithoutStakeholdersInput>
+  where?: Prisma.proyectosWhereInput
+}
+
+export type proyectosUpdateToOneWithWhereWithoutStakeholdersInput = {
+  where?: Prisma.proyectosWhereInput
+  data: Prisma.XOR<Prisma.proyectosUpdateWithoutStakeholdersInput, Prisma.proyectosUncheckedUpdateWithoutStakeholdersInput>
+}
+
+export type proyectosUpdateWithoutStakeholdersInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
+  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
+  roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
+}
+
+export type proyectosUncheckedUpdateWithoutStakeholdersInput = {
+  idproyecto?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
+  roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
+}
+
 export type proyectosCreateManyUsuariosInput = {
   idproyecto?: number
   nombre: string
@@ -706,6 +799,7 @@ export type proyectosUpdateWithoutUsuariosInput = {
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateWithoutUsuariosInput = {
@@ -716,6 +810,7 @@ export type proyectosUncheckedUpdateWithoutUsuariosInput = {
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
+  stakeholders?: Prisma.stakeholdersUncheckedUpdateManyWithoutProyectosNestedInput
 }
 
 export type proyectosUncheckedUpdateManyWithoutUsuariosInput = {
@@ -734,12 +829,14 @@ export type ProyectosCountOutputType = {
   procesos: number
   roles: number
   rolespersonasproyecto: number
+  stakeholders: number
 }
 
 export type ProyectosCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   procesos?: boolean | ProyectosCountOutputTypeCountProcesosArgs
   roles?: boolean | ProyectosCountOutputTypeCountRolesArgs
   rolespersonasproyecto?: boolean | ProyectosCountOutputTypeCountRolespersonasproyectoArgs
+  stakeholders?: boolean | ProyectosCountOutputTypeCountStakeholdersArgs
 }
 
 /**
@@ -773,6 +870,13 @@ export type ProyectosCountOutputTypeCountRolespersonasproyectoArgs<ExtArgs exten
   where?: Prisma.rolespersonasproyectoWhereInput
 }
 
+/**
+ * ProyectosCountOutputType without action
+ */
+export type ProyectosCountOutputTypeCountStakeholdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.stakeholdersWhereInput
+}
+
 
 export type proyectosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idproyecto?: boolean
@@ -784,6 +888,7 @@ export type proyectosSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
   roles?: boolean | Prisma.proyectos$rolesArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.proyectos$rolespersonasproyectoArgs<ExtArgs>
+  stakeholders?: boolean | Prisma.proyectos$stakeholdersArgs<ExtArgs>
   _count?: boolean | Prisma.ProyectosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proyectos"]>
 
@@ -819,6 +924,7 @@ export type proyectosInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
   roles?: boolean | Prisma.proyectos$rolesArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.proyectos$rolespersonasproyectoArgs<ExtArgs>
+  stakeholders?: boolean | Prisma.proyectos$stakeholdersArgs<ExtArgs>
   _count?: boolean | Prisma.ProyectosCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type proyectosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -835,6 +941,7 @@ export type $proyectosPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     usuarios: Prisma.$usuariosPayload<ExtArgs>
     roles: Prisma.$rolesPayload<ExtArgs>[]
     rolespersonasproyecto: Prisma.$rolespersonasproyectoPayload<ExtArgs>[]
+    stakeholders: Prisma.$stakeholdersPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idproyecto: number
@@ -1240,6 +1347,7 @@ export interface Prisma__proyectosClient<T, Null = never, ExtArgs extends runtim
   usuarios<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   roles<T extends Prisma.proyectos$rolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.proyectos$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$rolesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rolespersonasproyecto<T extends Prisma.proyectos$rolespersonasproyectoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.proyectos$rolespersonasproyectoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$rolespersonasproyectoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stakeholders<T extends Prisma.proyectos$stakeholdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.proyectos$stakeholdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$stakeholdersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1739,6 +1847,30 @@ export type proyectos$rolespersonasproyectoArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.RolespersonasproyectoScalarFieldEnum | Prisma.RolespersonasproyectoScalarFieldEnum[]
+}
+
+/**
+ * proyectos.stakeholders
+ */
+export type proyectos$stakeholdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the stakeholders
+   */
+  select?: Prisma.stakeholdersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the stakeholders
+   */
+  omit?: Prisma.stakeholdersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.stakeholdersInclude<ExtArgs> | null
+  where?: Prisma.stakeholdersWhereInput
+  orderBy?: Prisma.stakeholdersOrderByWithRelationInput | Prisma.stakeholdersOrderByWithRelationInput[]
+  cursor?: Prisma.stakeholdersWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StakeholdersScalarFieldEnum | Prisma.StakeholdersScalarFieldEnum[]
 }
 
 /**

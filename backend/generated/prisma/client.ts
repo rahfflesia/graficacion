@@ -84,3 +84,8 @@ export type subprocesos = Prisma.subprocesosModel
  * 
  */
 export type usuarios = Prisma.usuariosModel
+/**
+ * Model stakeholders
+ * 
+ */
+export type stakeholders = Prisma.stakeholdersModel

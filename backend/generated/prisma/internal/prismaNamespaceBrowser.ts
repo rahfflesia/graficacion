@@ -59,7 +59,8 @@ export const ModelName = {
   personas: 'personas',
   rolespersonasproyecto: 'rolespersonasproyecto',
   subprocesos: 'subprocesos',
-  usuarios: 'usuarios'
+  usuarios: 'usuarios',
+  stakeholders: 'stakeholders'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -172,6 +173,19 @@ export const UsuariosScalarFieldEnum = {
 } as const
 
 export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
+
+
+export const StakeholdersScalarFieldEnum = {
+  idstakeholder: 'idstakeholder',
+  nombre: 'nombre',
+  influencia: 'influencia',
+  interes: 'interes',
+  contacto: 'contacto',
+  fechacreacion: 'fechacreacion',
+  idproyecto: 'idproyecto'
+} as const
+
+export type StakeholdersScalarFieldEnum = (typeof StakeholdersScalarFieldEnum)[keyof typeof StakeholdersScalarFieldEnum]
 
 
 export const SortOrder = {
