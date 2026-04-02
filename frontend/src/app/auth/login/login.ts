@@ -39,8 +39,11 @@ export class Login {
       next: (datosUsuario) => {
         this.router.navigate(['/proyectos']);
         this.toastr.success('Sesión iniciada');
+
         this.ServicioUsuario.guardarUsuario(datosUsuario);
+
         this.esModalCargaVisible.set(false);
+        console.log(datosInicioSesion);
       },
       error: (error) => {
         this.toastr.error('Ocurrió un error al iniciar sesión', '', {

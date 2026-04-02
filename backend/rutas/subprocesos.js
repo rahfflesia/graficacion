@@ -1,7 +1,10 @@
 import { prisma } from "../lib/prisma";
 import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware";
 
 const subprocesos = Router();
+
+subprocesos.use(validarToken);
 
 subprocesos.get("/obtener/:idsubproceso", async (req, res) => {
   try {

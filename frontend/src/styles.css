@@ -16,13 +16,16 @@
     rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
     rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
   --border-radius: 0.75rem;
-  --body-bg-color: #f0f5f9;
+  --body-bg-color: #f4f5f7;
   --font-color: #111c2d;
   --blue: rgb(0, 133, 219);
   --lightgreen: rgb(223, 255, 243);
   --grayish: rgb(231, 236, 240);
   --lightblue: rgb(229, 243, 251);
   --yellowish: rgb(255, 246, 234);
+  --red-color: #ef4444;
+  --red-background-color: #fff1f2;
+  --red-outline: 1px solid #fdd4d6;
 }
 
 .flex-column {
@@ -174,7 +177,7 @@ img {
 }
 
 .slide-in {
-  transition: transfrom ease-in 300ms 0s;
+  transition: transform ease-in 300ms 0s;
 }
 
 .error-span {

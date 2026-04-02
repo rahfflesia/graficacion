@@ -23,6 +23,7 @@ export interface Proyectos {
   descripcion: string;
   fechaCreacion: Date;
   idUsuario: number;
+  estado: 'Activo' | 'Cancelado' | 'Pausado' | 'En_revisi_n';
 }
 
 // Esta es la interfaz que utilizo para crear el proyecto en el modal
@@ -36,6 +37,7 @@ export interface ProyectoCreado {
 export interface ProyectoEditar {
   nombre: string;
   descripcion: string;
+  estado: 'Activo' | 'Cancelado' | 'Pausado' | 'En_revisi_n';
 }
 
 export interface Roles {

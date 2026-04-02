@@ -27,6 +27,10 @@ export class RolCard {
     tipoRol: ['Interno', [Validators.required]],
   });
 
+  obtenerControlFormularioEditarRol(nombreControl: string) {
+    return this.formularioRoles.get(nombreControl);
+  }
+
   mostarMenuBorrado() {
     this.estaBorrando = true;
   }

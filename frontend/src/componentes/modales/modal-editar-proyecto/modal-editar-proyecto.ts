@@ -50,6 +50,7 @@ export class ModalEditarProyecto implements OnChanges {
         Validators.pattern(this.espaciosEnBlancoRegex),
       ],
     ],
+    estadoProyecto: ['', [Validators.required]],
   });
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,6 +71,12 @@ export class ModalEditarProyecto implements OnChanges {
       nombre: this.formularioEditarProyecto.get('nombre')?.value ?? 'Nombre por defecto',
       descripcion:
         this.formularioEditarProyecto.get('descripcion')?.value ?? 'Descripción por defecto',
+      estado:
+        (this.formularioEditarProyecto.get('estadoProyecto')?.value as
+          | 'Activo'
+          | 'Cancelado'
+          | 'Pausado'
+          | 'En_revisi_n') ?? 'Activo',
     };
 
     this.api.editarProyecto(this.proyectoEditar!.idproyecto, datosProyectoEditar).subscribe({
@@ -77,6 +84,7 @@ export class ModalEditarProyecto implements OnChanges {
         this.editar.emit(respuesta);
         this.cancelarEdicion();
         this.toastr.success('Proyecto editado correctamente');
+        console.log(respuesta);
       },
       error: (error) => {
         this.toastr.error('No se pudo editar el proyecto', '', {

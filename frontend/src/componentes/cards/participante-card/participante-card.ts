@@ -17,7 +17,7 @@ import { Rol } from '../../../models/rol.interface';
 })
 export class ParticipanteCard {
   @Input() participante: Participante | undefined;
-  @Input() roles: Rol[] | undefined;
+  @Input() roles: Rol[] = [];
   @Output() borrarParticipante = new EventEmitter<RolParticipanteProyecto>();
   @Output() editar = new EventEmitter<Participante>();
 
@@ -36,6 +36,10 @@ export class ParticipanteCard {
     telefono: ['', [Validators.required]],
     idrol: ['', [Validators.required]],
   });
+
+  obtenerControlFormularioEditarParticipante(nombreControl: string) {
+    return this.formularioEditarParticipante.get(nombreControl);
+  }
 
   mostrarMenuEditar() {
     this.estaEditando = true;

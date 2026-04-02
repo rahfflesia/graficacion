@@ -1,19 +1,31 @@
 <div class="project-card flex-column sm-gap">
-  <div class="project-header">
+  <div class="wrapper flex-column sm-gap">
+    <div class="project-header">
+      <span
+        class="estado-proyecto"
+        [style.color]="obtenerColorFuente(datosProyecto.estado)"
+        [style.backgroundColor]="obtenerColorFondo(datosProyecto.estado)"
+        >{{ datosProyecto.estado === 'En_revisi_n' ? 'En revisión' : datosProyecto.estado }}</span
+      >
+      <img
+        src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
+        alt="icono-configuracion"
+        class="config-icon"
+        (click)="configurarProyecto()"
+      />
+    </div>
     <h3>{{ datosProyecto.nombre }}</h3>
-    <img
-      src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-      alt="icono-configuracion"
-      class="config-icon"
-      (click)="configurarProyecto()"
-    />
-  </div>
-  <p>{{ datosProyecto.descripcion }}</p>
-  <div class="fecha-creacion">
-    <span>{{ datosProyecto.fechaCreacion | date }}</span>
-  </div>
-  <div class="opciones-proyecto">
-    <button (click)="editarProyecto()">Editar</button>
-    <button (click)="eliminarProyecto()">Eliminar</button>
+    <p>{{ datosProyecto.descripcion }}</p>
+    <div class="fecha-creacion">
+      <span>{{ datosProyecto.fechaCreacion | date }}</span>
+    </div>
+    <div
+      class="barra-estado"
+      [style.backgroundColor]="obtenerColorFuente(datosProyecto.estado)"
+    ></div>
+    <div class="opciones-proyecto">
+      <button (click)="editarProyecto()" class="editar">Editar</button>
+      <button (click)="eliminarProyecto()">Eliminar</button>
+    </div>
   </div>
 </div>

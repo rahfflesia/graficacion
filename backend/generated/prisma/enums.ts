@@ -23,3 +23,13 @@ export const tipousuario = {
 } as const
 
 export type tipousuario = (typeof tipousuario)[keyof typeof tipousuario]
+
+
+export const estadosproyectos = {
+  Activo: 'Activo',
+  Pausado: 'Pausado',
+  Cancelado: 'Cancelado',
+  En_revisi_n: 'En_revisi_n'
+} as const
+
+export type estadosproyectos = (typeof estadosproyectos)[keyof typeof estadosproyectos]

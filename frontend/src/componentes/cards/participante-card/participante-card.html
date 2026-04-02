@@ -68,7 +68,13 @@
         </select>
       </div>
       <div class="botones-formulario-edicion">
-        <button class="default-button" (click)="editarParticipante()">Editar</button>
+        <button
+          class="default-button"
+          (click)="editarParticipante()"
+          [disabled]="formularioEditarParticipante.invalid"
+        >
+          Editar
+        </button>
         <button (click)="ocultarMenuEditar()" class="gray-button">Cancelar</button>
       </div>
     </form>

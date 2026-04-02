@@ -78,6 +78,15 @@
           </span>
         }
       </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Estado del proyecto</label>
+        <select class="custom-select" formControlName="estadoProyecto">
+          <option value="Activo">Activo</option>
+          <option value="Pausado">Pausado</option>
+          <option value="Cancelado">Cancelado</option>
+          <option value="En_revisi_n">En revisión</option>
+        </select>
+      </div>
       <div class="botones">
         <button class="gray-button" (click)="cancelarEdicion()">Cancelar</button>
         <button

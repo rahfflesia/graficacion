@@ -19,6 +19,12 @@
             formControlName="nombreRol"
             class="search-input"
           />
+          @if (
+            obtenerControlFormularioEditarRol('nombreRol')?.hasError('required') &&
+            obtenerControlFormularioEditarRol('nombreRol')?.dirty
+          ) {
+            <div class="error-span">El nombre del rol no puede quedar vacío</div>
+          }
         </div>
         <div class="input-wrapper flex-column sm-gap">
           <label for="">Tipo del rol</label>
@@ -26,6 +32,12 @@
             <option value="Interno">Interno</option>
             <option value="Externo">Externo</option>
           </select>
+          @if (
+            obtenerControlFormularioEditarRol('tipoRol')?.hasError('required') &&
+            obtenerControlFormularioEditarRol('tipoRol')?.dirty
+          ) {
+            <div class="error-span">El tipo del rol no puede quedar vacío</div>
+          }
         </div>
         <div class="botones-edicion">
           <button class="default-button" [disabled]="formularioRoles.invalid" (click)="editarRol()">

@@ -3,7 +3,15 @@ import { DatePipe } from '@angular/common';
 import { DatosEditarProceso, Proceso } from '../../../models/procesos.interface';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { ModalConfiguracionProyecto } from '../../modales/modal-configuracion-proyecto/modal-configuracion-proyecto';
 
 @Component({
   selector: 'proceso-card',
@@ -17,6 +25,7 @@ export class ProcesoCard {
   @Output() editarProceso = new EventEmitter<Proceso>();
   estaBorrando = false;
   estaEditando = false;
+
   private api = inject(Api);
   private toastr = inject(ToastrService);
   private formBuilder = inject(FormBuilder);
@@ -24,6 +33,10 @@ export class ProcesoCard {
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
   });
+
+  obtenerControlFormularioProcesos(nombreControl: string) {
+    return this.formularioEdicionProceso.get(nombreControl);
+  }
 
   mostrarMenuBorrarProceso() {
     this.estaBorrando = true;

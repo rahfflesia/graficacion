@@ -1,4 +1,4 @@
-<div class="subproceso-card flex-column sm-gap">
+<div class="subproceso-card flex-column sm-gap" (click)="goToSeccionTecnicaSeleccionada()">
   <header>
     @if (!estaEditando) {
       <h4>{{ subproceso?.nombresubproceso }}</h4>
@@ -29,6 +29,12 @@
           placeholder="Ingresa el nombre"
           class="search-input"
         />
+        @if (
+          obtenerControlFormularioEditarSubproceso('nombreSubproceso')?.hasError('required') &&
+          obtenerControlFormularioEditarSubproceso('nombreSubproceso')?.dirty
+        ) {
+          <div class="error-span">El nombre del subproceso no puede quedar vacío</div>
+        }
       </div>
       <div class="input-wrapper flex-column sm-gap">
         <label for="">Descripción del subproceso</label>
@@ -37,6 +43,12 @@
           class="search-input"
           placeholder="Descripción del subproceso"
         ></textarea>
+        @if (
+          obtenerControlFormularioEditarSubproceso('descripcionSubproceso')?.hasError('required') &&
+          obtenerControlFormularioEditarSubproceso('descripcionSubproceso')?.dirty
+        ) {
+          <div class="error-span">La descripción del subprooceso no puede quedar vacía</div>
+        }
       </div>
       <div class="input-wrapper flex-column sm-gap">
         <label for="">Proceso asociado</label>
@@ -56,9 +68,22 @@
             </div>
           }
         </div>
+        @if (
+          obtenerControlFormularioEditarSubproceso('tecnicasAsociadas')?.hasError(
+            'sinTecnicaSeleccionada'
+          ) && obtenerControlFormularioEditarSubproceso('tecnicasAsociadas')?.dirty
+        ) {
+          <div class="error-span">Debes seleccionar al menos una técnica</div>
+        }
       </div>
       <div class="botones-formulario-edicion">
-        <button class="default-button" (click)="editarSubproceso()">Editar</button>
+        <button
+          class="default-button"
+          (click)="editarSubproceso()"
+          [disabled]="formularioEditarSubproceso.invalid"
+        >
+          Editar
+        </button>
         <button class="gray-button" (click)="cerrarMenuEditar()">Cancelar</button>
       </div>
     </form>

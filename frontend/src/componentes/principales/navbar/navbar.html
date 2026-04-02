@@ -1,5 +1,8 @@
-<nav>
-  <h4>Gestor de proyectos</h4>
+<nav class="flex-column md-gap">
+  <div class="logo-wrapper">
+    <div class="logo"></div>
+    <h3>Gestor de proyectos</h3>
+  </div>
   <ul class="flex-column sm-gap">
     <span>Secciones principales</span>
     <li>
@@ -16,8 +19,8 @@
       />
       <span>Proyectos</span>
     </li>
-    <li (click)="cerrarSesion()">
-      <span>Cerrar sesión</span>
-    </li>
   </ul>
+  <button (click)="cerrarSesion()" class="gray-button" id="boton-cerrar-sesion">
+    <span class="boton-inner-text">Cerrar sesión</span>
+  </button>
 </nav>

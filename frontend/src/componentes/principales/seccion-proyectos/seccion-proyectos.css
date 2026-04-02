@@ -31,36 +31,41 @@ header {
 
 header {
   align-items: center;
+  padding: 2rem;
 }
 
-header,
-.section-header,
-.projects-section {
+.section-header {
   background-color: var(--primary-color);
-  padding: 1.5rem;
+  padding: 0.75rem 2rem;
 }
 
 .section-header {
   border-bottom: 1px solid lightgray;
 }
 
-.projects-section {
+.projects-section,
+header {
+  background-color: var(--body-bg-color);
 }
 
-header {
-  border-radius: 5rem;
+.projects-section {
+  padding: 0 2rem 2rem 2rem;
 }
 
 .hamburger-menu,
 .modo,
 .notificaciones {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 
 .foto {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+}
+
+.foto > img {
+  border-radius: 50%;
 }
 
 .section-header {
@@ -76,19 +81,20 @@ header {
 .info-perfil {
   display: flex;
   gap: 1rem;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.6rem;
 }
 
 .username {
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .role {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-weight: 300;
-}
-
-.datos-usuario {
-  gap: 0.25rem;
 }
 
 .section-title {
@@ -110,26 +116,13 @@ header {
   border-radius: 1rem;
   cursor: pointer;
   transition: transform ease-in 300ms;
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  position: relative;
 }
 
 .projects-section > *:hover {
   transform: scale(1.025);
-}
-
-.projects-section > proyecto-card:nth-child(4n + 1) {
-  background-color: var(--lightgreen);
-}
-
-.projects-section > proyecto-card:nth-child(4n + 2) {
-  background-color: var(--grayish);
-}
-
-.projects-section > proyecto-card:nth-child(4n + 3) {
-  background-color: var(--lightblue);
-}
-
-.projects-section > proyecto-card:nth-child(4n + 4) {
-  background-color: var(--yellowish);
 }
 
 .loading-wrapper > p {

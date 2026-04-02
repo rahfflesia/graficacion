@@ -1,7 +1,10 @@
 import express from "express";
 import { prisma } from "../db/db.js";
+import { validarToken } from "../middleware/authMiddleware.js";
 
 const roles = express.Router();
+
+roles.use(validarToken);
 
 // Obtener todos los roles asociados a un proyecto
 roles.get("/obtener/:idproyecto", async (req, res) => {

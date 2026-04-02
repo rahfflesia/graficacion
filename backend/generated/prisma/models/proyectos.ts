@@ -42,6 +42,7 @@ export type ProyectosMinAggregateOutputType = {
   descripcion: string | null
   fechacreacion: Date | null
   idusuario: number | null
+  estado: $Enums.estadosproyectos | null
 }
 
 export type ProyectosMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type ProyectosMaxAggregateOutputType = {
   descripcion: string | null
   fechacreacion: Date | null
   idusuario: number | null
+  estado: $Enums.estadosproyectos | null
 }
 
 export type ProyectosCountAggregateOutputType = {
@@ -58,6 +60,7 @@ export type ProyectosCountAggregateOutputType = {
   descripcion: number
   fechacreacion: number
   idusuario: number
+  estado: number
   _all: number
 }
 
@@ -78,6 +81,7 @@ export type ProyectosMinAggregateInputType = {
   descripcion?: true
   fechacreacion?: true
   idusuario?: true
+  estado?: true
 }
 
 export type ProyectosMaxAggregateInputType = {
@@ -86,6 +90,7 @@ export type ProyectosMaxAggregateInputType = {
   descripcion?: true
   fechacreacion?: true
   idusuario?: true
+  estado?: true
 }
 
 export type ProyectosCountAggregateInputType = {
@@ -94,6 +99,7 @@ export type ProyectosCountAggregateInputType = {
   descripcion?: true
   fechacreacion?: true
   idusuario?: true
+  estado?: true
   _all?: true
 }
 
@@ -189,6 +195,7 @@ export type ProyectosGroupByOutputType = {
   descripcion: string
   fechacreacion: Date
   idusuario: number
+  estado: $Enums.estadosproyectos
   _count: ProyectosCountAggregateOutputType | null
   _avg: ProyectosAvgAggregateOutputType | null
   _sum: ProyectosSumAggregateOutputType | null
@@ -220,6 +227,7 @@ export type proyectosWhereInput = {
   descripcion?: Prisma.StringFilter<"proyectos"> | string
   fechacreacion?: Prisma.DateTimeFilter<"proyectos"> | Date | string
   idusuario?: Prisma.IntFilter<"proyectos"> | number
+  estado?: Prisma.EnumestadosproyectosFilter<"proyectos"> | $Enums.estadosproyectos
   procesos?: Prisma.ProcesosListRelationFilter
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   roles?: Prisma.RolesListRelationFilter
@@ -232,6 +240,7 @@ export type proyectosOrderByWithRelationInput = {
   descripcion?: Prisma.SortOrder
   fechacreacion?: Prisma.SortOrder
   idusuario?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   procesos?: Prisma.procesosOrderByRelationAggregateInput
   usuarios?: Prisma.usuariosOrderByWithRelationInput
   roles?: Prisma.rolesOrderByRelationAggregateInput
@@ -247,6 +256,7 @@ export type proyectosWhereUniqueInput = Prisma.AtLeast<{
   descripcion?: Prisma.StringFilter<"proyectos"> | string
   fechacreacion?: Prisma.DateTimeFilter<"proyectos"> | Date | string
   idusuario?: Prisma.IntFilter<"proyectos"> | number
+  estado?: Prisma.EnumestadosproyectosFilter<"proyectos"> | $Enums.estadosproyectos
   procesos?: Prisma.ProcesosListRelationFilter
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   roles?: Prisma.RolesListRelationFilter
@@ -259,6 +269,7 @@ export type proyectosOrderByWithAggregationInput = {
   descripcion?: Prisma.SortOrder
   fechacreacion?: Prisma.SortOrder
   idusuario?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
   _count?: Prisma.proyectosCountOrderByAggregateInput
   _avg?: Prisma.proyectosAvgOrderByAggregateInput
   _max?: Prisma.proyectosMaxOrderByAggregateInput
@@ -275,12 +286,14 @@ export type proyectosScalarWhereWithAggregatesInput = {
   descripcion?: Prisma.StringWithAggregatesFilter<"proyectos"> | string
   fechacreacion?: Prisma.DateTimeWithAggregatesFilter<"proyectos"> | Date | string
   idusuario?: Prisma.IntWithAggregatesFilter<"proyectos"> | number
+  estado?: Prisma.EnumestadosproyectosWithAggregatesFilter<"proyectos"> | $Enums.estadosproyectos
 }
 
 export type proyectosCreateInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
@@ -293,6 +306,7 @@ export type proyectosUncheckedCreateInput = {
   descripcion: string
   fechacreacion?: Date | string
   idusuario: number
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
@@ -302,6 +316,7 @@ export type proyectosUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
@@ -314,6 +329,7 @@ export type proyectosUncheckedUpdateInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
@@ -325,12 +341,14 @@ export type proyectosCreateManyInput = {
   descripcion: string
   fechacreacion?: Date | string
   idusuario: number
+  estado?: $Enums.estadosproyectos
 }
 
 export type proyectosUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
 }
 
 export type proyectosUncheckedUpdateManyInput = {
@@ -339,6 +357,7 @@ export type proyectosUncheckedUpdateManyInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
 }
 
 export type ProyectosScalarRelationFilter = {
@@ -352,6 +371,7 @@ export type proyectosCountOrderByAggregateInput = {
   descripcion?: Prisma.SortOrder
   fechacreacion?: Prisma.SortOrder
   idusuario?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type proyectosAvgOrderByAggregateInput = {
@@ -365,6 +385,7 @@ export type proyectosMaxOrderByAggregateInput = {
   descripcion?: Prisma.SortOrder
   fechacreacion?: Prisma.SortOrder
   idusuario?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type proyectosMinOrderByAggregateInput = {
@@ -373,6 +394,7 @@ export type proyectosMinOrderByAggregateInput = {
   descripcion?: Prisma.SortOrder
   fechacreacion?: Prisma.SortOrder
   idusuario?: Prisma.SortOrder
+  estado?: Prisma.SortOrder
 }
 
 export type proyectosSumOrderByAggregateInput = {
@@ -402,6 +424,10 @@ export type proyectosUpdateOneRequiredWithoutProcesosNestedInput = {
   upsert?: Prisma.proyectosUpsertWithoutProcesosInput
   connect?: Prisma.proyectosWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.proyectosUpdateToOneWithWhereWithoutProcesosInput, Prisma.proyectosUpdateWithoutProcesosInput>, Prisma.proyectosUncheckedUpdateWithoutProcesosInput>
+}
+
+export type EnumestadosproyectosFieldUpdateOperationsInput = {
+  set?: $Enums.estadosproyectos
 }
 
 export type proyectosCreateNestedOneWithoutRolesInput = {
@@ -478,6 +504,7 @@ export type proyectosCreateWithoutProcesosInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
@@ -489,6 +516,7 @@ export type proyectosUncheckedCreateWithoutProcesosInput = {
   descripcion: string
   fechacreacion?: Date | string
   idusuario: number
+  estado?: $Enums.estadosproyectos
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
 }
@@ -513,6 +541,7 @@ export type proyectosUpdateWithoutProcesosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
@@ -524,6 +553,7 @@ export type proyectosUncheckedUpdateWithoutProcesosInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
 }
@@ -532,6 +562,7 @@ export type proyectosCreateWithoutRolesInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
@@ -543,6 +574,7 @@ export type proyectosUncheckedCreateWithoutRolesInput = {
   descripcion: string
   fechacreacion?: Date | string
   idusuario: number
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
 }
@@ -567,6 +599,7 @@ export type proyectosUpdateWithoutRolesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
@@ -578,6 +611,7 @@ export type proyectosUncheckedUpdateWithoutRolesInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
 }
@@ -586,6 +620,7 @@ export type proyectosCreateWithoutRolespersonasproyectoInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
@@ -597,6 +632,7 @@ export type proyectosUncheckedCreateWithoutRolespersonasproyectoInput = {
   descripcion: string
   fechacreacion?: Date | string
   idusuario: number
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
 }
@@ -621,6 +657,7 @@ export type proyectosUpdateWithoutRolespersonasproyectoInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
@@ -632,6 +669,7 @@ export type proyectosUncheckedUpdateWithoutRolespersonasproyectoInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idusuario?: Prisma.IntFieldUpdateOperationsInput | number
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
 }
@@ -640,6 +678,7 @@ export type proyectosCreateWithoutUsuariosInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutProyectosInput
@@ -650,6 +689,7 @@ export type proyectosUncheckedCreateWithoutUsuariosInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedCreateNestedManyWithoutProyectosInput
   roles?: Prisma.rolesUncheckedCreateNestedManyWithoutProyectosInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutProyectosInput
@@ -690,6 +730,7 @@ export type proyectosScalarWhereInput = {
   descripcion?: Prisma.StringFilter<"proyectos"> | string
   fechacreacion?: Prisma.DateTimeFilter<"proyectos"> | Date | string
   idusuario?: Prisma.IntFilter<"proyectos"> | number
+  estado?: Prisma.EnumestadosproyectosFilter<"proyectos"> | $Enums.estadosproyectos
 }
 
 export type proyectosCreateManyUsuariosInput = {
@@ -697,12 +738,14 @@ export type proyectosCreateManyUsuariosInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
+  estado?: $Enums.estadosproyectos
 }
 
 export type proyectosUpdateWithoutUsuariosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutProyectosNestedInput
@@ -713,6 +756,7 @@ export type proyectosUncheckedUpdateWithoutUsuariosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
   procesos?: Prisma.procesosUncheckedUpdateManyWithoutProyectosNestedInput
   roles?: Prisma.rolesUncheckedUpdateManyWithoutProyectosNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutProyectosNestedInput
@@ -723,6 +767,7 @@ export type proyectosUncheckedUpdateManyWithoutUsuariosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumestadosproyectosFieldUpdateOperationsInput | $Enums.estadosproyectos
 }
 
 
@@ -780,6 +825,7 @@ export type proyectosSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   descripcion?: boolean
   fechacreacion?: boolean
   idusuario?: boolean
+  estado?: boolean
   procesos?: boolean | Prisma.proyectos$procesosArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
   roles?: boolean | Prisma.proyectos$rolesArgs<ExtArgs>
@@ -793,6 +839,7 @@ export type proyectosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   descripcion?: boolean
   fechacreacion?: boolean
   idusuario?: boolean
+  estado?: boolean
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proyectos"]>
 
@@ -802,6 +849,7 @@ export type proyectosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   descripcion?: boolean
   fechacreacion?: boolean
   idusuario?: boolean
+  estado?: boolean
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proyectos"]>
 
@@ -811,9 +859,10 @@ export type proyectosSelectScalar = {
   descripcion?: boolean
   fechacreacion?: boolean
   idusuario?: boolean
+  estado?: boolean
 }
 
-export type proyectosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idproyecto" | "nombre" | "descripcion" | "fechacreacion" | "idusuario", ExtArgs["result"]["proyectos"]>
+export type proyectosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idproyecto" | "nombre" | "descripcion" | "fechacreacion" | "idusuario" | "estado", ExtArgs["result"]["proyectos"]>
 export type proyectosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   procesos?: boolean | Prisma.proyectos$procesosArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
@@ -842,6 +891,7 @@ export type $proyectosPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     descripcion: string
     fechacreacion: Date
     idusuario: number
+    estado: $Enums.estadosproyectos
   }, ExtArgs["result"]["proyectos"]>
   composites: {}
 }
@@ -1274,6 +1324,7 @@ export interface proyectosFieldRefs {
   readonly descripcion: Prisma.FieldRef<"proyectos", 'String'>
   readonly fechacreacion: Prisma.FieldRef<"proyectos", 'DateTime'>
   readonly idusuario: Prisma.FieldRef<"proyectos", 'Int'>
+  readonly estado: Prisma.FieldRef<"proyectos", 'estadosproyectos'>
 }
     
 
