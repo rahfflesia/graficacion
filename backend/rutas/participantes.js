@@ -1,7 +1,10 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware.js";
 
 const participantes = Router();
+
+participantes.use(validarToken);
 
 /* Estos datos de acá los obtengo en el handler de proyectos para obtener todo en una sola petición*/
 /* Quizás después lo utilizamos*/

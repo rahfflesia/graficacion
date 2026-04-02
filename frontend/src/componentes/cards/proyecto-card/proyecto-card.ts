@@ -26,4 +26,34 @@ export class ProyectoCard {
   configurarProyecto() {
     this.configurar.emit();
   }
+
+  obtenerColorFondo(estado: string) {
+    switch (estado) {
+      case 'Activo':
+        return '#e0f7ff';
+      case 'Pausado':
+        return '#fffaa2';
+      case 'Cancelado':
+        return '#c4c4c4';
+      // Sé que se ve raro pero así lo mapea prisma
+      case 'En_revisi_n':
+        return '#b5ffb2';
+    }
+    return '#ffcdcd';
+  }
+
+  obtenerColorFuente(estado: string) {
+    switch (estado) {
+      case 'Activo':
+        return '#0085db';
+      case 'Pausado':
+        return '#bca837';
+      case 'Cancelado':
+        return '#515151';
+      // Sé que se ve raro pero así lo mapea prisma
+      case 'En_revisi_n':
+        return '#11741e';
+    }
+    return '#ff0000';
+  }
 }

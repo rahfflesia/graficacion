@@ -27,6 +27,12 @@
                 class="search-input"
                 formControlName="nombre"
               />
+              @if (
+                obtenerControlFormularioProcesos('nombre')?.hasError('required') &&
+                obtenerControlFormularioProcesos('nombre')?.touched
+              ) {
+                <div class="error-span">El nombre del proceso no puede quedar vacío</div>
+              }
             </div>
           </div>
           <div class="input-wrapper flex-column sm-gap">
@@ -38,8 +44,20 @@
               class="search-input"
               formControlName="descripcion"
             ></textarea>
+            @if (
+              obtenerControlFormularioProcesos('descripcion')?.hasError('required') &&
+              obtenerControlFormularioProcesos('descripcion')?.touched
+            ) {
+              <div class="error-span">La descripción del proceso no puede quedar vacía</div>
+            }
             <div class="botones-edicion">
-              <button class="default-button" (click)="editar()">Editar</button>
+              <button
+                class="default-button"
+                (click)="editar()"
+                [disabled]="formularioEdicionProceso.invalid"
+              >
+                Editar
+              </button>
               <button class="gray-button" (click)="ocultarMenuEdicion()">Cancelar</button>
             </div>
           </div>

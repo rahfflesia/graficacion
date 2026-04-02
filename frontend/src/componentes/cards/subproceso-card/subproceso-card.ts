@@ -3,14 +3,18 @@ import { Subproceso } from '../../../models/subprocesos.interface';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Proceso } from '../../../models/procesos.interface';
 import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'subproceso-card',
@@ -29,18 +33,23 @@ export class SubprocesoCard {
   private api = inject(Api);
   private toastr = inject(ToastrService);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   formularioEditarSubproceso = this.formBuilder.group({
     nombreSubproceso: ['', [Validators.required]],
     descripcionSubproceso: ['', [Validators.required]],
     procesoAsociado: ['', [Validators.required]],
-    tecnicasAsociadas: this.formBuilder.array([]),
+    tecnicasAsociadas: this.formBuilder.array([], [this.tieneTecnicaSeleccionada()]),
   });
   estaBorrando = false;
   estaEditando = false;
 
   get tecnicasAsociadasSubproceso() {
     return this.formularioEditarSubproceso.get('tecnicasAsociadas') as FormArray;
+  }
+
+  obtenerControlFormularioEditarSubproceso(nombreControl: string) {
+    return this.formularioEditarSubproceso.get(nombreControl);
   }
 
   mostrarMenuBorrar() {
@@ -185,6 +194,18 @@ export class SubprocesoCard {
     }
   }
 
+  tieneTecnicaSeleccionada(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      let boolean = false;
+      control.value.forEach((checkbox: boolean) => {
+        if (checkbox) {
+          boolean = true;
+        }
+      });
+      return boolean ? null : { sinTecnicaSeleccionada: true };
+    };
+  }
+
   obtenerNombreTecnica(index: number) {
     return this.tecnicasRecoleccion[index].nombre;
   }
@@ -196,5 +217,9 @@ export class SubprocesoCard {
       if (boolean) tecnicasSeleccionadas.push(this.tecnicasRecoleccion[index]);
     });
     return tecnicasSeleccionadas;
+  }
+
+  goToSeccionTecnicaSeleccionada() {
+    this.router.navigate(['/observaciones']);
   }
 }

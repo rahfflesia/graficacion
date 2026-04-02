@@ -1,4 +1,8 @@
-.project-card {
+.project-card > * {
+  flex: 1;
+}
+
+.wrapper {
   padding: 1.5rem;
 }
 
@@ -8,8 +12,8 @@
 }
 
 .project-header > img {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
 }
 
 .fecha-creacion {
@@ -24,11 +28,50 @@
 
 .opciones-proyecto > button {
   flex: 1;
-  border: none;
+  border: 1px solid lightgray;
   padding: 0.5rem 0.25rem;
   border-radius: var(--border-radius);
   color: var(--font-color);
   background-color: var(--primary-color);
   cursor: pointer;
   font-weight: 700;
+  transition: color ease-in 300ms 0ms;
+  transition: background-color ease-in 300ms 0ms;
+}
+
+.opciones-proyecto > button:first-child:hover {
+  color: var(--primary-color);
+  background-color: var(--blue);
+  border: none;
+}
+
+.opciones-proyecto > button:last-child:hover {
+  color: var(--red-color);
+  background-color: var(--red-background-color);
+  border: var(--red-outline);
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 0.8rem;
+  color: rgb(109, 109, 109);
+}
+
+.estado-proyecto {
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.6rem;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.barra-estado {
+  background-color: var(--blue);
+  height: 3px;
+  border-radius: var(--border-radius);
 }

@@ -10,10 +10,13 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Api } from '../../../servicios/api';
@@ -30,7 +33,6 @@ import {
 } from '../../../models/participantesProyecto.interface';
 import { ParticipanteCard } from '../../cards/participante-card/participante-card';
 import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
-import { single } from 'rxjs';
 import { Subproceso } from '../../../models/subprocesos.interface';
 import { SubprocesoCard } from '../../cards/subproceso-card/subproceso-card';
 
@@ -67,7 +69,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     nombreSubproceso: ['', Validators.required],
     descripcionSubproceso: ['', Validators.required],
     idProcesoAsociado: ['', Validators.required],
-    tecnicasAsociadas: this.formBuilder.array([]),
+    tecnicasAsociadas: this.formBuilder.array([], [this.tieneTecnicaSeleccionada()]),
   });
   formularioRoles = this.formBuilder.group({
     nombreRol: ['', Validators.required],
@@ -76,7 +78,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
   formularioParticipantes = this.formBuilder.group({
     nombre: ['', [Validators.required]],
     apellidoUno: ['', [Validators.required]],
-    apellidoDos: ['', [Validators.required]],
+    apellidoDos: [''],
     correo: ['', [Validators.required]],
     telefono: ['', [Validators.required]],
     idrol: ['', [Validators.required]],
@@ -88,6 +90,22 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
   get tecnicasAsociadas() {
     return this.formularioSubprocesos.get('tecnicasAsociadas') as FormArray;
+  }
+
+  obtenerControlFormularioProcesos(nombreControl: string) {
+    return this.formularioProcesos.get(nombreControl);
+  }
+
+  obtenerControlFormularioSubprocesos(nombreControl: string) {
+    return this.formularioSubprocesos.get(nombreControl);
+  }
+
+  obtenerControlFormularioRoles(nombreControl: string) {
+    return this.formularioRoles.get(nombreControl);
+  }
+
+  obtenerControlFormularioParticipantes(nombreControl: string) {
+    return this.formularioParticipantes.get(nombreControl);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -268,6 +286,18 @@ export class ModalConfiguracionProyecto implements OnChanges {
     return tecnicasSeleccionadas;
   }
 
+  tieneTecnicaSeleccionada(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      let boolean = false;
+      control.value.forEach((checkbox: any) => {
+        if (checkbox) {
+          boolean = true;
+        }
+      });
+      return !boolean ? { sinTecnicaSeleccionada: true } : null;
+    };
+  }
+
   obtenerNombreCheckbox(indice: number) {
     return this.tecnicasRecoleccion()[indice].nombre;
   }
@@ -279,6 +309,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
     if (!idProcesoAsociado || !nombreSubproceso || !descripcionSubproceso) {
       console.error('Alguna propiedad del formulario no está definida');
+      return;
+    }
+
+    if (tecnicasSeleccionadas.length === 0) {
+      console.error('No hay ninguna técnica seleccionada');
       return;
     }
 

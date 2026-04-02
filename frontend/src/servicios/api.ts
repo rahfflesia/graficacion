@@ -67,6 +67,8 @@ export class Api {
   private subprocesosEliminarUrl = 'eliminar/';
   private subprocesosEditarUrl = 'editar/';
 
+  private logoutUrl = 'logout/';
+
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
       this.baseUrl + this.registroUrl + this.reigstroRegistrarUrl,
@@ -209,5 +211,9 @@ export class Api {
       this.baseUrl + this.subprocesosUrl + this.subprocesosEditarUrl + idSubproceso,
       datosSubproceso,
     );
+  }
+
+  cerrarSesion(): Observable<any> {
+    return this.http.post(this.baseUrl + this.logoutUrl, {});
   }
 }

@@ -9,12 +9,15 @@ import stakeholders from "./rutas/stakeholders";
 import registro from "./auth/registro";
 import login from "./auth/login";
 import participantes from "./rutas/participantes";
+import logout from "./auth/logout";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/proyectos", proyectos);
 app.use("/tecnicasrecoleccion", tecnicasRecoleccion);
@@ -25,6 +28,7 @@ app.use("/stakeholders", stakeholders);
 app.use("/registro", registro);
 app.use("/login", login);
 app.use("/participantes", participantes);
+app.use("/logout", logout);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);

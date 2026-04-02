@@ -62,6 +62,12 @@
                     class="search-input"
                     formControlName="nombreProceso"
                   />
+                  @if (
+                    obtenerControlFormularioProcesos('nombreProceso')?.hasError('required') &&
+                    obtenerControlFormularioProcesos('nombreProceso')?.dirty
+                  ) {
+                    <div class="error-span">El nombre del proceso no puede quedar vacío</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Descripción del proceso</label>
@@ -70,6 +76,12 @@
                     class="search-input"
                     formControlName="descripcionProceso"
                   ></textarea>
+                  @if (
+                    obtenerControlFormularioProcesos('descripcionProceso')?.hasError('required') &&
+                    obtenerControlFormularioProcesos('descripcionProceso')?.touched
+                  ) {
+                    <div class="error-span">La descripción del proceso no puede quedar vacía</div>
+                  }
                 </div>
                 <div>
                   <button
@@ -113,6 +125,12 @@
                     class="search-input"
                     formControlName="nombreSubproceso"
                   />
+                  @if (
+                    obtenerControlFormularioSubprocesos('nombreSubproceso')?.hasError('required') &&
+                    obtenerControlFormularioSubprocesos('nombreSubproceso')?.touched
+                  ) {
+                    <div class="error-span">El nombre del subproceso no puede quedar vacío</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Descripción del subproceso</label>
@@ -121,6 +139,15 @@
                     class="search-input"
                     formControlName="descripcionSubproceso"
                   ></textarea>
+                  @if (
+                    obtenerControlFormularioSubprocesos('descripcionSubproceso')?.hasError(
+                      'required'
+                    ) && obtenerControlFormularioSubprocesos('descripcionSubproceso')?.touched
+                  ) {
+                    <div class="error-span">
+                      La descripción del subproceso no puede quedar vacía
+                    </div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Proceso asociado</label>
@@ -129,6 +156,13 @@
                       <option value="{{ proceso.idproceso }}">{{ proceso.nombre }}</option>
                     }
                   </select>
+                  @if (
+                    obtenerControlFormularioSubprocesos('idProcesoAsociado')?.hasError(
+                      'required'
+                    ) && obtenerControlFormularioSubprocesos('idProcesoAsociado')?.touched
+                  ) {
+                    <div class="error-span">El proceso asociado al subproceso es requerido</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap" formArrayName="tecnicasAsociadas">
                   <label for="">Técnica de recolección utilizada</label>
@@ -142,9 +176,27 @@
                       </div>
                     }
                   </div>
+                  @if (
+                    obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.hasError(
+                      'required'
+                    ) && obtenerControlFormularioProcesos('tecnicasAsociadas')?.touched
+                  ) {
+                    <div class="error-span">Al menos una técnica es requerida</div>
+                  }
+                  @if (
+                    obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.hasError(
+                      'sinTecnicaSeleccionada'
+                    ) && obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.dirty
+                  ) {
+                    <span class="error-span">Debes seleccionar al menos una técnica</span>
+                  }
                 </div>
                 <div>
-                  <button class="default-button" (click)="crearSubproceso()">
+                  <button
+                    class="default-button"
+                    (click)="crearSubproceso()"
+                    [disabled]="formularioSubprocesos.invalid"
+                  >
                     Crear subproceso
                   </button>
                 </div>
@@ -179,6 +231,12 @@
                     class="search-input"
                     formControlName="nombreRol"
                   />
+                  @if (
+                    obtenerControlFormularioRoles('nombreRol')?.hasError('required') &&
+                    obtenerControlFormularioRoles('nombreRol')?.dirty
+                  ) {
+                    <div class="error-span">El nombre del rol no puede quedar vacío</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Tipo de rol</label>
@@ -186,6 +244,12 @@
                     <option value="Interno" [defaultSelected]="true">Interno</option>
                     <option value="Externo">Externo</option>
                   </select>
+                  @if (
+                    obtenerControlFormularioRoles('tipoRol')?.hasError('required') &&
+                    obtenerControlFormularioRoles('tipoRol')?.dirty
+                  ) {
+                    <div class="error-span">El tipo de rol es requerido</div>
+                  }
                 </div>
                 <div>
                   <button
@@ -229,6 +293,12 @@
                     class="search-input"
                     formControlName="nombre"
                   />
+                  @if (
+                    obtenerControlFormularioParticipantes('nombre')?.hasError('required') &&
+                    obtenerControlFormularioParticipantes('nombre')?.dirty
+                  ) {
+                    <div class="error-span">El nombre del participante no puede quedar vacío</div>
+                  }
                 </div>
                 <div class="apellidos-wrapper">
                   <div class="input-wrapper flex-column sm-gap">
@@ -239,6 +309,12 @@
                       placeholder="Ingresa el apellido uno"
                       formControlName="apellidoUno"
                     />
+                    @if (
+                      obtenerControlFormularioParticipantes('apellidoUno')?.hasError('required') &&
+                      obtenerControlFormularioParticipantes('apellidoUno')?.dirty
+                    ) {
+                      <div class="error-span">El apellido uno no puede quedar vacío</div>
+                    }
                   </div>
                   <div class="input-wrapper flex-column sm-gap">
                     <label for="">Apellidos dos</label>
@@ -258,6 +334,12 @@
                     placeholder="Ingresa el correo electrónico"
                     formControlName="correo"
                   />
+                  @if (
+                    obtenerControlFormularioParticipantes('correo')?.hasError('required') &&
+                    obtenerControlFormularioParticipantes('correo')?.dirty
+                  ) {
+                    <div class="error-span">El correo electrónico es requerido</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Teléfono</label>
@@ -267,6 +349,12 @@
                     class="search-input"
                     formControlName="telefono"
                   />
+                  @if (
+                    obtenerControlFormularioParticipantes('telefono')?.hasError('required') &&
+                    obtenerControlFormularioParticipantes('telefono')?.dirty
+                  ) {
+                    <div class="error-span">El número de teléfono es requerido</div>
+                  }
                 </div>
                 <div class="input-wrapper flex-column sm-gap">
                   <label for="">Selecciona el rol a asignar</label>
@@ -279,6 +367,12 @@
                       </div>
                     }
                   </select>
+                  @if (
+                    obtenerControlFormularioParticipantes('idrol')?.hasError('required') &&
+                    obtenerControlFormularioParticipantes('idrol')?.dirty
+                  ) {
+                    <div class="error-span">El rol es requerido</div>
+                  }
                 </div>
                 <div>
                   <button

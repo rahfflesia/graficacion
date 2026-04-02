@@ -31,6 +31,7 @@ model proyectos {
   descripcion           String
   fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)
   idusuario             Int
+  estado                estadosproyectos        @default(Activo)
   procesos              procesos[]
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
@@ -104,4 +105,11 @@ enum tiporol {
 enum tipousuario {
   Persona
   Usuario
+}
+
+enum estadosproyectos {
+  Activo
+  Pausado
+  Cancelado
+  En_revisi_n @map("En revisión")
 }

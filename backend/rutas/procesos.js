@@ -1,7 +1,10 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware.js";
 
 const procesos = Router();
+
+procesos.use(validarToken);
 
 procesos.get("/obtener/:idproyecto", async (req, res) => {
   try {

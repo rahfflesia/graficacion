@@ -1,7 +1,11 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware.js";
 
 const proyectos = Router();
+
+// Middleware de autenticación para proteger la ruta
+proyectos.use(validarToken);
 
 // Id del usuario
 proyectos.get("/obtenertodos/:id", async (req, res) => {
@@ -145,6 +149,7 @@ proyectos.post("/crear", async (req, res) => {
           nombre: proyecto.nombre,
           descripcion: proyecto.descripcion,
           idusuario: proyecto.idusuario,
+          estado: "Activo",
         },
       });
       const idProyecto = nuevoProyecto.idproyecto;
@@ -175,6 +180,7 @@ proyectos.put("/editar/:id", async (req, res) => {
       data: {
         nombre: proyectoSinActualizar.nombre,
         descripcion: proyectoSinActualizar.descripcion,
+        estado: proyectoSinActualizar.estado,
       },
       where: {
         idproyecto: parseInt(id),

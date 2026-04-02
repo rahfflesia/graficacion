@@ -1142,7 +1142,8 @@ export const ProyectosScalarFieldEnum = {
   nombre: 'nombre',
   descripcion: 'descripcion',
   fechacreacion: 'fechacreacion',
-  idusuario: 'idusuario'
+  idusuario: 'idusuario',
+  estado: 'estado'
 } as const
 
 export type ProyectosScalarFieldEnum = (typeof ProyectosScalarFieldEnum)[keyof typeof ProyectosScalarFieldEnum]
@@ -1282,6 +1283,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'estadosproyectos'
+ */
+export type EnumestadosproyectosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'estadosproyectos'>
+    
+
+
+/**
+ * Reference to a field of type 'estadosproyectos[]'
+ */
+export type ListEnumestadosproyectosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'estadosproyectos[]'>
     
 
 
