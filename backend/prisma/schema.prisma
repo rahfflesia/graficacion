@@ -55,13 +55,15 @@ model tecnicasrecoleccion {
 }
 
 model personas {
-  idpersona             Int                     @id @default(autoincrement())
-  nombre                String                  @db.VarChar(255)
-  apellidouno           String                  @db.VarChar(255)
-  apellidodos           String?                 @db.VarChar(255)
-  correo                String?                 @db.VarChar(255)
-  telefono              String?                 @db.VarChar(255)
-  rolespersonasproyecto rolespersonasproyecto[]
+  idpersona               Int                       @id @default(autoincrement())
+  nombre                  String                    @db.VarChar(255)
+  apellidouno             String                    @db.VarChar(255)
+  apellidodos             String?                   @db.VarChar(255)
+  correo                  String?                   @db.VarChar(255)
+  telefono                String?                   @db.VarChar(255)
+  observaciones           observaciones[]
+  observacionesobservados observacionesobservados[]
+  rolespersonasproyecto   rolespersonasproyecto[]
 }
 
 model rolespersonasproyecto {
@@ -84,6 +86,7 @@ model subprocesos {
   descripcion        String
   fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
   metodossubprocesos metodossubprocesos[]
+  observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
 }
 
@@ -95,6 +98,29 @@ model usuarios {
   correo              String      @unique(map: "correo_unico") @db.VarChar(255)
   pfp                 String?     @default("https://pbs.twimg.com/media/FeToVEqX0Acjv0i.png") @db.VarChar(255)
   proyectos           proyectos[]
+}
+
+model observaciones {
+  idobservacion           Int                       @id @default(autoincrement())
+  idsubproceso            Int
+  nombre                  String                    @db.VarChar(255)
+  descripcion             String
+  idobservador            Int
+  lugar                   String                    @db.VarChar(255)
+  tipo                    tipoobservacion
+  fechahoracaptura        DateTime                  @default(now()) @db.Timestamptz(6)
+  personas                personas                  @relation(fields: [idobservador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  observacionesobservados observacionesobservados[]
+}
+
+model observacionesobservados {
+  idobservacion Int
+  idobservado   Int
+  observaciones observaciones @relation(fields: [idobservacion], references: [idobservacion], onDelete: NoAction, onUpdate: NoAction)
+  personas      personas      @relation(fields: [idobservado], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([idobservacion, idobservado])
 }
 
 enum tiporol {
@@ -112,4 +138,9 @@ enum estadosproyectos {
   Pausado
   Cancelado
   En_revisi_n @map("En revisión")
+}
+
+enum tipoobservacion {
+  Pasiva
+  Activa
 }
