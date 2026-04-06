@@ -21,6 +21,7 @@ import {
 } from '../models/participantesProyecto.interface';
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
+import { DatosFormularioObservacion } from '../models/observacion';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +69,9 @@ export class Api {
   private subprocesosEditarUrl = 'editar/';
 
   private logoutUrl = 'logout/';
+
+  private observacionesUrl = 'observaciones/';
+  private observacionesCrearUrl = 'crear/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -215,5 +219,12 @@ export class Api {
 
   cerrarSesion(): Observable<any> {
     return this.http.post(this.baseUrl + this.logoutUrl, {});
+  }
+
+  crearObservacion(datosObservacion: DatosFormularioObservacion): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.observacionesUrl + this.observacionesCrearUrl,
+      datosObservacion,
+    );
   }
 }

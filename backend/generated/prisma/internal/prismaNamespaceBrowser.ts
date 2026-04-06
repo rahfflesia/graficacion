@@ -59,7 +59,9 @@ export const ModelName = {
   personas: 'personas',
   rolespersonasproyecto: 'rolespersonasproyecto',
   subprocesos: 'subprocesos',
-  usuarios: 'usuarios'
+  usuarios: 'usuarios',
+  observaciones: 'observaciones',
+  observacionesobservados: 'observacionesobservados'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -173,6 +175,28 @@ export const UsuariosScalarFieldEnum = {
 } as const
 
 export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
+
+
+export const ObservacionesScalarFieldEnum = {
+  idobservacion: 'idobservacion',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idobservador: 'idobservador',
+  lugar: 'lugar',
+  tipo: 'tipo',
+  fechahoracaptura: 'fechahoracaptura'
+} as const
+
+export type ObservacionesScalarFieldEnum = (typeof ObservacionesScalarFieldEnum)[keyof typeof ObservacionesScalarFieldEnum]
+
+
+export const ObservacionesobservadosScalarFieldEnum = {
+  idobservacion: 'idobservacion',
+  idobservado: 'idobservado'
+} as const
+
+export type ObservacionesobservadosScalarFieldEnum = (typeof ObservacionesobservadosScalarFieldEnum)[keyof typeof ObservacionesobservadosScalarFieldEnum]
 
 
 export const SortOrder = {

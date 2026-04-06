@@ -224,6 +224,8 @@ export type personasWhereInput = {
   apellidodos?: Prisma.StringNullableFilter<"personas"> | string | null
   correo?: Prisma.StringNullableFilter<"personas"> | string | null
   telefono?: Prisma.StringNullableFilter<"personas"> | string | null
+  observaciones?: Prisma.ObservacionesListRelationFilter
+  observacionesobservados?: Prisma.ObservacionesobservadosListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
 }
 
@@ -234,6 +236,8 @@ export type personasOrderByWithRelationInput = {
   apellidodos?: Prisma.SortOrderInput | Prisma.SortOrder
   correo?: Prisma.SortOrderInput | Prisma.SortOrder
   telefono?: Prisma.SortOrderInput | Prisma.SortOrder
+  observaciones?: Prisma.observacionesOrderByRelationAggregateInput
+  observacionesobservados?: Prisma.observacionesobservadosOrderByRelationAggregateInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOrderByRelationAggregateInput
 }
 
@@ -247,6 +251,8 @@ export type personasWhereUniqueInput = Prisma.AtLeast<{
   apellidodos?: Prisma.StringNullableFilter<"personas"> | string | null
   correo?: Prisma.StringNullableFilter<"personas"> | string | null
   telefono?: Prisma.StringNullableFilter<"personas"> | string | null
+  observaciones?: Prisma.ObservacionesListRelationFilter
+  observacionesobservados?: Prisma.ObservacionesobservadosListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
 }, "idpersona">
 
@@ -282,6 +288,8 @@ export type personasCreateInput = {
   apellidodos?: string | null
   correo?: string | null
   telefono?: string | null
+  observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
 }
 
@@ -292,6 +300,8 @@ export type personasUncheckedCreateInput = {
   apellidodos?: string | null
   correo?: string | null
   telefono?: string | null
+  observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
 }
 
@@ -301,6 +311,8 @@ export type personasUpdateInput = {
   apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
 }
 
@@ -311,6 +323,8 @@ export type personasUncheckedUpdateInput = {
   apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
@@ -394,12 +408,42 @@ export type personasUpdateOneRequiredWithoutRolespersonasproyectoNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.personasUpdateToOneWithWhereWithoutRolespersonasproyectoInput, Prisma.personasUpdateWithoutRolespersonasproyectoInput>, Prisma.personasUncheckedUpdateWithoutRolespersonasproyectoInput>
 }
 
+export type personasCreateNestedOneWithoutObservacionesInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutObservacionesInput, Prisma.personasUncheckedCreateWithoutObservacionesInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutObservacionesInput
+  connect?: Prisma.personasWhereUniqueInput
+}
+
+export type personasUpdateOneRequiredWithoutObservacionesNestedInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutObservacionesInput, Prisma.personasUncheckedCreateWithoutObservacionesInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutObservacionesInput
+  upsert?: Prisma.personasUpsertWithoutObservacionesInput
+  connect?: Prisma.personasWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.personasUpdateToOneWithWhereWithoutObservacionesInput, Prisma.personasUpdateWithoutObservacionesInput>, Prisma.personasUncheckedUpdateWithoutObservacionesInput>
+}
+
+export type personasCreateNestedOneWithoutObservacionesobservadosInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutObservacionesobservadosInput, Prisma.personasUncheckedCreateWithoutObservacionesobservadosInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutObservacionesobservadosInput
+  connect?: Prisma.personasWhereUniqueInput
+}
+
+export type personasUpdateOneRequiredWithoutObservacionesobservadosNestedInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutObservacionesobservadosInput, Prisma.personasUncheckedCreateWithoutObservacionesobservadosInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutObservacionesobservadosInput
+  upsert?: Prisma.personasUpsertWithoutObservacionesobservadosInput
+  connect?: Prisma.personasWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.personasUpdateToOneWithWhereWithoutObservacionesobservadosInput, Prisma.personasUpdateWithoutObservacionesobservadosInput>, Prisma.personasUncheckedUpdateWithoutObservacionesobservadosInput>
+}
+
 export type personasCreateWithoutRolespersonasproyectoInput = {
   nombre: string
   apellidouno: string
   apellidodos?: string | null
   correo?: string | null
   telefono?: string | null
+  observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateWithoutRolespersonasproyectoInput = {
@@ -409,6 +453,8 @@ export type personasUncheckedCreateWithoutRolespersonasproyectoInput = {
   apellidodos?: string | null
   correo?: string | null
   telefono?: string | null
+  observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasCreateOrConnectWithoutRolespersonasproyectoInput = {
@@ -433,6 +479,8 @@ export type personasUpdateWithoutRolespersonasproyectoInput = {
   apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateWithoutRolespersonasproyectoInput = {
@@ -442,6 +490,124 @@ export type personasUncheckedUpdateWithoutRolespersonasproyectoInput = {
   apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasCreateWithoutObservacionesInput = {
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+}
+
+export type personasUncheckedCreateWithoutObservacionesInput = {
+  idpersona?: number
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+}
+
+export type personasCreateOrConnectWithoutObservacionesInput = {
+  where: Prisma.personasWhereUniqueInput
+  create: Prisma.XOR<Prisma.personasCreateWithoutObservacionesInput, Prisma.personasUncheckedCreateWithoutObservacionesInput>
+}
+
+export type personasUpsertWithoutObservacionesInput = {
+  update: Prisma.XOR<Prisma.personasUpdateWithoutObservacionesInput, Prisma.personasUncheckedUpdateWithoutObservacionesInput>
+  create: Prisma.XOR<Prisma.personasCreateWithoutObservacionesInput, Prisma.personasUncheckedCreateWithoutObservacionesInput>
+  where?: Prisma.personasWhereInput
+}
+
+export type personasUpdateToOneWithWhereWithoutObservacionesInput = {
+  where?: Prisma.personasWhereInput
+  data: Prisma.XOR<Prisma.personasUpdateWithoutObservacionesInput, Prisma.personasUncheckedUpdateWithoutObservacionesInput>
+}
+
+export type personasUpdateWithoutObservacionesInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasUncheckedUpdateWithoutObservacionesInput = {
+  idpersona?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasCreateWithoutObservacionesobservadosInput = {
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+}
+
+export type personasUncheckedCreateWithoutObservacionesobservadosInput = {
+  idpersona?: number
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+}
+
+export type personasCreateOrConnectWithoutObservacionesobservadosInput = {
+  where: Prisma.personasWhereUniqueInput
+  create: Prisma.XOR<Prisma.personasCreateWithoutObservacionesobservadosInput, Prisma.personasUncheckedCreateWithoutObservacionesobservadosInput>
+}
+
+export type personasUpsertWithoutObservacionesobservadosInput = {
+  update: Prisma.XOR<Prisma.personasUpdateWithoutObservacionesobservadosInput, Prisma.personasUncheckedUpdateWithoutObservacionesobservadosInput>
+  create: Prisma.XOR<Prisma.personasCreateWithoutObservacionesobservadosInput, Prisma.personasUncheckedCreateWithoutObservacionesobservadosInput>
+  where?: Prisma.personasWhereInput
+}
+
+export type personasUpdateToOneWithWhereWithoutObservacionesobservadosInput = {
+  where?: Prisma.personasWhereInput
+  data: Prisma.XOR<Prisma.personasUpdateWithoutObservacionesobservadosInput, Prisma.personasUncheckedUpdateWithoutObservacionesobservadosInput>
+}
+
+export type personasUpdateWithoutObservacionesobservadosInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasUncheckedUpdateWithoutObservacionesobservadosInput = {
+  idpersona?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 
@@ -450,10 +616,14 @@ export type personasUncheckedUpdateWithoutRolespersonasproyectoInput = {
  */
 
 export type PersonasCountOutputType = {
+  observaciones: number
+  observacionesobservados: number
   rolespersonasproyecto: number
 }
 
 export type PersonasCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  observaciones?: boolean | PersonasCountOutputTypeCountObservacionesArgs
+  observacionesobservados?: boolean | PersonasCountOutputTypeCountObservacionesobservadosArgs
   rolespersonasproyecto?: boolean | PersonasCountOutputTypeCountRolespersonasproyectoArgs
 }
 
@@ -465,6 +635,20 @@ export type PersonasCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the PersonasCountOutputType
    */
   select?: Prisma.PersonasCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PersonasCountOutputType without action
+ */
+export type PersonasCountOutputTypeCountObservacionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.observacionesWhereInput
+}
+
+/**
+ * PersonasCountOutputType without action
+ */
+export type PersonasCountOutputTypeCountObservacionesobservadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.observacionesobservadosWhereInput
 }
 
 /**
@@ -482,6 +666,8 @@ export type personasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   apellidodos?: boolean
   correo?: boolean
   telefono?: boolean
+  observaciones?: boolean | Prisma.personas$observacionesArgs<ExtArgs>
+  observacionesobservados?: boolean | Prisma.personas$observacionesobservadosArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.personas$rolespersonasproyectoArgs<ExtArgs>
   _count?: boolean | Prisma.PersonasCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["personas"]>
@@ -515,6 +701,8 @@ export type personasSelectScalar = {
 
 export type personasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idpersona" | "nombre" | "apellidouno" | "apellidodos" | "correo" | "telefono", ExtArgs["result"]["personas"]>
 export type personasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  observaciones?: boolean | Prisma.personas$observacionesArgs<ExtArgs>
+  observacionesobservados?: boolean | Prisma.personas$observacionesobservadosArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.personas$rolespersonasproyectoArgs<ExtArgs>
   _count?: boolean | Prisma.PersonasCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -524,6 +712,8 @@ export type personasIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $personasPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "personas"
   objects: {
+    observaciones: Prisma.$observacionesPayload<ExtArgs>[]
+    observacionesobservados: Prisma.$observacionesobservadosPayload<ExtArgs>[]
     rolespersonasproyecto: Prisma.$rolespersonasproyectoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -927,6 +1117,8 @@ readonly fields: personasFieldRefs;
  */
 export interface Prisma__personasClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  observaciones<T extends Prisma.personas$observacionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$observacionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$observacionesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  observacionesobservados<T extends Prisma.personas$observacionesobservadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$observacionesobservadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$observacionesobservadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rolespersonasproyecto<T extends Prisma.personas$rolespersonasproyectoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$rolespersonasproyectoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$rolespersonasproyectoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1348,6 +1540,54 @@ export type personasDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many personas to delete.
    */
   limit?: number
+}
+
+/**
+ * personas.observaciones
+ */
+export type personas$observacionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the observaciones
+   */
+  select?: Prisma.observacionesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the observaciones
+   */
+  omit?: Prisma.observacionesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.observacionesInclude<ExtArgs> | null
+  where?: Prisma.observacionesWhereInput
+  orderBy?: Prisma.observacionesOrderByWithRelationInput | Prisma.observacionesOrderByWithRelationInput[]
+  cursor?: Prisma.observacionesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ObservacionesScalarFieldEnum | Prisma.ObservacionesScalarFieldEnum[]
+}
+
+/**
+ * personas.observacionesobservados
+ */
+export type personas$observacionesobservadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the observacionesobservados
+   */
+  select?: Prisma.observacionesobservadosSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the observacionesobservados
+   */
+  omit?: Prisma.observacionesobservadosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.observacionesobservadosInclude<ExtArgs> | null
+  where?: Prisma.observacionesobservadosWhereInput
+  orderBy?: Prisma.observacionesobservadosOrderByWithRelationInput | Prisma.observacionesobservadosOrderByWithRelationInput[]
+  cursor?: Prisma.observacionesobservadosWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ObservacionesobservadosScalarFieldEnum | Prisma.ObservacionesobservadosScalarFieldEnum[]
 }
 
 /**

@@ -15,6 +15,7 @@ import {
 import { Proceso } from '../../../models/procesos.interface';
 import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
 import { Router } from '@angular/router';
+import { Participante } from '../../../models/participantesProyecto.interface';
 
 @Component({
   selector: 'subproceso-card',
@@ -26,6 +27,7 @@ export class SubprocesoCard {
   @Input() subproceso: Subproceso | undefined;
   @Input() procesosProyecto: Proceso[] = [];
   @Input() tecnicasRecoleccion: TecnicaRecoleccion[] = [];
+  @Input() participantes: Participante[] = [];
 
   @Output() editar = new EventEmitter<Subproceso>();
   @Output() eliminar = new EventEmitter<Subproceso>();
@@ -219,7 +221,36 @@ export class SubprocesoCard {
     return tecnicasSeleccionadas;
   }
 
-  goToSeccionTecnicaSeleccionada() {
-    this.router.navigate(['/observaciones']);
+  goToSeccionTecnicaSeleccionada(nombreTecnica: string) {
+    // La única ruta que funciona es la de observaciones de momento
+    const datosTecnica = {
+      participantes: this.participantes,
+      subproceso: this.subproceso,
+    };
+    switch (nombreTecnica) {
+      case 'Entrevista':
+        this.router.navigate(['/entrevistas']);
+        break;
+      case 'Observacion':
+        this.router.navigate(['/observaciones'], { state: { datosTecnica } });
+        break;
+      case 'Cuestionario':
+        this.router.navigate(['/cuestionarios']);
+        break;
+      case 'Historia de usuario':
+        this.router.navigate(['/historiasusuario']);
+        break;
+      case 'Focus group':
+        this.router.navigate(['/focusgroup']);
+        break;
+      case 'Análisis de documento':
+        this.router.navigate(['/analisisdocumento']);
+        break;
+      case 'Seguimiento transaccional':
+        this.router.navigate(['/seguimientotransaccional']);
+        break;
+      default:
+        console.error('Valor inválido');
+    }
   }
 }

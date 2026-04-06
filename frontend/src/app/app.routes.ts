@@ -21,7 +21,6 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-    canActivateChild: [authGuard],
     children: [
       { path: 'proyectos', component: SeccionProyectos },
       { path: 'procesos', component: ProcesosPrincipales },

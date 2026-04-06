@@ -1,12 +1,21 @@
-<div class="subproceso-card flex-column sm-gap" (click)="goToSeccionTecnicaSeleccionada()">
-  <header>
-    @if (!estaEditando) {
-      <h4>{{ subproceso?.nombresubproceso }}</h4>
-    }
+<div class="subproceso-card flex-column sm-gap">
+  <header class="flex-column sm-gap">
+    <div class="header-inner-wrapper">
+      @if (!estaEditando) {
+        <h4>{{ subproceso?.nombresubproceso }}</h4>
+      }
+      @if (!estaBorrando && !estaEditando) {
+        <div class="botones">
+          <button class="gray-button" (click)="mostrarMenuEditar()">Editar</button>
+          <button class="gray-button" (click)="mostrarMenuBorrar()">Eliminar</button>
+        </div>
+      }
+    </div>
     @if (!estaBorrando && !estaEditando) {
-      <div class="botones">
-        <button class="gray-button" (click)="mostrarMenuEditar()">Editar</button>
-        <button class="gray-button" (click)="mostrarMenuBorrar()">Eliminar</button>
+      <div class="tecnicas">
+        @for (tecnica of subproceso?.tecnicasasociadas; track tecnica.idtecnicarecoleccion) {
+          <span (click)="goToSeccionTecnicaSeleccionada(tecnica.nombre)">{{ tecnica.nombre }}</span>
+        }
       </div>
     }
   </header>

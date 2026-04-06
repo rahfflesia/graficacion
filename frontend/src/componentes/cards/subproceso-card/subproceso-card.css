@@ -4,12 +4,6 @@
   border: 1px solid lightgray;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .botones,
 .botones-borrar {
   display: flex;
@@ -63,4 +57,26 @@ header {
 
 .checkbox-inner-wrapper > span {
   font-size: 0.8rem;
+}
+
+.header-inner-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.tecnicas {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.tecnicas > * {
+  color: var(--blue);
+  background-color: var(--blue-fg-color);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
 }

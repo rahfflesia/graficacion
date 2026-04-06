@@ -1,1 +1,166 @@
-<h1>Soy la sección de observaciones</h1>
+<section class="flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Observaciones</h1>
+    <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
+  </div>
+  <form class="flex-column sm-gap" [formGroup]="formularioObservaciones">
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Tipo de observación</label>
+      <div class="barra-menu">
+        <div
+          (click)="seleccionarOpcion('Pasiva')"
+          [class.opcion-seleccionada]="tipoObservacionSeleccionada() === 'Pasiva'"
+        >
+          Pasiva
+        </div>
+        <div
+          (click)="seleccionarOpcion('Activa')"
+          [class.opcion-seleccionada]="tipoObservacionSeleccionada() === 'Activa'"
+        >
+          Activa
+        </div>
+      </div>
+    </div>
+    @if (tipoObservacionSeleccionada() === 'Activa') {
+      <div class="observados-wrapper flex-column sm-gap">
+        <div class="observados-wrapper-header">
+          <h4>Agregar observados</h4>
+        </div>
+        <input
+          #inputNombrePersona
+          type="text"
+          placeholder="Busca el nombre de un participante del proyecto"
+          class="search-input"
+          (input)="filtrarNombres(inputNombrePersona.value)"
+        />
+        @if (inputNombrePersona.value.length > 0) {
+          <div
+            class="flex-column sm-gap wrapper-resultados"
+            formArrayName="checkboxesParticipantes"
+          >
+            <h3>Resultados de la búsqueda ({{ participantesFiltrados.length }})</h3>
+            @for (
+              objeto of participantesFiltrados;
+              track objeto.participante.idpersona;
+              let i = $index
+            ) {
+              <div class="wrapper-persona">
+                <span class="nombre-persona"
+                  >{{ objeto.participante.nombre }}
+                  {{ objeto.participante.apellidouno }}
+                  {{ objeto.participante.apellidodos }}</span
+                >
+                <div class="rol-checkbox-wrapper">
+                  <span class="rol-persona">{{ objeto.participante.nombrerol }}</span>
+                  <input
+                    type="checkbox"
+                    [formControlName]="objeto.indiceOriginal"
+                    (change)="agregarParticipante(objeto)"
+                  />
+                </div>
+              </div>
+            } @empty {
+              <span class="sin-resultados">No se encontraron resultados</span>
+            }
+          </div>
+        }
+        @if (listaParticipantesAgregados.length > 0) {
+          <div class="lista-observados">
+            @for (
+              participante of listaParticipantesAgregados;
+              track participante.idpersona;
+              let i = $index
+            ) {
+              <div class="observado">
+                <span
+                  >{{ participante.nombre }} {{ participante.apellidouno }}
+                  {{ participante.apellidodos ?? '' }}</span
+                >
+                <div class="info-roles">
+                  <span class="nombre-rol">{{ participante.nombrerol }}</span>
+                  <span class="tipo-rol">Interno</span>
+                  <button class="eliminar" (click)="eliminarParticipante(i)">X</button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="nombre-observacion">Nombre</label>
+      <input
+        type="text"
+        name="nombre-observacion"
+        class="search-input"
+        placeholder="Ingresa el nombre de la observación"
+        formControlName="nombreObservacion"
+      />
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="descripcion-observacion">Descripción</label>
+      <textarea
+        name="descripcion-observacion"
+        placeholder="Ingresa la descripción de la observación"
+        class="search-input observacion-desc"
+        formControlName="descripcionObservacion"
+      ></textarea>
+    </div>
+    <div class="input-wrapper-row">
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="informacion-persona">Selecciona la persona que recopiló la observación</label>
+        <select name="informacion-persona" class="custom-select" formControlName="idPersona">
+          @for (participante of participantes(); track participante.idpersona) {
+            <option value="{{ participante.idpersona }}">
+              {{ participante.nombre }} {{ participante.apellidouno }}
+              {{ participante.apellidodos ?? '' }}
+            </option>
+          }
+        </select>
+      </div>
+      @if (estaCheckboxFechaHoraSeleccionado()) {
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="fecha-hora-captura">Fecha y hora de captura</label>
+          <input
+            type="datetime-local"
+            name="fecha-hora-captura"
+            class="search-input"
+            placeholder="Ingresa la fecha y hora de captura"
+            formControlName="fechaHoraCaptura"
+          />
+        </div>
+      }
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="nombre-lugar">Nombre del lugar</label>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Ingresa el nombre del lugar donde se obtuvo la observación"
+        formControlName="nombreLugar"
+      />
+    </div>
+    <div class="checkbox-wrapper">
+      <input
+        type="checkbox"
+        formControlName="checkboxFechaHora"
+        (change)="actualizarValidezCheckbox()"
+      />
+      <span>Quiero ingresar una fecha y hora distinta a la actual</span>
+    </div>
+    <div>
+      <button
+        class="default-button"
+        (click)="crearObservacion()"
+        [disabled]="formularioObservaciones.invalid"
+      >
+        Guardar observación
+      </button>
+    </div>
+  </form>
+  <h3>Observaciones asociadas</h3>
+  <div class="lista-observaciones flex-column sm-gap">
+    <div>Observación 1</div>
+    <div>Observación 2</div>
+  </div>
+</section>

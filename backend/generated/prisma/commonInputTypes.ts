@@ -188,6 +188,23 @@ export type EnumtipousuarioWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumtipousuarioFilter<$PrismaModel>
 }
 
+export type EnumtipoobservacionFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipoobservacion | Prisma.EnumtipoobservacionFieldRefInput<$PrismaModel>
+  in?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel> | $Enums.tipoobservacion
+}
+
+export type EnumtipoobservacionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipoobservacion | Prisma.EnumtipoobservacionFieldRefInput<$PrismaModel>
+  in?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipoobservacionWithAggregatesFilter<$PrismaModel> | $Enums.tipoobservacion
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -373,6 +390,23 @@ export type NestedEnumtipousuarioWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumtipousuarioFilter<$PrismaModel>
   _max?: Prisma.NestedEnumtipousuarioFilter<$PrismaModel>
+}
+
+export type NestedEnumtipoobservacionFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipoobservacion | Prisma.EnumtipoobservacionFieldRefInput<$PrismaModel>
+  in?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel> | $Enums.tipoobservacion
+}
+
+export type NestedEnumtipoobservacionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipoobservacion | Prisma.EnumtipoobservacionFieldRefInput<$PrismaModel>
+  in?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipoobservacion[] | Prisma.ListEnumtipoobservacionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipoobservacionWithAggregatesFilter<$PrismaModel> | $Enums.tipoobservacion
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtipoobservacionFilter<$PrismaModel>
 }
 
 

@@ -84,3 +84,13 @@ export type subprocesos = Prisma.subprocesosModel
  * 
  */
 export type usuarios = Prisma.usuariosModel
+/**
+ * Model observaciones
+ * 
+ */
+export type observaciones = Prisma.observacionesModel
+/**
+ * Model observacionesobservados
+ * 
+ */
+export type observacionesobservados = Prisma.observacionesobservadosModel
