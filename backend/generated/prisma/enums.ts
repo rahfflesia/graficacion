@@ -41,3 +41,12 @@ export const tipoobservacion = {
 } as const
 
 export type tipoobservacion = (typeof tipoobservacion)[keyof typeof tipoobservacion]
+
+
+export const tipopregunta = {
+  Abierta: 'Abierta',
+  Opcion_multiple: 'Opcion_multiple',
+  Escala: 'Escala'
+} as const
+
+export type tipopregunta = (typeof tipopregunta)[keyof typeof tipopregunta]
