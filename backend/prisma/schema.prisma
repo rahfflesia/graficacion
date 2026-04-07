@@ -64,6 +64,7 @@ model personas {
   observaciones           observaciones[]
   observacionesobservados observacionesobservados[]
   rolespersonasproyecto   rolespersonasproyecto[]
+  cuestionarios           cuestionarios[]
 }
 
 model rolespersonasproyecto {
@@ -88,6 +89,7 @@ model subprocesos {
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+  cuestionarios          cuestionarios[]
 }
 
 model usuarios {
@@ -143,4 +145,32 @@ enum estadosproyectos {
 enum tipoobservacion {
   Pasiva
   Activa
+}
+
+model cuestionarios {
+  idicuestionario        Int                    @id @default(autoincrement())
+  idsubproceso           Int
+  nombre                 String                 @db.VarChar(255)
+  descripcion            String
+  idcreador              Int
+  fechacreacion          DateTime               @default(now()) @db.Timestamptz(6)
+  personas               personas               @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  preguntascuestionario  preguntascuestionario[]
+}
+
+model preguntascuestionario {
+  idpregunta      Int            @id @default(autoincrement())
+  idcuestionario  Int
+  textopregunta   String
+  tipopregunta    tipopregunta
+  opciones        String[]       @default([])
+  orden           Int
+  cuestionarios   cuestionarios  @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
+}
+
+enum tipopregunta {
+  Abierta
+  Opcion_multiple @map("Opción múltiple")
+  Escala
 }
