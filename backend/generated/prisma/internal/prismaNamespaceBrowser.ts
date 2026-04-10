@@ -61,7 +61,9 @@ export const ModelName = {
   subprocesos: 'subprocesos',
   usuarios: 'usuarios',
   observaciones: 'observaciones',
-  observacionesobservados: 'observacionesobservados'
+  observacionesobservados: 'observacionesobservados',
+  cuestionarios: 'cuestionarios',
+  preguntascuestionario: 'preguntascuestionario'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -197,6 +199,30 @@ export const ObservacionesobservadosScalarFieldEnum = {
 } as const
 
 export type ObservacionesobservadosScalarFieldEnum = (typeof ObservacionesobservadosScalarFieldEnum)[keyof typeof ObservacionesobservadosScalarFieldEnum]
+
+
+export const CuestionariosScalarFieldEnum = {
+  idicuestionario: 'idicuestionario',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idcreador: 'idcreador',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type CuestionariosScalarFieldEnum = (typeof CuestionariosScalarFieldEnum)[keyof typeof CuestionariosScalarFieldEnum]
+
+
+export const PreguntascuestionarioScalarFieldEnum = {
+  idpregunta: 'idpregunta',
+  idcuestionario: 'idcuestionario',
+  textopregunta: 'textopregunta',
+  tipopregunta: 'tipopregunta',
+  opciones: 'opciones',
+  orden: 'orden'
+} as const
+
+export type PreguntascuestionarioScalarFieldEnum = (typeof PreguntascuestionarioScalarFieldEnum)[keyof typeof PreguntascuestionarioScalarFieldEnum]
 
 
 export const SortOrder = {

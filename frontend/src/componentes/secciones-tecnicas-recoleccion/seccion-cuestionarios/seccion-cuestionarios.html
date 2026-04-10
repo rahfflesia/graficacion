@@ -1,0 +1,170 @@
+<section class="flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Cuestionarios</h1>
+    <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
+  </div>
+
+  <form class="flex-column sm-gap" [formGroup]="formularioCuestionario">
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="nombre-cuestionario">Nombre del cuestionario</label>
+      <input
+        type="text"
+        name="nombre-cuestionario"
+        class="search-input"
+        placeholder="Ingresa el nombre del cuestionario"
+        formControlName="nombreCuestionario"
+      />
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="descripcion-cuestionario">Descripción</label>
+      <textarea
+        name="descripcion-cuestionario"
+        placeholder="Ingresa la descripción del cuestionario"
+        class="search-input observacion-desc"
+        formControlName="descripcionCuestionario"
+      ></textarea>
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="creador-cuestionario">Persona que creó el cuestionario</label>
+      <select name="creador-cuestionario" class="custom-select" formControlName="idPersona">
+        @for (participante of participantes(); track participante.idpersona) {
+          <option value="{{ participante.idpersona }}">
+            {{ participante.nombre }} {{ participante.apellidouno }}
+            {{ participante.apellidodos ?? '' }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="preguntas-wrapper flex-column sm-gap">
+      <div class="preguntas-header">
+        <h3>Preguntas</h3>
+        <button type="button" class="default-button btn-agregar" (click)="agregarPregunta()">
+          + Agregar pregunta
+        </button>
+      </div>
+
+      <div formArrayName="preguntas">
+        @for (pregunta of preguntasFormArray.controls; track $index; let i = $index) {
+          <div class="pregunta-card flex-column sm-gap" [formGroupName]="i">
+            <div class="pregunta-header">
+              <span class="pregunta-numero">Pregunta {{ i + 1 }}</span>
+              <button type="button" class="btn-eliminar-pregunta" (click)="eliminarPregunta(i)">
+                X
+              </button>
+            </div>
+
+            <div class="input-wrapper flex-column sm-gap">
+              <label>Texto de la pregunta</label>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Escribe la pregunta"
+                formControlName="textoPregunta"
+              />
+            </div>
+
+            <div class="input-wrapper flex-column sm-gap">
+              <label>Tipo de pregunta</label>
+              <select
+                class="custom-select"
+                formControlName="tipoPregunta"
+                (change)="alCambiarTipoPregunta(i)"
+              >
+                <option value="Abierta">Abierta</option>
+                <option value="Opción múltiple">Opción múltiple</option>
+                <option value="Escala">Escala (1-5)</option>
+              </select>
+            </div>
+
+            @if (obtenerTipoPregunta(i) === 'Opción múltiple') {
+              <div class="opciones-wrapper flex-column sm-gap">
+                <label>Opciones de respuesta</label>
+                <div formArrayName="opciones" class="flex-column sm-gap">
+                  @for (
+                    opcion of obtenerOpcionesFormArray(i).controls;
+                    track $index;
+                    let j = $index
+                  ) {
+                    <div class="opcion-row">
+                      <input
+                        type="text"
+                        class="search-input opcion-input"
+                        placeholder="Opción {{ j + 1 }}"
+                        [formControlName]="j"
+                      />
+                      <button
+                        type="button"
+                        class="btn-eliminar-opcion"
+                        (click)="eliminarOpcion(i, j)"
+                      >
+                        X
+                      </button>
+                    </div>
+                  }
+                </div>
+                <button
+                  type="button"
+                  class="default-button btn-agregar-opcion"
+                  (click)="agregarOpcion(i)"
+                >
+                  + Agregar opción
+                </button>
+              </div>
+            }
+
+            @if (obtenerTipoPregunta(i) === 'Escala') {
+              <div class="escala-preview">
+                <span class="escala-label">Vista previa de la escala:</span>
+                <div class="escala-numeros">
+                  @for (num of [1, 2, 3, 4, 5]; track num) {
+                    <div class="escala-numero">{{ num }}</div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @empty {
+          <div class="sin-preguntas">
+            <span>No hay preguntas agregadas. Agrega al menos una pregunta para crear el cuestionario.</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div>
+      <button
+        class="default-button"
+        (click)="crearCuestionario()"
+        [disabled]="formularioCuestionario.invalid || preguntasFormArray.length === 0"
+      >
+        Guardar cuestionario
+      </button>
+    </div>
+  </form>
+
+  <h3>Cuestionarios asociados</h3>
+  <div class="lista-cuestionarios flex-column sm-gap">
+    @for (cuestionario of cuestionariosExistentes(); track cuestionario.idicuestionario) {
+      <div class="cuestionario-item">
+        <div class="cuestionario-info">
+          <span class="cuestionario-nombre">{{ cuestionario.nombre }}</span>
+          <span class="cuestionario-desc">{{ cuestionario.descripcion }}</span>
+          <span class="cuestionario-preguntas">
+            {{ cuestionario.preguntascuestionario.length }} pregunta(s)
+          </span>
+        </div>
+        <button
+          class="btn-eliminar-cuestionario"
+          (click)="eliminarCuestionario(cuestionario.idicuestionario)"
+        >
+          Eliminar
+        </button>
+      </div>
+    } @empty {
+      <div class="sin-cuestionarios">No hay cuestionarios asociados a este subproceso.</div>
+    }
+  </div>
+</section>

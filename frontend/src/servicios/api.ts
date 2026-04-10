@@ -22,6 +22,7 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion } from '../models/observacion';
+import { DatosFormularioCuestionario, Cuestionario } from '../models/cuestionario';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +73,11 @@ export class Api {
 
   private observacionesUrl = 'observaciones/';
   private observacionesCrearUrl = 'crear/';
+
+  private cuestionariosUrl = 'cuestionarios/';
+  private cuestionariosCrearUrl = 'crear/';
+  private cuestionariosObtenerUrl = 'obtener/';
+  private cuestionariosEliminarUrl = 'eliminar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -225,6 +231,23 @@ export class Api {
     return this.http.post<any>(
       this.baseUrl + this.observacionesUrl + this.observacionesCrearUrl,
       datosObservacion,
+    );
+  }
+  crearCuestionario(datosCuestionario: DatosFormularioCuestionario): Observable<any> {
+  return this.http.post<any>(
+    this.baseUrl + this.cuestionariosUrl + this.cuestionariosCrearUrl,
+    datosCuestionario,
+    );
+  } 
+  obtenerCuestionarios(idSubproceso: number): Observable<Cuestionario[]> {
+  return this.http.get<Cuestionario[]>(
+    this.baseUrl + this.cuestionariosUrl + this.cuestionariosObtenerUrl + idSubproceso,
+    );
+  }
+
+  eliminarCuestionario(idCuestionario: number): Observable<any> {
+  return this.http.delete<any>(
+    this.baseUrl + this.cuestionariosUrl + this.cuestionariosEliminarUrl + idCuestionario,
     );
   }
 }
