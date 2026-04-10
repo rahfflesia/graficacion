@@ -94,3 +94,13 @@ export type observaciones = Prisma.observacionesModel
  * 
  */
 export type observacionesobservados = Prisma.observacionesobservadosModel
+/**
+ * Model cuestionarios
+ * 
+ */
+export type cuestionarios = Prisma.cuestionariosModel
+/**
+ * Model preguntascuestionario
+ * 
+ */
+export type preguntascuestionario = Prisma.preguntascuestionarioModel

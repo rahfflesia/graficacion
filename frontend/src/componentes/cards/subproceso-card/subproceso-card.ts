@@ -235,7 +235,7 @@ export class SubprocesoCard {
         this.router.navigate(['/observaciones'], { state: { datosTecnica } });
         break;
       case 'Cuestionario':
-        this.router.navigate(['/cuestionarios']);
+        this.router.navigate(['/cuestionarios'], { state: { datosTecnica } });
         break;
       case 'Historia de usuario':
         this.router.navigate(['/historiasusuario']);
