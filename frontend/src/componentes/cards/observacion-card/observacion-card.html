@@ -30,7 +30,27 @@
     @let longitudListaParticipantes = observacion?.listaparticipantes?.length ?? 0;
     @if (longitudListaParticipantes > 0) {
       <div class="numero-observados">
-        {{ longitudListaParticipantes }} observados <span>Ver observados</span>
+        {{ longitudListaParticipantes }} observados
+        <span (click)="mostrarListaObservados()">Ver observados</span>
+        @if (esListaObservadosVisible) {
+          <div class="lista-observados flex-column" style="gap: 0.5rem">
+            <div class="flex-between">
+              <h2>Lista de observados</h2>
+              <div class="close-button" (click)="ocultarListaObservados()">X</div>
+            </div>
+            @for (observado of observacion?.listaparticipantes; track observado.idpersona) {
+              <div class="flex-between observado-sm-component">
+                <div>
+                  {{ observado.nombre }} {{ observado.apellidouno }}
+                  {{ observado.apellidodos ?? '' }}
+                </div>
+                <span>
+                  {{ observado.nombrerol }}
+                </span>
+              </div>
+            }
+          </div>
+        }
       </div>
     }
   </footer>

@@ -24,6 +24,7 @@ export class ObservacionCard {
 
   esMenuBorrarVisible = false;
   esModalEditarObservacionVisible = false;
+  esListaObservadosVisible = false;
 
   mostrarMenuBorrar() {
     this.esMenuBorrarVisible = true;
@@ -39,6 +40,14 @@ export class ObservacionCard {
 
   ocultarModalEditar() {
     this.esModalEditarObservacionVisible = false;
+  }
+
+  mostrarListaObservados() {
+    this.esListaObservadosVisible = true;
+  }
+
+  ocultarListaObservados() {
+    this.esListaObservadosVisible = false;
   }
 
   eliminarObservacion() {
