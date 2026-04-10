@@ -1,3 +1,7 @@
+<modal-carga
+  [toggler]="estanCargandoObservaciones"
+  [mensaje]="'Cargando observaciones'"
+></modal-carga>
 <section class="flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Observaciones</h1>
@@ -27,13 +31,14 @@
           <h4>Agregar observados</h4>
         </div>
         <input
-          #inputNombrePersona
           type="text"
           placeholder="Busca el nombre de un participante del proyecto"
           class="search-input"
-          (input)="filtrarNombres(inputNombrePersona.value)"
+          formControlName="campoBusqueda"
+          (input)="filtrarParticipantes()"
         />
-        @if (inputNombrePersona.value.length > 0) {
+        @let controlCampoBusqueda = obtenerControlFormularioObservaciones('campoBusqueda');
+        @if (controlCampoBusqueda?.value.length > 0) {
           <div
             class="flex-column sm-gap wrapper-resultados"
             formArrayName="checkboxesParticipantes"
@@ -79,11 +84,21 @@
                 <div class="info-roles">
                   <span class="nombre-rol">{{ participante.nombrerol }}</span>
                   <span class="tipo-rol">Interno</span>
-                  <button class="eliminar" (click)="eliminarParticipante(i)">X</button>
+                  <button class="eliminar" (click)="eliminarParticipante(i, participante)">
+                    X
+                  </button>
                 </div>
               </div>
             }
           </div>
+        }
+        @if (controlCampoBusqueda?.dirty && controlCampoBusqueda?.hasError('listaVacia')) {
+          <div class="error-span">Debes seleccionar al menos a una persona observada</div>
+        } @else if (
+          controlCampoBusqueda?.dirty &&
+          controlCampoBusqueda?.hasError('observadorEnListaObservados')
+        ) {
+          <div class="error-span">El observador no puede estar en la lista de observados</div>
         }
       </div>
     }
@@ -96,6 +111,10 @@
         placeholder="Ingresa el nombre de la observación"
         formControlName="nombreObservacion"
       />
+      @let controlNombreObservacion = obtenerControlFormularioObservaciones('nombreObservacion');
+      @if (controlNombreObservacion?.hasError('required') && controlNombreObservacion?.dirty) {
+        <div class="error-span">El nombre de la observación no puede quedar vacío</div>
+      }
     </div>
     <div class="input-wrapper flex-column sm-gap">
       <label for="descripcion-observacion">Descripción</label>
@@ -105,6 +124,13 @@
         class="search-input observacion-desc"
         formControlName="descripcionObservacion"
       ></textarea>
+      @let controlDescripcionObservacion =
+        obtenerControlFormularioObservaciones('descripcionObservacion');
+      @if (
+        controlDescripcionObservacion?.hasError('required') && controlDescripcionObservacion?.dirty
+      ) {
+        <div class="error-span">La descripción de la observación no puede quedar vacía</div>
+      }
     </div>
     <div class="input-wrapper-row">
       <div class="input-wrapper flex-column sm-gap">
@@ -117,6 +143,10 @@
             </option>
           }
         </select>
+        @let controlIdPersona = obtenerControlFormularioObservaciones('idPersona');
+        @if (controlIdPersona?.hasError('required') && controlIdPersona?.touched) {
+          <div class="error-span">Debes seleccionar a la persona que recopiló la información</div>
+        }
       </div>
       @if (estaCheckboxFechaHoraSeleccionado()) {
         <div class="input-wrapper flex-column sm-gap">
@@ -128,6 +158,10 @@
             placeholder="Ingresa la fecha y hora de captura"
             formControlName="fechaHoraCaptura"
           />
+          @let controlFechaHoraCaptura = obtenerControlFormularioObservaciones('fechaHoraCaptura');
+          @if (controlFechaHoraCaptura?.hasError('required') && controlFechaHoraCaptura?.dirty) {
+            <div class="error-span">Los datos de fecha y hora no pueden quedar vacíos</div>
+          }
         </div>
       }
     </div>
@@ -139,6 +173,10 @@
         placeholder="Ingresa el nombre del lugar donde se obtuvo la observación"
         formControlName="nombreLugar"
       />
+      @let controlNombreLugar = obtenerControlFormularioObservaciones('nombreLugar');
+      @if (controlNombreLugar?.hasError('required') && controlNombreLugar?.dirty) {
+        <div class="error-span">El lugar no puede quedar vacío</div>
+      }
     </div>
     <div class="checkbox-wrapper">
       <input
@@ -158,9 +196,17 @@
       </button>
     </div>
   </form>
-  <h3>Observaciones asociadas</h3>
-  <div class="lista-observaciones flex-column sm-gap">
-    <div>Observación 1</div>
-    <div>Observación 2</div>
+  <h3>Observaciones asociadas ({{ observaciones().length }})</h3>
+  <div class="lista-observaciones">
+    @for (observacion of observaciones(); track observacion.idobservacion) {
+      <observacion-card
+        [observacion]="observacion"
+        [listaParticipantesProyecto]="participantes()"
+        (eliminar)="eliminarObservacion($event)"
+        (editar)="editarObservacion($event)"
+      ></observacion-card>
+    } @empty {
+      <div class="sin-observaciones">Aún no has creado ninguna observación</div>
+    }
   </div>
 </section>

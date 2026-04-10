@@ -1,0 +1,46 @@
+<modal-editar-observacion
+  [toggler]="esModalEditarObservacionVisible"
+  (cerrar)="ocultarModalEditar()"
+  [observacion]="observacion"
+  [listaParticipantesProyecto]="listaParticipantesProyecto"
+  (editar)="editar.emit($event)"
+></modal-editar-observacion>
+<div class="observacion flex-column sm-gap">
+  <div class="flex-row-between">
+    <span class="tipo-observacion">{{ observacion?.tipo }}</span>
+    <div class="wrapper-botones">
+      <button (click)="mostrarModalEditar()" class="tipo-observacion">Editar</button>
+      <button (click)="mostrarMenuBorrar()" class="boton-eliminar">Eliminar</button>
+    </div>
+  </div>
+  <header>
+    <h4 class="nombre-observacion">{{ observacion?.nombre }}</h4>
+  </header>
+  <div class="descripcion-observacion">{{ observacion?.descripcion }}</div>
+  <footer>
+    <div class="datos-captura">
+      Recopilado el
+      {{ observacion?.fechahoracaptura | date }}
+      por
+      {{ observacion?.observador?.nombre }} {{ observacion?.observador?.apellidouno }}
+      {{ observacion?.observador?.apellidodos ?? '' }}
+      en
+      {{ observacion?.lugar }}
+    </div>
+    @let longitudListaParticipantes = observacion?.listaparticipantes?.length ?? 0;
+    @if (longitudListaParticipantes > 0) {
+      <div class="numero-observados">
+        {{ longitudListaParticipantes }} observados <span>Ver observados</span>
+      </div>
+    }
+  </footer>
+  @if (esMenuBorrarVisible) {
+    <div class="confirmar-eliminacion">
+      <span class="mensaje-eliminar">¿Quieres eliminar esta observación?</span>
+      <div class="botones">
+        <button (click)="eliminarObservacion()" class="boton-eliminar">Sí</button>
+        <button (click)="ocultarMenuBorrar()" class="tipo-observacion">No</button>
+      </div>
+    </div>
+  }
+</div>
