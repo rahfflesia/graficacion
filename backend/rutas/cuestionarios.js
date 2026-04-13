@@ -77,4 +77,52 @@ cuestionarios.delete("/eliminar/:idcuestionario", async (req, res) => {
   }
 });
 
+cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
+  try {
+    const idcuestionario = parseInt(req.params.idcuestionario);
+    const { nombre, descripcion, idCreador, preguntas } = req.body;
+
+    const resultado = await prisma.$transaction(async (tx) => {
+      const cuestionarioActualizado = await tx.cuestionarios.update({
+        where: { idicuestionario: idcuestionario },
+        data: {
+          nombre,
+          descripcion,
+          idcreador: idCreador,
+        },
+      });
+
+      // Eliminar preguntas anteriores
+      await tx.preguntascuestionario.deleteMany({
+        where: { idcuestionario: idcuestionario },
+      });
+
+      // Crear las nuevas preguntas
+      if (preguntas && preguntas.length > 0) {
+        const datosPreguntas = preguntas.map((pregunta, index) => ({
+          idcuestionario: idcuestionario,
+          textopregunta: pregunta.textoPregunta,
+          tipopregunta: pregunta.tipoPregunta,
+          opciones: pregunta.opciones || [],
+          orden: index + 1,
+        }));
+
+        await tx.preguntascuestionario.createMany({
+          data: datosPreguntas,
+        });
+      }
+
+      return cuestionarioActualizado;
+    });
+
+    return res.status(200).json({
+      mensaje: "Cuestionario actualizado exitosamente",
+      cuestionario: resultado,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar el cuestionario" });
+  }
+});
+
 export default cuestionarios;

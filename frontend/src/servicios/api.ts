@@ -81,6 +81,7 @@ export class Api {
   private cuestionariosCrearUrl = 'crear/';
   private cuestionariosObtenerUrl = 'obtener/';
   private cuestionariosEliminarUrl = 'eliminar/';
+  private cuestionariosEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -271,6 +272,13 @@ export class Api {
   eliminarCuestionario(idCuestionario: number): Observable<any> {
     return this.http.delete<any>(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosEliminarUrl + idCuestionario,
+    );
+  }
+
+  editarCuestionario(idCuestionario: number, datosCuestionario: DatosFormularioCuestionario): Observable<any> {
+    return this.http.put(
+      this.baseUrl + this.cuestionariosUrl + this.cuestionariosEditarUrl + idCuestionario,
+      datosCuestionario,
     );
   }
 }
