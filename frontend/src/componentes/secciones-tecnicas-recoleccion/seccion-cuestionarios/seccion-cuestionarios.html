@@ -135,13 +135,26 @@
     </div>
 
     <div>
-      <button
-        class="default-button"
-        (click)="crearCuestionario()"
-        [disabled]="formularioCuestionario.invalid || preguntasFormArray.length === 0"
-      >
-        Guardar cuestionario
-      </button>
+      @if (cuestionarioEnEdicion()) {
+        <button
+          class="default-button"
+          (click)="editarCuestionario()"
+          [disabled]="formularioCuestionario.invalid || preguntasFormArray.length === 0"
+        >
+          Actualizar cuestionario
+        </button>
+        <button class="default-button btn-cancelar" (click)="cancelarEdicion()">
+          Cancelar edición
+        </button>
+      } @else {
+        <button
+          class="default-button"
+          (click)="crearCuestionario()"
+          [disabled]="formularioCuestionario.invalid || preguntasFormArray.length === 0"
+        >
+          Guardar cuestionario
+        </button>
+      }
     </div>
   </form>
 
@@ -156,12 +169,20 @@
             {{ cuestionario.preguntascuestionario.length }} pregunta(s)
           </span>
         </div>
-        <button
-          class="btn-eliminar-cuestionario"
-          (click)="eliminarCuestionario(cuestionario.idicuestionario)"
-        >
-          Eliminar
-        </button>
+        <div class="cuestionario-acciones">
+          <button
+            class="btn-editar-cuestionario"
+            (click)="cargarParaEdicion(cuestionario)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn-eliminar-cuestionario"
+            (click)="eliminarCuestionario(cuestionario.idicuestionario)"
+          >
+            Eliminar
+          </button>
+        </div>
       </div>
     } @empty {
       <div class="sin-cuestionarios">No hay cuestionarios asociados a este subproceso.</div>
