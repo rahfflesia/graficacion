@@ -11,6 +11,7 @@ import { Roles } from '../componentes/principales/roles/roles';
 import { Stakeholders } from '../componentes/principales/stakeholders/stakeholders';
 import { SeccionObservaciones } from '../componentes/secciones-tecnicas-recoleccion/seccion-observaciones/seccion-observaciones';
 import { authGuard } from '../guards/auth-guard';
+import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recoleccion/seccion-cuestionarios/seccion-cuestionarios';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -21,7 +22,6 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-    canActivateChild: [authGuard],
     children: [
       { path: 'proyectos', component: SeccionProyectos },
       { path: 'procesos', component: ProcesosPrincipales },
@@ -30,6 +30,7 @@ export const routes: Routes = [
       { path: 'roles', component: Roles },
       { path: 'stakeholders', component: Stakeholders },
       { path: 'observaciones', component: SeccionObservaciones },
+      { path: 'cuestionarios', component: SeccionCuestionarios },
     ],
   },
 ];

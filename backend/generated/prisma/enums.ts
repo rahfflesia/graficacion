@@ -33,3 +33,20 @@ export const estadosproyectos = {
 } as const
 
 export type estadosproyectos = (typeof estadosproyectos)[keyof typeof estadosproyectos]
+
+
+export const tipoobservacion = {
+  Pasiva: 'Pasiva',
+  Activa: 'Activa'
+} as const
+
+export type tipoobservacion = (typeof tipoobservacion)[keyof typeof tipoobservacion]
+
+
+export const tipopregunta = {
+  Abierta: 'Abierta',
+  Opcion_multiple: 'Opcion_multiple',
+  Escala: 'Escala'
+} as const
+
+export type tipopregunta = (typeof tipopregunta)[keyof typeof tipopregunta]

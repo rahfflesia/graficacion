@@ -1,0 +1,206 @@
+section {
+  padding: 2rem;
+  background-color: var(--body-bg-color);
+  min-height: 100dvh;
+}
+
+.barra-menu {
+  display: flex;
+}
+
+.lista-observaciones {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.barra-menu > * {
+  flex: 1;
+  border: none;
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  background-color: var(--primary-color);
+  border: 1px solid lightgray;
+}
+
+.barra-menu > *:first-child {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.barra-menu > *:last-child {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+form {
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+}
+
+.checkbox-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.checkbox-wrapper span {
+  font-size: 0.8rem;
+  color: rgb(130, 130, 130);
+}
+
+.opcion-seleccionada {
+  background-color: var(--blue) !important;
+  color: var(--primary-color);
+  border: none !important;
+}
+
+.agregar-observados {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.agregar-observados > button {
+  font-size: 0.8rem;
+}
+
+.wrapper-persona {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+}
+
+.nombre-persona,
+.rol-persona,
+.sin-resultados {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.rol-persona {
+  background-color: var(--blue-fg-color);
+  color: var(--blue);
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+}
+
+.rol-checkbox-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.sin-resultados {
+  text-align: center;
+  border: 1px solid lightgray;
+  padding: 1rem 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.observados-wrapper {
+  position: relative;
+}
+
+.wrapper-resultados {
+  position: absolute;
+  z-index: 1;
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  top: 0;
+  left: 0;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  width: 100%;
+  margin-top: 5rem;
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.lista-observados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.observado {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--orange);
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.info-roles {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.info-roles > * {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.nombre-rol {
+  color: var(--blue);
+  background-color: var(--blue-fg-color);
+}
+
+.tipo-rol {
+  color: var(--orange);
+  background-color: var(--orange-fg-color);
+}
+
+.eliminar {
+  font-size: 0.6rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.sin-observaciones {
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+
+/* Estilos del modal para editar */
+.modal-editar-observacion {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.header-modal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.formulario-editar-observacion {
+  padding: 0;
+  box-shadow: none;
+}
+
+.wrapper-resultados-modal {
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+.formulario-editar-observacion {
+  max-height: 80vh;
+  overflow-y: auto;
+}

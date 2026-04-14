@@ -392,7 +392,11 @@ export const ModelName = {
   personas: 'personas',
   rolespersonasproyecto: 'rolespersonasproyecto',
   subprocesos: 'subprocesos',
-  usuarios: 'usuarios'
+  usuarios: 'usuarios',
+  observaciones: 'observaciones',
+  observacionesobservados: 'observacionesobservados',
+  cuestionarios: 'cuestionarios',
+  preguntascuestionario: 'preguntascuestionario'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios"
+    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios" | "observaciones" | "observacionesobservados" | "cuestionarios" | "preguntascuestionario"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1082,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    observaciones: {
+      payload: Prisma.$observacionesPayload<ExtArgs>
+      fields: Prisma.observacionesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.observacionesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.observacionesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        findFirst: {
+          args: Prisma.observacionesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.observacionesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        findMany: {
+          args: Prisma.observacionesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>[]
+        }
+        create: {
+          args: Prisma.observacionesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        createMany: {
+          args: Prisma.observacionesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.observacionesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>[]
+        }
+        delete: {
+          args: Prisma.observacionesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        update: {
+          args: Prisma.observacionesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        deleteMany: {
+          args: Prisma.observacionesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.observacionesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.observacionesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>[]
+        }
+        upsert: {
+          args: Prisma.observacionesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesPayload>
+        }
+        aggregate: {
+          args: Prisma.ObservacionesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateObservaciones>
+        }
+        groupBy: {
+          args: Prisma.observacionesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservacionesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.observacionesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservacionesCountAggregateOutputType> | number
+        }
+      }
+    }
+    observacionesobservados: {
+      payload: Prisma.$observacionesobservadosPayload<ExtArgs>
+      fields: Prisma.observacionesobservadosFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.observacionesobservadosFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.observacionesobservadosFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        findFirst: {
+          args: Prisma.observacionesobservadosFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.observacionesobservadosFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        findMany: {
+          args: Prisma.observacionesobservadosFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>[]
+        }
+        create: {
+          args: Prisma.observacionesobservadosCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        createMany: {
+          args: Prisma.observacionesobservadosCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.observacionesobservadosCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>[]
+        }
+        delete: {
+          args: Prisma.observacionesobservadosDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        update: {
+          args: Prisma.observacionesobservadosUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        deleteMany: {
+          args: Prisma.observacionesobservadosDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.observacionesobservadosUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.observacionesobservadosUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>[]
+        }
+        upsert: {
+          args: Prisma.observacionesobservadosUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$observacionesobservadosPayload>
+        }
+        aggregate: {
+          args: Prisma.ObservacionesobservadosAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateObservacionesobservados>
+        }
+        groupBy: {
+          args: Prisma.observacionesobservadosGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservacionesobservadosGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.observacionesobservadosCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservacionesobservadosCountAggregateOutputType> | number
+        }
+      }
+    }
+    cuestionarios: {
+      payload: Prisma.$cuestionariosPayload<ExtArgs>
+      fields: Prisma.cuestionariosFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.cuestionariosFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.cuestionariosFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        findFirst: {
+          args: Prisma.cuestionariosFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.cuestionariosFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        findMany: {
+          args: Prisma.cuestionariosFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>[]
+        }
+        create: {
+          args: Prisma.cuestionariosCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        createMany: {
+          args: Prisma.cuestionariosCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.cuestionariosCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>[]
+        }
+        delete: {
+          args: Prisma.cuestionariosDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        update: {
+          args: Prisma.cuestionariosUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        deleteMany: {
+          args: Prisma.cuestionariosDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.cuestionariosUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.cuestionariosUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>[]
+        }
+        upsert: {
+          args: Prisma.cuestionariosUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$cuestionariosPayload>
+        }
+        aggregate: {
+          args: Prisma.CuestionariosAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCuestionarios>
+        }
+        groupBy: {
+          args: Prisma.cuestionariosGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CuestionariosGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.cuestionariosCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CuestionariosCountAggregateOutputType> | number
+        }
+      }
+    }
+    preguntascuestionario: {
+      payload: Prisma.$preguntascuestionarioPayload<ExtArgs>
+      fields: Prisma.preguntascuestionarioFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.preguntascuestionarioFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.preguntascuestionarioFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        findFirst: {
+          args: Prisma.preguntascuestionarioFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.preguntascuestionarioFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        findMany: {
+          args: Prisma.preguntascuestionarioFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>[]
+        }
+        create: {
+          args: Prisma.preguntascuestionarioCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        createMany: {
+          args: Prisma.preguntascuestionarioCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.preguntascuestionarioCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>[]
+        }
+        delete: {
+          args: Prisma.preguntascuestionarioDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        update: {
+          args: Prisma.preguntascuestionarioUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        deleteMany: {
+          args: Prisma.preguntascuestionarioDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.preguntascuestionarioUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.preguntascuestionarioUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>[]
+        }
+        upsert: {
+          args: Prisma.preguntascuestionarioUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$preguntascuestionarioPayload>
+        }
+        aggregate: {
+          args: Prisma.PreguntascuestionarioAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePreguntascuestionario>
+        }
+        groupBy: {
+          args: Prisma.preguntascuestionarioGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PreguntascuestionarioGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.preguntascuestionarioCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PreguntascuestionarioCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1214,6 +1514,52 @@ export const UsuariosScalarFieldEnum = {
 export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
 
 
+export const ObservacionesScalarFieldEnum = {
+  idobservacion: 'idobservacion',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idobservador: 'idobservador',
+  lugar: 'lugar',
+  tipo: 'tipo',
+  fechahoracaptura: 'fechahoracaptura'
+} as const
+
+export type ObservacionesScalarFieldEnum = (typeof ObservacionesScalarFieldEnum)[keyof typeof ObservacionesScalarFieldEnum]
+
+
+export const ObservacionesobservadosScalarFieldEnum = {
+  idobservacion: 'idobservacion',
+  idobservado: 'idobservado'
+} as const
+
+export type ObservacionesobservadosScalarFieldEnum = (typeof ObservacionesobservadosScalarFieldEnum)[keyof typeof ObservacionesobservadosScalarFieldEnum]
+
+
+export const CuestionariosScalarFieldEnum = {
+  idicuestionario: 'idicuestionario',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idcreador: 'idcreador',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type CuestionariosScalarFieldEnum = (typeof CuestionariosScalarFieldEnum)[keyof typeof CuestionariosScalarFieldEnum]
+
+
+export const PreguntascuestionarioScalarFieldEnum = {
+  idpregunta: 'idpregunta',
+  idcuestionario: 'idcuestionario',
+  textopregunta: 'textopregunta',
+  tipopregunta: 'tipopregunta',
+  opciones: 'opciones',
+  orden: 'orden'
+} as const
+
+export type PreguntascuestionarioScalarFieldEnum = (typeof PreguntascuestionarioScalarFieldEnum)[keyof typeof PreguntascuestionarioScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1325,6 +1671,34 @@ export type EnumtipousuarioFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'tipousuario[]'
  */
 export type ListEnumtipousuarioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipousuario[]'>
+    
+
+
+/**
+ * Reference to a field of type 'tipoobservacion'
+ */
+export type EnumtipoobservacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipoobservacion'>
+    
+
+
+/**
+ * Reference to a field of type 'tipoobservacion[]'
+ */
+export type ListEnumtipoobservacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipoobservacion[]'>
+    
+
+
+/**
+ * Reference to a field of type 'tipopregunta'
+ */
+export type EnumtipopreguntaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipopregunta'>
+    
+
+
+/**
+ * Reference to a field of type 'tipopregunta[]'
+ */
+export type ListEnumtipopreguntaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipopregunta[]'>
     
 
 
@@ -1445,6 +1819,10 @@ export type GlobalOmitConfig = {
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOmit
   subprocesos?: Prisma.subprocesosOmit
   usuarios?: Prisma.usuariosOmit
+  observaciones?: Prisma.observacionesOmit
+  observacionesobservados?: Prisma.observacionesobservadosOmit
+  cuestionarios?: Prisma.cuestionariosOmit
+  preguntascuestionario?: Prisma.preguntascuestionarioOmit
 }
 
 /* Types for Logging */
