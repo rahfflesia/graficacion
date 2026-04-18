@@ -22,8 +22,7 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion } from '../models/observacion';
-import { DatosFormularioCuestionario, Cuestionario } from '../models/cuestionario';
-
+import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
 @Injectable({
   providedIn: 'root',
 })
@@ -79,6 +78,11 @@ export class Api {
   private cuestionariosObtenerUrl = 'obtener/';
   private cuestionariosEliminarUrl = 'eliminar/';
   private cuestionariosEditarUrl = 'editar/';
+
+  private respuestasCuestionariosUrl = 'respuestas-cuestionarios/';
+  private respuestasCuestionariosResponderUrl = 'responder/';
+  private respuestasCuestionariosObtenerUrl = 'obtener/';
+  private respuestasCuestionariosEliminarUrl = 'eliminar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -256,6 +260,26 @@ export class Api {
     return this.http.put(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosEditarUrl + idCuestionario,
       datosCuestionario,
+    );
+  }
+
+
+  responderCuestionario(datos: DatosRespuestaCuestionario): Observable<any> {
+  return this.http.post<any>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
+    datos,
+    );
+  }
+
+  obtenerRespuestasCuestionario(idCuestionario: number): Observable<RespuestaCuestionario[]> {
+  return this.http.get<RespuestaCuestionario[]>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosObtenerUrl + idCuestionario,
+    );
+  }
+
+  eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
+  return this.http.delete<any>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
     );
   }
 }

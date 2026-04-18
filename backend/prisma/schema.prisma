@@ -65,6 +65,7 @@ model personas {
   observacionesobservados observacionesobservados[]
   rolespersonasproyecto   rolespersonasproyecto[]
   cuestionarios           cuestionarios[]
+  respuestascuestionario respuestascuestionario[]
 }
 
 model rolespersonasproyecto {
@@ -157,6 +158,7 @@ model cuestionarios {
   personas               personas               @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
   subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario[]
+  respuestascuestionario respuestascuestionario[]
 }
 
 model preguntascuestionario {
@@ -167,10 +169,30 @@ model preguntascuestionario {
   opciones        String[]       @default([])
   orden           Int
   cuestionarios   cuestionarios  @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
+  respuestaspreguntas    respuestaspreguntas[]
 }
 
 enum tipopregunta {
   Abierta
   Opcion_multiple @map("Opción múltiple")
   Escala
+}
+
+model respuestascuestionario {
+  idrespuesta        Int                   @id @default(autoincrement())
+  idcuestionario     Int
+  idrespondente      Int
+  fecharespuesta     DateTime              @default(now()) @db.Timestamptz(6)
+  cuestionarios      cuestionarios         @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
+  personas           personas              @relation(fields: [idrespondente], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  respuestaspreguntas respuestaspreguntas[]
+}
+
+model respuestaspreguntas {
+  idrespuestapregunta    Int                      @id @default(autoincrement())
+  idrespuesta            Int
+  idpregunta             Int
+  valor                  String
+  respuestascuestionario respuestascuestionario   @relation(fields: [idrespuesta], references: [idrespuesta], onDelete: Cascade, onUpdate: NoAction)
+  preguntascuestionario  preguntascuestionario    @relation(fields: [idpregunta], references: [idpregunta], onDelete: Cascade, onUpdate: NoAction)
 }
