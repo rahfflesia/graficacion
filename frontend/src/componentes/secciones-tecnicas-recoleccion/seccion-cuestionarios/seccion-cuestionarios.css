@@ -218,3 +218,18 @@ form {
   border: 1px dashed lightgray;
   border-radius: var(--border-radius);
 }
+
+.btn-responder-cuestionario {
+  border: 1px solid green;
+  background: none;
+  color: green;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.btn-responder-cuestionario:hover {
+  background-color: rgba(0, 128, 0, 0.1);
+}
