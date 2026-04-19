@@ -21,7 +21,7 @@ import {
 } from '../models/participantesProyecto.interface';
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
-import { DatosFormularioObservacion } from '../models/observacion';
+import { DatosFormularioObservacion, Observacion } from '../models/observacion';
 import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
 @Injectable({
   providedIn: 'root',
@@ -72,6 +72,9 @@ export class Api {
 
   private observacionesUrl = 'observaciones/';
   private observacionesCrearUrl = 'crear/';
+  private observacionesObtenerUrl = 'obtener/';
+  private observacionesEliminarUrl = 'eliminar/';
+  private observacionesEditarUrl = 'editar/';
 
   private cuestionariosUrl = 'cuestionarios/';
   private cuestionariosCrearUrl = 'crear/';
@@ -232,27 +235,47 @@ export class Api {
     return this.http.post(this.baseUrl + this.logoutUrl, {});
   }
 
-  crearObservacion(datosObservacion: DatosFormularioObservacion): Observable<any> {
-    return this.http.post<any>(
+  crearObservacion(datosObservacion: DatosFormularioObservacion): Observable<Observacion> {
+    return this.http.post<Observacion>(
       this.baseUrl + this.observacionesUrl + this.observacionesCrearUrl,
       datosObservacion,
     );
   }
-  crearCuestionario(datosCuestionario: DatosFormularioCuestionario): Observable<any> {
-  return this.http.post<any>(
-    this.baseUrl + this.cuestionariosUrl + this.cuestionariosCrearUrl,
-    datosCuestionario,
+
+  obtenerObservaciones(idSubproceso: number): Observable<Observacion[]> {
+    return this.http.get<Observacion[]>(
+      this.baseUrl + this.observacionesUrl + this.observacionesObtenerUrl + idSubproceso,
     );
-  } 
+  }
+
+  eliminarObservacion(idObservacion: number): Observable<Observacion> {
+    return this.http.delete<Observacion>(
+      this.baseUrl + this.observacionesUrl + this.observacionesEliminarUrl + idObservacion,
+    );
+  }
+
+  editarObservacion(idObservacion: number, datosObservacion: Observacion): Observable<Observacion> {
+    return this.http.put<Observacion>(
+      this.baseUrl + this.observacionesUrl + this.observacionesEditarUrl + idObservacion,
+      datosObservacion,
+    );
+  }
+
+  crearCuestionario(datosCuestionario: DatosFormularioCuestionario): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.cuestionariosUrl + this.cuestionariosCrearUrl,
+      datosCuestionario,
+    );
+  }
   obtenerCuestionarios(idSubproceso: number): Observable<Cuestionario[]> {
-  return this.http.get<Cuestionario[]>(
-    this.baseUrl + this.cuestionariosUrl + this.cuestionariosObtenerUrl + idSubproceso,
+    return this.http.get<Cuestionario[]>(
+      this.baseUrl + this.cuestionariosUrl + this.cuestionariosObtenerUrl + idSubproceso,
     );
   }
 
   eliminarCuestionario(idCuestionario: number): Observable<any> {
-  return this.http.delete<any>(
-    this.baseUrl + this.cuestionariosUrl + this.cuestionariosEliminarUrl + idCuestionario,
+    return this.http.delete<any>(
+      this.baseUrl + this.cuestionariosUrl + this.cuestionariosEliminarUrl + idCuestionario,
     );
   }
 

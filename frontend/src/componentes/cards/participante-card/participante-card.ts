@@ -50,7 +50,7 @@ export class ParticipanteCard {
       apellidodos: this.participante?.apellidodos ?? 'Apellido dos',
       correo: this.participante?.correo ?? 'Correo',
       telefono: this.participante?.telefono ?? 'Telefono',
-      idrol: this.participante?.idrol.toString() ?? '1',
+      idrol: this.participante?.idrol!.toString() ?? '1',
     });
   }
 
