@@ -171,6 +171,12 @@
         </div>
         <div class="cuestionario-acciones">
           <button
+            class="btn-responder-cuestionario"
+            (click)="abrirResponder(cuestionario)"
+          >
+            Responder
+          </button>
+          <button
             class="btn-editar-cuestionario"
             (click)="cargarParaEdicion(cuestionario)"
           >
@@ -188,4 +194,13 @@
       <div class="sin-cuestionarios">No hay cuestionarios asociados a este subproceso.</div>
     }
   </div>
+
+  @if (cuestionarioRespondiendo()) {
+    <responder-cuestionario
+      [cuestionario]="cuestionarioRespondiendo()!"
+      [participantes]="participantes()"
+      (respuestaGuardada)="alGuardarRespuesta()"
+      (cancelar)="cerrarResponder()"
+    />
+  }
 </section>

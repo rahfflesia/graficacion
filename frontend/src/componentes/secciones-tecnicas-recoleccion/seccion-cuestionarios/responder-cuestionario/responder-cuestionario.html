@@ -1,0 +1,70 @@
+<div class="responder-overlay">
+  <div class="responder-modal flex-column sm-gap">
+    <div class="responder-header">
+      <h3>Responder: {{ cuestionario.nombre }}</h3>
+      <button type="button" class="btn-eliminar-pregunta" (click)="cancelar.emit()">X</button>
+    </div>
+
+    <form [formGroup]="formularioRespuesta" class="flex-column sm-gap">
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Persona que responde</label>
+        <select class="custom-select" formControlName="idRespondente">
+          @for (participante of participantes; track participante.idpersona) {
+            <option value="{{ participante.idpersona }}">
+              {{ participante.nombre }} {{ participante.apellidouno }}
+              {{ participante.apellidodos ?? '' }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div formArrayName="respuestas" class="flex-column sm-gap">
+        @for (pregunta of cuestionario.preguntascuestionario; track pregunta.idpregunta; let i = $index) {
+          <div class="pregunta-respuesta flex-column sm-gap" [formGroupName]="i">
+            <label class="pregunta-texto">{{ i + 1 }}. {{ pregunta.textopregunta }}</label>
+
+            @if (pregunta.tipopregunta === 'Abierta') {
+              <textarea
+                class="search-input observacion-desc"
+                placeholder="Escribe tu respuesta"
+                formControlName="valor"
+              ></textarea>
+            }
+
+            @if (pregunta.tipopregunta === 'Opción múltiple') {
+              <div class="opciones-respuesta flex-column sm-gap">
+                @for (opcion of pregunta.opciones; track opcion) {
+                  <label class="opcion-label">
+                    <input type="radio" [value]="opcion" formControlName="valor" />
+                    {{ opcion }}
+                  </label>
+                }
+              </div>
+            }
+
+            @if (pregunta.tipopregunta === 'Escala') {
+              <div class="escala-respuesta">
+                @for (num of [1, 2, 3, 4, 5]; track num) {
+                  <label class="escala-opcion">
+                    <input type="radio" [value]="'' + num" formControlName="valor" />
+                    <span class="escala-numero">{{ num }}</span>
+                  </label>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button
+          class="default-button"
+          (click)="guardarRespuesta()"
+          [disabled]="formularioRespuesta.invalid"
+        >
+          Enviar respuesta
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
