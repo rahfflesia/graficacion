@@ -1,0 +1,119 @@
+.nombre-observacion {
+  font-weight: bolder;
+}
+
+.numero-observados span {
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  margin-left: 0.5rem;
+  position: relative;
+}
+
+.observacion > footer {
+  font-weight: bolder;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.observacion > footer span {
+  color: var(--blue);
+}
+
+.flex-row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper-botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.observacion {
+  background-color: rgb(245, 252, 255);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  font-weight: 500;
+  height: 100%;
+}
+
+.observacion > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.descripcion-observacion,
+.tipo-observacion,
+.observacion > footer {
+  font-size: 0.8rem;
+}
+
+.descripcion-observacion {
+  color: rgb(169, 169, 169);
+}
+
+.tipo-observacion {
+  background-color: var(--blue-fg-color);
+  color: var(--blue);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius);
+  font-size: 0.7rem;
+}
+
+.boton-eliminar {
+  background-color: pink;
+  color: var(--red-color);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius);
+  font-size: 0.7rem;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.mensaje-eliminar {
+  font-size: 0.7rem;
+  color: lightslategray;
+}
+
+.confirmar-eliminacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lista-observados {
+  position: absolute;
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  transform: translate(70%, -90%);
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.observado-sm-component {
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+}

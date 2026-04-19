@@ -35,6 +35,7 @@ import { ParticipanteCard } from '../../cards/participante-card/participante-car
 import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
 import { Subproceso } from '../../../models/subprocesos.interface';
 import { SubprocesoCard } from '../../cards/subproceso-card/subproceso-card';
+import { crear, editar, eliminar } from '../../../crud-helpers/crudHelpers';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
@@ -164,7 +165,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.api.crearProceso(proceso).subscribe({
       next: (procesoCreado) => {
         this.toastr.success('Proceso creado correctamente');
-        this.procesos.update((procesosActuales) => [procesoCreado, ...procesosActuales]);
+        crear(this.procesos, procesoCreado);
       },
       error: (error) => {
         this.toastr.error('Ha ocurrido un error al crear el proceso', '', {
@@ -177,22 +178,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   borrarProceso(procesoEliminado: Proceso) {
-    this.procesos.update((procesos) =>
-      procesos.filter((proceso) => proceso.idproceso !== procesoEliminado.idproceso),
-    );
+    eliminar(this.procesos, procesoEliminado, 'idproceso');
   }
 
   editarProceso(procesoEditado: Proceso) {
-    this.procesos().map((proceso, index) => {
-      if (procesoEditado.idproceso === proceso.idproceso) {
-        this.procesos()[index] = procesoEditado;
-        return;
-      }
-
-      // Igual acá no supe muy bien que poner lol
-      console.log('No se encontró un proceso con ese id');
-      return;
-    });
+    editar(this.procesos, procesoEditado, 'idproceso');
   }
 
   crearRol() {
@@ -204,9 +194,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.api.crearRol(rol).subscribe({
       next: (rolCreado) => {
         this.toastr.success('Rol creado correctamente');
-        this.roles.update((roles) => [rolCreado, ...roles]);
-        console.log(this.primerRol());
-        console.log(this.roles()[0]);
+        crear(this.roles, rolCreado);
       },
       error: (error) => {
         console.error(error);
@@ -220,21 +208,12 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   eliminarRol(rolEliminado: Rol) {
-    this.roles.update((roles) => roles.filter((rol) => rol.idrol !== rolEliminado.idrol));
+    eliminar(this.roles, rolEliminado, 'idrol');
   }
 
   // Hay mucha lógica duplicada con esto de los cruds, después le haré un refactor
   editarRol(rolEditado: Rol) {
-    this.roles().map((rol, index) => {
-      if (rolEditado.idrol === rol.idrol) {
-        this.roles()[index] = rolEditado;
-        return;
-      }
-
-      // Igual acá no supe muy bien que poner lol
-      console.log('No se encontró un rol con ese id');
-      return;
-    });
+    editar(this.roles, rolEditado, 'idrol');
   }
 
   registrarParticipante() {
@@ -247,7 +226,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.api.registrarParticipante(datosParticipante).subscribe({
       next: (participanteRegistrado) => {
         this.toastr.success('Participante registrado exitosamente');
-        this.participantes.update((participantes) => [participanteRegistrado, ...participantes]);
+        crear(this.participantes, participanteRegistrado);
       },
       error: (error) => {
         console.error(error);
@@ -261,12 +240,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   eliminarParticipante(participanteEliminado: RolParticipanteProyecto) {
-    this.participantes.update((participantes) =>
-      participantes.filter(
-        (participante) =>
-          participante.idrolpersonaproyecto !== participanteEliminado.idrolpersonaproyecto,
-      ),
-    );
+    eliminar(this.participantes, participanteEliminado, 'idrolpersonaproyecto');
   }
 
   cargarTecnicas() {
@@ -327,8 +301,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.api.crearSubproceso(datosSubproceso).subscribe({
       next: (subprocesoCreado) => {
         this.toastr.success('Subproceso creado correctamente');
-        this.subprocesos.update((subproceso) => [...subproceso, subprocesoCreado]);
-        console.log(this.subprocesos());
+        crear(this.subprocesos, subprocesoCreado);
       },
       error: (error) => {
         console.error(error);
@@ -342,20 +315,10 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   eliminarSubproceso(subprocesoEliminado: Subproceso) {
-    this.subprocesos.update((subprocesos) =>
-      subprocesos.filter(
-        (subproceso) => subproceso.idsubproceso !== subprocesoEliminado.idsubproceso,
-      ),
-    );
+    eliminar(this.subprocesos, subprocesoEliminado, 'idsubproceso');
   }
 
   editarSubproceso(subprocesoEditado: Subproceso) {
-    this.subprocesos().map((subproceso, index) => {
-      if (subprocesoEditado.idsubproceso === subproceso.idsubproceso) {
-        this.subprocesos()[index] = subprocesoEditado;
-        console.log('Subproceso editado');
-        return;
-      }
-    });
+    editar(this.subprocesos, subprocesoEditado, 'idsubproceso');
   }
 }

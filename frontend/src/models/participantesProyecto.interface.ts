@@ -14,10 +14,11 @@ interface Participante {
   apellidodos: string | null;
   correo: string;
   telefono: string;
-  nombrerol: string;
+  nombrerol?: string;
   idpersona: number;
-  idrol: number;
-  idrolpersonaproyecto: number;
+  idrol?: number;
+  idrolpersonaproyecto?: number;
+  tiporol: string;
 }
 
 interface RolParticipanteProyecto {
