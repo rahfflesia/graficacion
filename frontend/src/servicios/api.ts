@@ -84,7 +84,6 @@ export class Api {
   private cuestionariosEliminarUrl = 'eliminar/';
   private cuestionariosEditarUrl = 'editar/';
 
-<<<<<<< HEAD
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
 
@@ -92,12 +91,11 @@ export class Api {
       Authorization: `Bearer ${token ?? ''}`,
     });
   }
-=======
+
   private respuestasCuestionariosUrl = 'respuestas-cuestionarios/';
   private respuestasCuestionariosResponderUrl = 'responder/';
   private respuestasCuestionariosObtenerUrl = 'obtener/';
   private respuestasCuestionariosEliminarUrl = 'eliminar/';
->>>>>>> main
 
   private focusGroupsUrl = 'focusgroups/';
   private focusGroupsCrearUrl = 'crear/';
@@ -409,31 +407,24 @@ export class Api {
       },
     );
   }
-<<<<<<< HEAD
-}
-=======
-
-
   responderCuestionario(datos: DatosRespuestaCuestionario): Observable<any> {
-  return this.http.post<any>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
-    datos,
+    return this.http.post<any>(
+      this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
+      datos,
     );
   }
 
   obtenerRespuestasCuestionario(idCuestionario: number): Observable<RespuestaCuestionario[]> {
-  return this.http.get<RespuestaCuestionario[]>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosObtenerUrl + idCuestionario,
+    return this.http.get<RespuestaCuestionario[]>(
+      this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosObtenerUrl + idCuestionario,
     );
   }
 
   eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
-  return this.http.delete<any>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
+    return this.http.delete<any>(
+      this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
     );
   }
-
-  // ─── Focus Groups ───────────────────────────────────────────────────────────
 
   crearFocusGroup(datos: DatosFormularioFocusGroup): Observable<any> {
     return this.http.post<any>(
@@ -461,8 +452,6 @@ export class Api {
     );
   }
 
-  // ─── Análisis de Documentos ─────────────────────────────────────────────────
-
   crearAnalisisDocumento(datos: DatosFormularioAnalisis): Observable<any> {
     return this.http.post<any>(
       this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosCrearUrl,
@@ -489,4 +478,3 @@ export class Api {
     );
   }
 }
->>>>>>> main
