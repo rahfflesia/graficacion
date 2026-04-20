@@ -22,8 +22,7 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
-import { Cuestionario, DatosFormularioCuestionario } from '../models/cuestionario';
-
+import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
 @Injectable({
   providedIn: 'root',
 })
@@ -83,6 +82,7 @@ export class Api {
   private cuestionariosEliminarUrl = 'eliminar/';
   private cuestionariosEditarUrl = 'editar/';
 
+<<<<<<< HEAD
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
 
@@ -90,6 +90,12 @@ export class Api {
       Authorization: `Bearer ${token ?? ''}`,
     });
   }
+=======
+  private respuestasCuestionariosUrl = 'respuestas-cuestionarios/';
+  private respuestasCuestionariosResponderUrl = 'responder/';
+  private respuestasCuestionariosObtenerUrl = 'obtener/';
+  private respuestasCuestionariosEliminarUrl = 'eliminar/';
+>>>>>>> main
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -389,4 +395,28 @@ export class Api {
       },
     );
   }
+<<<<<<< HEAD
 }
+=======
+
+
+  responderCuestionario(datos: DatosRespuestaCuestionario): Observable<any> {
+  return this.http.post<any>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
+    datos,
+    );
+  }
+
+  obtenerRespuestasCuestionario(idCuestionario: number): Observable<RespuestaCuestionario[]> {
+  return this.http.get<RespuestaCuestionario[]>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosObtenerUrl + idCuestionario,
+    );
+  }
+
+  eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
+  return this.http.delete<any>(
+    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
+    );
+  }
+}
+>>>>>>> main

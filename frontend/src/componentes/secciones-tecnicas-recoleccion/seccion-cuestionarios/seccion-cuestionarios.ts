@@ -12,10 +12,11 @@ import { Subproceso } from '../../../models/subprocesos.interface';
 import { Cuestionario, DatosFormularioCuestionario, Pregunta } from '../../../models/cuestionario';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
+import { ResponderCuestionario } from './responder-cuestionario/responder-cuestionario';
 
 @Component({
   selector: 'seccion-cuestionarios',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ResponderCuestionario],
   templateUrl: './seccion-cuestionarios.html',
   styleUrl: './seccion-cuestionarios.css',
 })
@@ -29,6 +30,7 @@ export class SeccionCuestionarios {
   participantes = signal<Participante[]>([]);
   cuestionariosExistentes = signal<Cuestionario[]>([]);
   cuestionarioEnEdicion = signal<Cuestionario | null>(null);
+  cuestionarioRespondiendo = signal<Cuestionario | null>(null);
 
   formularioCuestionario = this.formBuilder.group({
     nombreCuestionario: ['', [Validators.required]],
@@ -230,5 +232,17 @@ export class SeccionCuestionarios {
         });
       },
     });
+  }
+
+  abrirResponder(cuestionario: Cuestionario) {
+  this.cuestionarioRespondiendo.set(cuestionario);
+  }
+
+  cerrarResponder() {
+  this.cuestionarioRespondiendo.set(null);
+  }
+
+  alGuardarRespuesta() {
+  this.cuestionarioRespondiendo.set(null);
   }
 }
