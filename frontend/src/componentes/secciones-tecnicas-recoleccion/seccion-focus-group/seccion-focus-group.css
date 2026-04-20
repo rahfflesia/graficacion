@@ -1,0 +1,258 @@
+section {
+  padding: 2rem;
+  background-color: var(--body-bg-color);
+  min-height: 100dvh;
+}
+
+form {
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+}
+
+.area-texto {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* ── Temas ──────────────────────────────────────────────────── */
+.temas-wrapper {
+  border-top: 1px solid lightgray;
+  padding-top: 1rem;
+}
+
+.temas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tema-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tema-numero {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+  min-width: 1.5rem;
+}
+
+.tema-input {
+  flex: 1;
+}
+
+.btn-agregar {
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-eliminar-item {
+  border: none;
+  background: none;
+  color: red;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.btn-eliminar-item:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.sin-items {
+  text-align: center;
+  padding: 1.2rem;
+  border: 1px dashed lightgray;
+  border-radius: var(--border-radius);
+  color: rgb(130, 130, 130);
+  font-size: 0.85rem;
+}
+
+/* ── Participantes ──────────────────────────────────────────── */
+.participantes-wrapper {
+  border-top: 1px solid lightgray;
+  padding-top: 1rem;
+}
+
+.participantes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.participante-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+  transition: background 0.15s;
+}
+
+.participante-check:hover {
+  background-color: rgba(0, 100, 255, 0.06);
+}
+
+.participante-check input[type='checkbox'] {
+  accent-color: var(--blue);
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+/* ── Botones acción form ─────────────────────────────────────── */
+.acciones-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-cancelar {
+  background-color: transparent;
+  border: 1px solid red;
+  color: red;
+}
+
+.btn-cancelar:hover {
+  background-color: rgba(255, 0, 0, 0.08);
+}
+
+/* ── Lista cards ─────────────────────────────────────────────── */
+.lista-items > * {
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--box-shadow);
+  background-color: var(--primary-color);
+}
+
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.item-nombre {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.item-desc {
+  font-size: 0.82rem;
+  color: rgb(100, 100, 100);
+}
+
+.item-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge-lugar {
+  background-color: rgba(180, 100, 255, 0.12);
+  color: #8b5cf6;
+}
+
+.badge-temas {
+  background-color: rgba(0, 100, 255, 0.1);
+  color: var(--blue);
+}
+
+.badge-participantes {
+  background-color: rgba(0, 200, 120, 0.12);
+  color: #059669;
+}
+
+.badge-moderador {
+  background-color: rgba(255, 160, 0, 0.12);
+  color: #d97706;
+}
+
+.temas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+}
+
+.tema-tag {
+  background-color: rgba(0, 100, 255, 0.07);
+  color: var(--blue);
+  border: 1px solid rgba(0, 100, 255, 0.2);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.55rem;
+}
+
+.item-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: fit-content;
+}
+
+.btn-editar {
+  border: 1px solid var(--blue);
+  background: none;
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-editar:hover {
+  background-color: rgba(0, 100, 255, 0.1);
+}
+
+.btn-eliminar {
+  border: 1px solid red;
+  background: none;
+  color: red;
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-eliminar:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.sin-registros {
+  text-align: center;
+  padding: 1rem;
+  color: rgb(130, 130, 130);
+  font-size: 0.85rem;
+  border: 1px dashed lightgray;
+  border-radius: var(--border-radius);
+}

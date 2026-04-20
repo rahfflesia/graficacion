@@ -23,6 +23,8 @@ import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
 import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
+import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
+import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
 @Injectable({
   providedIn: 'root',
 })
@@ -86,6 +88,18 @@ export class Api {
   private respuestasCuestionariosResponderUrl = 'responder/';
   private respuestasCuestionariosObtenerUrl = 'obtener/';
   private respuestasCuestionariosEliminarUrl = 'eliminar/';
+
+  private focusGroupsUrl = 'focusgroups/';
+  private focusGroupsCrearUrl = 'crear/';
+  private focusGroupsObtenerUrl = 'obtener/';
+  private focusGroupsEliminarUrl = 'eliminar/';
+  private focusGroupsEditarUrl = 'editar/';
+
+  private analisisDocumentosUrl = 'analisis-documentos/';
+  private analisisDocumentosCrearUrl = 'crear/';
+  private analisisDocumentosObtenerUrl = 'obtener/';
+  private analisisDocumentosEliminarUrl = 'eliminar/';
+  private analisisDocumentosEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -303,6 +317,62 @@ export class Api {
   eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
   return this.http.delete<any>(
     this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
+    );
+  }
+
+  // ─── Focus Groups ───────────────────────────────────────────────────────────
+
+  crearFocusGroup(datos: DatosFormularioFocusGroup): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerFocusGroups(idSubproceso: number): Observable<FocusGroup[]> {
+    return this.http.get<FocusGroup[]>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsObtenerUrl + idSubproceso,
+    );
+  }
+
+  eliminarFocusGroup(idFocusGroup: number): Observable<any> {
+    return this.http.delete<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsEliminarUrl + idFocusGroup,
+    );
+  }
+
+  editarFocusGroup(idFocusGroup: number, datos: DatosFormularioFocusGroup): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsEditarUrl + idFocusGroup,
+      datos,
+    );
+  }
+
+  // ─── Análisis de Documentos ─────────────────────────────────────────────────
+
+  crearAnalisisDocumento(datos: DatosFormularioAnalisis): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerAnalisisDocumentos(idSubproceso: number): Observable<AnalisisDocumento[]> {
+    return this.http.get<AnalisisDocumento[]>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosObtenerUrl + idSubproceso,
+    );
+  }
+
+  eliminarAnalisisDocumento(idAnalisis: number): Observable<any> {
+    return this.http.delete<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosEliminarUrl + idAnalisis,
+    );
+  }
+
+  editarAnalisisDocumento(idAnalisis: number, datos: DatosFormularioAnalisis): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosEditarUrl + idAnalisis,
+      datos,
     );
   }
 }

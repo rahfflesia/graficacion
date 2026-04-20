@@ -65,7 +65,10 @@ model personas {
   observacionesobservados observacionesobservados[]
   rolespersonasproyecto   rolespersonasproyecto[]
   cuestionarios           cuestionarios[]
-  respuestascuestionario respuestascuestionario[]
+  respuestascuestionario  respuestascuestionario[]
+  focusgroups             focusgroups[]
+  participantesfg         participantesfg[]
+  analisisDocumentos      analisisDocumentos[]
 }
 
 model rolespersonasproyecto {
@@ -90,7 +93,9 @@ model subprocesos {
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
-  cuestionarios          cuestionarios[]
+  cuestionarios      cuestionarios[]
+  focusgroups        focusgroups[]
+  analisisDocumentos analisisDocumentos[]
 }
 
 model usuarios {
@@ -195,4 +200,56 @@ model respuestaspreguntas {
   valor                  String
   respuestascuestionario respuestascuestionario   @relation(fields: [idrespuesta], references: [idrespuesta], onDelete: Cascade, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario    @relation(fields: [idpregunta], references: [idpregunta], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model focusgroups {
+  idfocusgroup    Int               @id @default(autoincrement())
+  idsubproceso    Int
+  nombre          String            @db.VarChar(255)
+  descripcion     String
+  idmoderador     Int
+  lugar           String            @db.VarChar(255)
+  fechahora       DateTime          @default(now()) @db.Timestamptz(6)
+  subprocesos     subprocesos       @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas        personas          @relation(fields: [idmoderador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  temasfocusgroup temasfocusgroup[]
+  participantesfg participantesfg[]
+}
+
+model temasfocusgroup {
+  idtema       Int         @id @default(autoincrement())
+  idfocusgroup Int
+  tema         String
+  focusgroups  focusgroups @relation(fields: [idfocusgroup], references: [idfocusgroup], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model participantesfg {
+  idfocusgroup Int
+  idpersona    Int
+  focusgroups  focusgroups @relation(fields: [idfocusgroup], references: [idfocusgroup], onDelete: Cascade, onUpdate: NoAction)
+  personas     personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([idfocusgroup, idpersona])
+}
+
+model analisisDocumentos {
+  idanalisis        Int                 @id @default(autoincrement())
+  idsubproceso      Int
+  nombre            String              @db.VarChar(255)
+  descripcion       String
+  idanalista        Int
+  tipodocumento     String              @db.VarChar(128)
+  fuente            String              @db.VarChar(500)
+  fechaanalisis     DateTime            @default(now()) @db.Timestamptz(6)
+  notas             String?
+  subprocesos       subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas          personas            @relation(fields: [idanalista], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  hallazgosanalisis hallazgosanalisis[]
+}
+
+model hallazgosanalisis {
+  idhallazgo         Int                @id @default(autoincrement())
+  idanalisis         Int
+  hallazgo           String
+  analisisDocumentos analisisDocumentos @relation(fields: [idanalisis], references: [idanalisis], onDelete: Cascade, onUpdate: NoAction)
 }
