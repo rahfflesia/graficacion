@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Usuario } from '../../../servicios/usuario';
 import { Router } from '@angular/router';
-import { Auth } from '../../../servicios/auth';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,19 +17,21 @@ export class Navbar {
   private toastr = inject(ToastrService);
 
   cerrarSesion() {
-    this.ServicioUsuario.borrarUsuario();
     this.api.cerrarSesion().subscribe({
-      // Acá la respuesta no la ocupo para nada
       next: () => {
+        this.ServicioUsuario.borrarUsuario();
         this.toastr.success('Sesión cerrada correctamente');
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error(error);
+
+        this.ServicioUsuario.borrarUsuario();
         this.toastr.error('Ha ocurrido un error al intentar cerrar la sesión', '', {
           toastClass: 'toastr-error',
         });
+        this.router.navigate(['/login']);
       },
     });
-    this.router.navigate(['/login']);
   }
 }

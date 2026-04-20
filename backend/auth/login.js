@@ -8,16 +8,28 @@ const login = Router();
 login.post("/iniciar-sesion", async (req, res) => {
   try {
     const datosSesion = req.body;
+
+    console.log("BODY LOGIN:", datosSesion);
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
     const datosUsuario = await prisma.usuarios.findUnique({
       where: {
         correo: datosSesion.correo,
       },
     });
 
+    if (!datosUsuario) {
+      return res.status(404).json({ error: "El usuario no fue encontrado" });
+    }
+
     const contrasenaValida = await bcrypt.compare(
       datosSesion.contrasena,
       datosUsuario.hashcontrasena,
     );
+
+    if (!contrasenaValida) {
+      return res.status(401).json({ error: "Contraseña incorrecta" });
+    }
 
     const datosUsuarioFormateados = {
       idusuario: datosUsuario.idusuario,
@@ -30,18 +42,21 @@ login.post("/iniciar-sesion", async (req, res) => {
       expiresIn: "1h",
     });
 
-    if (contrasenaValida) {
-      res.cookie("token", token, {
-        httpOnly: true,
-        maxAge: 8 * 60 * 60 * 1000, // 8 hrs
-      });
-      return res.status(200).json(datosUsuarioFormateados);
-    }
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 8 * 60 * 60 * 1000,
+    });
 
-    return res.status(404).json({ error: "El usuario no fue encontrado" });
+    return res.status(200).json({
+      token,
+      usuario: datosUsuarioFormateados,
+    });
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    console.error("ERROR LOGIN:", error);
+    return res.status(500).json({
+      error: "Error interno del servidor",
+      detalle: error.message,
+    });
   }
 });
 
