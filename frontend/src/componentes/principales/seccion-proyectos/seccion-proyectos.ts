@@ -23,6 +23,7 @@ import { Usuario } from '../../../servicios/usuario';
 export class SeccionProyectos implements OnInit {
   private api = inject(Api);
   private ServicioUsuario = inject(Usuario);
+
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
   esConfigurarProyectoModalVisible: boolean = false;
@@ -35,9 +36,15 @@ export class SeccionProyectos implements OnInit {
   ngOnInit(): void {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
 
-    if (this.usuario() === null) return;
+    const idusuario = localStorage.getItem('idusuario');
 
-    this.api.obtenerProyectos(this.usuario()?.idusuario!).subscribe({
+    if (!idusuario) {
+      console.error('No se encontró idusuario en localStorage');
+      this.estaCargando.set(false);
+      return;
+    }
+
+    this.api.obtenerProyectos(Number(idusuario)).subscribe({
       next: (proyectos: Proyectos[]) => {
         this.proyectos.set(proyectos);
         this.estaCargando.set(false);
@@ -67,7 +74,7 @@ export class SeccionProyectos implements OnInit {
 
   mostrarModalEditarProyecto() {
     this.esEditarProyectoModalVisible.set(true);
-    console.log(JSON.stringify(this.proyectoSeleccionado));
+    console.log(JSON.stringify(this.proyectoSeleccionado()));
   }
 
   cerrarModalCrearProyecto() {
@@ -97,20 +104,14 @@ export class SeccionProyectos implements OnInit {
   }
 
   editarProyecto(proyectoEditado: Proyectos) {
-    this.proyectos().map((proyecto, indice) => {
-      if (proyecto.idproyecto === proyectoEditado.idproyecto) {
-        this.proyectos()[indice] = proyectoEditado;
-        return;
-      }
-
-      // Acá no supe muy bien que retornar
-      console.log('No se encontró un proyecto con ese id');
-      return;
-    });
+    this.proyectos.update((proyectos) =>
+      proyectos.map((proyecto) =>
+        proyecto.idproyecto === proyectoEditado.idproyecto ? proyectoEditado : proyecto,
+      ),
+    );
   }
 
   eliminarProyecto(proyectoEliminado: Proyectos) {
-    // Si el proyecto a eliminar es undefined aún no se ha seleccionado ningún proyecto por lo que no hay nada que eliminar
     if (this.proyectoSeleccionado() === undefined) return;
 
     this.proyectos.update((proyectos) =>

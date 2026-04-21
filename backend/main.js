@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import proyectos from "./rutas/proyectos";
 import tecnicasRecoleccion from "./rutas/tecnicasRecoleccion";
@@ -38,5 +40,5 @@ app.use("/respuestas-cuestionarios", respuestasCuestionarios);
 
 
 app.listen(port, () => {
-  console.log(`Servidor escuchando en el puerto ${port}`);
+    console.log(`Servidor escuchando en el puerto ${port}`);
 });

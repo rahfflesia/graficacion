@@ -235,6 +235,7 @@ export type cuestionariosWhereInput = {
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
   subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   preguntascuestionario?: Prisma.PreguntascuestionarioListRelationFilter
+  respuestascuestionario?: Prisma.RespuestascuestionarioListRelationFilter
 }
 
 export type cuestionariosOrderByWithRelationInput = {
@@ -247,6 +248,7 @@ export type cuestionariosOrderByWithRelationInput = {
   personas?: Prisma.personasOrderByWithRelationInput
   subprocesos?: Prisma.subprocesosOrderByWithRelationInput
   preguntascuestionario?: Prisma.preguntascuestionarioOrderByRelationAggregateInput
+  respuestascuestionario?: Prisma.respuestascuestionarioOrderByRelationAggregateInput
 }
 
 export type cuestionariosWhereUniqueInput = Prisma.AtLeast<{
@@ -262,6 +264,7 @@ export type cuestionariosWhereUniqueInput = Prisma.AtLeast<{
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
   subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   preguntascuestionario?: Prisma.PreguntascuestionarioListRelationFilter
+  respuestascuestionario?: Prisma.RespuestascuestionarioListRelationFilter
 }, "idicuestionario">
 
 export type cuestionariosOrderByWithAggregationInput = {
@@ -297,6 +300,7 @@ export type cuestionariosCreateInput = {
   personas: Prisma.personasCreateNestedOneWithoutCuestionariosInput
   subprocesos: Prisma.subprocesosCreateNestedOneWithoutCuestionariosInput
   preguntascuestionario?: Prisma.preguntascuestionarioCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosUncheckedCreateInput = {
@@ -307,6 +311,7 @@ export type cuestionariosUncheckedCreateInput = {
   idcreador: number
   fechacreacion?: Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosUpdateInput = {
@@ -316,6 +321,7 @@ export type cuestionariosUpdateInput = {
   personas?: Prisma.personasUpdateOneRequiredWithoutCuestionariosNestedInput
   subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutCuestionariosNestedInput
   preguntascuestionario?: Prisma.preguntascuestionarioUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateInput = {
@@ -326,6 +332,7 @@ export type cuestionariosUncheckedUpdateInput = {
   idcreador?: Prisma.IntFieldUpdateOperationsInput | number
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosCreateManyInput = {
@@ -504,12 +511,27 @@ export type cuestionariosUpdateOneRequiredWithoutPreguntascuestionarioNestedInpu
   update?: Prisma.XOR<Prisma.XOR<Prisma.cuestionariosUpdateToOneWithWhereWithoutPreguntascuestionarioInput, Prisma.cuestionariosUpdateWithoutPreguntascuestionarioInput>, Prisma.cuestionariosUncheckedUpdateWithoutPreguntascuestionarioInput>
 }
 
+export type cuestionariosCreateNestedOneWithoutRespuestascuestionarioInput = {
+  create?: Prisma.XOR<Prisma.cuestionariosCreateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedCreateWithoutRespuestascuestionarioInput>
+  connectOrCreate?: Prisma.cuestionariosCreateOrConnectWithoutRespuestascuestionarioInput
+  connect?: Prisma.cuestionariosWhereUniqueInput
+}
+
+export type cuestionariosUpdateOneRequiredWithoutRespuestascuestionarioNestedInput = {
+  create?: Prisma.XOR<Prisma.cuestionariosCreateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedCreateWithoutRespuestascuestionarioInput>
+  connectOrCreate?: Prisma.cuestionariosCreateOrConnectWithoutRespuestascuestionarioInput
+  upsert?: Prisma.cuestionariosUpsertWithoutRespuestascuestionarioInput
+  connect?: Prisma.cuestionariosWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.cuestionariosUpdateToOneWithWhereWithoutRespuestascuestionarioInput, Prisma.cuestionariosUpdateWithoutRespuestascuestionarioInput>, Prisma.cuestionariosUncheckedUpdateWithoutRespuestascuestionarioInput>
+}
+
 export type cuestionariosCreateWithoutPersonasInput = {
   nombre: string
   descripcion: string
   fechacreacion?: Date | string
   subprocesos: Prisma.subprocesosCreateNestedOneWithoutCuestionariosInput
   preguntascuestionario?: Prisma.preguntascuestionarioCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosUncheckedCreateWithoutPersonasInput = {
@@ -519,6 +541,7 @@ export type cuestionariosUncheckedCreateWithoutPersonasInput = {
   descripcion: string
   fechacreacion?: Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosCreateOrConnectWithoutPersonasInput = {
@@ -565,6 +588,7 @@ export type cuestionariosCreateWithoutSubprocesosInput = {
   fechacreacion?: Date | string
   personas: Prisma.personasCreateNestedOneWithoutCuestionariosInput
   preguntascuestionario?: Prisma.preguntascuestionarioCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosUncheckedCreateWithoutSubprocesosInput = {
@@ -574,6 +598,7 @@ export type cuestionariosUncheckedCreateWithoutSubprocesosInput = {
   idcreador: number
   fechacreacion?: Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosCreateOrConnectWithoutSubprocesosInput = {
@@ -608,6 +633,7 @@ export type cuestionariosCreateWithoutPreguntascuestionarioInput = {
   fechacreacion?: Date | string
   personas: Prisma.personasCreateNestedOneWithoutCuestionariosInput
   subprocesos: Prisma.subprocesosCreateNestedOneWithoutCuestionariosInput
+  respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosUncheckedCreateWithoutPreguntascuestionarioInput = {
@@ -617,6 +643,7 @@ export type cuestionariosUncheckedCreateWithoutPreguntascuestionarioInput = {
   descripcion: string
   idcreador: number
   fechacreacion?: Date | string
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
 }
 
 export type cuestionariosCreateOrConnectWithoutPreguntascuestionarioInput = {
@@ -641,6 +668,7 @@ export type cuestionariosUpdateWithoutPreguntascuestionarioInput = {
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personas?: Prisma.personasUpdateOneRequiredWithoutCuestionariosNestedInput
   subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateWithoutPreguntascuestionarioInput = {
@@ -650,6 +678,61 @@ export type cuestionariosUncheckedUpdateWithoutPreguntascuestionarioInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   idcreador?: Prisma.IntFieldUpdateOperationsInput | number
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
+}
+
+export type cuestionariosCreateWithoutRespuestascuestionarioInput = {
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+  personas: Prisma.personasCreateNestedOneWithoutCuestionariosInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutCuestionariosInput
+  preguntascuestionario?: Prisma.preguntascuestionarioCreateNestedManyWithoutCuestionariosInput
+}
+
+export type cuestionariosUncheckedCreateWithoutRespuestascuestionarioInput = {
+  idicuestionario?: number
+  idsubproceso: number
+  nombre: string
+  descripcion: string
+  idcreador: number
+  fechacreacion?: Date | string
+  preguntascuestionario?: Prisma.preguntascuestionarioUncheckedCreateNestedManyWithoutCuestionariosInput
+}
+
+export type cuestionariosCreateOrConnectWithoutRespuestascuestionarioInput = {
+  where: Prisma.cuestionariosWhereUniqueInput
+  create: Prisma.XOR<Prisma.cuestionariosCreateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedCreateWithoutRespuestascuestionarioInput>
+}
+
+export type cuestionariosUpsertWithoutRespuestascuestionarioInput = {
+  update: Prisma.XOR<Prisma.cuestionariosUpdateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedUpdateWithoutRespuestascuestionarioInput>
+  create: Prisma.XOR<Prisma.cuestionariosCreateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedCreateWithoutRespuestascuestionarioInput>
+  where?: Prisma.cuestionariosWhereInput
+}
+
+export type cuestionariosUpdateToOneWithWhereWithoutRespuestascuestionarioInput = {
+  where?: Prisma.cuestionariosWhereInput
+  data: Prisma.XOR<Prisma.cuestionariosUpdateWithoutRespuestascuestionarioInput, Prisma.cuestionariosUncheckedUpdateWithoutRespuestascuestionarioInput>
+}
+
+export type cuestionariosUpdateWithoutRespuestascuestionarioInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  personas?: Prisma.personasUpdateOneRequiredWithoutCuestionariosNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutCuestionariosNestedInput
+  preguntascuestionario?: Prisma.preguntascuestionarioUpdateManyWithoutCuestionariosNestedInput
+}
+
+export type cuestionariosUncheckedUpdateWithoutRespuestascuestionarioInput = {
+  idicuestionario?: Prisma.IntFieldUpdateOperationsInput | number
+  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  idcreador?: Prisma.IntFieldUpdateOperationsInput | number
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preguntascuestionario?: Prisma.preguntascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosCreateManyPersonasInput = {
@@ -666,6 +749,7 @@ export type cuestionariosUpdateWithoutPersonasInput = {
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutCuestionariosNestedInput
   preguntascuestionario?: Prisma.preguntascuestionarioUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateWithoutPersonasInput = {
@@ -675,6 +759,7 @@ export type cuestionariosUncheckedUpdateWithoutPersonasInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateManyWithoutPersonasInput = {
@@ -699,6 +784,7 @@ export type cuestionariosUpdateWithoutSubprocesosInput = {
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personas?: Prisma.personasUpdateOneRequiredWithoutCuestionariosNestedInput
   preguntascuestionario?: Prisma.preguntascuestionarioUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateWithoutSubprocesosInput = {
@@ -708,6 +794,7 @@ export type cuestionariosUncheckedUpdateWithoutSubprocesosInput = {
   idcreador?: Prisma.IntFieldUpdateOperationsInput | number
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preguntascuestionario?: Prisma.preguntascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutCuestionariosNestedInput
 }
 
 export type cuestionariosUncheckedUpdateManyWithoutSubprocesosInput = {
@@ -725,10 +812,12 @@ export type cuestionariosUncheckedUpdateManyWithoutSubprocesosInput = {
 
 export type CuestionariosCountOutputType = {
   preguntascuestionario: number
+  respuestascuestionario: number
 }
 
 export type CuestionariosCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preguntascuestionario?: boolean | CuestionariosCountOutputTypeCountPreguntascuestionarioArgs
+  respuestascuestionario?: boolean | CuestionariosCountOutputTypeCountRespuestascuestionarioArgs
 }
 
 /**
@@ -748,6 +837,13 @@ export type CuestionariosCountOutputTypeCountPreguntascuestionarioArgs<ExtArgs e
   where?: Prisma.preguntascuestionarioWhereInput
 }
 
+/**
+ * CuestionariosCountOutputType without action
+ */
+export type CuestionariosCountOutputTypeCountRespuestascuestionarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.respuestascuestionarioWhereInput
+}
+
 
 export type cuestionariosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idicuestionario?: boolean
@@ -759,6 +855,7 @@ export type cuestionariosSelect<ExtArgs extends runtime.Types.Extensions.Interna
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
   subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.cuestionarios$preguntascuestionarioArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.cuestionarios$respuestascuestionarioArgs<ExtArgs>
   _count?: boolean | Prisma.CuestionariosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cuestionarios"]>
 
@@ -798,6 +895,7 @@ export type cuestionariosInclude<ExtArgs extends runtime.Types.Extensions.Intern
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
   subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.cuestionarios$preguntascuestionarioArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.cuestionarios$respuestascuestionarioArgs<ExtArgs>
   _count?: boolean | Prisma.CuestionariosCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type cuestionariosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -815,6 +913,7 @@ export type $cuestionariosPayload<ExtArgs extends runtime.Types.Extensions.Inter
     personas: Prisma.$personasPayload<ExtArgs>
     subprocesos: Prisma.$subprocesosPayload<ExtArgs>
     preguntascuestionario: Prisma.$preguntascuestionarioPayload<ExtArgs>[]
+    respuestascuestionario: Prisma.$respuestascuestionarioPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idicuestionario: number
@@ -1220,6 +1319,7 @@ export interface Prisma__cuestionariosClient<T, Null = never, ExtArgs extends ru
   personas<T extends Prisma.personasDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personasDefaultArgs<ExtArgs>>): Prisma.Prisma__personasClient<runtime.Types.Result.GetResult<Prisma.$personasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   preguntascuestionario<T extends Prisma.cuestionarios$preguntascuestionarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cuestionarios$preguntascuestionarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$preguntascuestionarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  respuestascuestionario<T extends Prisma.cuestionarios$respuestascuestionarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cuestionarios$respuestascuestionarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$respuestascuestionarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1672,6 +1772,30 @@ export type cuestionarios$preguntascuestionarioArgs<ExtArgs extends runtime.Type
   take?: number
   skip?: number
   distinct?: Prisma.PreguntascuestionarioScalarFieldEnum | Prisma.PreguntascuestionarioScalarFieldEnum[]
+}
+
+/**
+ * cuestionarios.respuestascuestionario
+ */
+export type cuestionarios$respuestascuestionarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the respuestascuestionario
+   */
+  select?: Prisma.respuestascuestionarioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the respuestascuestionario
+   */
+  omit?: Prisma.respuestascuestionarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.respuestascuestionarioInclude<ExtArgs> | null
+  where?: Prisma.respuestascuestionarioWhereInput
+  orderBy?: Prisma.respuestascuestionarioOrderByWithRelationInput | Prisma.respuestascuestionarioOrderByWithRelationInput[]
+  cursor?: Prisma.respuestascuestionarioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RespuestascuestionarioScalarFieldEnum | Prisma.RespuestascuestionarioScalarFieldEnum[]
 }
 
 /**

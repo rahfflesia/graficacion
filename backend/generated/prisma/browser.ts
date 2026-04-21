@@ -82,3 +82,38 @@ export type cuestionarios = Prisma.cuestionariosModel
  * 
  */
 export type preguntascuestionario = Prisma.preguntascuestionarioModel
+/**
+ * Model respuestascuestionario
+ * 
+ */
+export type respuestascuestionario = Prisma.respuestascuestionarioModel
+/**
+ * Model respuestaspreguntas
+ * 
+ */
+export type respuestaspreguntas = Prisma.respuestaspreguntasModel
+/**
+ * Model focusgroups
+ * 
+ */
+export type focusgroups = Prisma.focusgroupsModel
+/**
+ * Model temasfocusgroup
+ * 
+ */
+export type temasfocusgroup = Prisma.temasfocusgroupModel
+/**
+ * Model participantesfg
+ * 
+ */
+export type participantesfg = Prisma.participantesfgModel
+/**
+ * Model analisisDocumentos
+ * 
+ */
+export type analisisDocumentos = Prisma.analisisDocumentosModel
+/**
+ * Model hallazgosanalisis
+ * 
+ */
+export type hallazgosanalisis = Prisma.hallazgosanalisisModel
