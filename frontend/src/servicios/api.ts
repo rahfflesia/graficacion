@@ -23,6 +23,7 @@ import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
 import { Cuestionario, DatosFormularioCuestionario } from '../models/cuestionario';
+import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 @Injectable({
   providedIn: 'root',
@@ -82,6 +83,12 @@ export class Api {
   private cuestionariosObtenerUrl = 'obtener/';
   private cuestionariosEliminarUrl = 'eliminar/';
   private cuestionariosEditarUrl = 'editar/';
+
+  private entrevistasUrl = 'entrevistas/';
+  private entrevistasCrearUrl = 'crear/';
+  private entrevistasObtenerUrl = 'obtener/';
+  private entrevistasEliminarUrl = 'eliminar/';
+  private entrevistasEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -154,7 +161,9 @@ export class Api {
   }
 
   obtenerRolesProyecto(idProyecto: number): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.baseUrl + this.rolesObtenerRolesProyectoUrl + idProyecto);
+    return this.http.get<Rol[]>(
+      this.baseUrl + this.rolesUrl + this.rolesObtenerRolesProyectoUrl + idProyecto,
+    );
   }
 
   eliminarRol(idRol: number): Observable<Rol> {
@@ -275,10 +284,39 @@ export class Api {
     );
   }
 
-  editarCuestionario(idCuestionario: number, datosCuestionario: DatosFormularioCuestionario): Observable<any> {
+  editarCuestionario(
+    idCuestionario: number,
+    datosCuestionario: DatosFormularioCuestionario,
+  ): Observable<any> {
     return this.http.put(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosEditarUrl + idCuestionario,
       datosCuestionario,
+    );
+  }
+
+  crearEntrevista(datosEntrevista: Entrevista): Observable<Entrevista> {
+    return this.http.post<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasCrearUrl,
+      datosEntrevista,
+    );
+  }
+
+  editarEntrevista(idEntrevista: number, datosEntrevista: Entrevista): Observable<Entrevista> {
+    return this.http.put<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasEditarUrl + idEntrevista,
+      datosEntrevista,
+    );
+  }
+
+  eliminarEntrevista(idEntrevista: number): Observable<Entrevista> {
+    return this.http.delete<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasEliminarUrl + idEntrevista,
+    );
+  }
+
+  obtenerEntrevistas(idSubproceso: number): Observable<Entrevista[]> {
+    return this.http.get<Entrevista[]>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasObtenerUrl + idSubproceso,
     );
   }
 }

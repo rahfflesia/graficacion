@@ -1,0 +1,43 @@
+.wrapper-botones {
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.wrapper-botones > * {
+  flex: none;
+  font-size: 0.8rem;
+}
+
+.entrevista-card {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entrevista-card-eliminacion {
+  padding: 1rem;
+  border: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: var(--border-radius);
+}
+
+.mensaje-confirmacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mensaje-confirmacion > span {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.wrapper-botones-eliminar button {
+  font-size: 0.9rem;
+}

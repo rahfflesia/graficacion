@@ -116,6 +116,13 @@ export type EnumestadosproyectosWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumestadosproyectosFilter<$PrismaModel>
 }
 
+export type EnumtiporolFilter<$PrismaModel = never> = {
+  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
+  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtiporolFilter<$PrismaModel> | $Enums.tiporol
+}
+
 export type StringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -131,16 +138,19 @@ export type StringNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringNullableFilter<$PrismaModel> | string | null
 }
 
-export type EnumtiporolFilter<$PrismaModel = never> = {
-  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
-  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumtiporolFilter<$PrismaModel> | $Enums.tiporol
-}
-
 export type SortOrderInput = {
   sort: Prisma.SortOrder
   nulls?: Prisma.NullsOrder
+}
+
+export type EnumtiporolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
+  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtiporolWithAggregatesFilter<$PrismaModel> | $Enums.tiporol
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
 }
 
 export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -159,16 +169,6 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedStringNullableFilter<$PrismaModel>
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
-}
-
-export type EnumtiporolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
-  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumtiporolWithAggregatesFilter<$PrismaModel> | $Enums.tiporol
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
 }
 
 export type EnumtipousuarioFilter<$PrismaModel = never> = {
@@ -333,6 +333,13 @@ export type NestedEnumestadosproyectosWithAggregatesFilter<$PrismaModel = never>
   _max?: Prisma.NestedEnumestadosproyectosFilter<$PrismaModel>
 }
 
+export type NestedEnumtiporolFilter<$PrismaModel = never> = {
+  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
+  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtiporolFilter<$PrismaModel> | $Enums.tiporol
+}
+
 export type NestedStringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -347,11 +354,14 @@ export type NestedStringNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringNullableFilter<$PrismaModel> | string | null
 }
 
-export type NestedEnumtiporolFilter<$PrismaModel = never> = {
+export type NestedEnumtiporolWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
   in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
   notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumtiporolFilter<$PrismaModel> | $Enums.tiporol
+  not?: Prisma.NestedEnumtiporolWithAggregatesFilter<$PrismaModel> | $Enums.tiporol
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
 }
 
 export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -380,16 +390,6 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
-}
-
-export type NestedEnumtiporolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.tiporol | Prisma.EnumtiporolFieldRefInput<$PrismaModel>
-  in?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  notIn?: $Enums.tiporol[] | Prisma.ListEnumtiporolFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumtiporolWithAggregatesFilter<$PrismaModel> | $Enums.tiporol
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumtiporolFilter<$PrismaModel>
 }
 
 export type NestedEnumtipousuarioFilter<$PrismaModel = never> = {

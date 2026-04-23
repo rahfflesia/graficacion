@@ -6,7 +6,6 @@ function crear(signal: WritableSignal<any[]>, valor: any) {
 
 function editar(signal: WritableSignal<any[]>, objetoEditado: any, propiedad: any) {
   signal().map((elemento, index) => {
-    console.log(elemento);
     if (elemento[propiedad] === objetoEditado[propiedad]) {
       signal()[index] = objetoEditado;
       return;

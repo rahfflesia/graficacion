@@ -13,6 +13,7 @@ import logout from "./auth/logout";
 import cookieParser from "cookie-parser";
 import observaciones from "./rutas/observaciones";
 import cuestionarios from "./rutas/cuestionarios";
+import entrevistas from "./rutas/entrevistas";
 
 const app = express();
 const port = 3000;
@@ -33,6 +34,7 @@ app.use("/participantes", participantes);
 app.use("/logout", logout);
 app.use("/observaciones", observaciones);
 app.use("/cuestionarios", cuestionarios);
+app.use("/entrevistas", entrevistas);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);

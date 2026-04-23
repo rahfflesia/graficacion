@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { Subproceso } from '../../../models/subprocesos.interface';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
@@ -43,6 +43,7 @@ export class SubprocesoCard {
     procesoAsociado: ['', [Validators.required]],
     tecnicasAsociadas: this.formBuilder.array([], [this.tieneTecnicaSeleccionada()]),
   });
+
   estaBorrando = false;
   estaEditando = false;
 
@@ -226,10 +227,12 @@ export class SubprocesoCard {
     const datosTecnica = {
       participantes: this.participantes,
       subproceso: this.subproceso,
+      // La id del proyecto es la misma para todos por lo que no importa, con tomar la de un elemento está bien
+      idproyecto: this.procesosProyecto[0].idproyecto,
     };
     switch (nombreTecnica) {
       case 'Entrevista':
-        this.router.navigate(['/entrevistas']);
+        this.router.navigate(['/entrevistas'], { state: { datosTecnica } });
         break;
       case 'Observacion':
         this.router.navigate(['/observaciones'], { state: { datosTecnica } });

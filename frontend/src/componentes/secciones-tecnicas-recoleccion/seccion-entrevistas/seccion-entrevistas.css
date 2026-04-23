@@ -1,0 +1,29 @@
+section {
+  padding: 1.5rem;
+  background-color: var(--body-bg-color);
+}
+
+.entrevistas-wrapper {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.sin-resultados {
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.entrevista-card {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

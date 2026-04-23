@@ -82,3 +82,18 @@ export type cuestionarios = Prisma.cuestionariosModel
  * 
  */
 export type preguntascuestionario = Prisma.preguntascuestionarioModel
+/**
+ * Model entrevistadosentrevista
+ * 
+ */
+export type entrevistadosentrevista = Prisma.entrevistadosentrevistaModel
+/**
+ * Model entrevistas
+ * 
+ */
+export type entrevistas = Prisma.entrevistasModel
+/**
+ * Model preguntasentrevista
+ * 
+ */
+export type preguntasentrevista = Prisma.preguntasentrevistaModel

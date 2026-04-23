@@ -1,0 +1,27 @@
+<modal-editar-entrevista
+  [toggler]="esModalEditarEntrevistaVisible"
+  (cerrar)="ocultarModalEditarEntrevista()"
+  [entrevista]="entrevista"
+  [participantes]="listaParticipantes"
+  (entrevistaEditada)="entrevistaEditada.emit($event)"
+></modal-editar-entrevista>
+@if (estaModoEliminarActivo) {
+  <div class="entrevista-card-eliminacion flex-column xs-gap">
+    <span>{{ entrevista?.entrevista?.nombre }}</span>
+    <div class="mensaje-confirmacion">
+      <span>¿Seguro que deseas eliminar esta entrevista?</span>
+      <div class="wrapper-botones-eliminar input-wrapper-row">
+        <button class="default-button" (click)="eliminarEntrevista()">Sí</button>
+        <button class="default-button" (click)="desactivarModoEliminar()">No</button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="entrevista-card">
+    <span>{{ entrevista?.entrevista?.nombre }}</span>
+    <div class="wrapper-botones input-wrapper-row">
+      <button class="default-button" (click)="mostrarModalEditarEntrevista()">Editar</button>
+      <button class="default-button" (click)="activarModoEliminar()">Eliminar</button>
+    </div>
+  </div>
+}

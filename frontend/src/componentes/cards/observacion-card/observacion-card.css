@@ -102,7 +102,7 @@ button {
   box-shadow: var(--box-shadow);
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  transform: translate(70%, -90%);
+  transform: translate(20%, -120%);
 }
 
 .flex-between {
