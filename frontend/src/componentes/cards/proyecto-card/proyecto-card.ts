@@ -14,6 +14,7 @@ export class ProyectoCard {
   @Output() eliminar = new EventEmitter<void>();
   @Output() editar = new EventEmitter<void>();
   @Output() configurar = new EventEmitter<void>();
+  @Output() crearDiagrama = new EventEmitter<void>();
 
   eliminarProyecto() {
     this.eliminar.emit();
@@ -25,6 +26,10 @@ export class ProyectoCard {
 
   configurarProyecto() {
     this.configurar.emit();
+  }
+
+  crearDiagramaProyecto() {
+    this.crearDiagrama.emit();
   }
 
   obtenerColorFondo(estado: string) {
