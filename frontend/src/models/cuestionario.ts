@@ -30,3 +30,33 @@ export interface PreguntaCuestionario {
   opciones: string[];
   orden: number;
 }
+
+export interface RespuestaPregunta {
+  idPregunta: number;
+  valor: string;
+}
+
+export interface DatosRespuestaCuestionario {
+  idCuestionario: number;
+  idRespondente: number;
+  respuestas: RespuestaPregunta[];
+}
+
+export interface RespuestaCuestionario {
+  idrespuesta: number;
+  idcuestionario: number;
+  idrespondente: number;
+  fecharespuesta: Date;
+  personas: {
+    idpersona: number;
+    nombre: string;
+    apellidouno: string;
+    apellidodos: string | null;
+  };
+  respuestaspreguntas: {
+    idrespuestapregunta: number;
+    idpregunta: number;
+    valor: string;
+    preguntascuestionario: PreguntaCuestionario;
+  }[];
+}

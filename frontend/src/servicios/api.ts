@@ -22,7 +22,12 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
-import { Cuestionario, DatosFormularioCuestionario } from '../models/cuestionario';
+import {
+  DatosFormularioCuestionario,
+  Cuestionario,
+  DatosRespuestaCuestionario,
+  RespuestaCuestionario,
+} from '../models/cuestionario';
 import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 @Injectable({
@@ -83,6 +88,11 @@ export class Api {
   private cuestionariosObtenerUrl = 'obtener/';
   private cuestionariosEliminarUrl = 'eliminar/';
   private cuestionariosEditarUrl = 'editar/';
+
+  private respuestasCuestionariosUrl = 'respuestas-cuestionarios/';
+  private respuestasCuestionariosResponderUrl = 'responder/';
+  private respuestasCuestionariosObtenerUrl = 'obtener/';
+  private respuestasCuestionariosEliminarUrl = 'eliminar/';
 
   private entrevistasUrl = 'entrevistas/';
   private entrevistasCrearUrl = 'crear/';
@@ -291,6 +301,31 @@ export class Api {
     return this.http.put(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosEditarUrl + idCuestionario,
       datosCuestionario,
+    );
+  }
+
+  responderCuestionario(datos: DatosRespuestaCuestionario): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
+      datos,
+    );
+  }
+
+  obtenerRespuestasCuestionario(idCuestionario: number): Observable<RespuestaCuestionario[]> {
+    return this.http.get<RespuestaCuestionario[]>(
+      this.baseUrl +
+        this.respuestasCuestionariosUrl +
+        this.respuestasCuestionariosObtenerUrl +
+        idCuestionario,
+    );
+  }
+
+  eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
+    return this.http.delete<any>(
+      this.baseUrl +
+        this.respuestasCuestionariosUrl +
+        this.respuestasCuestionariosEliminarUrl +
+        idRespuesta,
     );
   }
 
