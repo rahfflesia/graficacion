@@ -1,0 +1,118 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-editar z-100" [class.animar]="toggler">
+    <div class="procesos-wrapper flex-column sm-gap">
+      <header class="header-modal">
+        <div class="flex-column xs-gap">
+          <h2>Participantes</h2>
+          <h3>Agrega un participante</h3>
+        </div>
+        <div class="close-button" (click)="cerrar.emit()">X</div>
+      </header>
+      <form
+        action=""
+        class="flex-column sm-gap formulario formulario-modal-editar"
+        [formGroup]="formularioParticipantes"
+        id="formulario-participantes-modal"
+      >
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Nombre del participante</label>
+          <input
+            type="text"
+            placeholder="Ingresa el nombre"
+            class="search-input"
+            formControlName="nombre"
+          />
+          @if (
+            obtenerControlFormularioParticipantes('nombre')?.hasError('required') &&
+            obtenerControlFormularioParticipantes('nombre')?.dirty
+          ) {
+            <div class="error-span">El nombre del participante no puede quedar vacío</div>
+          }
+        </div>
+        <div class="apellidos-wrapper">
+          <div class="input-wrapper flex-column sm-gap">
+            <label for="">Apellido uno</label>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Ingresa el apellido uno"
+              formControlName="apellidoUno"
+            />
+            @if (
+              obtenerControlFormularioParticipantes('apellidoUno')?.hasError('required') &&
+              obtenerControlFormularioParticipantes('apellidoUno')?.dirty
+            ) {
+              <div class="error-span">El apellido uno no puede quedar vacío</div>
+            }
+          </div>
+          <div class="input-wrapper flex-column sm-gap">
+            <label for="">Apellidos dos</label>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Ingresa el apellido dos"
+              formControlName="apellidoDos"
+            />
+          </div>
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Correo electrónico</label>
+          <input
+            type="email"
+            class="search-input"
+            placeholder="Ingresa el correo electrónico"
+            formControlName="correo"
+          />
+          @if (
+            obtenerControlFormularioParticipantes('correo')?.hasError('required') &&
+            obtenerControlFormularioParticipantes('correo')?.dirty
+          ) {
+            <div class="error-span">El correo electrónico es requerido</div>
+          }
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Teléfono</label>
+          <input
+            type="tel"
+            placeholder="Ingresa el teléfono"
+            class="search-input"
+            formControlName="telefono"
+          />
+          @if (
+            obtenerControlFormularioParticipantes('telefono')?.hasError('required') &&
+            obtenerControlFormularioParticipantes('telefono')?.dirty
+          ) {
+            <div class="error-span">El número de teléfono es requerido</div>
+          }
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label for="">Selecciona el rol a asignar</label>
+          <select class="custom-select" formControlName="idrol">
+            @for (rol of roles(); track rol.idrol) {
+              <option value="{{ rol.idrol }}">{{ rol.nombre }}</option>
+            } @empty {
+              <div>
+                <p>No se encontraron roles</p>
+              </div>
+            }
+          </select>
+          @if (
+            obtenerControlFormularioParticipantes('idrol')?.hasError('required') &&
+            obtenerControlFormularioParticipantes('idrol')?.dirty
+          ) {
+            <div class="error-span">El rol es requerido</div>
+          }
+        </div>
+        <div>
+          <button
+            class="default-button"
+            (click)="registrarParticipante()"
+            [disabled]="formularioParticipantes.invalid"
+          >
+            Registrar participante
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

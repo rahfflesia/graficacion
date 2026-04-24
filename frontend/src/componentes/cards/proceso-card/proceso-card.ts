@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { DatosEditarProceso, Proceso } from '../../../models/procesos.interface';
 import { Api } from '../../../servicios/api';

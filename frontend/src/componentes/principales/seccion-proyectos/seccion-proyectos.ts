@@ -7,6 +7,7 @@ import { Api } from '../../../servicios/api';
 import { ModalEliminar } from '../../modales/modal-eliminar/modal-eliminar';
 import { ModalEditarProyecto } from '../../modales/modal-editar-proyecto/modal-editar-proyecto';
 import { Usuario } from '../../../servicios/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'seccion-proyectos',
@@ -23,6 +24,8 @@ import { Usuario } from '../../../servicios/usuario';
 export class SeccionProyectos implements OnInit {
   private api = inject(Api);
   private ServicioUsuario = inject(Usuario);
+
+  private router = inject(Router);
 
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
@@ -117,5 +120,9 @@ export class SeccionProyectos implements OnInit {
     this.proyectos.update((proyectos) =>
       proyectos.filter((proyecto) => proyecto.idproyecto !== proyectoEliminado.idproyecto),
     );
+  }
+
+  irMenuDiagramas() {
+    this.router.navigateByUrl('/menudiagramas');
   }
 }

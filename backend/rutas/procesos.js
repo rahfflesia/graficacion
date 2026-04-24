@@ -4,8 +4,6 @@ import { validarToken } from "../middleware/authMiddleware.js";
 
 const procesos = Router();
 
-procesos.use(validarToken);
-
 procesos.get("/obtener/:idproyecto", async (req, res) => {
   try {
     const { idproyecto } = req.params;

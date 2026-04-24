@@ -88,14 +88,15 @@ export class SeccionObservaciones implements OnInit {
     }
     this.api.obtenerObservaciones(idSubproceso).subscribe({
       next: (observaciones) => {
-        this.estanCargandoObservaciones = false;
         this.observaciones.set(observaciones);
+        this.estanCargandoObservaciones = false;
       },
       error: (error) => {
         console.error(error);
         this.toastr.error('Ha ocurrido un error al obtener las observaciones', '', {
           toastClass: 'toastr-error',
         });
+        this.estanCargandoObservaciones = false;
       },
     });
   }

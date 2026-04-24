@@ -204,3 +204,8 @@ form {
   max-height: 80vh;
   overflow-y: auto;
 }
+
+.formulario-observaciones {
+  box-shadow: none;
+  padding: 0;
+}

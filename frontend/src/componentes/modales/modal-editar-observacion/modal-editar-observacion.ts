@@ -59,6 +59,7 @@ export class ModalEditarObservacion implements OnInit {
       nombreLugar: this.observacion?.lugar,
     });
 
+    // Esto es muy redundante
     this.participantesProyecto.set(this.listaParticipantesProyecto);
 
     const checkboxParticipante = this.participantesProyecto().map(() => new FormControl(false));
@@ -69,6 +70,17 @@ export class ModalEditarObservacion implements OnInit {
     this.seleccionarOpcion(this.observacion?.tipo ?? 'Pasiva');
 
     this.actualizarValidezCheckbox();
+
+    this.participantesProyecto().forEach((participante, index) => {
+      const esParticipanteObservado = this.listaObservados.some(
+        (observado) => participante.idpersona === observado.idpersona,
+      );
+
+      if (esParticipanteObservado) {
+        const checkboxes = this.checkboxFormArray;
+        checkboxes.controls[index].setValue(true);
+      }
+    });
   }
 
   get checkboxFormArray() {

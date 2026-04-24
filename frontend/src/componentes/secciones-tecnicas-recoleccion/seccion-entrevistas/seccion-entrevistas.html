@@ -1,0 +1,36 @@
+<modal-agregar-participante
+  [toggler]="esModalAgregarParticipanteVisible"
+  (cerrar)="ocultarModalAgregarParticipante()"
+  [idProyecto]="idproyecto()"
+  (participanteCreado)="registrarParticipante($event)"
+></modal-agregar-participante>
+<modal-carga [toggler]="estaCargando" [mensaje]="'Cargando entrevistas'"></modal-carga>
+<section class="flex-column md-gap">
+  <header>
+    <h1>Entrevistas</h1>
+    <h3>Subproceso asociado: {{ subproceso()?.nombresubproceso }}</h3>
+  </header>
+  <form-entrevistas
+    [participantes]="participantes()"
+    [subproceso]="subproceso()"
+    (abrirModal)="mostrarModalAgregarParticipante()"
+    (entrevistaCreada)="crearEntrevista($event)"
+  ></form-entrevistas>
+  <div class="flex-column md-gap">
+    <h3>Entrevistas asociadas</h3>
+    <div class="entrevistas-wrapper flex-column sm-gap">
+      @for (entrevista of entrevistas(); track entrevista.entrevista.identrevista) {
+        <entrevista-card
+          [entrevista]="entrevista"
+          (eliminar)="eliminarEntrevista($event)"
+          [listaParticipantes]="participantes()"
+          (entrevistaEditada)="editarEntrevista($event)"
+        ></entrevista-card>
+      } @empty {
+        <div class="sin-resultados">
+          <span>Aún no has creado ninguna entrevista</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>

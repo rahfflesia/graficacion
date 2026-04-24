@@ -29,9 +29,9 @@ model proyectos {
   idproyecto            Int                     @id @default(autoincrement())
   nombre                String                  @db.VarChar(255)
   descripcion           String
+  estado                estadosproyectos        @default(Activo)
   fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)
   idusuario             Int
-  estado                estadosproyectos        @default(Activo)
   procesos              procesos[]
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
@@ -41,8 +41,8 @@ model proyectos {
 model roles {
   idrol                 Int                     @id @default(autoincrement())
   idproyecto            Int
-  nombre                String?                 @db.VarChar(255)
   tipo                  tiporol
+  nombre                String?                 @db.VarChar(255)
   proyectos             proyectos               @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_roles_proyecto")
   rolespersonasproyecto rolespersonasproyecto[]
 }
@@ -61,10 +61,12 @@ model personas {
   apellidodos             String?                   @db.VarChar(255)
   correo                  String?                   @db.VarChar(255)
   telefono                String?                   @db.VarChar(255)
+  cuestionarios           cuestionarios[]
+  entrevistadosentrevista entrevistadosentrevista[]
+  entrevistas             entrevistas[]
   observaciones           observaciones[]
   observacionesobservados observacionesobservados[]
   rolespersonasproyecto   rolespersonasproyecto[]
-  cuestionarios           cuestionarios[]
   respuestascuestionario  respuestascuestionario[]
   focusgroups             focusgroups[]
   participantesfg         participantesfg[]
@@ -90,10 +92,11 @@ model subprocesos {
   nombre             String               @db.VarChar(255)
   descripcion        String
   fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
+  cuestionarios      cuestionarios[]
+  entrevistas        entrevistas[]
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
-  cuestionarios      cuestionarios[]
   focusgroups        focusgroups[]
   analisisDocumentos analisisDocumentos[]
 }
@@ -129,6 +132,38 @@ model observacionesobservados {
   personas      personas      @relation(fields: [idobservado], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([idobservacion, idobservado])
+}
+
+model entrevistadosentrevista {
+  identrevistado Int
+  identrevista   Int
+  entrevistas    entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: NoAction, onUpdate: NoAction)
+  personas       personas    @relation(fields: [identrevistado], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([identrevista, identrevistado])
+}
+
+model entrevistas {
+  identrevista            Int                       @id @default(autoincrement())
+  nombre                  String                    @db.VarChar(255)
+  descripcion             String
+  identrevistador         Int
+  fechahorainicio         DateTime                  @db.Timestamptz(6)
+  fechahorafinalizacion   DateTime                  @db.Timestamptz(6)
+  lugar                   String                    @db.VarChar(255)
+  idsubproceso            Int
+  entrevistadosentrevista entrevistadosentrevista[]
+  personas                personas                  @relation(fields: [identrevistador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  preguntasentrevista     preguntasentrevista[]
+}
+
+model preguntasentrevista {
+  idpregunta   Int         @id @default(autoincrement())
+  identrevista Int
+  nombre       String      @db.VarChar(255)
+  descripcion  String
+  entrevistas  entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum tiporol {
