@@ -1,0 +1,84 @@
+.responder-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.responder-modal {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--box-shadow);
+}
+
+.responder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pregunta-respuesta {
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  background-color: var(--body-bg-color);
+}
+
+.pregunta-texto {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.opciones-respuesta {
+  padding-left: 0.5rem;
+}
+
+.opcion-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.escala-respuesta {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.escala-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.escala-opcion .escala-numero {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--blue);
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.escala-opcion input:checked + .escala-numero {
+  background-color: var(--blue);
+  color: white;
+}

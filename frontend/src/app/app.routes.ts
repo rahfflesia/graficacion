@@ -13,6 +13,8 @@ import { SeccionObservaciones } from '../componentes/secciones-tecnicas-recolecc
 import { authGuard } from '../guards/auth-guard';
 import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recoleccion/seccion-cuestionarios/seccion-cuestionarios';
 import { SeccionEntrevistas } from '../componentes/secciones-tecnicas-recoleccion/seccion-entrevistas/seccion-entrevistas';
+import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion/seccion-focus-group/seccion-focus-group';
+import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -33,6 +35,8 @@ export const routes: Routes = [
       { path: 'observaciones', component: SeccionObservaciones },
       { path: 'cuestionarios', component: SeccionCuestionarios },
       { path: 'entrevistas', component: SeccionEntrevistas },
+      { path: 'focus-group', component: SeccionFocusGroup },
+      { path: 'analisis-documento', component: SeccionAnalisisDocumento },
     ],
   },
 ];

@@ -1,0 +1,162 @@
+<section class="flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Focus Group</h1>
+    <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
+  </div>
+
+  <form class="flex-column sm-gap" [formGroup]="formulario">
+    <!-- Nombre -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="fg-nombre">Nombre del Focus Group</label>
+      <input
+        id="fg-nombre"
+        type="text"
+        class="search-input"
+        placeholder="Ingresa el nombre"
+        formControlName="nombre"
+      />
+    </div>
+
+    <!-- Descripción -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="fg-descripcion">Descripción</label>
+      <textarea
+        id="fg-descripcion"
+        class="search-input area-texto"
+        placeholder="Ingresa la descripción"
+        formControlName="descripcion"
+      ></textarea>
+    </div>
+
+    <!-- Moderador -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="fg-moderador">Moderador</label>
+      <select id="fg-moderador" class="custom-select" formControlName="idmoderador">
+        @for (p of participantes(); track p.idpersona) {
+          <option value="{{ p.idpersona }}">{{ nombreCompleto(p) }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Lugar -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="fg-lugar">Lugar</label>
+      <input
+        id="fg-lugar"
+        type="text"
+        class="search-input"
+        placeholder="Lugar del focus group"
+        formControlName="lugar"
+      />
+    </div>
+
+    <!-- Fecha y hora -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="fg-fecha">Fecha y hora (opcional)</label>
+      <input id="fg-fecha" type="datetime-local" class="search-input" formControlName="fechahora" />
+    </div>
+
+    <!-- Temas -->
+    <div class="temas-wrapper flex-column sm-gap">
+      <div class="temas-header">
+        <h3>Temas a discutir</h3>
+        <button type="button" class="default-button btn-agregar" (click)="agregarTema()">
+          + Agregar tema
+        </button>
+      </div>
+
+      <div formArrayName="temas" class="flex-column sm-gap">
+        @for (tema of temasFormArray.controls; track $index; let i = $index) {
+          <div class="tema-row">
+            <span class="tema-numero">{{ i + 1 }}.</span>
+            <input
+              type="text"
+              class="search-input tema-input"
+              placeholder="Escribe el tema"
+              [formControlName]="i"
+            />
+            <button type="button" class="btn-eliminar-item" (click)="eliminarTema(i)">✕</button>
+          </div>
+        } @empty {
+          <div class="sin-items">No hay temas agregados. Agrega al menos uno.</div>
+        }
+      </div>
+    </div>
+
+    <!-- Participantes -->
+    <div class="participantes-wrapper flex-column sm-gap">
+      <h3>Participantes</h3>
+      <div formArrayName="participantes" class="participantes-grid">
+        @for (p of participantes(); track p.idpersona; let i = $index) {
+          <label class="participante-check">
+            <input type="checkbox" [formControlName]="i" />
+            <span>{{ nombreCompleto(p) }}</span>
+          </label>
+        }
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="acciones-form">
+      @if (focusGroupEnEdicion()) {
+        <button
+          class="default-button"
+          type="button"
+          (click)="editarFocusGroup()"
+          [disabled]="formulario.invalid || temasFormArray.length === 0"
+        >
+          Actualizar Focus Group
+        </button>
+        <button class="default-button btn-cancelar" type="button" (click)="cancelarEdicion()">
+          Cancelar edición
+        </button>
+      } @else {
+        <button
+          class="default-button"
+          type="button"
+          (click)="crearFocusGroup()"
+          [disabled]="formulario.invalid || temasFormArray.length === 0"
+        >
+          Guardar Focus Group
+        </button>
+      }
+    </div>
+  </form>
+
+  <!-- Lista existente -->
+  <h3>Focus Groups asociados</h3>
+  <div class="lista-items flex-column sm-gap">
+    @for (fg of focusGroupsExistentes(); track fg.idfocusgroup) {
+      <div class="item-card">
+        <div class="item-info">
+          <span class="item-nombre">{{ fg.nombre }}</span>
+          <span class="item-desc">{{ fg.descripcion }}</span>
+          <div class="item-badges">
+            <span class="badge badge-lugar">📍 {{ fg.lugar }}</span>
+            <span class="badge badge-temas">{{ fg.temasfocusgroup.length }} tema(s)</span>
+            <span class="badge badge-participantes">
+              👥 {{ fg.participantesfg.length }} participante(s)
+            </span>
+            <span class="badge badge-moderador">
+              🎤 Mod: {{ nombreCompleto(fg.personas) }}
+            </span>
+          </div>
+          <!-- Temas listados -->
+          @if (fg.temasfocusgroup.length > 0) {
+            <div class="temas-list">
+              @for (t of fg.temasfocusgroup; track t.idtema) {
+                <span class="tema-tag">{{ t.tema }}</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="item-acciones">
+          <button class="btn-editar" (click)="cargarParaEdicion(fg)">Editar</button>
+          <button class="btn-eliminar" (click)="eliminarFocusGroup(fg.idfocusgroup)">Eliminar</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="sin-registros">No hay Focus Groups asociados a este subproceso.</div>
+    }
+  </div>
+</section>
