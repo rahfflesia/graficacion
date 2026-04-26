@@ -63,7 +63,9 @@ export const ModelName = {
   observaciones: 'observaciones',
   observacionesobservados: 'observacionesobservados',
   cuestionarios: 'cuestionarios',
-  preguntascuestionario: 'preguntascuestionario'
+  preguntascuestionario: 'preguntascuestionario',
+  respuestascuestionario: 'respuestascuestionario',
+  respuestaspreguntas: 'respuestaspreguntas'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -223,6 +225,26 @@ export const PreguntascuestionarioScalarFieldEnum = {
 } as const
 
 export type PreguntascuestionarioScalarFieldEnum = (typeof PreguntascuestionarioScalarFieldEnum)[keyof typeof PreguntascuestionarioScalarFieldEnum]
+
+
+export const RespuestascuestionarioScalarFieldEnum = {
+  idrespuesta: 'idrespuesta',
+  idcuestionario: 'idcuestionario',
+  idrespondente: 'idrespondente',
+  fecharespuesta: 'fecharespuesta'
+} as const
+
+export type RespuestascuestionarioScalarFieldEnum = (typeof RespuestascuestionarioScalarFieldEnum)[keyof typeof RespuestascuestionarioScalarFieldEnum]
+
+
+export const RespuestaspreguntasScalarFieldEnum = {
+  idrespuestapregunta: 'idrespuestapregunta',
+  idrespuesta: 'idrespuesta',
+  idpregunta: 'idpregunta',
+  valor: 'valor'
+} as const
+
+export type RespuestaspreguntasScalarFieldEnum = (typeof RespuestaspreguntasScalarFieldEnum)[keyof typeof RespuestaspreguntasScalarFieldEnum]
 
 
 export const SortOrder = {

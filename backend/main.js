@@ -14,6 +14,7 @@ import cookieParser from "cookie-parser";
 import observaciones from "./rutas/observaciones";
 import cuestionarios from "./rutas/cuestionarios";
 import respuestasCuestionarios from "./rutas/respuestasCuestionarios";
+import historiasUsuario from "./rutas/historiasUsuario.js";
 
 const app = express();
 const port = 3000;
@@ -35,6 +36,7 @@ app.use("/logout", logout);
 app.use("/observaciones", observaciones);
 app.use("/cuestionarios", cuestionarios);
 app.use("/respuestas-cuestionarios", respuestasCuestionarios);
+app.use("/historiasusuario", historiasUsuario);
 
 
 app.listen(port, () => {

@@ -104,3 +104,13 @@ export type cuestionarios = Prisma.cuestionariosModel
  * 
  */
 export type preguntascuestionario = Prisma.preguntascuestionarioModel
+/**
+ * Model respuestascuestionario
+ * 
+ */
+export type respuestascuestionario = Prisma.respuestascuestionarioModel
+/**
+ * Model respuestaspreguntas
+ * 
+ */
+export type respuestaspreguntas = Prisma.respuestaspreguntasModel

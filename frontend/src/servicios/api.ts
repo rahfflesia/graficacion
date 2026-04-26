@@ -23,6 +23,7 @@ import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
 import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
+import { DatosFormularioHistoriaUsuario, HistoriaUsuario } from '../models/historiaUsuario';
 @Injectable({
   providedIn: 'root',
 })
@@ -86,6 +87,12 @@ export class Api {
   private respuestasCuestionariosResponderUrl = 'responder/';
   private respuestasCuestionariosObtenerUrl = 'obtener/';
   private respuestasCuestionariosEliminarUrl = 'eliminar/';
+
+  private historiasUsuarioUrl = 'historiasusuario/';
+  private historiasUsuarioCrearUrl = 'crear/';
+  private historiasUsuarioObtenerUrl = 'obtener/';
+  private historiasUsuarioEliminarUrl = 'eliminar/';
+  private historiasUsuarioEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -303,6 +310,32 @@ export class Api {
   eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
   return this.http.delete<any>(
     this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
+    );
+  }
+
+  crearHistoriaUsuario(datos: DatosFormularioHistoriaUsuario) {
+    return this.http.post<HistoriaUsuario>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerHistoriasUsuario(idsubproceso: number) {
+    return this.http.get<HistoriaUsuario[]>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioObtenerUrl + idsubproceso,
+    );
+  }
+
+  editarHistoriaUsuario(id: number, datos: Partial<DatosFormularioHistoriaUsuario>) {
+    return this.http.put<HistoriaUsuario>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEditarUrl + id,
+      datos,
+    );
+  }
+
+  eliminarHistoriaUsuario(id: number) {
+    return this.http.delete(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEliminarUrl + id,
     );
   }
 }

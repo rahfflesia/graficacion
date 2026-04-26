@@ -12,6 +12,7 @@ import { Stakeholders } from '../componentes/principales/stakeholders/stakeholde
 import { SeccionObservaciones } from '../componentes/secciones-tecnicas-recoleccion/seccion-observaciones/seccion-observaciones';
 import { authGuard } from '../guards/auth-guard';
 import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recoleccion/seccion-cuestionarios/seccion-cuestionarios';
+import { SeccionHistoriasUsuario } from '../componentes/secciones-tecnicas-recoleccion/seccion-historias-usuario/seccion-historias-usuario';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'stakeholders', component: Stakeholders },
       { path: 'observaciones', component: SeccionObservaciones },
       { path: 'cuestionarios', component: SeccionCuestionarios },
+      { path: 'historiasusuario', component: SeccionHistoriasUsuario },
     ],
   },
 ];

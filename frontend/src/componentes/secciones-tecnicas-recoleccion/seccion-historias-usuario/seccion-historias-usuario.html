@@ -1,0 +1,108 @@
+<modal-carga [toggler]="estanCargandoHistorias" [mensaje]="'Cargando historias de usuario'"></modal-carga>
+
+<section class="flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Historias de Usuario</h1>
+    <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
+  </div>
+
+  <form class="flex-column sm-gap" [formGroup]="formulario">
+    <h2>{{ historiaEnEdicion ? 'Editar historia' : 'Nueva historia' }}</h2>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Participante (creador)</label>
+      <select formControlName="idcreador">
+        <option value="">Selecciona un participante</option>
+        @for (p of participantes(); track p.idpersona) {
+          <option [value]="p.idpersona">{{ p.nombre }} {{ p.apellidouno }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Rol del usuario</label>
+      <input type="text" formControlName="rolusuario" placeholder="Ej. Cliente, Administrador..." />
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Necesidad</label>
+      <textarea formControlName="necesidad" placeholder="Como [rol], quiero [necesidad]..."></textarea>
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Beneficio</label>
+      <textarea formControlName="beneficio" placeholder="Para [beneficio]..."></textarea>
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Criterios de aceptación</label>
+      <div class="criterio-input-wrapper">
+        <input
+          type="text"
+          [(ngModel)]="criterioActual"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Escribe un criterio y presiona Agregar"
+        />
+        <button type="button" (click)="agregarCriterio()">Agregar</button>
+      </div>
+      @if (criterios.length > 0) {
+        <ul class="lista-criterios">
+          @for (criterio of criterios; track criterio; let i = $index) {
+            <li>
+              {{ criterio }}
+              <button type="button" (click)="eliminarCriterio(i)">X</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Prioridad</label>
+      <select formControlName="prioridad">
+        <option value="">Selecciona prioridad</option>
+        <option value="Alta">Alta</option>
+        <option value="Media">Media</option>
+        <option value="Baja">Baja</option>
+      </select>
+    </div>
+
+    @if (historiaEnEdicion) {
+      <div class="flex-row sm-gap">
+        <button type="button" (click)="guardarEdicion()">Guardar cambios</button>
+        <button type="button" class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+    } @else {
+      <button type="button" (click)="crearHistoria()">Crear historia</button>
+    }
+  </form>
+
+  <div class="lista-historias flex-column sm-gap">
+    @for (historia of historias(); track historia.idhistoriausuario) {
+      <div class="historia-card flex-column sm-gap">
+        <div class="historia-header">
+          <span class="prioridad prioridad-{{ historia.prioridad.toLowerCase() }}">{{ historia.prioridad }}</span>
+          <div class="acciones">
+            <button (click)="iniciarEdicion(historia)">Editar</button>
+            <button class="btn-cancelar" (click)="eliminarHistoria(historia)">Eliminar</button>
+          </div>
+        </div>
+        <p><strong>Rol:</strong> {{ historia.rolusuario }}</p>
+        <p><strong>Necesidad:</strong> {{ historia.necesidad }}</p>
+        <p><strong>Beneficio:</strong> {{ historia.beneficio }}</p>
+        @if (historia.criteriosaceptacion.length > 0) {
+          <div class="flex-column sm-gap">
+            <strong>Criterios de aceptación:</strong>
+            <ul>
+              @for (criterio of historia.criteriosaceptacion; track criterio) {
+                <li>{{ criterio }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    } @empty {
+      <p>No hay historias de usuario registradas.</p>
+    }
+  </div>
+</section>
