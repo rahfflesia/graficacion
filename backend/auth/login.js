@@ -9,9 +9,6 @@ login.post("/iniciar-sesion", async (req, res) => {
   try {
     const datosSesion = req.body;
 
-    console.log("BODY LOGIN:", datosSesion);
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
-
     const datosUsuario = await prisma.usuarios.findUnique({
       where: {
         correo: datosSesion.correo,
@@ -52,7 +49,6 @@ login.post("/iniciar-sesion", async (req, res) => {
       usuario: datosUsuarioFormateados,
     });
   } catch (error) {
-    console.error("ERROR LOGIN:", error);
     return res.status(500).json({
       error: "Error interno del servidor",
       detalle: error.message,

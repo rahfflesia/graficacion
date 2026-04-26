@@ -221,7 +221,15 @@ entrevistas.put("/editar/:identrevista", async (req, res) => {
         where: {
           identrevista: id,
         },
-        data: datos.entrevista,
+        data: {
+          ...datos.entrevista,
+          fechahorainicio: new Date(
+            datos.entrevista.fechahorainicio,
+          ).toISOString(),
+          fechahorafinalizacion: new Date(
+            datos.entrevista.fechahorafinalizacion,
+          ).toISOString(),
+        },
       });
 
       const datosEntrevistadosFormateados = datos.entrevistados.map(

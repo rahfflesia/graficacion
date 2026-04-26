@@ -8,6 +8,8 @@ import { ModalEliminar } from '../../modales/modal-eliminar/modal-eliminar';
 import { ModalEditarProyecto } from '../../modales/modal-editar-proyecto/modal-editar-proyecto';
 import { Usuario } from '../../../servicios/usuario';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ModalCrearDiagrama } from '../../modales/modal-crear-diagrama/modal-crear-diagrama';
 
 @Component({
   selector: 'seccion-proyectos',
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
     ProyectoCard,
     ModalEliminar,
     ModalEditarProyecto,
+    ModalCrearDiagrama,
   ],
   templateUrl: './seccion-proyectos.html',
   styleUrl: './seccion-proyectos.css',
@@ -24,7 +27,7 @@ import { Router } from '@angular/router';
 export class SeccionProyectos implements OnInit {
   private api = inject(Api);
   private ServicioUsuario = inject(Usuario);
-
+  private toastr = inject(ToastrService);
   private router = inject(Router);
 
   proyectos = signal<Proyectos[]>([]);
@@ -32,28 +35,33 @@ export class SeccionProyectos implements OnInit {
   esConfigurarProyectoModalVisible: boolean = false;
   esEliminarProyectoModalVisible: boolean = false;
   esEditarProyectoModalVisible = signal<boolean>(false);
+  esModalCrearDiagramaVisible = true;
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
   usuario = signal<DatosUsuario | null>(null);
 
   ngOnInit(): void {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
+    const idUsuario = this.usuario()?.usuario.idusuario;
 
-    const idusuario = localStorage.getItem('idusuario');
+    console.log('Id del usuario', idUsuario);
 
-    if (!idusuario) {
-      console.error('No se encontró idusuario en localStorage');
+    if (!idUsuario) {
+      console.error('No existen datos de usuario');
       this.estaCargando.set(false);
       return;
     }
 
-    this.api.obtenerProyectos(Number(idusuario)).subscribe({
+    this.api.obtenerProyectos(idUsuario).subscribe({
       next: (proyectos: Proyectos[]) => {
         this.proyectos.set(proyectos);
         this.estaCargando.set(false);
       },
       error: (error) => {
-        alert(JSON.stringify(error));
+        this.toastr.error('Ha ocurrido un error al obtener los proyectos', '', {
+          toastClass: 'toastr-error',
+        });
+        console.error(error);
         this.estaCargando.set(false);
       },
     });
@@ -98,6 +106,14 @@ export class SeccionProyectos implements OnInit {
     this.limpiarProyectoSeleccionado();
   }
 
+  mostrarModalMenuDiagramas() {
+    this.esModalCrearDiagramaVisible = true;
+  }
+
+  cerrarModalMenuDiagramas() {
+    this.esModalCrearDiagramaVisible = false;
+  }
+
   crearNuevoProyecto(nuevoProyecto: Proyectos) {
     this.proyectos.update((proyectos) => [nuevoProyecto, ...proyectos]);
   }
@@ -120,9 +136,5 @@ export class SeccionProyectos implements OnInit {
     this.proyectos.update((proyectos) =>
       proyectos.filter((proyecto) => proyecto.idproyecto !== proyectoEliminado.idproyecto),
     );
-  }
-
-  irMenuDiagramas() {
-    this.router.navigateByUrl('/menudiagramas');
   }
 }

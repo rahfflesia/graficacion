@@ -20,6 +20,10 @@
   (editar)="editarProyecto($event)"
   [toggler]="esEditarProyectoModalVisible()"
 ></modal-editar-proyecto>
+<modal-crear-diagrama
+  [toggler]="esModalCrearDiagramaVisible"
+  (cerrar)="cerrarModalMenuDiagramas()"
+></modal-crear-diagrama>
 <section class="flex-column">
   <div class="section-header flex-center">
     <div class="hamburger-menu">
@@ -44,10 +48,10 @@
       </div>
       <div class="info-perfil">
         <div class="foto">
-          <img src="{{ usuario()?.pfp }}" alt="default-pfp" />
+          <img src="{{ usuario()?.usuario?.pfp }}" alt="default-pfp" />
         </div>
         <div class="datos-usuario flex-column">
-          <span class="username">{{ usuario()?.nombre }}</span>
+          <span class="username">{{ usuario()?.usuario?.nombre }}</span>
           <span class="role">Rol</span>
         </div>
       </div>
@@ -85,7 +89,7 @@
           (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
           (editar)="seleccionarProyecto(proyecto); mostrarModalEditarProyecto()"
           (configurar)="mostrarModalConfigurarProyecto(); seleccionarProyecto(proyecto)"
-          (crearDiagrama)="irMenuDiagramas()"
+          (crearDiagrama)="mostrarModalMenuDiagramas()"
         ></proyecto-card>
       }
     </div>

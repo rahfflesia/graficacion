@@ -1,0 +1,47 @@
+.modal-menu-diagrama {
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.opciones-diagramas button {
+  background-color: var(--primary-color);
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.boton-menu-diagrama {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  justify-content: center;
+  transition: transform ease 300ms 0s;
+  transform: translateY(0);
+}
+
+.boton-menu-diagrama span:first-child,
+.boton-menu-diagrama span:last-child {
+  font-weight: 600;
+}
+
+.boton-menu-diagrama span:last-child {
+  font-size: 0.8rem;
+  color: rgb(158, 158, 158);
+}
+
+.boton-menu-diagrama:hover {
+  transform: translateY(-5%);
+}

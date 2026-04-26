@@ -234,6 +234,9 @@ export class SeccionObservaciones implements OnInit {
         });
       },
     });
+
+    this.formularioObservaciones.reset();
+    this.listaParticipantesAgregados = [];
   }
 
   estaListaParticipantesVacia(): ValidatorFn {

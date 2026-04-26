@@ -1,0 +1,26 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-menu-diagrama" [class.animar]="toggler">
+    <header>
+      <h2>¿Qué diagrama quieres crear?</h2>
+      <div class="close-button" (click)="cerrar.emit()">X</div>
+    </header>
+    <div class="opciones-diagramas flex-column md-gap">
+      <button class="boton-menu-diagrama">
+        <span>Crear diagrama de clases</span>
+        <span>Descripción simple</span>
+      </button>
+      <button class="boton-menu-diagrama">
+        <span>Crear diagrama de casos de uso</span>
+        <span>Descripción simple</span>
+      </button>
+      <button class="boton-menu-diagrama">
+        <span>Crear diagrama de secuencia</span>
+        <span>Descripción simple</span>
+      </button>
+      <button class="boton-menu-diagrama">
+        <span>Crear diagrama de paquetes</span>
+        <span>Descripción simple</span>
+      </button>
+    </div>
+  </div>
+</div>
