@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuCrearDiagrama } from './menu-crear-diagrama';
+import { CanvasDiagramaClase } from './canvas-diagrama-clase';
 
-describe('MenuCrearDiagrama', () => {
-  let component: MenuCrearDiagrama;
-  let fixture: ComponentFixture<MenuCrearDiagrama>;
+describe('CanvasDiagramaClase', () => {
+  let component: CanvasDiagramaClase;
+  let fixture: ComponentFixture<CanvasDiagramaClase>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuCrearDiagrama]
+      imports: [CanvasDiagramaClase]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MenuCrearDiagrama);
+    fixture = TestBed.createComponent(CanvasDiagramaClase);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,7 +15,7 @@ import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recolecc
 import { SeccionEntrevistas } from '../componentes/secciones-tecnicas-recoleccion/seccion-entrevistas/seccion-entrevistas';
 import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion/seccion-focus-group/seccion-focus-group';
 import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
-import { MenuCrearDiagrama } from '../componentes/principales/menu-crear-diagrama/menu-crear-diagrama';
+import { CanvasDiagramaClase } from '../componentes/diagramas/canvas-diagrama-clase/canvas-diagrama-clase';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -38,7 +38,8 @@ export const routes: Routes = [
       { path: 'entrevistas', component: SeccionEntrevistas },
       { path: 'focus-group', component: SeccionFocusGroup },
       { path: 'analisis-documento', component: SeccionAnalisisDocumento },
-      { path: 'menudiagramas', component: MenuCrearDiagrama },
     ],
   },
+
+  { path: 'crear-diagrama-clase', component: CanvasDiagramaClase },
 ];

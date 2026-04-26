@@ -37,13 +37,8 @@ export class Login {
 
     this.api.iniciarSesion(datosInicioSesion).subscribe({
       next: (datosUsuario) => {
-        console.log('RESPUESTA LOGIN:', datosUsuario);
-
+        console.log('Datos del usuario', datosUsuario);
         this.ServicioUsuario.guardarUsuario(datosUsuario);
-
-        console.log('TOKEN GUARDADO:', localStorage.getItem('token'));
-        console.log('IDUSUARIO GUARDADO:', localStorage.getItem('idusuario'));
-        console.log('DATOSUSUARIO GUARDADO:', localStorage.getItem('datosUsuario'));
 
         this.toastr.success('Sesión iniciada');
         this.esModalCargaVisible.set(false);

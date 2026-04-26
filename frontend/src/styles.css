@@ -154,13 +154,16 @@ img {
   display: grid;
   place-items: center;
   opacity: 0;
-  transition: opacity ease 200ms 0ms;
+  transition: opacity ease 300ms 0ms;
   pointer-events: none;
 }
 
 .modal {
-  transition: transform ease 200ms 0ms;
-  transform: translateY(100%);
+  transition:
+    transform ease 300ms 0ms,
+    opacity ease 300ms 0ms;
+  transform: scale(0);
+  opacity: 0;
   min-width: 750px;
 }
 
@@ -170,7 +173,8 @@ img {
 }
 
 .modal.animar {
-  transform: translateY(0);
+  transform: scale(1);
+  opacity: 1;
 }
 
 .header-modal {
