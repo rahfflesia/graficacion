@@ -10,7 +10,7 @@ model metodossubprocesos {
   idmetodosubproceso   Int                 @id @default(autoincrement())
   idsubproceso         Int
   idtecnicarecoleccion Int
-  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_metodossubprocesos_subprocesos")
+  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_subprocesos")
   tecnicasrecoleccion  tecnicasrecoleccion @relation(fields: [idtecnicarecoleccion], references: [idtecnicarecoleccion], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_tecnicarsecoleccion")
 }
 
@@ -89,7 +89,7 @@ model subprocesos {
   fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
-  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
   cuestionarios          cuestionarios[]
   historiasusuario historiasusuario[]
 }
@@ -114,7 +114,7 @@ model observaciones {
   tipo                    tipoobservacion
   fechahoracaptura        DateTime                  @default(now()) @db.Timestamptz(6)
   personas                personas                  @relation(fields: [idobservador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   observacionesobservados observacionesobservados[]
 }
 
@@ -157,7 +157,7 @@ model cuestionarios {
   idcreador              Int
   fechacreacion          DateTime               @default(now()) @db.Timestamptz(6)
   personas               personas               @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario[]
   respuestascuestionario respuestascuestionario[]
 }
@@ -209,5 +209,5 @@ model historiasusuario {
   prioridad           String      @db.VarChar(20)
   fechacreacion       DateTime    @default(now()) @db.Timestamptz(6)
   personas            personas    @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
 }
