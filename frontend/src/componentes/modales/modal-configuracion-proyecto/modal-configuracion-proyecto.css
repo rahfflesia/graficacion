@@ -90,3 +90,7 @@ header.header-config {
   font-size: 0.8rem;
 }
 /* */
+#formulario-participantes-modal {
+  border: none;
+  padding: 0;
+}

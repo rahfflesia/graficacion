@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import proyectos from "./rutas/proyectos";
 import tecnicasRecoleccion from "./rutas/tecnicasRecoleccion";
@@ -15,6 +17,7 @@ import observaciones from "./rutas/observaciones";
 import cuestionarios from "./rutas/cuestionarios";
 import respuestasCuestionarios from "./rutas/respuestasCuestionarios";
 import historiasUsuario from "./rutas/historiasUsuario.js";
+import entrevistas from "./rutas/entrevistas";
 
 const app = express();
 const port = 3000;
@@ -37,8 +40,8 @@ app.use("/observaciones", observaciones);
 app.use("/cuestionarios", cuestionarios);
 app.use("/respuestas-cuestionarios", respuestasCuestionarios);
 app.use("/historiasusuario", historiasUsuario);
-
+app.use("/entrevistas", entrevistas);
 
 app.listen(port, () => {
-  console.log(`Servidor escuchando en el puerto ${port}`);
+    console.log(`Servidor escuchando en el puerto ${port}`);
 });

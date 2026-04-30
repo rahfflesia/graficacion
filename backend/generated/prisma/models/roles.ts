@@ -39,22 +39,22 @@ export type RolesSumAggregateOutputType = {
 export type RolesMinAggregateOutputType = {
   idrol: number | null
   idproyecto: number | null
-  nombre: string | null
   tipo: $Enums.tiporol | null
+  nombre: string | null
 }
 
 export type RolesMaxAggregateOutputType = {
   idrol: number | null
   idproyecto: number | null
-  nombre: string | null
   tipo: $Enums.tiporol | null
+  nombre: string | null
 }
 
 export type RolesCountAggregateOutputType = {
   idrol: number
   idproyecto: number
-  nombre: number
   tipo: number
+  nombre: number
   _all: number
 }
 
@@ -72,22 +72,22 @@ export type RolesSumAggregateInputType = {
 export type RolesMinAggregateInputType = {
   idrol?: true
   idproyecto?: true
-  nombre?: true
   tipo?: true
+  nombre?: true
 }
 
 export type RolesMaxAggregateInputType = {
   idrol?: true
   idproyecto?: true
-  nombre?: true
   tipo?: true
+  nombre?: true
 }
 
 export type RolesCountAggregateInputType = {
   idrol?: true
   idproyecto?: true
-  nombre?: true
   tipo?: true
+  nombre?: true
   _all?: true
 }
 
@@ -180,8 +180,8 @@ export type rolesGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type RolesGroupByOutputType = {
   idrol: number
   idproyecto: number
-  nombre: string | null
   tipo: $Enums.tiporol
+  nombre: string | null
   _count: RolesCountAggregateOutputType | null
   _avg: RolesAvgAggregateOutputType | null
   _sum: RolesSumAggregateOutputType | null
@@ -210,8 +210,8 @@ export type rolesWhereInput = {
   NOT?: Prisma.rolesWhereInput | Prisma.rolesWhereInput[]
   idrol?: Prisma.IntFilter<"roles"> | number
   idproyecto?: Prisma.IntFilter<"roles"> | number
-  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
   tipo?: Prisma.EnumtiporolFilter<"roles"> | $Enums.tiporol
+  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
   proyectos?: Prisma.XOR<Prisma.ProyectosScalarRelationFilter, Prisma.proyectosWhereInput>
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
 }
@@ -219,8 +219,8 @@ export type rolesWhereInput = {
 export type rolesOrderByWithRelationInput = {
   idrol?: Prisma.SortOrder
   idproyecto?: Prisma.SortOrder
-  nombre?: Prisma.SortOrderInput | Prisma.SortOrder
   tipo?: Prisma.SortOrder
+  nombre?: Prisma.SortOrderInput | Prisma.SortOrder
   proyectos?: Prisma.proyectosOrderByWithRelationInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOrderByRelationAggregateInput
 }
@@ -231,8 +231,8 @@ export type rolesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.rolesWhereInput[]
   NOT?: Prisma.rolesWhereInput | Prisma.rolesWhereInput[]
   idproyecto?: Prisma.IntFilter<"roles"> | number
-  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
   tipo?: Prisma.EnumtiporolFilter<"roles"> | $Enums.tiporol
+  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
   proyectos?: Prisma.XOR<Prisma.ProyectosScalarRelationFilter, Prisma.proyectosWhereInput>
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
 }, "idrol">
@@ -240,8 +240,8 @@ export type rolesWhereUniqueInput = Prisma.AtLeast<{
 export type rolesOrderByWithAggregationInput = {
   idrol?: Prisma.SortOrder
   idproyecto?: Prisma.SortOrder
-  nombre?: Prisma.SortOrderInput | Prisma.SortOrder
   tipo?: Prisma.SortOrder
+  nombre?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.rolesCountOrderByAggregateInput
   _avg?: Prisma.rolesAvgOrderByAggregateInput
   _max?: Prisma.rolesMaxOrderByAggregateInput
@@ -255,13 +255,13 @@ export type rolesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.rolesScalarWhereWithAggregatesInput | Prisma.rolesScalarWhereWithAggregatesInput[]
   idrol?: Prisma.IntWithAggregatesFilter<"roles"> | number
   idproyecto?: Prisma.IntWithAggregatesFilter<"roles"> | number
-  nombre?: Prisma.StringNullableWithAggregatesFilter<"roles"> | string | null
   tipo?: Prisma.EnumtiporolWithAggregatesFilter<"roles"> | $Enums.tiporol
+  nombre?: Prisma.StringNullableWithAggregatesFilter<"roles"> | string | null
 }
 
 export type rolesCreateInput = {
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
   proyectos: Prisma.proyectosCreateNestedOneWithoutRolesInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutRolesInput
 }
@@ -269,14 +269,14 @@ export type rolesCreateInput = {
 export type rolesUncheckedCreateInput = {
   idrol?: number
   idproyecto: number
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutRolesInput
 }
 
 export type rolesUpdateInput = {
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectos?: Prisma.proyectosUpdateOneRequiredWithoutRolesNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutRolesNestedInput
 }
@@ -284,28 +284,28 @@ export type rolesUpdateInput = {
 export type rolesUncheckedUpdateInput = {
   idrol?: Prisma.IntFieldUpdateOperationsInput | number
   idproyecto?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutRolesNestedInput
 }
 
 export type rolesCreateManyInput = {
   idrol?: number
   idproyecto: number
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
 }
 
 export type rolesUpdateManyMutationInput = {
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type rolesUncheckedUpdateManyInput = {
   idrol?: Prisma.IntFieldUpdateOperationsInput | number
   idproyecto?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RolesListRelationFilter = {
@@ -321,8 +321,8 @@ export type rolesOrderByRelationAggregateInput = {
 export type rolesCountOrderByAggregateInput = {
   idrol?: Prisma.SortOrder
   idproyecto?: Prisma.SortOrder
-  nombre?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
 }
 
 export type rolesAvgOrderByAggregateInput = {
@@ -333,15 +333,15 @@ export type rolesAvgOrderByAggregateInput = {
 export type rolesMaxOrderByAggregateInput = {
   idrol?: Prisma.SortOrder
   idproyecto?: Prisma.SortOrder
-  nombre?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
 }
 
 export type rolesMinOrderByAggregateInput = {
   idrol?: Prisma.SortOrder
   idproyecto?: Prisma.SortOrder
-  nombre?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
 }
 
 export type rolesSumOrderByAggregateInput = {
@@ -396,12 +396,12 @@ export type rolesUncheckedUpdateManyWithoutProyectosNestedInput = {
   deleteMany?: Prisma.rolesScalarWhereInput | Prisma.rolesScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type EnumtiporolFieldUpdateOperationsInput = {
   set?: $Enums.tiporol
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type rolesCreateNestedOneWithoutRolespersonasproyectoInput = {
@@ -419,15 +419,15 @@ export type rolesUpdateOneRequiredWithoutRolespersonasproyectoNestedInput = {
 }
 
 export type rolesCreateWithoutProyectosInput = {
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutRolesInput
 }
 
 export type rolesUncheckedCreateWithoutProyectosInput = {
   idrol?: number
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutRolesInput
 }
 
@@ -463,21 +463,21 @@ export type rolesScalarWhereInput = {
   NOT?: Prisma.rolesScalarWhereInput | Prisma.rolesScalarWhereInput[]
   idrol?: Prisma.IntFilter<"roles"> | number
   idproyecto?: Prisma.IntFilter<"roles"> | number
-  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
   tipo?: Prisma.EnumtiporolFilter<"roles"> | $Enums.tiporol
+  nombre?: Prisma.StringNullableFilter<"roles"> | string | null
 }
 
 export type rolesCreateWithoutRolespersonasproyectoInput = {
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
   proyectos: Prisma.proyectosCreateNestedOneWithoutRolesInput
 }
 
 export type rolesUncheckedCreateWithoutRolespersonasproyectoInput = {
   idrol?: number
   idproyecto: number
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
 }
 
 export type rolesCreateOrConnectWithoutRolespersonasproyectoInput = {
@@ -497,41 +497,41 @@ export type rolesUpdateToOneWithWhereWithoutRolespersonasproyectoInput = {
 }
 
 export type rolesUpdateWithoutRolespersonasproyectoInput = {
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectos?: Prisma.proyectosUpdateOneRequiredWithoutRolesNestedInput
 }
 
 export type rolesUncheckedUpdateWithoutRolespersonasproyectoInput = {
   idrol?: Prisma.IntFieldUpdateOperationsInput | number
   idproyecto?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type rolesCreateManyProyectosInput = {
   idrol?: number
-  nombre?: string | null
   tipo: $Enums.tiporol
+  nombre?: string | null
 }
 
 export type rolesUpdateWithoutProyectosInput = {
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutRolesNestedInput
 }
 
 export type rolesUncheckedUpdateWithoutProyectosInput = {
   idrol?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutRolesNestedInput
 }
 
 export type rolesUncheckedUpdateManyWithoutProyectosInput = {
   idrol?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipo?: Prisma.EnumtiporolFieldUpdateOperationsInput | $Enums.tiporol
+  nombre?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -568,8 +568,8 @@ export type RolesCountOutputTypeCountRolespersonasproyectoArgs<ExtArgs extends r
 export type rolesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idrol?: boolean
   idproyecto?: boolean
-  nombre?: boolean
   tipo?: boolean
+  nombre?: boolean
   proyectos?: boolean | Prisma.proyectosDefaultArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.roles$rolespersonasproyectoArgs<ExtArgs>
   _count?: boolean | Prisma.RolesCountOutputTypeDefaultArgs<ExtArgs>
@@ -578,27 +578,27 @@ export type rolesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type rolesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idrol?: boolean
   idproyecto?: boolean
-  nombre?: boolean
   tipo?: boolean
+  nombre?: boolean
   proyectos?: boolean | Prisma.proyectosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["roles"]>
 
 export type rolesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idrol?: boolean
   idproyecto?: boolean
-  nombre?: boolean
   tipo?: boolean
+  nombre?: boolean
   proyectos?: boolean | Prisma.proyectosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["roles"]>
 
 export type rolesSelectScalar = {
   idrol?: boolean
   idproyecto?: boolean
-  nombre?: boolean
   tipo?: boolean
+  nombre?: boolean
 }
 
-export type rolesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idrol" | "idproyecto" | "nombre" | "tipo", ExtArgs["result"]["roles"]>
+export type rolesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idrol" | "idproyecto" | "tipo" | "nombre", ExtArgs["result"]["roles"]>
 export type rolesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   proyectos?: boolean | Prisma.proyectosDefaultArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.roles$rolespersonasproyectoArgs<ExtArgs>
@@ -620,8 +620,8 @@ export type $rolesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idrol: number
     idproyecto: number
-    nombre: string | null
     tipo: $Enums.tiporol
+    nombre: string | null
   }, ExtArgs["result"]["roles"]>
   composites: {}
 }
@@ -1049,8 +1049,8 @@ export interface Prisma__rolesClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface rolesFieldRefs {
   readonly idrol: Prisma.FieldRef<"roles", 'Int'>
   readonly idproyecto: Prisma.FieldRef<"roles", 'Int'>
-  readonly nombre: Prisma.FieldRef<"roles", 'String'>
   readonly tipo: Prisma.FieldRef<"roles", 'tiporol'>
+  readonly nombre: Prisma.FieldRef<"roles", 'String'>
 }
     
 

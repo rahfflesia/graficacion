@@ -68,8 +68,11 @@ export interface SesionUsuario {
 
 // Interfaz que utilizo para guardar los datos del usuario en el servicio
 export interface DatosUsuario {
-  idusuario: number;
-  nombre: string;
-  correo: string;
-  pfp: string;
+  token: string;
+  usuario: {
+    idusuario: number;
+    nombre: string;
+    correo: string;
+    pfp: string;
+  };
 }

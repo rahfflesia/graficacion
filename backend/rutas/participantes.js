@@ -85,6 +85,7 @@ participantes.post("/registrar", async (req, res) => {
         nombrerol: detallesParticipanteRegistrado.roles.nombre,
         idrolpersonaproyecto:
           detallesParticipanteRegistrado.idrolpersonaproyecto,
+        idrol: detallesParticipanteRegistrado.idrol,
       };
       return res.status(201).json(datosParticipanteFormateados);
     });

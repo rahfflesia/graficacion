@@ -1,0 +1,18 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-editar" [class.animar]="toggler">
+    <div class="header-modal">
+      <div class="flex-column xs-gap">
+        <h2>Entrevistas</h2>
+        <h3>Editar entrevista</h3>
+      </div>
+      <div class="close-button" (click)="cerrarModal()">X</div>
+    </div>
+    <form-entrevistas
+      [modo]="'editar'"
+      [entrevista]="entrevista"
+      [participantes]="participantes"
+      (entrevistaEditada)="entrevistaEditada.emit($event); cerrarModal()"
+      [toggler]="toggler"
+    ></form-entrevistas>
+  </div>
+</div>

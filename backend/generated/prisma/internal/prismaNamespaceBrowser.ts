@@ -62,10 +62,18 @@ export const ModelName = {
   usuarios: 'usuarios',
   observaciones: 'observaciones',
   observacionesobservados: 'observacionesobservados',
+  entrevistadosentrevista: 'entrevistadosentrevista',
+  entrevistas: 'entrevistas',
+  preguntasentrevista: 'preguntasentrevista',
   cuestionarios: 'cuestionarios',
   preguntascuestionario: 'preguntascuestionario',
   respuestascuestionario: 'respuestascuestionario',
-  respuestaspreguntas: 'respuestaspreguntas'
+  respuestaspreguntas: 'respuestaspreguntas',
+  focusgroups: 'focusgroups',
+  temasfocusgroup: 'temasfocusgroup',
+  participantesfg: 'participantesfg',
+  analisisDocumentos: 'analisisDocumentos',
+  hallazgosanalisis: 'hallazgosanalisis'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -108,9 +116,9 @@ export const ProyectosScalarFieldEnum = {
   idproyecto: 'idproyecto',
   nombre: 'nombre',
   descripcion: 'descripcion',
+  estado: 'estado',
   fechacreacion: 'fechacreacion',
-  idusuario: 'idusuario',
-  estado: 'estado'
+  idusuario: 'idusuario'
 } as const
 
 export type ProyectosScalarFieldEnum = (typeof ProyectosScalarFieldEnum)[keyof typeof ProyectosScalarFieldEnum]
@@ -119,8 +127,8 @@ export type ProyectosScalarFieldEnum = (typeof ProyectosScalarFieldEnum)[keyof t
 export const RolesScalarFieldEnum = {
   idrol: 'idrol',
   idproyecto: 'idproyecto',
-  nombre: 'nombre',
-  tipo: 'tipo'
+  tipo: 'tipo',
+  nombre: 'nombre'
 } as const
 
 export type RolesScalarFieldEnum = (typeof RolesScalarFieldEnum)[keyof typeof RolesScalarFieldEnum]
@@ -203,6 +211,38 @@ export const ObservacionesobservadosScalarFieldEnum = {
 export type ObservacionesobservadosScalarFieldEnum = (typeof ObservacionesobservadosScalarFieldEnum)[keyof typeof ObservacionesobservadosScalarFieldEnum]
 
 
+export const EntrevistadosentrevistaScalarFieldEnum = {
+  identrevistado: 'identrevistado',
+  identrevista: 'identrevista'
+} as const
+
+export type EntrevistadosentrevistaScalarFieldEnum = (typeof EntrevistadosentrevistaScalarFieldEnum)[keyof typeof EntrevistadosentrevistaScalarFieldEnum]
+
+
+export const EntrevistasScalarFieldEnum = {
+  identrevista: 'identrevista',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  identrevistador: 'identrevistador',
+  fechahorainicio: 'fechahorainicio',
+  fechahorafinalizacion: 'fechahorafinalizacion',
+  lugar: 'lugar',
+  idsubproceso: 'idsubproceso'
+} as const
+
+export type EntrevistasScalarFieldEnum = (typeof EntrevistasScalarFieldEnum)[keyof typeof EntrevistasScalarFieldEnum]
+
+
+export const PreguntasentrevistaScalarFieldEnum = {
+  idpregunta: 'idpregunta',
+  identrevista: 'identrevista',
+  nombre: 'nombre',
+  descripcion: 'descripcion'
+} as const
+
+export type PreguntasentrevistaScalarFieldEnum = (typeof PreguntasentrevistaScalarFieldEnum)[keyof typeof PreguntasentrevistaScalarFieldEnum]
+
+
 export const CuestionariosScalarFieldEnum = {
   idicuestionario: 'idicuestionario',
   idsubproceso: 'idsubproceso',
@@ -245,6 +285,60 @@ export const RespuestaspreguntasScalarFieldEnum = {
 } as const
 
 export type RespuestaspreguntasScalarFieldEnum = (typeof RespuestaspreguntasScalarFieldEnum)[keyof typeof RespuestaspreguntasScalarFieldEnum]
+
+
+export const FocusgroupsScalarFieldEnum = {
+  idfocusgroup: 'idfocusgroup',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idmoderador: 'idmoderador',
+  lugar: 'lugar',
+  fechahora: 'fechahora'
+} as const
+
+export type FocusgroupsScalarFieldEnum = (typeof FocusgroupsScalarFieldEnum)[keyof typeof FocusgroupsScalarFieldEnum]
+
+
+export const TemasfocusgroupScalarFieldEnum = {
+  idtema: 'idtema',
+  idfocusgroup: 'idfocusgroup',
+  tema: 'tema'
+} as const
+
+export type TemasfocusgroupScalarFieldEnum = (typeof TemasfocusgroupScalarFieldEnum)[keyof typeof TemasfocusgroupScalarFieldEnum]
+
+
+export const ParticipantesfgScalarFieldEnum = {
+  idfocusgroup: 'idfocusgroup',
+  idpersona: 'idpersona'
+} as const
+
+export type ParticipantesfgScalarFieldEnum = (typeof ParticipantesfgScalarFieldEnum)[keyof typeof ParticipantesfgScalarFieldEnum]
+
+
+export const AnalisisDocumentosScalarFieldEnum = {
+  idanalisis: 'idanalisis',
+  idsubproceso: 'idsubproceso',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idanalista: 'idanalista',
+  tipodocumento: 'tipodocumento',
+  fuente: 'fuente',
+  fechaanalisis: 'fechaanalisis',
+  notas: 'notas'
+} as const
+
+export type AnalisisDocumentosScalarFieldEnum = (typeof AnalisisDocumentosScalarFieldEnum)[keyof typeof AnalisisDocumentosScalarFieldEnum]
+
+
+export const HallazgosanalisisScalarFieldEnum = {
+  idhallazgo: 'idhallazgo',
+  idanalisis: 'idanalisis',
+  hallazgo: 'hallazgo'
+} as const
+
+export type HallazgosanalisisScalarFieldEnum = (typeof HallazgosanalisisScalarFieldEnum)[keyof typeof HallazgosanalisisScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -15,7 +15,7 @@ import { Rol } from '../../../models/rol.interface';
   templateUrl: './participante-card.html',
   styleUrl: './participante-card.css',
 })
-export class ParticipanteCard {
+export class ParticipanteCard implements OnInit {
   @Input() participante: Participante | undefined;
   @Input() roles: Rol[] = [];
   @Output() borrarParticipante = new EventEmitter<RolParticipanteProyecto>();
@@ -36,6 +36,10 @@ export class ParticipanteCard {
     telefono: ['', [Validators.required]],
     idrol: ['', [Validators.required]],
   });
+
+  ngOnInit(): void {
+    console.log('Datos del participante', this.participante);
+  }
 
   obtenerControlFormularioEditarParticipante(nombreControl: string) {
     return this.formularioEditarParticipante.get(nombreControl);

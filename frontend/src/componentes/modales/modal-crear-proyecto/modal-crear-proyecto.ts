@@ -50,7 +50,7 @@ export class ModalCrearProyecto {
   crearProyecto() {
     const usuario = this.ServicioUsuario.obtenerUsuario();
     const proyecto = {
-      idusuario: usuario?.idusuario!,
+      idusuario: usuario?.usuario.idusuario!,
       nombre: this.formularioCrearPoyecto.value.nombre ?? 'Proyecto',
       descripcion: this.formularioCrearPoyecto.value.descripcion ?? 'Descripcion del proyecto',
     };

@@ -121,6 +121,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
           this.tecnicasRecoleccion.set(datosProyecto.tecnicasRecoleccion);
           this.subprocesos.set(datosProyecto.subprocesos);
           this.cargarTecnicas();
+          console.log(this.procesos());
         },
         error: (error) => {
           console.error(error);
