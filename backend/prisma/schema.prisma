@@ -61,16 +61,16 @@ model personas {
   apellidodos             String?                   @db.VarChar(255)
   correo                  String?                   @db.VarChar(255)
   telefono                String?                   @db.VarChar(255)
+  analisisDocumentos      analisisDocumentos[]
   cuestionarios           cuestionarios[]
   entrevistadosentrevista entrevistadosentrevista[]
   entrevistas             entrevistas[]
+  focusgroups             focusgroups[]
   observaciones           observaciones[]
   observacionesobservados observacionesobservados[]
-  rolespersonasproyecto   rolespersonasproyecto[]
-  respuestascuestionario  respuestascuestionario[]
-  focusgroups             focusgroups[]
   participantesfg         participantesfg[]
-  analisisDocumentos      analisisDocumentos[]
+  respuestascuestionario  respuestascuestionario[]
+  rolespersonasproyecto   rolespersonasproyecto[]
 }
 
 model rolespersonasproyecto {
@@ -92,8 +92,10 @@ model subprocesos {
   nombre             String               @db.VarChar(255)
   descripcion        String
   fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
+  analisisDocumentos analisisDocumentos[]
   cuestionarios      cuestionarios[]
   entrevistas        entrevistas[]
+  focusgroups        focusgroups[]
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
@@ -166,75 +168,47 @@ model preguntasentrevista {
   entrevistas  entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: NoAction, onUpdate: NoAction)
 }
 
-enum tiporol {
-  Interno
-  Externo
-}
-
-enum tipousuario {
-  Persona
-  Usuario
-}
-
-enum estadosproyectos {
-  Activo
-  Pausado
-  Cancelado
-  En_revisi_n @map("En revisión")
-}
-
-enum tipoobservacion {
-  Pasiva
-  Activa
-}
-
 model cuestionarios {
-  idicuestionario        Int                    @id @default(autoincrement())
+  idicuestionario        Int                      @id @default(autoincrement())
   idsubproceso           Int
-  nombre                 String                 @db.VarChar(255)
+  nombre                 String                   @db.VarChar(255)
   descripcion            String
   idcreador              Int
-  fechacreacion          DateTime               @default(now()) @db.Timestamptz(6)
-  personas               personas               @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  fechacreacion          DateTime                 @default(now()) @db.Timestamptz(6)
+  personas               personas                 @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos            subprocesos              @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario[]
   respuestascuestionario respuestascuestionario[]
 }
 
 model preguntascuestionario {
-  idpregunta      Int            @id @default(autoincrement())
-  idcuestionario  Int
-  textopregunta   String
-  tipopregunta    tipopregunta
-  opciones        String[]       @default([])
-  orden           Int
-  cuestionarios   cuestionarios  @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
-  respuestaspreguntas    respuestaspreguntas[]
-}
-
-enum tipopregunta {
-  Abierta
-  Opcion_multiple @map("Opción múltiple")
-  Escala
+  idpregunta          Int                   @id @default(autoincrement())
+  idcuestionario      Int
+  textopregunta       String
+  tipopregunta        tipopregunta
+  opciones            String[]              @default([])
+  orden               Int
+  cuestionarios       cuestionarios         @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
+  respuestaspreguntas respuestaspreguntas[]
 }
 
 model respuestascuestionario {
-  idrespuesta        Int                   @id @default(autoincrement())
-  idcuestionario     Int
-  idrespondente      Int
-  fecharespuesta     DateTime              @default(now()) @db.Timestamptz(6)
-  cuestionarios      cuestionarios         @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
-  personas           personas              @relation(fields: [idrespondente], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  idrespuesta         Int                   @id @default(autoincrement())
+  idcuestionario      Int
+  idrespondente       Int
+  fecharespuesta      DateTime              @default(now()) @db.Timestamptz(6)
+  cuestionarios       cuestionarios         @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
+  personas            personas              @relation(fields: [idrespondente], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
   respuestaspreguntas respuestaspreguntas[]
 }
 
 model respuestaspreguntas {
-  idrespuestapregunta    Int                      @id @default(autoincrement())
+  idrespuestapregunta    Int                    @id @default(autoincrement())
   idrespuesta            Int
   idpregunta             Int
   valor                  String
-  respuestascuestionario respuestascuestionario   @relation(fields: [idrespuesta], references: [idrespuesta], onDelete: Cascade, onUpdate: NoAction)
-  preguntascuestionario  preguntascuestionario    @relation(fields: [idpregunta], references: [idpregunta], onDelete: Cascade, onUpdate: NoAction)
+  preguntascuestionario  preguntascuestionario  @relation(fields: [idpregunta], references: [idpregunta], onDelete: Cascade, onUpdate: NoAction)
+  respuestascuestionario respuestascuestionario @relation(fields: [idrespuesta], references: [idrespuesta], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model focusgroups {
@@ -245,10 +219,10 @@ model focusgroups {
   idmoderador     Int
   lugar           String            @db.VarChar(255)
   fechahora       DateTime          @default(now()) @db.Timestamptz(6)
-  subprocesos     subprocesos       @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   personas        personas          @relation(fields: [idmoderador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  temasfocusgroup temasfocusgroup[]
+  subprocesos     subprocesos       @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   participantesfg participantesfg[]
+  temasfocusgroup temasfocusgroup[]
 }
 
 model temasfocusgroup {
@@ -277,8 +251,8 @@ model analisisDocumentos {
   fuente            String              @db.VarChar(500)
   fechaanalisis     DateTime            @default(now()) @db.Timestamptz(6)
   notas             String?
-  subprocesos       subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   personas          personas            @relation(fields: [idanalista], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos       subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
   hallazgosanalisis hallazgosanalisis[]
 }
 
@@ -287,4 +261,32 @@ model hallazgosanalisis {
   idanalisis         Int
   hallazgo           String
   analisisDocumentos analisisDocumentos @relation(fields: [idanalisis], references: [idanalisis], onDelete: Cascade, onUpdate: NoAction)
+}
+
+enum tiporol {
+  Interno
+  Externo
+}
+
+enum tipousuario {
+  Persona
+  Usuario
+}
+
+enum estadosproyectos {
+  Activo
+  Pausado
+  Cancelado
+  En_revisi_n @map("En revisión")
+}
+
+enum tipoobservacion {
+  Pasiva
+  Activa
+}
+
+enum tipopregunta {
+  Abierta
+  Opcion_multiple @map("Opción múltiple")
+  Escala
 }
