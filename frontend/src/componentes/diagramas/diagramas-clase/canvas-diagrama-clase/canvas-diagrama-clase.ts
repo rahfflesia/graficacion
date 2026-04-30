@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, Injector, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit } from '@angular/core';
 import {
   NgDiagramComponent,
   initializeModel,
