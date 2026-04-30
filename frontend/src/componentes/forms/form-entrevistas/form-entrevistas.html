@@ -1,0 +1,273 @@
+<form
+  class="flex-column sm-gap formulario-principal"
+  [class.formulario-modal-editar]="modo === 'editar'"
+  [class.box-shadow]="modo === 'crear'"
+  [class.form-padding]="modo === 'crear'"
+  [formGroup]="formularioEntrevistas"
+>
+  @let nombreEntrevista = obtenerControlFormularioEntrevistas('nombre');
+  @let descripcionEntrevista = obtenerControlFormularioEntrevistas('descripcion');
+  <div class="input-wrapper flex-column sm-gap">
+    <label for="">Nombre</label>
+    <input
+      type="text"
+      placeholder="Ingresa el nombre de la entrevista"
+      class="search-input"
+      formControlName="nombre"
+    />
+    @if (nombreEntrevista?.hasError('required') && nombreEntrevista?.dirty) {
+      <div class="error-span">El nombre de la entrevista no puede quedar vacío</div>
+    }
+  </div>
+  <div class="input-wrapper flex-column sm-gap">
+    <label for="">Descripción</label>
+    <textarea
+      placeholder="Ingresa la descripción de la entrevista"
+      class="search-input"
+      formControlName="descripcion"
+    ></textarea>
+    @if (descripcionEntrevista?.hasError('required') && descripcionEntrevista?.dirty) {
+      <div class="error-span">La descripcion de la entrevista no puede quedar vacía</div>
+    }
+  </div>
+  @let controlEntrevistador = obtenerControlFormularioEntrevistas('idEntrevistador');
+  <div class="input-wrapper-row resultados-busqueda-padre">
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Entrevistador</label>
+      <select
+        class="custom-select"
+        formControlName="idEntrevistador"
+        (change)="actualizarValidezBusqueda()"
+      >
+        @for (participante of participantes; track participante.idpersona) {
+          <option value="{{ participante.idpersona }}">
+            {{ participante.nombre }} {{ participante.apellidouno }}
+            {{ participante.apellidodos ?? '' }}
+          </option>
+        }
+      </select>
+      @if (controlEntrevistador?.hasError('required') && controlEntrevistador?.dirty) {
+        <div class="error-span">Debes seleccionar un entrevistador</div>
+      }
+      @if (modo === 'crear') {
+        <div class="agregar-participante">
+          ¿No encuentras al participante que buscas?
+          <span (click)="abrirModal.emit()">Agregar uno</span>
+        </div>
+      }
+    </div>
+    @let campoBusqueda = obtenerControlFormularioEntrevistas('busqueda');
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Agregar entrevistado(s)</label>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Ingresa el nombre de algún participante"
+        formControlName="busqueda"
+        (input)="filtrarParticipantes()"
+      />
+      @if (campoBusqueda?.hasError('listaEntrevistadosVacia') && campoBusqueda?.dirty) {
+        <div class="error-span">Debes agregar al menos un entrevistado</div>
+      }
+      @if (campoBusqueda?.hasError('entrevistadorEnListaEntrevistados') && campoBusqueda?.dirty) {
+        <div class="error-span">El entrevistador no puede estar en los entrevistados</div>
+      }
+    </div>
+    @if (campoBusqueda?.value?.length > 0) {
+      <div class="resultados-busqueda" formArrayName="checkboxesEntrevistados">
+        <h3>Resultados de la búsqueda ({{ participantesFiltrados().length }})</h3>
+        @for (objeto of participantesFiltrados(); track objeto.participante.idpersona) {
+          <div class="wrapper-participante">
+            <span class="nombre-participante"
+              >{{ objeto.participante.nombre }} {{ objeto.participante.apellidouno }}
+              {{ objeto.participante.apellidodos ?? '' }}</span
+            >
+            <div class="datos-rol">
+              <span class="nombre-rol">{{ objeto.participante.nombrerol }}</span>
+              <input
+                type="checkbox"
+                (change)="agregarParticipante(objeto)"
+                [formControlName]="objeto.indiceOriginal"
+              />
+            </div>
+          </div>
+        } @empty {
+          <div class="sin-participantes">
+            <span>No se encontraron participantes</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+  @if (entrevistados.length > 0) {
+    <div class="lista-entrevistados">
+      @for (entrevistado of entrevistados; track entrevistado.idpersona) {
+        <div class="componente-entrevistado">
+          <div class="datos-componente-entrevistado">
+            <span
+              >{{ entrevistado.nombre }} {{ entrevistado.apellidouno }}
+              {{ entrevistado.apellidodos ?? '' }}</span
+            >
+            <span class="rol-entrevistado">
+              {{ entrevistado.nombrerol }}
+            </span>
+          </div>
+          <button
+            class="boton-eliminar-participante"
+            (click)="eliminarParticipante($index, entrevistado)"
+          >
+            X
+          </button>
+        </div>
+      }
+    </div>
+  }
+  @let fechaHoraInicio = obtenerControlFormularioEntrevistas('fechaHoraInicio');
+  @let fechaHoraFinalizacion = obtenerControlFormularioEntrevistas('fechaHoraFinalizacion');
+  @let lugar = obtenerControlFormularioEntrevistas('lugar');
+  <div class="input-wrapper-row">
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Fecha y hora de inicio</label>
+      <input type="datetime-local" class="search-input" formControlName="fechaHoraInicio" />
+      @if (fechaHoraInicio?.hasError('required') && fechaHoraInicio?.touched) {
+        <div class="error-span">La fecha y hora de inicio son requeridas</div>
+      }
+      @if (fechaHoraInicio?.hasError('fechaFutura') && fechaHoraInicio?.touched) {
+        <div class="error-span">Estás ingresando una fecha futura</div>
+      }
+      @if (fechaHoraInicio?.hasError('inicioMayorQueFinal') && fechaHoraInicio?.touched) {
+        <div class="error-span">
+          La fecha de inicio no puede suceder después que la fecha de finalización
+        </div>
+      }
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Fecha y hora de finalización</label>
+      <input
+        type="datetime-local"
+        class="search-input"
+        formControlName="fechaHoraFinalizacion"
+        (change)="actualizarValidezFechaInicio()"
+      />
+      @if (fechaHoraFinalizacion?.hasError('required') && fechaHoraFinalizacion?.dirty) {
+        <div class="error-span">La fecha y hora de inicio son requeridas</div>
+      }
+      @if (fechaHoraFinalizacion?.hasError('fechaFutura') && fechaHoraFinalizacion?.dirty) {
+        <div class="error-span">Estás ingresando una fecha futura</div>
+      }
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="">Lugar</label>
+      <input
+        type="text"
+        placeholder="Ingresa el lugar donde se realizó la entrevista"
+        class="search-input"
+        formControlName="lugar"
+      />
+      @if (lugar?.hasError('required') && lugar?.dirty) {
+        <div class="error-span">El lugar de la entrevista es requerido</div>
+      }
+    </div>
+  </div>
+  @let textoPregunta = obtenerControlFormularioPreguntaEntrevista('nombre');
+  @let respuestaPregunta = obtenerControlFormularioPreguntaEntrevista('descripcion');
+  <div class="input-wrapper flex-column sm-gap">
+    <div class="input-wrapper cabecera-agregar-preguntas">
+      <label for="">Preguntas</label>
+    </div>
+    <form class="wrapper-pregunta flex-column sm-gap" [formGroup]="formularioPreguntaEntrevista">
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Texto de la pregunta</label>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Ingresa la pregunta"
+          formControlName="nombre"
+        />
+        @if (textoPregunta?.hasError('required') && textoPregunta?.dirty) {
+          <div class="error-span">El texto de la pregunta no puede quedar vacío</div>
+        }
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="">Respuesta</label>
+        <textarea
+          placeholder="Ingresa la respuesta"
+          class="search-input"
+          formControlName="descripcion"
+        ></textarea>
+        @if (respuestaPregunta?.hasError('required') && respuestaPregunta?.dirty) {
+          <div class="error-span">La respuesta no puede quedar vacía</div>
+        }
+      </div>
+      <div>
+        @if (estaModoEdicionActivado) {
+          <button
+            class="default-button boton-agregar-pregunta"
+            style="margin-right: 0.5rem"
+            (click)="editarPregunta()"
+          >
+            Editar pregunta
+          </button>
+          <button
+            class="default-button boton-agregar-pregunta"
+            (click)="desactivarModoEdicionPregunta()"
+          >
+            Cancelar edición
+          </button>
+        } @else {
+          <button
+            class="default-button boton-agregar-pregunta"
+            (click)="agregarPregunta()"
+            [disabled]="formularioPreguntaEntrevista.invalid"
+          >
+            Guardar pregunta
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+  <div class="input-wrapper flex-column sm-gap">
+    <label for="">Lista de preguntas</label>
+    @for (pregunta of preguntasEntrevista; track $index; let i = $index) {
+      <div class="pregunta-entrevista input-wrapper-row">
+        <span>{{ pregunta.nombre }}</span>
+        <div class="wrapper-botones input-wrapper-row">
+          <button class="default-button" (click)="cargarDatosPregunta(i)">Editar</button>
+          <button class="default-button" (click)="eliminarPreguntaCuestionario(i)">Eliminar</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="sin-resultados">Aún no has agregado ninguna pregunta</div>
+    }
+  </div>
+  <div>
+    @switch (modo) {
+      @case ('crear') {
+        <button
+          class="default-button"
+          (click)="crearEntrevista()"
+          [disabled]="
+            formularioEntrevistas.invalid ||
+            entrevistados.length < 1 ||
+            preguntasEntrevista.length < 1
+          "
+        >
+          Crear entrevista
+        </button>
+      }
+      @case ('editar') {
+        <button
+          class="default-button"
+          (click)="editarEntrevista()"
+          [disabled]="
+            formularioEntrevistas.invalid ||
+            entrevistados.length < 1 ||
+            preguntasEntrevista.length < 1
+          "
+        >
+          Editar entrevista
+        </button>
+      }
+    }
+  </div>
+</form>

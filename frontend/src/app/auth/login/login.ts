@@ -18,9 +18,10 @@ export class Login {
   private router = inject(Router);
   private api = inject(Api);
   private toastr = inject(ToastrService);
-  // Servicio de usuario
   private ServicioUsuario = inject(Usuario);
+
   esModalCargaVisible = signal<boolean>(false);
+
   formularioInicioSesion = this.formBuilder.group({
     correo: ['', [Validators.required]],
     contrasena: ['', [Validators.required]],
@@ -32,18 +33,17 @@ export class Login {
       contrasena: this.formularioInicioSesion.get('contrasena')?.value!,
     };
 
-    // Signal que utilizo para mostrar el modal de carga mientras se realiza la petición
     this.esModalCargaVisible.set(true);
 
     this.api.iniciarSesion(datosInicioSesion).subscribe({
       next: (datosUsuario) => {
-        this.router.navigate(['/proyectos']);
-        this.toastr.success('Sesión iniciada');
-
+        console.log('Datos del usuario', datosUsuario);
         this.ServicioUsuario.guardarUsuario(datosUsuario);
 
+        this.toastr.success('Sesión iniciada');
         this.esModalCargaVisible.set(false);
-        console.log(datosInicioSesion);
+
+        this.router.navigate(['/proyectos']);
       },
       error: (error) => {
         this.toastr.error('Ocurrió un error al iniciar sesión', '', {

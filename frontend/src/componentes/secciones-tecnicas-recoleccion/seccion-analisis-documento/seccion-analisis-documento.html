@@ -1,0 +1,170 @@
+<section class="flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Análisis de Documento</h1>
+    <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
+  </div>
+
+  <form class="flex-column sm-gap" [formGroup]="formulario">
+    <!-- Nombre -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-nombre">Nombre del análisis</label>
+      <input
+        id="ad-nombre"
+        type="text"
+        class="search-input"
+        placeholder="Nombre del análisis"
+        formControlName="nombre"
+      />
+    </div>
+
+    <!-- Descripción -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-descripcion">Descripción</label>
+      <textarea
+        id="ad-descripcion"
+        class="search-input area-texto"
+        placeholder="Descripción del análisis"
+        formControlName="descripcion"
+      ></textarea>
+    </div>
+
+    <!-- Analista -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-analista">Analista responsable</label>
+      <select id="ad-analista" class="custom-select" formControlName="idanalista">
+        @for (p of participantes(); track p.idpersona) {
+          <option value="{{ p.idpersona }}">{{ nombreCompleto(p) }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Tipo de documento -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-tipo">Tipo de documento</label>
+      <select id="ad-tipo" class="custom-select" formControlName="tipodocumento">
+        @for (tipo of tiposDocumento; track tipo) {
+          <option [value]="tipo">{{ tipo }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Fuente -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-fuente">Fuente / URL / Referencia</label>
+      <input
+        id="ad-fuente"
+        type="text"
+        class="search-input"
+        placeholder="Ej: https://ejemplo.com/doc o 'Archivo interno'"
+        formControlName="fuente"
+      />
+    </div>
+
+    <!-- Fecha -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-fecha">Fecha de análisis (opcional)</label>
+      <input id="ad-fecha" type="datetime-local" class="search-input" formControlName="fechaanalisis" />
+    </div>
+
+    <!-- Notas -->
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="ad-notas">Notas adicionales (opcional)</label>
+      <textarea
+        id="ad-notas"
+        class="search-input area-texto"
+        placeholder="Cualquier observación adicional"
+        formControlName="notas"
+      ></textarea>
+    </div>
+
+    <!-- Hallazgos -->
+    <div class="hallazgos-wrapper flex-column sm-gap">
+      <div class="hallazgos-header">
+        <h3>Hallazgos</h3>
+        <button type="button" class="default-button btn-agregar" (click)="agregarHallazgo()">
+          + Agregar hallazgo
+        </button>
+      </div>
+
+      <div formArrayName="hallazgos" class="flex-column sm-gap">
+        @for (h of hallazgosFormArray.controls; track $index; let i = $index) {
+          <div class="hallazgo-row">
+            <span class="hallazgo-numero">{{ i + 1 }}.</span>
+            <input
+              type="text"
+              class="search-input hallazgo-input"
+              placeholder="Describe el hallazgo"
+              [formControlName]="i"
+            />
+            <button type="button" class="btn-eliminar-item" (click)="eliminarHallazgo(i)">✕</button>
+          </div>
+        } @empty {
+          <div class="sin-items">No hay hallazgos. Agrega al menos uno.</div>
+        }
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="acciones-form">
+      @if (analisisEnEdicion()) {
+        <button
+          class="default-button"
+          type="button"
+          (click)="editarAnalisis()"
+          [disabled]="formulario.invalid || hallazgosFormArray.length === 0"
+        >
+          Actualizar análisis
+        </button>
+        <button class="default-button btn-cancelar" type="button" (click)="cancelarEdicion()">
+          Cancelar edición
+        </button>
+      } @else {
+        <button
+          class="default-button"
+          type="button"
+          (click)="crearAnalisis()"
+          [disabled]="formulario.invalid || hallazgosFormArray.length === 0"
+        >
+          Guardar análisis
+        </button>
+      }
+    </div>
+  </form>
+
+  <!-- Lista existente -->
+  <h3>Análisis asociados</h3>
+  <div class="lista-items flex-column sm-gap">
+    @for (a of analisisExistentes(); track a.idanalisis) {
+      <div class="item-card">
+        <div class="item-info">
+          <span class="item-nombre">{{ a.nombre }}</span>
+          <span class="item-desc">{{ a.descripcion }}</span>
+          <div class="item-badges">
+            <span class="badge badge-tipo">📄 {{ a.tipodocumento }}</span>
+            <span class="badge badge-analista">🔍 {{ nombreCompleto(a.personas) }}</span>
+            <span class="badge badge-hallazgos">{{ a.hallazgosanalisis.length }} hallazgo(s)</span>
+          </div>
+          <a class="fuente-link" [href]="a.fuente" target="_blank" rel="noopener">
+            🔗 {{ a.fuente }}
+          </a>
+          @if (a.hallazgosanalisis.length > 0) {
+            <div class="hallazgos-list">
+              @for (h of a.hallazgosanalisis; track h.idhallazgo) {
+                <span class="hallazgo-tag">{{ h.hallazgo }}</span>
+              }
+            </div>
+          }
+          @if (a.notas) {
+            <span class="notas">📝 {{ a.notas }}</span>
+          }
+        </div>
+        <div class="item-acciones">
+          <button class="btn-editar" (click)="cargarParaEdicion(a)">Editar</button>
+          <button class="btn-eliminar" (click)="eliminarAnalisis(a.idanalisis)">Eliminar</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="sin-registros">No hay análisis de documentos asociados a este subproceso.</div>
+    }
+  </div>
+</section>

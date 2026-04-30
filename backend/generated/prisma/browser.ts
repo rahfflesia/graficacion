@@ -73,6 +73,21 @@ export type observaciones = Prisma.observacionesModel
  */
 export type observacionesobservados = Prisma.observacionesobservadosModel
 /**
+ * Model entrevistadosentrevista
+ * 
+ */
+export type entrevistadosentrevista = Prisma.entrevistadosentrevistaModel
+/**
+ * Model entrevistas
+ * 
+ */
+export type entrevistas = Prisma.entrevistasModel
+/**
+ * Model preguntasentrevista
+ * 
+ */
+export type preguntasentrevista = Prisma.preguntasentrevistaModel
+/**
  * Model cuestionarios
  * 
  */
@@ -92,3 +107,28 @@ export type respuestascuestionario = Prisma.respuestascuestionarioModel
  * 
  */
 export type respuestaspreguntas = Prisma.respuestaspreguntasModel
+/**
+ * Model focusgroups
+ * 
+ */
+export type focusgroups = Prisma.focusgroupsModel
+/**
+ * Model temasfocusgroup
+ * 
+ */
+export type temasfocusgroup = Prisma.temasfocusgroupModel
+/**
+ * Model participantesfg
+ * 
+ */
+export type participantesfg = Prisma.participantesfgModel
+/**
+ * Model analisisDocumentos
+ * 
+ */
+export type analisisDocumentos = Prisma.analisisDocumentosModel
+/**
+ * Model hallazgosanalisis
+ * 
+ */
+export type hallazgosanalisis = Prisma.hallazgosanalisisModel

@@ -1,0 +1,140 @@
+form {
+  border-radius: var(--border-radius);
+}
+
+.form-padding {
+  padding: 1.5rem;
+}
+
+.formulario-principal {
+  background-color: var(--primary-color);
+}
+
+.box-shadow {
+  box-shadow: var(--box-shadow);
+}
+
+form:not(.formulario-principal) {
+  border: 1px solid lightgray;
+  padding: 1.5rem;
+}
+
+.agregar-participante {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.agregar-participante span {
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.wrapper-agregar-pregunta > button,
+.boton-agregar-pregunta {
+  font-size: 0.8rem;
+}
+
+.wrapper-pregunta {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid lightgray;
+  box-shadow: none;
+}
+
+.pregunta-entrevista {
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  font-weight: bold;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wrapper-botones {
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.wrapper-botones > * {
+  flex: none;
+  font-size: 0.8rem;
+}
+
+.wrapper-agregar-pregunta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.entrevistas-wrapper > * {
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.editar-fecha-hora {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.editar-fecha-hora > span {
+  font-size: 0.8rem;
+  color: rgb(155, 155, 155);
+}
+
+.cabecera-agregar-preguntas {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sin-resultados {
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.lista-entrevistados {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+
+.componente-entrevistado {
+  border: 1px solid var(--blue);
+  display: flex;
+  gap: 1rem;
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  align-items: center;
+}
+
+.datos-componente-entrevistado {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.boton-eliminar-participante {
+  border: none;
+  width: 15px;
+  height: 15px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rol-entrevistado {
+  color: var(--blue);
+  font-weight: bold;
+  font-size: 0.55rem;
+  background-color: var(--blue-fg-color);
+  border-radius: var(--border-radius);
+  padding: 0.2rem 0.4rem;
+}

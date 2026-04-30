@@ -102,6 +102,7 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
     for (let i = 0; i < datosProyecto.procesos.length; i++) {
       const procesoAntiguo = datosProyecto.procesos[i];
       let nuevoProceso = {
+        idproyecto: parseInt(id),
         nombre: procesoAntiguo.nombre,
         descripcion: procesoAntiguo.descripcion,
         idproceso: procesoAntiguo.idproceso,

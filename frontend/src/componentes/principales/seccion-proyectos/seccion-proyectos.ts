@@ -7,6 +7,9 @@ import { Api } from '../../../servicios/api';
 import { ModalEliminar } from '../../modales/modal-eliminar/modal-eliminar';
 import { ModalEditarProyecto } from '../../modales/modal-editar-proyecto/modal-editar-proyecto';
 import { Usuario } from '../../../servicios/usuario';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ModalCrearDiagrama } from '../../modales/modal-crear-diagrama/modal-crear-diagrama';
 
 @Component({
   selector: 'seccion-proyectos',
@@ -16,6 +19,7 @@ import { Usuario } from '../../../servicios/usuario';
     ProyectoCard,
     ModalEliminar,
     ModalEditarProyecto,
+    ModalCrearDiagrama,
   ],
   templateUrl: './seccion-proyectos.html',
   styleUrl: './seccion-proyectos.css',
@@ -23,27 +27,41 @@ import { Usuario } from '../../../servicios/usuario';
 export class SeccionProyectos implements OnInit {
   private api = inject(Api);
   private ServicioUsuario = inject(Usuario);
+  private toastr = inject(ToastrService);
+  private router = inject(Router);
+
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
   esConfigurarProyectoModalVisible: boolean = false;
   esEliminarProyectoModalVisible: boolean = false;
   esEditarProyectoModalVisible = signal<boolean>(false);
+  esModalCrearDiagramaVisible = true;
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
   usuario = signal<DatosUsuario | null>(null);
 
   ngOnInit(): void {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
+    const idUsuario = this.usuario()?.usuario.idusuario;
 
-    if (this.usuario() === null) return;
+    console.log('Id del usuario', idUsuario);
 
-    this.api.obtenerProyectos(this.usuario()?.idusuario!).subscribe({
+    if (!idUsuario) {
+      console.error('No existen datos de usuario');
+      this.estaCargando.set(false);
+      return;
+    }
+
+    this.api.obtenerProyectos(idUsuario).subscribe({
       next: (proyectos: Proyectos[]) => {
         this.proyectos.set(proyectos);
         this.estaCargando.set(false);
       },
       error: (error) => {
-        alert(JSON.stringify(error));
+        this.toastr.error('Ha ocurrido un error al obtener los proyectos', '', {
+          toastClass: 'toastr-error',
+        });
+        console.error(error);
         this.estaCargando.set(false);
       },
     });
@@ -67,7 +85,7 @@ export class SeccionProyectos implements OnInit {
 
   mostrarModalEditarProyecto() {
     this.esEditarProyectoModalVisible.set(true);
-    console.log(JSON.stringify(this.proyectoSeleccionado));
+    console.log(JSON.stringify(this.proyectoSeleccionado()));
   }
 
   cerrarModalCrearProyecto() {
@@ -88,6 +106,14 @@ export class SeccionProyectos implements OnInit {
     this.limpiarProyectoSeleccionado();
   }
 
+  mostrarModalMenuDiagramas() {
+    this.esModalCrearDiagramaVisible = true;
+  }
+
+  cerrarModalMenuDiagramas() {
+    this.esModalCrearDiagramaVisible = false;
+  }
+
   crearNuevoProyecto(nuevoProyecto: Proyectos) {
     this.proyectos.update((proyectos) => [nuevoProyecto, ...proyectos]);
   }
@@ -97,20 +123,14 @@ export class SeccionProyectos implements OnInit {
   }
 
   editarProyecto(proyectoEditado: Proyectos) {
-    this.proyectos().map((proyecto, indice) => {
-      if (proyecto.idproyecto === proyectoEditado.idproyecto) {
-        this.proyectos()[indice] = proyectoEditado;
-        return;
-      }
-
-      // Acá no supe muy bien que retornar
-      console.log('No se encontró un proyecto con ese id');
-      return;
-    });
+    this.proyectos.update((proyectos) =>
+      proyectos.map((proyecto) =>
+        proyecto.idproyecto === proyectoEditado.idproyecto ? proyectoEditado : proyecto,
+      ),
+    );
   }
 
   eliminarProyecto(proyectoEliminado: Proyectos) {
-    // Si el proyecto a eliminar es undefined aún no se ha seleccionado ningún proyecto por lo que no hay nada que eliminar
     if (this.proyectoSeleccionado() === undefined) return;
 
     this.proyectos.update((proyectos) =>

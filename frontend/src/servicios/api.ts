@@ -24,6 +24,10 @@ import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.int
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
 import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
 import { DatosFormularioHistoriaUsuario, HistoriaUsuario } from '../models/historiaUsuario';
+import { DatosEntrevista, Entrevista } from '../models/entrevista';
+
+import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
+import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
 @Injectable({
   providedIn: 'root',
 })
@@ -93,6 +97,24 @@ export class Api {
   private historiasUsuarioObtenerUrl = 'obtener/';
   private historiasUsuarioEliminarUrl = 'eliminar/';
   private historiasUsuarioEditarUrl = 'editar/';
+  
+  private entrevistasUrl = 'entrevistas/';
+  private entrevistasCrearUrl = 'crear/';
+  private entrevistasObtenerUrl = 'obtener/';
+  private entrevistasEliminarUrl = 'eliminar/';
+  private entrevistasEditarUrl = 'editar/';
+
+  private focusGroupsUrl = 'focusgroups/';
+  private focusGroupsCrearUrl = 'crear/';
+  private focusGroupsObtenerUrl = 'obtener/';
+  private focusGroupsEliminarUrl = 'eliminar/';
+  private focusGroupsEditarUrl = 'editar/';
+
+  private analisisDocumentosUrl = 'analisis-documentos/';
+  private analisisDocumentosCrearUrl = 'crear/';
+  private analisisDocumentosObtenerUrl = 'obtener/';
+  private analisisDocumentosEliminarUrl = 'eliminar/';
+  private analisisDocumentosEditarUrl = 'editar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -165,7 +187,9 @@ export class Api {
   }
 
   obtenerRolesProyecto(idProyecto: number): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.baseUrl + this.rolesObtenerRolesProyectoUrl + idProyecto);
+    return this.http.get<Rol[]>(
+      this.baseUrl + this.rolesUrl + this.rolesObtenerRolesProyectoUrl + idProyecto,
+    );
   }
 
   eliminarRol(idRol: number): Observable<Rol> {
@@ -173,7 +197,6 @@ export class Api {
   }
 
   editarRol(idRol: number, datosEditarRol: DatosFormularioRol): Observable<Rol> {
-    console.log(datosEditarRol);
     return this.http.put<Rol>(
       this.baseUrl + this.rolesUrl + this.rolesEditarUrl + idRol,
       datosEditarRol,
@@ -274,6 +297,7 @@ export class Api {
       datosCuestionario,
     );
   }
+
   obtenerCuestionarios(idSubproceso: number): Observable<Cuestionario[]> {
     return this.http.get<Cuestionario[]>(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosObtenerUrl + idSubproceso,
@@ -286,30 +310,116 @@ export class Api {
     );
   }
 
-  editarCuestionario(idCuestionario: number, datosCuestionario: DatosFormularioCuestionario): Observable<any> {
+  editarCuestionario(
+    idCuestionario: number,
+    datosCuestionario: DatosFormularioCuestionario,
+  ): Observable<any> {
     return this.http.put(
       this.baseUrl + this.cuestionariosUrl + this.cuestionariosEditarUrl + idCuestionario,
       datosCuestionario,
     );
   }
 
-
   responderCuestionario(datos: DatosRespuestaCuestionario): Observable<any> {
-  return this.http.post<any>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
-    datos,
+    return this.http.post<any>(
+      this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosResponderUrl,
+      datos,
     );
   }
 
   obtenerRespuestasCuestionario(idCuestionario: number): Observable<RespuestaCuestionario[]> {
-  return this.http.get<RespuestaCuestionario[]>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosObtenerUrl + idCuestionario,
+    return this.http.get<RespuestaCuestionario[]>(
+      this.baseUrl +
+        this.respuestasCuestionariosUrl +
+        this.respuestasCuestionariosObtenerUrl +
+        idCuestionario,
     );
   }
 
   eliminarRespuestaCuestionario(idRespuesta: number): Observable<any> {
-  return this.http.delete<any>(
-    this.baseUrl + this.respuestasCuestionariosUrl + this.respuestasCuestionariosEliminarUrl + idRespuesta,
+    return this.http.delete<any>(
+      this.baseUrl +
+        this.respuestasCuestionariosUrl +
+        this.respuestasCuestionariosEliminarUrl +
+        idRespuesta,
+    );
+  }
+
+  crearEntrevista(datosEntrevista: Entrevista): Observable<Entrevista> {
+    return this.http.post<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasCrearUrl,
+      datosEntrevista,
+    );
+  }
+
+  editarEntrevista(idEntrevista: number, datosEntrevista: Entrevista): Observable<Entrevista> {
+    return this.http.put<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasEditarUrl + idEntrevista,
+      datosEntrevista,
+    );
+  }
+
+  eliminarEntrevista(idEntrevista: number): Observable<Entrevista> {
+    return this.http.delete<Entrevista>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasEliminarUrl + idEntrevista,
+    );
+  }
+
+  obtenerEntrevistas(idSubproceso: number): Observable<Entrevista[]> {
+    return this.http.get<Entrevista[]>(
+      this.baseUrl + this.entrevistasUrl + this.entrevistasObtenerUrl + idSubproceso,
+    );
+  }
+
+  crearFocusGroup(datos: DatosFormularioFocusGroup): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerFocusGroups(idSubproceso: number): Observable<FocusGroup[]> {
+    return this.http.get<FocusGroup[]>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsObtenerUrl + idSubproceso,
+    );
+  }
+
+  eliminarFocusGroup(idFocusGroup: number): Observable<any> {
+    return this.http.delete<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsEliminarUrl + idFocusGroup,
+    );
+  }
+
+  editarFocusGroup(idFocusGroup: number, datos: DatosFormularioFocusGroup): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + this.focusGroupsUrl + this.focusGroupsEditarUrl + idFocusGroup,
+      datos,
+    );
+  }
+
+  crearAnalisisDocumento(datos: DatosFormularioAnalisis): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerAnalisisDocumentos(idSubproceso: number): Observable<AnalisisDocumento[]> {
+    return this.http.get<AnalisisDocumento[]>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosObtenerUrl + idSubproceso,
+    );
+  }
+
+  eliminarAnalisisDocumento(idAnalisis: number): Observable<any> {
+    return this.http.delete<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosEliminarUrl + idAnalisis,
+    );
+  }
+
+  editarAnalisisDocumento(idAnalisis: number, datos: DatosFormularioAnalisis): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosEditarUrl + idAnalisis,
+      datos,
     );
   }
 
