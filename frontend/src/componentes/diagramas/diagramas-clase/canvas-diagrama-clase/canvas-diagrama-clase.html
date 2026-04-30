@@ -1,0 +1,44 @@
+<div class="canvas-wrapper">
+  <ng-diagram
+    [model]="model"
+    class="canvas"
+    [nodeTemplateMap]="nodeTemplateMap"
+    (drop)="f($event)"
+  ></ng-diagram>
+  <div class="menu-lateral flex-column md-gap" [class.animar-menu-lateral]="estaAbiertoMenuLateral">
+    <header>
+      <div>
+        <h3>Menú de componentes</h3>
+        <span>Selecciona uno</span>
+      </div>
+      <div class="close-button" (click)="cerrarMenuLateral()">X</div>
+    </header>
+    <div class="seccion-componentes">
+      <button (click)="agregarForma('diagramaClase')" draggable="true">Diagrama de clase</button>
+      <button (click)="agregarForma('diagramaInterfaz')">Interfaz</button>
+      <button (click)="agregarForma('diagramaEnum')">Enum</button>
+      <button (click)="agregarForma('etiqueta')">Etiqueta</button>
+      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaClase')">
+        Diagrama de clase
+      </div>
+      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaInterfaz')">Interfaz</div>
+      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaEnum')">Enum</div>
+      <div draggable="true" (dragstart)="onDragStart($event, 'etiqueta')">Etiqueta</div>
+    </div>
+  </div>
+  <div class="barra-flotante">
+    <div>
+      <h3>Creación de diagramas de clase</h3>
+    </div>
+    @if (!estaAbiertoMenuLateral) {
+      <div class="abrir-menu" (click)="abrirMenuLateral()">
+        <img
+          src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000"
+          alt="hamburger-menu"
+        />
+      </div>
+    }
+    <button class="default-button" (click)="guardarDiagramaClase()">Guardar</button>
+  </div>
+  <ng-diagram-minimap></ng-diagram-minimap>
+</div>
