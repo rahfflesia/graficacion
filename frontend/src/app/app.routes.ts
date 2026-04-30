@@ -12,6 +12,7 @@ import { Stakeholders } from '../componentes/principales/stakeholders/stakeholde
 import { SeccionObservaciones } from '../componentes/secciones-tecnicas-recoleccion/seccion-observaciones/seccion-observaciones';
 import { authGuard } from '../guards/auth-guard';
 import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recoleccion/seccion-cuestionarios/seccion-cuestionarios';
+import { SeccionHistoriasUsuario } from '../componentes/secciones-tecnicas-recoleccion/seccion-historias-usuario/seccion-historias-usuario';
 import { SeccionEntrevistas } from '../componentes/secciones-tecnicas-recoleccion/seccion-entrevistas/seccion-entrevistas';
 import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion/seccion-focus-group/seccion-focus-group';
 import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
@@ -35,6 +36,7 @@ export const routes: Routes = [
       { path: 'stakeholders', component: Stakeholders },
       { path: 'observaciones', component: SeccionObservaciones },
       { path: 'cuestionarios', component: SeccionCuestionarios },
+      { path: 'historiasusuario', component: SeccionHistoriasUsuario },
       { path: 'entrevistas', component: SeccionEntrevistas },
       { path: 'focus-group', component: SeccionFocusGroup },
       { path: 'analisis-documento', component: SeccionAnalisisDocumento },

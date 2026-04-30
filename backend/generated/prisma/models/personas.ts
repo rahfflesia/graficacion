@@ -230,6 +230,7 @@ export type personasWhereInput = {
   observaciones?: Prisma.ObservacionesListRelationFilter
   observacionesobservados?: Prisma.ObservacionesobservadosListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
+  cuestionarios?: Prisma.CuestionariosListRelationFilter
   respuestascuestionario?: Prisma.RespuestascuestionarioListRelationFilter
   focusgroups?: Prisma.FocusgroupsListRelationFilter
   participantesfg?: Prisma.ParticipantesfgListRelationFilter
@@ -249,6 +250,7 @@ export type personasOrderByWithRelationInput = {
   observaciones?: Prisma.observacionesOrderByRelationAggregateInput
   observacionesobservados?: Prisma.observacionesobservadosOrderByRelationAggregateInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoOrderByRelationAggregateInput
+  cuestionarios?: Prisma.cuestionariosOrderByRelationAggregateInput
   respuestascuestionario?: Prisma.respuestascuestionarioOrderByRelationAggregateInput
   focusgroups?: Prisma.focusgroupsOrderByRelationAggregateInput
   participantesfg?: Prisma.participantesfgOrderByRelationAggregateInput
@@ -271,10 +273,8 @@ export type personasWhereUniqueInput = Prisma.AtLeast<{
   observaciones?: Prisma.ObservacionesListRelationFilter
   observacionesobservados?: Prisma.ObservacionesobservadosListRelationFilter
   rolespersonasproyecto?: Prisma.RolespersonasproyectoListRelationFilter
+  cuestionarios?: Prisma.CuestionariosListRelationFilter
   respuestascuestionario?: Prisma.RespuestascuestionarioListRelationFilter
-  focusgroups?: Prisma.FocusgroupsListRelationFilter
-  participantesfg?: Prisma.ParticipantesfgListRelationFilter
-  analisisDocumentos?: Prisma.AnalisisDocumentosListRelationFilter
 }, "idpersona">
 
 export type personasOrderByWithAggregationInput = {
@@ -315,10 +315,8 @@ export type personasCreateInput = {
   observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateInput = {
@@ -334,10 +332,8 @@ export type personasUncheckedCreateInput = {
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUpdateInput = {
@@ -352,10 +348,8 @@ export type personasUpdateInput = {
   observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateInput = {
@@ -371,10 +365,8 @@ export type personasUncheckedUpdateInput = {
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasCreateManyInput = {
@@ -1099,7 +1091,21 @@ export type personasUncheckedUpdateWithoutCuestionariosInput = {
   analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
-export type personasCreateWithoutRespuestascuestionarioInput = {
+export type personasCreateNestedOneWithoutRespuestascuestionarioInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedCreateWithoutRespuestascuestionarioInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutRespuestascuestionarioInput
+  connect?: Prisma.personasWhereUniqueInput
+}
+
+export type personasUpdateOneRequiredWithoutRespuestascuestionarioNestedInput = {
+  create?: Prisma.XOR<Prisma.personasCreateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedCreateWithoutRespuestascuestionarioInput>
+  connectOrCreate?: Prisma.personasCreateOrConnectWithoutRespuestascuestionarioInput
+  upsert?: Prisma.personasUpsertWithoutRespuestascuestionarioInput
+  connect?: Prisma.personasWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.personasUpdateToOneWithWhereWithoutRespuestascuestionarioInput, Prisma.personasUpdateWithoutRespuestascuestionarioInput>, Prisma.personasUncheckedUpdateWithoutRespuestascuestionarioInput>
+}
+
+export type personasCreateWithoutRolespersonasproyectoInput = {
   nombre: string
   apellidouno: string
   apellidodos?: string | null
@@ -1110,10 +1116,8 @@ export type personasCreateWithoutRespuestascuestionarioInput = {
   entrevistas?: Prisma.entrevistasCreateNestedManyWithoutPersonasInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
-  rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutPersonasInput
+  respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateWithoutRespuestascuestionarioInput = {
@@ -1128,10 +1132,8 @@ export type personasUncheckedCreateWithoutRespuestascuestionarioInput = {
   entrevistas?: Prisma.entrevistasUncheckedCreateNestedManyWithoutPersonasInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
-  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutPersonasInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasCreateOrConnectWithoutRespuestascuestionarioInput = {
@@ -1161,10 +1163,8 @@ export type personasUpdateWithoutRespuestascuestionarioInput = {
   entrevistas?: Prisma.entrevistasUpdateManyWithoutPersonasNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
-  rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutPersonasNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateWithoutRespuestascuestionarioInput = {
@@ -1179,10 +1179,8 @@ export type personasUncheckedUpdateWithoutRespuestascuestionarioInput = {
   entrevistas?: Prisma.entrevistasUncheckedUpdateManyWithoutPersonasNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
-  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutPersonasNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasCreateWithoutFocusgroupsInput = {
@@ -1197,9 +1195,8 @@ export type personasCreateWithoutFocusgroupsInput = {
   observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateWithoutFocusgroupsInput = {
@@ -1215,9 +1212,8 @@ export type personasUncheckedCreateWithoutFocusgroupsInput = {
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasCreateOrConnectWithoutFocusgroupsInput = {
@@ -1248,9 +1244,8 @@ export type personasUpdateWithoutFocusgroupsInput = {
   observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateWithoutFocusgroupsInput = {
@@ -1266,9 +1261,8 @@ export type personasUncheckedUpdateWithoutFocusgroupsInput = {
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasCreateWithoutParticipantesfgInput = {
@@ -1283,9 +1277,8 @@ export type personasCreateWithoutParticipantesfgInput = {
   observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateWithoutParticipantesfgInput = {
@@ -1301,9 +1294,8 @@ export type personasUncheckedCreateWithoutParticipantesfgInput = {
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutPersonasInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasCreateOrConnectWithoutParticipantesfgInput = {
@@ -1334,9 +1326,8 @@ export type personasUpdateWithoutParticipantesfgInput = {
   observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateWithoutParticipantesfgInput = {
@@ -1352,9 +1343,8 @@ export type personasUncheckedUpdateWithoutParticipantesfgInput = {
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
   observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutPersonasNestedInput
-  analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasCreateWithoutAnalisisDocumentosInput = {
@@ -1370,8 +1360,6 @@ export type personasCreateWithoutAnalisisDocumentosInput = {
   observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgCreateNestedManyWithoutPersonasInput
 }
 
 export type personasUncheckedCreateWithoutAnalisisDocumentosInput = {
@@ -1388,8 +1376,6 @@ export type personasUncheckedCreateWithoutAnalisisDocumentosInput = {
   observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedCreateNestedManyWithoutPersonasInput
-  focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutPersonasInput
-  participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutPersonasInput
 }
 
 export type personasCreateOrConnectWithoutAnalisisDocumentosInput = {
@@ -1421,8 +1407,6 @@ export type personasUpdateWithoutAnalisisDocumentosInput = {
   observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUpdateManyWithoutPersonasNestedInput
 }
 
 export type personasUncheckedUpdateWithoutAnalisisDocumentosInput = {
@@ -1439,8 +1423,72 @@ export type personasUncheckedUpdateWithoutAnalisisDocumentosInput = {
   observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
   rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
   respuestascuestionario?: Prisma.respuestascuestionarioUncheckedUpdateManyWithoutPersonasNestedInput
-  focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutPersonasNestedInput
-  participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasCreateWithoutRespuestascuestionarioInput = {
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observaciones?: Prisma.observacionesCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutPersonasInput
+}
+
+export type personasUncheckedCreateWithoutRespuestascuestionarioInput = {
+  idpersona?: number
+  nombre: string
+  apellidouno: string
+  apellidodos?: string | null
+  correo?: string | null
+  telefono?: string | null
+  observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutPersonasInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedCreateNestedManyWithoutPersonasInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedCreateNestedManyWithoutPersonasInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutPersonasInput
+}
+
+export type personasCreateOrConnectWithoutRespuestascuestionarioInput = {
+  where: Prisma.personasWhereUniqueInput
+  create: Prisma.XOR<Prisma.personasCreateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedCreateWithoutRespuestascuestionarioInput>
+}
+
+export type personasUpsertWithoutRespuestascuestionarioInput = {
+  update: Prisma.XOR<Prisma.personasUpdateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedUpdateWithoutRespuestascuestionarioInput>
+  create: Prisma.XOR<Prisma.personasCreateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedCreateWithoutRespuestascuestionarioInput>
+  where?: Prisma.personasWhereInput
+}
+
+export type personasUpdateToOneWithWhereWithoutRespuestascuestionarioInput = {
+  where?: Prisma.personasWhereInput
+  data: Prisma.XOR<Prisma.personasUpdateWithoutRespuestascuestionarioInput, Prisma.personasUncheckedUpdateWithoutRespuestascuestionarioInput>
+}
+
+export type personasUpdateWithoutRespuestascuestionarioInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutPersonasNestedInput
+}
+
+export type personasUncheckedUpdateWithoutRespuestascuestionarioInput = {
+  idpersona?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidouno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellidodos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutPersonasNestedInput
+  observacionesobservados?: Prisma.observacionesobservadosUncheckedUpdateManyWithoutPersonasNestedInput
+  rolespersonasproyecto?: Prisma.rolespersonasproyectoUncheckedUpdateManyWithoutPersonasNestedInput
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutPersonasNestedInput
 }
 
 
@@ -1455,10 +1503,8 @@ export type PersonasCountOutputType = {
   observaciones: number
   observacionesobservados: number
   rolespersonasproyecto: number
+  cuestionarios: number
   respuestascuestionario: number
-  focusgroups: number
-  participantesfg: number
-  analisisDocumentos: number
 }
 
 export type PersonasCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1468,10 +1514,8 @@ export type PersonasCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   observaciones?: boolean | PersonasCountOutputTypeCountObservacionesArgs
   observacionesobservados?: boolean | PersonasCountOutputTypeCountObservacionesobservadosArgs
   rolespersonasproyecto?: boolean | PersonasCountOutputTypeCountRolespersonasproyectoArgs
+  cuestionarios?: boolean | PersonasCountOutputTypeCountCuestionariosArgs
   respuestascuestionario?: boolean | PersonasCountOutputTypeCountRespuestascuestionarioArgs
-  focusgroups?: boolean | PersonasCountOutputTypeCountFocusgroupsArgs
-  participantesfg?: boolean | PersonasCountOutputTypeCountParticipantesfgArgs
-  analisisDocumentos?: boolean | PersonasCountOutputTypeCountAnalisisDocumentosArgs
 }
 
 /**
@@ -1554,6 +1598,13 @@ export type PersonasCountOutputTypeCountAnalisisDocumentosArgs<ExtArgs extends r
   where?: Prisma.analisisDocumentosWhereInput
 }
 
+/**
+ * PersonasCountOutputType without action
+ */
+export type PersonasCountOutputTypeCountRespuestascuestionarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.respuestascuestionarioWhereInput
+}
+
 
 export type personasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idpersona?: boolean
@@ -1568,10 +1619,8 @@ export type personasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   observaciones?: boolean | Prisma.personas$observacionesArgs<ExtArgs>
   observacionesobservados?: boolean | Prisma.personas$observacionesobservadosArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.personas$rolespersonasproyectoArgs<ExtArgs>
+  cuestionarios?: boolean | Prisma.personas$cuestionariosArgs<ExtArgs>
   respuestascuestionario?: boolean | Prisma.personas$respuestascuestionarioArgs<ExtArgs>
-  focusgroups?: boolean | Prisma.personas$focusgroupsArgs<ExtArgs>
-  participantesfg?: boolean | Prisma.personas$participantesfgArgs<ExtArgs>
-  analisisDocumentos?: boolean | Prisma.personas$analisisDocumentosArgs<ExtArgs>
   _count?: boolean | Prisma.PersonasCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["personas"]>
 
@@ -1610,10 +1659,8 @@ export type personasInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   observaciones?: boolean | Prisma.personas$observacionesArgs<ExtArgs>
   observacionesobservados?: boolean | Prisma.personas$observacionesobservadosArgs<ExtArgs>
   rolespersonasproyecto?: boolean | Prisma.personas$rolespersonasproyectoArgs<ExtArgs>
+  cuestionarios?: boolean | Prisma.personas$cuestionariosArgs<ExtArgs>
   respuestascuestionario?: boolean | Prisma.personas$respuestascuestionarioArgs<ExtArgs>
-  focusgroups?: boolean | Prisma.personas$focusgroupsArgs<ExtArgs>
-  participantesfg?: boolean | Prisma.personas$participantesfgArgs<ExtArgs>
-  analisisDocumentos?: boolean | Prisma.personas$analisisDocumentosArgs<ExtArgs>
   _count?: boolean | Prisma.PersonasCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type personasIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1628,10 +1675,8 @@ export type $personasPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     observaciones: Prisma.$observacionesPayload<ExtArgs>[]
     observacionesobservados: Prisma.$observacionesobservadosPayload<ExtArgs>[]
     rolespersonasproyecto: Prisma.$rolespersonasproyectoPayload<ExtArgs>[]
+    cuestionarios: Prisma.$cuestionariosPayload<ExtArgs>[]
     respuestascuestionario: Prisma.$respuestascuestionarioPayload<ExtArgs>[]
-    focusgroups: Prisma.$focusgroupsPayload<ExtArgs>[]
-    participantesfg: Prisma.$participantesfgPayload<ExtArgs>[]
-    analisisDocumentos: Prisma.$analisisDocumentosPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idpersona: number
@@ -2040,10 +2085,8 @@ export interface Prisma__personasClient<T, Null = never, ExtArgs extends runtime
   observaciones<T extends Prisma.personas$observacionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$observacionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$observacionesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   observacionesobservados<T extends Prisma.personas$observacionesobservadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$observacionesobservadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$observacionesobservadosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rolespersonasproyecto<T extends Prisma.personas$rolespersonasproyectoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$rolespersonasproyectoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$rolespersonasproyectoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cuestionarios<T extends Prisma.personas$cuestionariosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$cuestionariosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$cuestionariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   respuestascuestionario<T extends Prisma.personas$respuestascuestionarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$respuestascuestionarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$respuestascuestionarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  focusgroups<T extends Prisma.personas$focusgroupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$focusgroupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$focusgroupsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  participantesfg<T extends Prisma.personas$participantesfgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$participantesfgArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$participantesfgPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  analisisDocumentos<T extends Prisma.personas$analisisDocumentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personas$analisisDocumentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$analisisDocumentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2704,6 +2747,30 @@ export type personas$analisisDocumentosArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.AnalisisDocumentosScalarFieldEnum | Prisma.AnalisisDocumentosScalarFieldEnum[]
+}
+
+/**
+ * personas.respuestascuestionario
+ */
+export type personas$respuestascuestionarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the respuestascuestionario
+   */
+  select?: Prisma.respuestascuestionarioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the respuestascuestionario
+   */
+  omit?: Prisma.respuestascuestionarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.respuestascuestionarioInclude<ExtArgs> | null
+  where?: Prisma.respuestascuestionarioWhereInput
+  orderBy?: Prisma.respuestascuestionarioOrderByWithRelationInput | Prisma.respuestascuestionarioOrderByWithRelationInput[]
+  cursor?: Prisma.respuestascuestionarioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RespuestascuestionarioScalarFieldEnum | Prisma.RespuestascuestionarioScalarFieldEnum[]
 }
 
 /**

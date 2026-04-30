@@ -1,0 +1,69 @@
+section {
+  padding: 2rem;
+  background-color: var(--body-bg-color);
+  min-height: 100dvh;
+}
+
+form {
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+}
+
+.criterio-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lista-criterios {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lista-criterios li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+}
+
+.historia-card {
+  padding: 1.5rem;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.historia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.prioridad {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius);
+}
+
+.prioridad-alta { background-color: #fde8e8; color: #c0392b; }
+.prioridad-media { background-color: #fef3cd; color: #d68910; }
+.prioridad-baja { background-color: #eafaf1; color: #1e8449; }
+
+.btn-cancelar {
+  background-color: #e74c3c;
+  color: white;
+}

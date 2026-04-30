@@ -22,12 +22,8 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
-import {
-  DatosFormularioCuestionario,
-  Cuestionario,
-  DatosRespuestaCuestionario,
-  RespuestaCuestionario,
-} from '../models/cuestionario';
+import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
+import { DatosFormularioHistoriaUsuario, HistoriaUsuario } from '../models/historiaUsuario';
 import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
@@ -96,6 +92,12 @@ export class Api {
   private respuestasCuestionariosObtenerUrl = 'obtener/';
   private respuestasCuestionariosEliminarUrl = 'eliminar/';
 
+  private historiasUsuarioUrl = 'historiasusuario/';
+  private historiasUsuarioCrearUrl = 'crear/';
+  private historiasUsuarioObtenerUrl = 'obtener/';
+  private historiasUsuarioEliminarUrl = 'eliminar/';
+  private historiasUsuarioEditarUrl = 'editar/';
+  
   private entrevistasUrl = 'entrevistas/';
   private entrevistasCrearUrl = 'crear/';
   private entrevistasObtenerUrl = 'obtener/';
@@ -418,6 +420,32 @@ export class Api {
     return this.http.put<any>(
       this.baseUrl + this.analisisDocumentosUrl + this.analisisDocumentosEditarUrl + idAnalisis,
       datos,
+    );
+  }
+
+  crearHistoriaUsuario(datos: DatosFormularioHistoriaUsuario) {
+    return this.http.post<HistoriaUsuario>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioCrearUrl,
+      datos,
+    );
+  }
+
+  obtenerHistoriasUsuario(idsubproceso: number) {
+    return this.http.get<HistoriaUsuario[]>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioObtenerUrl + idsubproceso,
+    );
+  }
+
+  editarHistoriaUsuario(id: number, datos: Partial<DatosFormularioHistoriaUsuario>) {
+    return this.http.put<HistoriaUsuario>(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEditarUrl + id,
+      datos,
+    );
+  }
+
+  eliminarHistoriaUsuario(id: number) {
+    return this.http.delete(
+      this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEliminarUrl + id,
     );
   }
 }

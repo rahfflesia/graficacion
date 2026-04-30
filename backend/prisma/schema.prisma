@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -11,7 +10,7 @@ model metodossubprocesos {
   idmetodosubproceso   Int                 @id @default(autoincrement())
   idsubproceso         Int
   idtecnicarecoleccion Int
-  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_subprocesos")
+  subprocesos          subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_metodossubprocesos_subprocesos")
   tecnicasrecoleccion  tecnicasrecoleccion @relation(fields: [idtecnicarecoleccion], references: [idtecnicarecoleccion], onDelete: NoAction, onUpdate: NoAction, map: "fk_metodossubprocesos_tecnicarsecoleccion")
 }
 
@@ -67,6 +66,7 @@ model personas {
   observaciones           observaciones[]
   observacionesobservados observacionesobservados[]
   rolespersonasproyecto   rolespersonasproyecto[]
+  historiasusuario historiasusuario[]
   respuestascuestionario  respuestascuestionario[]
   focusgroups             focusgroups[]
   participantesfg         participantesfg[]
@@ -96,7 +96,9 @@ model subprocesos {
   entrevistas        entrevistas[]
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
-  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+  cuestionarios          cuestionarios[]
+  historiasusuario historiasusuario[]
   focusgroups        focusgroups[]
   analisisDocumentos analisisDocumentos[]
 }
@@ -121,7 +123,7 @@ model observaciones {
   tipo                    tipoobservacion
   fechahoracaptura        DateTime                  @default(now()) @db.Timestamptz(6)
   personas                personas                  @relation(fields: [idobservador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   observacionesobservados observacionesobservados[]
 }
 
@@ -196,7 +198,7 @@ model cuestionarios {
   idcreador              Int
   fechacreacion          DateTime               @default(now()) @db.Timestamptz(6)
   personas               personas               @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos            subprocesos            @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario[]
   respuestascuestionario respuestascuestionario[]
 }
@@ -235,6 +237,20 @@ model respuestaspreguntas {
   valor                  String
   respuestascuestionario respuestascuestionario   @relation(fields: [idrespuesta], references: [idrespuesta], onDelete: Cascade, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario    @relation(fields: [idpregunta], references: [idpregunta], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model historiasusuario {
+  idhistoriausuario   Int         @id @default(autoincrement())
+  idsubproceso        Int
+  idcreador           Int
+  rolusuario          String      @db.VarChar(255)
+  necesidad           String
+  beneficio           String
+  criteriosaceptacion String[]    @default([])
+  prioridad           String      @db.VarChar(20)
+  fechacreacion       DateTime    @default(now()) @db.Timestamptz(6)
+  personas            personas    @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction) 
 }
 
 model focusgroups {
