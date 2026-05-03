@@ -104,7 +104,7 @@ subprocesos.put("/editar/:idsubproceso", async (req, res) => {
         fechacreacion: subprocesoEditado.fechacreacion,
         idproceso: subprocesoEditado.idproceso,
         idsubproceso: subprocesoEditado.idsubproceso,
-        tecnicasasociadas: tecnicasCreadas,
+        tecnicasasociadas: datosSubproceso.tecnicasSeleccionadas,
       };
       /*nombresubproceso: string;
   nombreproceso: string;

@@ -81,7 +81,7 @@ model rolespersonasproyecto {
   tipo                 tipousuario
   personas             personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_persona")
   proyectos            proyectos   @relation(fields: [idproyecto], references: [idproyecto], onDelete: Cascade, onUpdate: NoAction, map: "fk_rolespersonasproyecto_proyecto")
-  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_rol")
+  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: Cascade, onUpdate: NoAction, map: "fk_rolespersonasproyecto_rol")
 
   @@unique([idpersona, idproyecto])
 }
