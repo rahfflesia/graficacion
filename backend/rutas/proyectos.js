@@ -4,6 +4,41 @@ import { validarToken } from "../middleware/authMiddleware.js";
 
 const proyectos = Router();
 
+const tecnicasPorDefecto = [
+  { nombre: "Entrevista", descripcion: "Recolección mediante entrevistas" },
+  { nombre: "Observacion", descripcion: "Recolección mediante observación directa" },
+  { nombre: "Cuestionario", descripcion: "Recolección mediante cuestionarios" },
+  {
+    nombre: "Historia de usuario",
+    descripcion: "Recolección mediante historias de usuario",
+  },
+  { nombre: "Focus group", descripcion: "Recolección mediante grupos focales" },
+  {
+    nombre: "Análisis de documento",
+    descripcion: "Recolección mediante análisis documental",
+  },
+];
+
+async function obtenerTecnicasRecoleccion() {
+  let tecnicasRecoleccion = await prisma.tecnicasrecoleccion.findMany({
+    orderBy: {
+      idtecnicarecoleccion: "asc",
+    },
+  });
+
+  if (tecnicasRecoleccion.length > 0) return tecnicasRecoleccion;
+
+  await prisma.tecnicasrecoleccion.createMany({
+    data: tecnicasPorDefecto,
+  });
+
+  return prisma.tecnicasrecoleccion.findMany({
+    orderBy: {
+      idtecnicarecoleccion: "asc",
+    },
+  });
+}
+
 // Middleware de autenticación para proteger la ruta
 proyectos.use(validarToken);
 
@@ -121,11 +156,7 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
         };
       });
 
-    const tecnicasRecoleccion = await prisma.tecnicasrecoleccion.findMany({
-      orderBy: {
-        idtecnicarecoleccion: "asc",
-      },
-    });
+    const tecnicasRecoleccion = await obtenerTecnicasRecoleccion();
 
     const datosFormateadosProyecto = {
       roles: datosProyecto.roles,

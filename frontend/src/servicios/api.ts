@@ -130,6 +130,10 @@ export class Api {
     );
   }
 
+  obtenerSesionActual(): Observable<DatosUsuario> {
+    return this.http.get<DatosUsuario>(this.baseUrl + this.loginUrl + 'sesion/');
+  }
+
   crearProyecto(proyecto: ProyectoCreado): Observable<Proyectos> {
     return this.http.post<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosCrearUrl,

@@ -57,7 +57,7 @@ export class SeccionEntrevistas implements OnInit {
 
   ngOnInit(): void {
     console.log(this.idproyecto());
-    const idSubproceso = this.subproceso()?.idproceso;
+    const idSubproceso = this.subproceso()?.idsubproceso;
 
     if (!idSubproceso) {
       console.error('El id del subproceso no se encuentra definido');
@@ -100,16 +100,13 @@ export class SeccionEntrevistas implements OnInit {
   }
 
   editarEntrevista(entrevistaEditada: Entrevista) {
-    console.log(entrevistaEditada);
-    console.log('Hola, entré a la función');
-    this.entrevistas().map((entrevista, index) => {
-      if (entrevista.entrevista.identrevista === entrevistaEditada.entrevista.identrevista) {
-        this.entrevistas()[index] = entrevistaEditada;
-        return;
-      }
-      console.error('No se encontró ningún objeto que coincidiera');
-      return;
-    });
+    this.entrevistas.update((entrevistas) =>
+      entrevistas.map((entrevista) =>
+        entrevista.entrevista.identrevista === entrevistaEditada.entrevista.identrevista
+          ? entrevistaEditada
+          : entrevista,
+      ),
+    );
   }
 
   registrarParticipante(participanteRegistrado: Participante) {

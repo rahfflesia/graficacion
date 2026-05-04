@@ -8,7 +8,9 @@
 
 .project-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .project-header > img {
@@ -68,6 +70,18 @@ p {
   display: grid;
   place-items: center;
   font-weight: 700;
+  min-width: max-content;
+}
+
+.crear-diagrama {
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
 }
 
 .barra-estado {
