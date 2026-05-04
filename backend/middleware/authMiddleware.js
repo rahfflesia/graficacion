@@ -1,7 +1,11 @@
 import jwt from "jsonwebtoken";
 
 export function validarToken(req, res, next) {
-  const token = req.cookies["token"];
+  const authHeader = req.headers.authorization ?? "";
+  const tokenHeader = authHeader.startsWith("Bearer ")
+    ? authHeader.slice("Bearer ".length)
+    : null;
+  const token = req.cookies["token"] ?? tokenHeader;
 
   if (!token)
     return res.status(403).json({ mensaje: "No se ha proporcionado un token" });

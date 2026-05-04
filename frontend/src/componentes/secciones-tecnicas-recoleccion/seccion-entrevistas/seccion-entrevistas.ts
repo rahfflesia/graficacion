@@ -18,6 +18,13 @@ import { EntrevistaCard } from '../../cards/entrevista-card/entrevista-card';
 import { ModalAgregarParticipante } from '../../modales/modal-agregar-participante/modal-agregar-participante';
 import { FormEntrevistas } from '../../forms/form-entrevistas/form-entrevistas';
 import { ModalCarga } from '../../modales/modal-carga/modal-carga';
+import { finalize, timeout } from 'rxjs';
+
+interface DatosTecnicaEntrevista {
+  subproceso: Subproceso;
+  participantes: Participante[];
+  idproyecto: number;
+}
 
 @Component({
   selector: 'seccion-entrevistas',
@@ -43,12 +50,14 @@ export class SeccionEntrevistas implements OnInit {
   participantes = signal<Participante[]>([]);
 
   esModalAgregarParticipanteVisible = false;
-  estaCargando = true;
+  estaCargando = false;
+  private readonly claveDatosTecnica = 'datosTecnicaActual';
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
-    if (!datosNavegacion?.extras.state) return;
-    const datosTecnica = datosNavegacion?.extras.state['datosTecnica'];
+    const datosTecnica = this.obtenerDatosTecnica(datosNavegacion?.extras.state?.['datosTecnica']);
+
+    if (!datosTecnica) return;
 
     this.subproceso.set(datosTecnica.subproceso);
     this.participantes.set(datosTecnica.participantes);
@@ -56,25 +65,63 @@ export class SeccionEntrevistas implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.idproyecto());
     const idSubproceso = this.subproceso()?.idsubproceso;
 
     if (!idSubproceso) {
       console.error('El id del subproceso no se encuentra definido');
+      this.toastr.error('Selecciona un subproceso antes de abrir entrevistas');
+      this.router.navigate(['/proyectos']);
       return;
     }
 
-    this.api.obtenerEntrevistas(idSubproceso).subscribe({
-      next: (entrevistas) => {
-        this.entrevistas.set(entrevistas);
-        this.estaCargando = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.toastr.error('Ha ocurrido un error al obtener las entrevistas');
-        this.estaCargando = false;
-      },
-    });
+    this.estaCargando = true;
+
+    this.api
+      .obtenerEntrevistas(idSubproceso)
+      .pipe(
+        timeout(10000),
+        finalize(() => {
+          this.estaCargando = false;
+        }),
+      )
+      .subscribe({
+        next: (entrevistas) => {
+          if (!Array.isArray(entrevistas)) {
+            console.error('La respuesta de entrevistas no es una lista', entrevistas);
+            this.entrevistas.set([]);
+            this.toastr.error('No se pudieron cargar las entrevistas');
+            return;
+          }
+
+          this.entrevistas.set(entrevistas);
+        },
+        error: (error) => {
+          console.error(error);
+          this.toastr.error('Ha ocurrido un error al obtener las entrevistas');
+        },
+      });
+  }
+
+  obtenerDatosTecnica(datosState?: DatosTecnicaEntrevista): DatosTecnicaEntrevista | null {
+    if (this.esDatosTecnicaValido(datosState)) {
+      localStorage.setItem(this.claveDatosTecnica, JSON.stringify(datosState));
+      return datosState;
+    }
+
+    const datosGuardados = localStorage.getItem(this.claveDatosTecnica);
+    if (!datosGuardados) return null;
+
+    try {
+      const datosTecnica = JSON.parse(datosGuardados) as DatosTecnicaEntrevista;
+      return this.esDatosTecnicaValido(datosTecnica) ? datosTecnica : null;
+    } catch {
+      localStorage.removeItem(this.claveDatosTecnica);
+      return null;
+    }
+  }
+
+  esDatosTecnicaValido(datosTecnica?: DatosTecnicaEntrevista): datosTecnica is DatosTecnicaEntrevista {
+    return !!datosTecnica?.subproceso?.idsubproceso && Array.isArray(datosTecnica.participantes);
   }
 
   mostrarModalAgregarParticipante() {
@@ -86,6 +133,8 @@ export class SeccionEntrevistas implements OnInit {
   }
 
   crearEntrevista(entrevistaCreada: Entrevista) {
+    if (!entrevistaCreada?.entrevista?.identrevista) return;
+
     crear(this.entrevistas, entrevistaCreada);
   }
 

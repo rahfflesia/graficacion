@@ -37,7 +37,7 @@
       <select
         class="custom-select"
         formControlName="idEntrevistador"
-        (change)="actualizarValidezBusqueda()"
+        (change)="actualizarEntrevistador()"
       >
         @for (participante of participantes; track participante.idpersona) {
           <option value="{{ participante.idpersona }}">
@@ -278,6 +278,17 @@
           Editar entrevista
         </button>
       }
+    }
+    @if (
+      formularioEntrevistas.invalid ||
+      entrevistados.length < 1 ||
+      preguntasEntrevista.length < 1
+    ) {
+      <div class="flex-column xs-gap">
+        @for (motivo of obtenerMotivosFormularioIncompleto(); track motivo) {
+          <span class="error-span">{{ motivo }}</span>
+        }
+      </div>
     }
   </div>
 </form>
