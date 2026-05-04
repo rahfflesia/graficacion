@@ -47,6 +47,20 @@ app.use("/respuestas-cuestionarios", respuestasCuestionarios);
 app.use("/historiasusuario", historiasUsuario);
 app.use("/entrevistas", entrevistas);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);
+});
+
+process.on("SIGINT", () => {
+    server.close(() => {
+        console.log("Servidor detenido");
+        process.exit(0);
+    });
+});
+
+process.on("SIGTERM", () => {
+    server.close(() => {
+        console.log("Servidor detenido");
+        process.exit(0);
+    });
 });

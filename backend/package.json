@@ -1,5 +1,10 @@
 {
   "type": "module",
+  "scripts": {
+    "dev": "tsx watch main.js",
+    "start": "tsx main.js",
+    "prisma:push": "prisma db push"
+  },
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
