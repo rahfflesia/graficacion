@@ -79,8 +79,8 @@ export class FormEntrevistas implements OnInit, OnChanges {
   indicePreguntaEditar: number | null = null;
 
   ngOnInit(): void {
-    const checkboxEntrevistados = this.participantes.map(() => new FormControl(false));
-    checkboxEntrevistados.forEach((control) => this.checkboxFormArray.push(control));
+    this.inicializarCheckboxesEntrevistados();
+    this.seleccionarEntrevistadorPorDefecto();
 
     if (this.modo === 'editar' && this.entrevista) {
       this.cargarDatosEntrevista();
@@ -93,6 +93,10 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   cargarDatosEntrevista() {
     if (!this.entrevista) return;
+
+    this.entrevistados = [];
+    this.preguntasEntrevista = [];
+    this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
 
     const datosEntrevista = this.entrevista.entrevista;
 
@@ -120,16 +124,6 @@ export class FormEntrevistas implements OnInit, OnChanges {
     const arrayEntrevistados = [...(this.entrevista.entrevistados ?? [])];
     const arrayPreguntasEntrevista = [...(this.entrevista.preguntasentrevista ?? [])];
 
-    if (
-      !arrayEntrevistados ||
-      !arrayPreguntasEntrevista ||
-      arrayEntrevistados.length < 1 ||
-      arrayPreguntasEntrevista.length < 1
-    ) {
-      console.error('Los array no pueden estar vacíos');
-      return;
-    }
-
     this.entrevistados = arrayEntrevistados;
     this.actualizarValidezBusqueda();
 
@@ -147,11 +141,15 @@ export class FormEntrevistas implements OnInit, OnChanges {
     });
 
     this.formularioEntrevistas.markAsPristine();
-    console.log(this.formularioEntrevistas.status);
-    console.log(this.formularioEntrevistas.errors);
+    this.formularioEntrevistas.updateValueAndValidity();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['participantes'] !== undefined && !changes['participantes'].firstChange) {
+      this.inicializarCheckboxesEntrevistados();
+      this.seleccionarEntrevistadorPorDefecto();
+    }
+
     if (
       changes['toggler'] !== undefined &&
       changes['toggler'].currentValue === true &&
@@ -163,6 +161,21 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   get checkboxFormArray() {
     return this.formularioEntrevistas.get('checkboxesEntrevistados') as FormArray;
+  }
+
+  inicializarCheckboxesEntrevistados() {
+    this.checkboxFormArray.clear();
+    const checkboxEntrevistados = this.participantes.map(() => new FormControl(false));
+    checkboxEntrevistados.forEach((control) => this.checkboxFormArray.push(control));
+  }
+
+  seleccionarEntrevistadorPorDefecto() {
+    const controlEntrevistador = this.obtenerControlFormularioEntrevistas('idEntrevistador');
+
+    if (controlEntrevistador?.value || this.participantes.length < 1) return;
+
+    controlEntrevistador?.setValue(this.participantes[0].idpersona.toString());
+    this.actualizarValidezBusqueda();
   }
 
   obtenerControlFormularioEntrevistas(nombreControl: string) {
@@ -181,7 +194,7 @@ export class FormEntrevistas implements OnInit, OnChanges {
         fechahorainicio: copiaDatosEntrevista.fechaHoraInicio!,
         fechahorafinalizacion: copiaDatosEntrevista.fechaHoraFinalizacion!,
         lugar: copiaDatosEntrevista.lugar!,
-        idsubproceso: this.subproceso?.idproceso!,
+        idsubproceso: this.subproceso?.idsubproceso!,
       },
       entrevistados: this.entrevistados,
     };
@@ -202,10 +215,12 @@ export class FormEntrevistas implements OnInit, OnChanges {
       },
     });
 
-    this.formularioEntrevistas.reset();
-    this.formularioEntrevistas.updateValueAndValidity();
     this.entrevistados = [];
     this.preguntasEntrevista = [];
+    this.formularioEntrevistas.reset();
+    this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
+    this.seleccionarEntrevistadorPorDefecto();
+    this.formularioEntrevistas.updateValueAndValidity();
   }
 
   eliminarParticipante(indice: number, participante?: Participante) {

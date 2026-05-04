@@ -16,7 +16,6 @@ form {
   resize: vertical;
 }
 
-/* ── Temas ──────────────────────────────────────────────────── */
 .temas-wrapper {
   border-top: 1px solid lightgray;
   padding-top: 1rem;
@@ -74,7 +73,6 @@ form {
   font-size: 0.85rem;
 }
 
-/* ── Participantes ──────────────────────────────────────────── */
 .participantes-wrapper {
   border-top: 1px solid lightgray;
   padding-top: 1rem;
@@ -109,7 +107,6 @@ form {
   cursor: pointer;
 }
 
-/* ── Botones acción form ─────────────────────────────────────── */
 .acciones-form {
   display: flex;
   gap: 0.75rem;
@@ -126,8 +123,7 @@ form {
   background-color: rgba(255, 0, 0, 0.08);
 }
 
-/* ── Lista cards ─────────────────────────────────────────────── */
-.lista-items > * {
+.lista-items>* {
   border-radius: var(--border-radius);
   padding: 1rem;
   box-shadow: var(--box-shadow);

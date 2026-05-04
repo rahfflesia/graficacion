@@ -179,10 +179,8 @@ export class ModalEditarObservacion implements OnInit {
     const inputFechaHoraCaptura = this.formularioObservaciones.get('fechaHoraCaptura');
     if (this.estaCheckboxFechaHoraSeleccionado()) {
       inputFechaHoraCaptura?.enable();
-      console.log('El input de fecha y hora se encuentra habilitado');
     } else {
       inputFechaHoraCaptura?.disable();
-      console.log('El input de fecha y hora se encuentra deshabilitado');
     }
     inputFechaHoraCaptura?.setValue('');
     this.formularioObservaciones.updateValueAndValidity();
@@ -196,13 +194,17 @@ export class ModalEditarObservacion implements OnInit {
       return;
     }
 
+    const fechaHoraCaptura = this.estaCheckboxFechaHoraSeleccionado()
+      ? this.formularioObservaciones.value.fechaHoraCaptura
+      : this.observacion?.fechahoracaptura;
+
     const observacionEditada: Observacion = {
       nombre: this.formularioObservaciones.value.nombreObservacion!,
       descripcion: this.formularioObservaciones.value.descripcionObservacion!,
       idobservador: parseInt(this.formularioObservaciones.value.idPersona!),
       lugar: this.formularioObservaciones.value.nombreLugar!,
       tipo: this.tipoObservacionSeleccionada(),
-      fechahoracaptura: new Date(this.formularioObservaciones.value.fechaHoraCaptura!),
+      fechahoracaptura: fechaHoraCaptura as Date,
       listaparticipantes: this.listaObservados,
     };
 

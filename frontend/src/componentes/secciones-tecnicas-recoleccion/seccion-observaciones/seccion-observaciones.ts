@@ -74,6 +74,7 @@ export class SeccionObservaciones implements OnInit {
 
     this.participantes.set(this.datosTecnica()?.participantes!);
     this.subproceso = this.datosTecnica()?.subproceso;
+    this.seleccionarObservadorPorDefecto();
 
     // Por cada participante creo un checkbox y lo establezco en falso
     const checkboxParticipante = this.participantes().map(() => new FormControl(false));
@@ -109,6 +110,15 @@ export class SeccionObservaciones implements OnInit {
     return this.formularioObservaciones.get(nombreControl);
   }
 
+  seleccionarObservadorPorDefecto() {
+    const controlObservador = this.obtenerControlFormularioObservaciones('idPersona');
+
+    if (controlObservador?.value || this.participantes().length < 1) return;
+
+    controlObservador?.setValue(this.participantes()[0].idpersona.toString());
+    this.actualizarValidezCampoBusqueda();
+  }
+
   filtrarParticipantes() {
     if (!this.participantes()) {
       console.error('La lista de participantes no se encuentra definida');
@@ -138,10 +148,8 @@ export class SeccionObservaciones implements OnInit {
     const inputFechaHoraCaptura = this.formularioObservaciones.get('fechaHoraCaptura');
     if (this.estaCheckboxFechaHoraSeleccionado()) {
       inputFechaHoraCaptura?.enable();
-      console.log('El input de fecha y hora se encuentra habilitado');
     } else {
       inputFechaHoraCaptura?.disable();
-      console.log('El input de fecha y hora se encuentra deshabilitado');
     }
     inputFechaHoraCaptura?.setValue('');
     this.formularioObservaciones.updateValueAndValidity();
@@ -210,6 +218,10 @@ export class SeccionObservaciones implements OnInit {
   }
 
   crearObservacion() {
+    const fechaHoraCaptura = this.estaCheckboxFechaHoraSeleccionado()
+      ? (this.formularioObservaciones.value.fechaHoraCaptura ?? undefined)
+      : undefined;
+
     const datosObservacion: DatosFormularioObservacion = {
       idsubproceso: this.subproceso?.idsubproceso!,
       nombre: this.formularioObservaciones.value.nombreObservacion!,
@@ -218,14 +230,14 @@ export class SeccionObservaciones implements OnInit {
       lugar: this.formularioObservaciones.value.nombreLugar!,
       tipo: this.tipoObservacionSeleccionada(),
       listaobservados: this.listaParticipantesAgregados,
-      fechahoracaptura: new Date(this.formularioObservaciones.value.fechaHoraCaptura!),
+      fechahoracaptura: fechaHoraCaptura,
     };
 
     this.api.crearObservacion(datosObservacion).subscribe({
       next: (observacion) => {
         this.observaciones.update((observaciones) => [observacion, ...observaciones]);
         this.toastr.success('Observacion creada correctamente');
-        console.log(this.observaciones());
+        this.reiniciarFormularioObservaciones();
       },
       error: (error) => {
         console.error(error);
@@ -234,9 +246,20 @@ export class SeccionObservaciones implements OnInit {
         });
       },
     });
+  }
 
-    this.formularioObservaciones.reset();
+  reiniciarFormularioObservaciones() {
+    this.formularioObservaciones.reset({ checkboxFechaHora: false });
     this.listaParticipantesAgregados = [];
+    this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
+    this.participantesFiltrados = [];
+    this.seleccionarOpcion('Pasiva');
+    this.actualizarValidezCheckbox();
+    this.seleccionarObservadorPorDefecto();
+  }
+
+  actualizarValidezCampoBusqueda() {
+    this.obtenerControlFormularioObservaciones('campoBusqueda')?.updateValueAndValidity();
   }
 
   estaListaParticipantesVacia(): ValidatorFn {

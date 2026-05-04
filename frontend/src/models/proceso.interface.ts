@@ -21,8 +21,10 @@ export interface Proyectos {
   idproyecto: number;
   nombre: string;
   descripcion: string;
-  fechaCreacion: Date;
-  idUsuario: number;
+  fechaCreacion?: Date;
+  fechacreacion?: Date;
+  idUsuario?: number;
+  idusuario?: number;
   estado: 'Activo' | 'Cancelado' | 'Pausado' | 'En_revisi_n';
 }
 
