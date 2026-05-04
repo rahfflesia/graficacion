@@ -44,17 +44,30 @@ export class SeccionProyectos implements OnInit {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
     const idUsuario = this.usuario()?.usuario.idusuario;
 
-    console.log('Id del usuario', idUsuario);
-
-    if (!idUsuario) {
-      console.error('No existen datos de usuario');
-      this.estaCargando.set(false);
+    if (idUsuario) {
+      this.obtenerProyectos(idUsuario);
       return;
     }
 
+    this.api.obtenerSesionActual().subscribe({
+      next: (datosUsuario) => {
+        this.ServicioUsuario.guardarUsuario(datosUsuario);
+        this.usuario.set(datosUsuario);
+        this.obtenerProyectos(datosUsuario.usuario.idusuario);
+      },
+      error: (error) => {
+        console.error(error);
+        this.ServicioUsuario.borrarUsuario();
+        this.estaCargando.set(false);
+        this.router.navigate(['/login']);
+      },
+    });
+  }
+
+  obtenerProyectos(idUsuario: number) {
     this.api.obtenerProyectos(idUsuario).subscribe({
       next: (proyectos: Proyectos[]) => {
-        this.proyectos.set(proyectos);
+        this.proyectos.set(proyectos.filter((proyecto) => proyecto.idproyecto));
         this.estaCargando.set(false);
       },
       error: (error) => {

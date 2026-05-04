@@ -46,8 +46,11 @@ export class ModalAgregarParticipante implements OnInit {
 
     this.api.obtenerRolesProyecto(idProyecto).subscribe({
       next: (roles) => {
-        this.roles.set(roles);
-        console.log(roles);
+        this.roles.set(Array.isArray(roles) ? roles : []);
+
+        if (this.roles().length > 0) {
+          this.formularioParticipantes.get('idrol')?.setValue(this.roles()[0].idrol.toString());
+        }
       },
       error: (error) => {
         console.error(error);
@@ -84,6 +87,8 @@ export class ModalAgregarParticipante implements OnInit {
     });
     this.cerrar.emit();
     this.formularioParticipantes.reset();
-    this.formularioParticipantes.get('idrol')?.setValue(this.roles()![0].idrol.toString());
+    if (this.roles().length > 0) {
+      this.formularioParticipantes.get('idrol')?.setValue(this.roles()[0].idrol.toString());
+    }
   }
 }

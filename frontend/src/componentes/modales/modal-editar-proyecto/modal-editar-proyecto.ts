@@ -59,6 +59,9 @@ export class ModalEditarProyecto implements OnChanges {
     if (proyecto) {
       this.formularioEditarProyecto.get('nombre')?.setValue(this.proyectoEditar?.nombre!);
       this.formularioEditarProyecto.get('descripcion')?.setValue(this.proyectoEditar?.descripcion!);
+      this.formularioEditarProyecto
+        .get('estadoProyecto')
+        ?.setValue(this.proyectoEditar?.estado ?? 'Activo');
     }
   }
 

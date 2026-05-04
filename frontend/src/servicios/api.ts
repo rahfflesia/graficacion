@@ -28,11 +28,13 @@ import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
 import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
+import { Usuario as UsuarioService } from './usuario';
 @Injectable({
   providedIn: 'root',
 })
 export class Api {
   private http = inject(HttpClient);
+  private usuarioService = inject(UsuarioService);
   private baseUrl = 'http://localhost:3000/';
 
   private registroUrl = 'registro/';
@@ -116,6 +118,19 @@ export class Api {
   private analisisDocumentosEliminarUrl = 'eliminar/';
   private analisisDocumentosEditarUrl = 'editar/';
 
+  private obtenerOpcionesAutenticadas() {
+    const token = this.usuarioService.obtenerUsuario()?.token;
+
+    if (!token) return { withCredentials: true };
+
+    return {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
       this.baseUrl + this.registroUrl + this.reigstroRegistrarUrl,
@@ -127,25 +142,35 @@ export class Api {
     return this.http.post<DatosUsuario>(
       this.baseUrl + this.loginUrl + this.loginIniciarSesionUrl,
       datosInicioSesion,
+      { withCredentials: true },
     );
+  }
+
+  obtenerSesionActual(): Observable<DatosUsuario> {
+    return this.http.get<DatosUsuario>(this.baseUrl + this.loginUrl + 'sesion/', {
+      withCredentials: true,
+    });
   }
 
   crearProyecto(proyecto: ProyectoCreado): Observable<Proyectos> {
     return this.http.post<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosCrearUrl,
       proyecto,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   obtenerProyectos(idUsuario: number): Observable<Proyectos[]> {
     return this.http.get<Proyectos[]>(
       this.baseUrl + this.proyectosUrl + this.proyectosObtenerTodosUrl + idUsuario,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   eliminarProyecto(idProyecto: number): Observable<Proyectos> {
     return this.http.delete<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosEliminarUrl + idProyecto,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
@@ -153,12 +178,14 @@ export class Api {
     return this.http.put<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosEditarUrl + idProyecto,
       proyectoEditar,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   obtenerDatosGeneralesProyecto(idProyecto: number): Observable<DatosGeneralesProyecto> {
     return this.http.get<DatosGeneralesProyecto>(
       this.baseUrl + this.proyectosUrl + this.proyectoObtenerDatosUrl + idProyecto,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 

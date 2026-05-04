@@ -53,6 +53,7 @@ subprocesos.post("/crear", async (req, res) => {
         nombresubproceso: subprocesoCreado.nombre,
         descripcionsubproceso: subprocesoCreado.descripcion,
         idsubproceso: subprocesoCreado.idsubproceso,
+        tecnicasasociadas: tecnicasSeleccionadas,
       };
 
       return res.status(201).json(subprocesoCreadoFormateado);
@@ -90,7 +91,7 @@ subprocesos.put("/editar/:idsubproceso", async (req, res) => {
         where: { idsubproceso: parseInt(idsubproceso) },
       });
 
-      const tecnicasCreadas = await tx.metodossubprocesos.createMany({
+      await tx.metodossubprocesos.createMany({
         data: datosSubproceso.tecnicasSeleccionadas.map((tecnica) => ({
           idsubproceso: parseInt(idsubproceso),
           idtecnicarecoleccion: tecnica.idtecnicarecoleccion,

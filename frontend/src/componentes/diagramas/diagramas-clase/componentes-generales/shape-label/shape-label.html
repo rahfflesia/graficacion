@@ -1,0 +1,8 @@
+@if (estaModoEdicionActivado) {
+  <div class="wrapper-edicion">
+    <input type="text" />
+    <button (click)="desactivarModoEdicion()">Cerrar</button>
+  </div>
+} @else {
+  <label for="" (dblclick)="activarModoEdicion()">Etiqueta</label>
+}

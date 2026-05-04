@@ -1,0 +1,34 @@
+.modal-crear-diagrama-clase {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+form button {
+  background-color: var(--blackish);
+  color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sin-elementos {
+  border: 1px solid lightgrey;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+}

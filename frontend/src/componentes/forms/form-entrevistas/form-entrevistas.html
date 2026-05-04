@@ -37,7 +37,7 @@
       <select
         class="custom-select"
         formControlName="idEntrevistador"
-        (change)="actualizarValidezBusqueda()"
+        (change)="actualizarEntrevistador()"
       >
         @for (participante of participantes; track participante.idpersona) {
           <option value="{{ participante.idpersona }}">
@@ -113,6 +113,7 @@
             </span>
           </div>
           <button
+            type="button"
             class="boton-eliminar-participante"
             (click)="eliminarParticipante($index, entrevistado)"
           >
@@ -175,7 +176,7 @@
     <div class="input-wrapper cabecera-agregar-preguntas">
       <label for="">Preguntas</label>
     </div>
-    <form class="wrapper-pregunta flex-column sm-gap" [formGroup]="formularioPreguntaEntrevista">
+    <div class="wrapper-pregunta flex-column sm-gap" [formGroup]="formularioPreguntaEntrevista">
       <div class="input-wrapper flex-column sm-gap">
         <label for="">Texto de la pregunta</label>
         <input
@@ -202,6 +203,7 @@
       <div>
         @if (estaModoEdicionActivado) {
           <button
+            type="button"
             class="default-button boton-agregar-pregunta"
             style="margin-right: 0.5rem"
             (click)="editarPregunta()"
@@ -209,6 +211,7 @@
             Editar pregunta
           </button>
           <button
+            type="button"
             class="default-button boton-agregar-pregunta"
             (click)="desactivarModoEdicionPregunta()"
           >
@@ -216,6 +219,7 @@
           </button>
         } @else {
           <button
+            type="button"
             class="default-button boton-agregar-pregunta"
             (click)="agregarPregunta()"
             [disabled]="formularioPreguntaEntrevista.invalid"
@@ -224,7 +228,7 @@
           </button>
         }
       </div>
-    </form>
+    </div>
   </div>
   <div class="input-wrapper flex-column sm-gap">
     <label for="">Lista de preguntas</label>
@@ -232,8 +236,12 @@
       <div class="pregunta-entrevista input-wrapper-row">
         <span>{{ pregunta.nombre }}</span>
         <div class="wrapper-botones input-wrapper-row">
-          <button class="default-button" (click)="cargarDatosPregunta(i)">Editar</button>
-          <button class="default-button" (click)="eliminarPreguntaCuestionario(i)">Eliminar</button>
+          <button type="button" class="default-button" (click)="cargarDatosPregunta(i)">
+            Editar
+          </button>
+          <button type="button" class="default-button" (click)="eliminarPreguntaCuestionario(i)">
+            Eliminar
+          </button>
         </div>
       </div>
     } @empty {
@@ -244,6 +252,7 @@
     @switch (modo) {
       @case ('crear') {
         <button
+          type="button"
           class="default-button"
           (click)="crearEntrevista()"
           [disabled]="
@@ -257,6 +266,7 @@
       }
       @case ('editar') {
         <button
+          type="button"
           class="default-button"
           (click)="editarEntrevista()"
           [disabled]="
@@ -268,6 +278,17 @@
           Editar entrevista
         </button>
       }
+    }
+    @if (
+      formularioEntrevistas.invalid ||
+      entrevistados.length < 1 ||
+      preguntasEntrevista.length < 1
+    ) {
+      <div class="flex-column xs-gap">
+        @for (motivo of obtenerMotivosFormularioIncompleto(); track motivo) {
+          <span class="error-span">{{ motivo }}</span>
+        }
+      </div>
     }
   </div>
 </form>

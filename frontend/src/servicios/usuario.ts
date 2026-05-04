@@ -8,27 +8,42 @@ const SESSION_KEY = 'sesion_usuario';
 })
 export class Usuario {
   datosSesionUsuario = signal<DatosUsuario | null>(null);
+  private readonly claveUsuario = 'datosSesionUsuario';
 
   guardarUsuario(datosUsuario: DatosUsuario) {
     this.datosSesionUsuario.set(datosUsuario);
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(datosUsuario));
+    localStorage.setItem(this.claveUsuario, JSON.stringify(datosUsuario));
   }
 
   obtenerUsuario() {
-    // Si el signal está vacío (ej: se recargó la página), intentar recuperar del sessionStorage
-    if (this.datosSesionUsuario() === null) {
-      const datosGuardados = sessionStorage.getItem(SESSION_KEY);
-      if (datosGuardados) {
-        const datosUsuario = JSON.parse(datosGuardados) as DatosUsuario;
-        this.datosSesionUsuario.set(datosUsuario);
+    const usuarioEnMemoria = this.datosSesionUsuario();
+    if (this.esUsuarioValido(usuarioEnMemoria)) return usuarioEnMemoria;
+
+    const usuarioGuardado = localStorage.getItem(this.claveUsuario);
+    if (!usuarioGuardado) return null;
+
+    try {
+      const usuario = JSON.parse(usuarioGuardado) as DatosUsuario;
+
+      if (!this.esUsuarioValido(usuario)) {
+        this.borrarUsuario();
+        return null;
       }
+
+      this.datosSesionUsuario.set(usuario);
+      return usuario;
+    } catch {
+      this.borrarUsuario();
+      return null;
     }
-    return this.datosSesionUsuario();
   }
 
   borrarUsuario() {
     this.datosSesionUsuario.set(null);
-    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(this.claveUsuario);
+  }
+
+  private esUsuarioValido(usuario: DatosUsuario | null): usuario is DatosUsuario {
+    return !!usuario?.usuario?.idusuario;
   }
 }
-
