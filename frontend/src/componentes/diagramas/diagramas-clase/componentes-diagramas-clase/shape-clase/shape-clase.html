@@ -1,25 +1,85 @@
-<div class="shape-clase">
+<div class="shape">
   <span class="tipo-componente">CLASE</span>
-  <div class="cabecera">
-    <div class="cabecera-contenido-interno">Círculo</div>
-  </div>
-  <div class="atributos">
-    <div class="atributos-contenido-interno">
-      <ul>
-        <li>Área</li>
-        <li>Perímetro</li>
-      </ul>
+  <main class="shape-main-content">
+    <div class="cabecera">
+      @if (estaModoEdicionClaseActivado) {
+        <input
+          type="text"
+          [(ngModel)]="node().data.nombre"
+          (keydown.enter)="desactivarModoEdicionClase()"
+          class="shape-input"
+        />
+      } @else {
+        <div class="cabecera-contenido-interno" (dblclick)="activarModoEdicionClase()">
+          {{ node().data.nombre }}
+        </div>
+      }
     </div>
-  </div>
-  <div class="metodos">
-    <div class="metodos-contenido-interno">
-      <ul>
-        <li>calcularÁrea()</li>
-        <li>calcularPerímetro()</li>
-        <li>obtenerÁrea()</li>
-      </ul>
+    <div class="atributos">
+      <div class="cabecera-seccion">
+        <span>Atributos</span>
+        <button (click)="agregarAtributo()">+</button>
+      </div>
+      <div class="atributos-contenido-interno">
+        <ul>
+          @for (atributo of node().data.atributos; track $index; let i = $index) {
+            @if (indiceAtributoEditando === i) {
+              <input
+                type="text"
+                [(ngModel)]="node().data.atributos[i]"
+                (keydown.enter)="desactivarModoEdicionAtributo()"
+                class="shape-input"
+              />
+            } @else {
+              <div class="metodo-wrapper">
+                <li (dblclick)="activarModoEdicion(i, 'atributo')">{{ atributo }}</li>
+                <div class="shape-boton-borrar" (click)="borrarAtributo(i)">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=79023&format=png&color=0085db"
+                    alt="icono-borrar"
+                  />
+                </div>
+              </div>
+            }
+          } @empty {
+            <span>Aún no has agregado ningún atributo</span>
+          }
+        </ul>
+      </div>
     </div>
-  </div>
+    <div class="metodos">
+      <div class="cabecera-seccion">
+        <span>Métodos</span>
+        <button (click)="agregarMetodo()">+</button>
+      </div>
+      <div class="metodos-contenido-interno">
+        <ul>
+          @for (metodo of node().data.metodos; track $index; let i = $index) {
+            @if (indiceMetodoEditando === i) {
+              <input
+                type="text"
+                [(ngModel)]="node().data.metodos[i]"
+                (keydown.enter)="desactivarModoEdicionMetodo()"
+                class="shape-input"
+              />
+            } @else {
+              <div class="metodo-wrapper">
+                <li (dblclick)="activarModoEdicion(i, 'metodo')">{{ metodo }}</li>
+                <div class="shape-boton-borrar" (click)="borrarMetodo(i)">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=79023&format=png&color=0085db"
+                    alt="icono-borrar"
+                  />
+                </div>
+              </div>
+            }
+          } @empty {
+            <span>Aún no has agregado un método</span>
+          }
+        </ul>
+      </div>
+    </div>
+  </main>
   <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
   <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
 </div>

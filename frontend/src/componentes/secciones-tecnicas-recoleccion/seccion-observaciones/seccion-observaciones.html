@@ -38,7 +38,7 @@
           (input)="filtrarParticipantes()"
         />
         @let controlCampoBusqueda = obtenerControlFormularioObservaciones('campoBusqueda');
-        @if (controlCampoBusqueda?.value.length > 0) {
+        @if (controlCampoBusqueda?.value && controlCampoBusqueda?.value.length > 0) {
           <div
             class="flex-column sm-gap wrapper-resultados"
             formArrayName="checkboxesParticipantes"

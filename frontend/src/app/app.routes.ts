@@ -43,5 +43,5 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'crear-diagrama-clase', component: CanvasDiagramaClase },
+  { path: 'crear-diagrama-clase/:idproyecto', component: CanvasDiagramaClase },
 ];

@@ -3,7 +3,7 @@
     [model]="model"
     class="canvas"
     [nodeTemplateMap]="nodeTemplateMap"
-    (drop)="f($event)"
+    (drop)="onDrop($event)"
   ></ng-diagram>
   <div class="menu-lateral flex-column md-gap" [class.animar-menu-lateral]="estaAbiertoMenuLateral">
     <header>
@@ -14,21 +14,57 @@
       <div class="close-button" (click)="cerrarMenuLateral()">X</div>
     </header>
     <div class="seccion-componentes">
-      <button (click)="agregarForma('diagramaClase')" draggable="true">Diagrama de clase</button>
-      <button (click)="agregarForma('diagramaInterfaz')">Interfaz</button>
-      <button (click)="agregarForma('diagramaEnum')">Enum</button>
-      <button (click)="agregarForma('etiqueta')">Etiqueta</button>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaClase')">
-        Diagrama de clase
+      <div
+        draggable="true"
+        (dragstart)="onDragStart($event, 'diagramaClase')"
+        (click)="agregarForma('diagramaClase', 'click')"
+        class="menu-shape"
+      >
+        <div class="nombre-shape">Clase</div>
+        <div class="atributos-shape">Atributos</div>
+        <div class="metodos-shape">Métodos</div>
       </div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaInterfaz')">Interfaz</div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaEnum')">Enum</div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'etiqueta')">Etiqueta</div>
+      <div
+        draggable="true"
+        (dragstart)="onDragStart($event, 'diagramaInterfaz')"
+        (click)="agregarForma('diagramaInterfaz', 'click')"
+        class="menu-shape"
+      >
+        <div class="nombre-shape">Interfaz</div>
+        <div class="metodos-shape">Métodos</div>
+      </div>
+      <div
+        draggable="true"
+        (dragstart)="onDragStart($event, 'diagramaEnum')"
+        (click)="agregarForma('diagramaEnum', 'click')"
+        class="menu-shape"
+      >
+        <div class="nombre-shape">Enum</div>
+        <div class="metodos-shape">Valores</div>
+      </div>
+      <div
+        draggable="true"
+        (dragstart)="onDragStart($event, 'etiqueta')"
+        (click)="agregarForma('etiqueta', 'click')"
+        style="display: grid; place-items: center"
+      >
+        <div class="menu-shape" style="padding: 0.25rem 0.5rem">Etiqueta</div>
+      </div>
+      <div
+        draggable="true"
+        (dragstart)="onDragStart($event, 'paquete')"
+        (click)="agregarForma('paquete', 'click')"
+        class="paquete-shape"
+        style="cursor: grab"
+      >
+        <span>texto</span>
+        <div>Paquete</div>
+      </div>
     </div>
   </div>
   <div class="barra-flotante">
     <div>
-      <h3>Creación de diagramas de clase</h3>
+      <h3>Creación de diagramas de clase (Editando)</h3>
     </div>
     @if (!estaAbiertoMenuLateral) {
       <div class="abrir-menu" (click)="abrirMenuLateral()">
@@ -38,7 +74,15 @@
         />
       </div>
     }
-    <button class="default-button" (click)="guardarDiagramaClase()">Guardar</button>
+    <div
+      class="guardar"
+      (click)="esDiagramaExistente ? editarDiagramaClase() : crearDiagramaClase()"
+    >
+      <img
+        src="https://img.icons8.com/?size=100&id=18764&format=png&color=ffffff"
+        alt="icono-guardar"
+      />
+    </div>
   </div>
   <ng-diagram-minimap></ng-diagram-minimap>
 </div>

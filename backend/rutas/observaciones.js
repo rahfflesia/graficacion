@@ -6,6 +6,70 @@ const observaciones = Router();
 
 observaciones.use(validarToken);
 
+async function formatearObservacion(observacion) {
+  const idObservacion = observacion.idobservacion;
+
+  const observadosRel = await prisma.observacionesobservados.findMany({
+    where: { idobservacion: idObservacion },
+    select: { idobservado: true },
+  });
+
+  const datosObservador = await prisma.personas.findUnique({
+    where: { idpersona: observacion.idobservador },
+  });
+
+  const idsObservados = observadosRel.map((o) => o.idobservado);
+
+  if (idsObservados.length === 0) {
+    return {
+      ...observacion,
+      observador: datosObservador,
+      listaparticipantes: [],
+    };
+  }
+
+  const datosObservados = await Promise.all(
+    idsObservados.map(async (idObservado) => {
+      const participante = await prisma.personas.findUnique({
+        where: { idpersona: idObservado },
+        include: { rolespersonasproyecto: true },
+      });
+
+      const rolPersona = participante.rolespersonasproyecto[0];
+
+      if (!rolPersona) return participante;
+
+      const rolData = await prisma.rolespersonasproyecto.findUnique({
+        where: {
+          idrolpersonaproyecto: rolPersona.idrolpersonaproyecto,
+        },
+        include: {
+          roles: {
+            select: { nombre: true },
+          },
+        },
+      });
+
+      return {
+        ...participante,
+        idrolpersonaproyecto: rolData.idrolpersonaproyecto,
+        idrol: rolData?.idrol,
+        nombrerol: rolData?.roles?.nombre,
+        tiporol: rolData?.tipo,
+      };
+    }),
+  );
+
+  return {
+    ...observacion,
+    observador: datosObservador,
+    listaparticipantes: datosObservados.map((o) => {
+      delete o.rolespersonasproyecto;
+      return o;
+    }),
+  };
+}
+
 observaciones.post("/crear", async (req, res) => {
   try {
     const {
@@ -18,8 +82,8 @@ observaciones.post("/crear", async (req, res) => {
       tipo,
       idsubproceso,
     } = req.body;
-    await prisma.$transaction(async (tx) => {
-      // Quizás haya una mejor manera de hacerlo, pero esta fue la que se me ocurrió
+
+    const resultado = await prisma.$transaction(async (tx) => {
       const datosObservacion = fechahoracaptura
         ? {
             nombre,
@@ -38,33 +102,31 @@ observaciones.post("/crear", async (req, res) => {
             tipo,
             idsubproceso,
           };
+
       const observacionCreada = await tx.observaciones.create({
         data: datosObservacion,
       });
 
       if (listaobservados.length > 0) {
-        const arrayDatosObservados = listaobservados.map((observado) => {
-          return {
-            idobservacion: observacionCreada.idobservacion,
-            idobservado: observado.idpersona,
-          };
-        });
+        const arrayDatosObservados = listaobservados.map((o) => ({
+          idobservacion: observacionCreada.idobservacion,
+          idobservado: o.idpersona,
+        }));
+
         await tx.observacionesobservados.createMany({
           data: arrayDatosObservados,
         });
       }
 
-      const observacion = await tx.observaciones.findUnique({
-        where: {
-          idobservacion: observacionCreada.idobservacion,
-        },
-      });
-
-      return res.status(200).json(observacion);
+      return observacionCreada;
     });
+
+    const observacionFormateada = await formatearObservacion(resultado);
+
+    return res.status(200).json(observacionFormateada);
   } catch (error) {
     console.error(error);
-    return res.json(error);
+    return res.status(500).json(error);
   }
 });
 

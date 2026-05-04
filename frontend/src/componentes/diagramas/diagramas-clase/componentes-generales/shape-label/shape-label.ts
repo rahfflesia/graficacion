@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NgDiagramNodeSelectedDirective, NgDiagramNodeTemplate, type Node } from 'ng-diagram';
 
 @Component({
@@ -9,13 +10,14 @@ import { NgDiagramNodeSelectedDirective, NgDiagramNodeTemplate, type Node } from
       inputs: ['node'],
     },
   ],
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './shape-label.html',
   styleUrl: './shape-label.css',
 })
 export class ShapeLabel implements NgDiagramNodeTemplate {
-  node = input.required<Node>();
+  node: any = input.required<Node>();
   estaModoEdicionActivado = false;
+  textoEtiqueta = '';
 
   activarModoEdicion() {
     this.estaModoEdicionActivado = true;
@@ -23,5 +25,11 @@ export class ShapeLabel implements NgDiagramNodeTemplate {
 
   desactivarModoEdicion() {
     this.estaModoEdicionActivado = false;
+  }
+
+  establecerValorEtiqueta() {
+    this.node().data.etiqueta = this.textoEtiqueta;
+    this.desactivarModoEdicion();
+    console.log(this.node().data.etiqueta);
   }
 }

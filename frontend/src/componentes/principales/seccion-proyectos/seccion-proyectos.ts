@@ -35,7 +35,7 @@ export class SeccionProyectos implements OnInit {
   esConfigurarProyectoModalVisible: boolean = false;
   esEliminarProyectoModalVisible: boolean = false;
   esEditarProyectoModalVisible = signal<boolean>(false);
-  esModalCrearDiagramaVisible = true;
+  esModalCrearDiagramaVisible = false;
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
   usuario = signal<DatosUsuario | null>(null);
@@ -149,5 +149,28 @@ export class SeccionProyectos implements OnInit {
     this.proyectos.update((proyectos) =>
       proyectos.filter((proyecto) => proyecto.idproyecto !== proyectoEliminado.idproyecto),
     );
+  }
+
+  irSeccionDiagramas(tipoDiagramaSeleccionado: 'clase' | 'paquetes' | 'casos_uso' | 'secuencia') {
+    const idProyecto = this.proyectoSeleccionado()?.idproyecto;
+
+    if (!idProyecto) {
+      console.error('El id del proyecto no está definido');
+      return;
+    }
+
+    switch (tipoDiagramaSeleccionado) {
+      case 'clase':
+        this.router.navigate(['/crear-diagrama-clase', idProyecto]);
+        break;
+      case 'paquetes':
+        break;
+      case 'casos_uso':
+        break;
+      case 'secuencia':
+        break;
+      default:
+        console.error('Tipo de diagrama inválido');
+    }
   }
 }
