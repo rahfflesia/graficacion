@@ -21,7 +21,7 @@ model procesos {
   descripcion   String
   fechacreacion DateTime      @default(now()) @db.Timestamptz(6)
   idproyecto    Int
-  proyectos     proyectos     @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyecto_procesos")
+  proyectos     proyectos     @relation(fields: [idproyecto], references: [idproyecto], onDelete: Cascade, onUpdate: NoAction, map: "fk_proyecto_procesos")
   subprocesos   subprocesos[]
 }
 
@@ -43,7 +43,7 @@ model roles {
   idproyecto            Int
   tipo                  tiporol
   nombre                String?                 @db.VarChar(255)
-  proyectos             proyectos               @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_roles_proyecto")
+  proyectos             proyectos               @relation(fields: [idproyecto], references: [idproyecto], onDelete: Cascade, onUpdate: NoAction, map: "fk_roles_proyecto")
   rolespersonasproyecto rolespersonasproyecto[]
 }
 
@@ -81,8 +81,8 @@ model rolespersonasproyecto {
   idproyecto           Int
   tipo                 tipousuario
   personas             personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_persona")
-  proyectos            proyectos   @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_proyecto")
-  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: NoAction, onUpdate: NoAction, map: "fk_rolespersonasproyecto_rol")
+  proyectos            proyectos   @relation(fields: [idproyecto], references: [idproyecto], onDelete: Cascade, onUpdate: NoAction, map: "fk_rolespersonasproyecto_proyecto")
+  roles                roles       @relation(fields: [idrol], references: [idrol], onDelete: Cascade, onUpdate: NoAction, map: "fk_rolespersonasproyecto_rol")
 
   @@unique([idpersona, idproyecto])
 }

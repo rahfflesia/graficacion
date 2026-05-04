@@ -1,6 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { DatosUsuario } from '../models/proceso.interface';
 
+const SESSION_KEY = 'sesion_usuario';
+
 @Injectable({
   providedIn: 'root',
 })
