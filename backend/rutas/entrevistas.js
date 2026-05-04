@@ -94,14 +94,33 @@ entrevistas.get("/obtener/:idsubproceso", async (req, res) => {
     return res.status(200).json(entrevistasFormateadas);
   } catch (error) {
     console.error(error);
-    return res.json(error);
+    return res.status(500).json({
+      error: "Error al obtener entrevistas",
+      detalle: error.message,
+    });
   }
 });
 
 entrevistas.post("/crear", async (req, res) => {
   try {
-    await prisma.$transaction(async (tx) => {
+    const entrevistaFormateada = await prisma.$transaction(async (tx) => {
       const datos = req.body;
+
+      if (!datos?.entrevista) {
+        throw new Error("Los datos de la entrevista son requeridos");
+      }
+
+      if (!Array.isArray(datos.entrevistados) || datos.entrevistados.length < 1) {
+        throw new Error("La entrevista debe tener al menos un entrevistado");
+      }
+
+      if (
+        !Array.isArray(datos.preguntasentrevista) ||
+        datos.preguntasentrevista.length < 1
+      ) {
+        throw new Error("La entrevista debe tener al menos una pregunta");
+      }
+
       const entrevista = await tx.entrevistas.create({
         data: {
           ...datos.entrevista,
@@ -184,17 +203,20 @@ entrevistas.post("/crear", async (req, res) => {
         datosEntrevista.fechahorafinalizacion,
       );
 
-      const entrevistaFormateada = {
+      return {
         entrevista: datosEntrevista,
         entrevistados: arrayEntrevistadosFormateado,
         preguntasentrevista: entrevistaCreada.preguntasentrevista,
       };
-
-      return res.status(201).json(entrevistaFormateada);
     });
+
+    return res.status(201).json(entrevistaFormateada);
   } catch (error) {
     console.error(error);
-    return res.json(error);
+    return res.status(500).json({
+      error: "Error al crear la entrevista",
+      detalle: error.message,
+    });
   }
 });
 
@@ -314,7 +336,10 @@ entrevistas.put("/editar/:identrevista", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.json(error);
+    return res.status(500).json({
+      error: "Error al editar la entrevista",
+      detalle: error.message,
+    });
   }
 });
 
@@ -346,7 +371,10 @@ entrevistas.delete("/eliminar/:identrevista", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.json(error);
+    return res.status(500).json({
+      error: "Error al eliminar la entrevista",
+      detalle: error.message,
+    });
   }
 });
 

@@ -22,9 +22,14 @@ import entrevistas from "./rutas/entrevistas";
 const app = express();
 const port = 3000;
 
+app.disable("etag");
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+    res.set("Cache-Control", "no-store");
+    next();
+});
 
 app.use("/proyectos", proyectos);
 app.use("/tecnicasrecoleccion", tecnicasRecoleccion);

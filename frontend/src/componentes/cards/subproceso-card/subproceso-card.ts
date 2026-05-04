@@ -230,6 +230,8 @@ export class SubprocesoCard {
       // La id del proyecto es la misma para todos por lo que no importa, con tomar la de un elemento está bien
       idproyecto: this.procesosProyecto[0].idproyecto,
     };
+    localStorage.setItem('datosTecnicaActual', JSON.stringify(datosTecnica));
+
     switch (nombreTecnica) {
       case 'Entrevista':
         this.router.navigate(['/entrevistas'], { state: { datosTecnica } });
