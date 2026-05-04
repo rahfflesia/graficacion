@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CanvasDiagramaClase } from './canvas-diagrama-clase';
+import { ShapePaquete } from './shape-paquete';
 
-describe('CanvasDiagramaClase', () => {
-  let component: CanvasDiagramaClase;
-  let fixture: ComponentFixture<CanvasDiagramaClase>;
+describe('ShapePaquete', () => {
+  let component: ShapePaquete;
+  let fixture: ComponentFixture<ShapePaquete>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CanvasDiagramaClase]
+      imports: [ShapePaquete]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CanvasDiagramaClase);
+    fixture = TestBed.createComponent(ShapePaquete);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

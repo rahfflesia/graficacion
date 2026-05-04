@@ -16,7 +16,7 @@
   margin-left: 1rem;
 }
 
-.barra-flotante > *:not(button) {
+.barra-flotante > *:not(.guardar) {
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -85,13 +85,22 @@
   flex: 1;
 }
 
-.abrir-menu {
+.abrir-menu,
+.guardar {
   cursor: pointer;
 }
 
-.abrir-menu img {
+.abrir-menu img,
+.guardar img {
   width: 20px;
   height: 20px;
+}
+
+.guardar {
+  background-color: var(--blue);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 header {
@@ -110,4 +119,45 @@ ng-diagram-minimap {
   left: 1rem;
   bottom: 1rem;
   right: unset !important;
+}
+
+.menu-shape {
+  border: 1px solid lightgray;
+  font-size: 0.5rem;
+  cursor: grab;
+}
+
+.nombre-shape {
+  background-color: var(--blue);
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+.atributos-shape {
+  border-bottom: 1px solid lightgrey;
+}
+
+.metodos-shape,
+.atributos-shape,
+.nombre-shape {
+  padding: 0.1rem;
+}
+
+.paquete-shape span {
+  padding: 0rem 0.25rem;
+  color: var(--primary-color);
+  font-size: 0.5rem;
+}
+
+.paquete-shape div {
+  padding: 0.7rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.5rem;
+}
+
+.paquete-shape span,
+.paquete-shape div {
+  border: 1px solid lightgray;
 }

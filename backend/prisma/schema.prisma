@@ -31,6 +31,7 @@ model proyectos {
   estado                estadosproyectos        @default(Activo)
   fechacreacion         DateTime                @default(now()) @db.Timestamptz(6)
   idusuario             Int
+  diagramasproyectos    diagramasproyectos[]
   procesos              procesos[]
   usuarios              usuarios                @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_proyectos_usuarios")
   roles                 roles[]
@@ -65,10 +66,10 @@ model personas {
   entrevistadosentrevista entrevistadosentrevista[]
   entrevistas             entrevistas[]
   focusgroups             focusgroups[]
+  historiasusuario        historiasusuario[]
   observaciones           observaciones[]
   observacionesobservados observacionesobservados[]
-  rolespersonasproyecto   rolespersonasproyecto[]
-  historiasusuario historiasusuario[]
+  participantesfg         participantesfg[]
   respuestascuestionario  respuestascuestionario[]
   rolespersonasproyecto   rolespersonasproyecto[]
 }
@@ -96,13 +97,10 @@ model subprocesos {
   cuestionarios      cuestionarios[]
   entrevistas        entrevistas[]
   focusgroups        focusgroups[]
+  historiasusuario   historiasusuario[]
   metodossubprocesos metodossubprocesos[]
   observaciones      observaciones[]
   procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_subprocesos_procesos")
-  cuestionarios          cuestionarios[]
-  historiasusuario historiasusuario[]
-  focusgroups        focusgroups[]
-  analisisDocumentos analisisDocumentos[]
 }
 
 model usuarios {
@@ -224,7 +222,7 @@ model historiasusuario {
   prioridad           String      @db.VarChar(20)
   fechacreacion       DateTime    @default(now()) @db.Timestamptz(6)
   personas            personas    @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction) 
+  subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model focusgroups {
@@ -279,6 +277,19 @@ model hallazgosanalisis {
   analisisDocumentos analisisDocumentos @relation(fields: [idanalisis], references: [idanalisis], onDelete: Cascade, onUpdate: NoAction)
 }
 
+model diagramasproyectos {
+  iddiagrama    Int       @id @default(autoincrement())
+  idproyecto    Int
+  nombre        String    @db.VarChar(255)
+  tipo          diagrama
+  contenido     Json
+  fechacreacion DateTime  @default(now()) @db.Timestamptz(6)
+  ultimaedicion DateTime  @default(now()) @db.Timestamptz(6)
+  proyectos     proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([idproyecto, tipo], map: "tipo_proyecto_unico")
+}
+
 enum tiporol {
   Interno
   Externo
@@ -305,4 +316,11 @@ enum tipopregunta {
   Abierta
   Opcion_multiple @map("Opción múltiple")
   Escala
+}
+
+enum diagrama {
+  clase
+  secuencia
+  casos_uso
+  paquetes
 }

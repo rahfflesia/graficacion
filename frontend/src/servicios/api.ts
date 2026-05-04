@@ -22,12 +22,18 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
-import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
+import {
+  DatosFormularioCuestionario,
+  Cuestionario,
+  DatosRespuestaCuestionario,
+  RespuestaCuestionario,
+} from '../models/cuestionario';
 import { DatosFormularioHistoriaUsuario, HistoriaUsuario } from '../models/historiaUsuario';
 import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
 import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
+import { DiagramaClase } from '../models/diagramas';
 @Injectable({
   providedIn: 'root',
 })
@@ -97,7 +103,7 @@ export class Api {
   private historiasUsuarioObtenerUrl = 'obtener/';
   private historiasUsuarioEliminarUrl = 'eliminar/';
   private historiasUsuarioEditarUrl = 'editar/';
-  
+
   private entrevistasUrl = 'entrevistas/';
   private entrevistasCrearUrl = 'crear/';
   private entrevistasObtenerUrl = 'obtener/';
@@ -115,6 +121,12 @@ export class Api {
   private analisisDocumentosObtenerUrl = 'obtener/';
   private analisisDocumentosEliminarUrl = 'eliminar/';
   private analisisDocumentosEditarUrl = 'editar/';
+
+  private diagramasUrl = 'diagramas/';
+  private diagramasCrearUrl = 'crear/';
+  private diagramasEditarUrl = 'editar/';
+  private diagramasObtenerUrl = 'obtener/';
+  private diagramasEliminarUrl = 'eliminar/';
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -446,6 +458,35 @@ export class Api {
   eliminarHistoriaUsuario(id: number) {
     return this.http.delete(
       this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEliminarUrl + id,
+    );
+  }
+
+  crearDiagrama(datosDiagrama: DiagramaClase): Observable<DiagramaClase> {
+    return this.http.post<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasCrearUrl,
+      datosDiagrama,
+    );
+  }
+
+  obtenerDiagrama(datosDiagrama: {
+    idproyecto: number;
+    tipo: 'clase' | 'secuencia' | 'casos_uso' | 'paquetes';
+  }): Observable<DiagramaClase> {
+    return this.http.get<DiagramaClase>(
+      this.baseUrl +
+        this.diagramasUrl +
+        this.diagramasObtenerUrl +
+        'id/' +
+        datosDiagrama.idproyecto +
+        '/tipo/' +
+        datosDiagrama.tipo,
+    );
+  }
+
+  editarDiagrama(idDiagrama: number, datosDiagrama: DiagramaClase): Observable<DiagramaClase> {
+    return this.http.put<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasEditarUrl + idDiagrama,
+      datosDiagrama,
     );
   }
 }

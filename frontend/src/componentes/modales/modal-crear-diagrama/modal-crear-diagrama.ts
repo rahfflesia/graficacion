@@ -10,4 +10,7 @@ export class ModalCrearDiagrama {
   @Input() toggler: boolean = false;
 
   @Output() cerrar = new EventEmitter<void>();
+  @Output() seleccionarDiagrama = new EventEmitter<
+    'clase' | 'secuencia' | 'casos_uso' | 'paquetes'
+  >();
 }
