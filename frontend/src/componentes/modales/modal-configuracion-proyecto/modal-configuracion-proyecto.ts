@@ -110,27 +110,33 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const proyecto = changes['proyectoSeleccionado'];
-    if (proyecto && this.proyectoSeleccionado !== undefined) {
-      this.api.obtenerDatosGeneralesProyecto(this.proyectoSeleccionado?.idproyecto!).subscribe({
-        next: (datosProyecto) => {
-          this.procesos.set(datosProyecto.procesos);
-          this.roles.set(datosProyecto.roles);
-          this.participantes.set(datosProyecto.participantes);
-          this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
-          this.tecnicasRecoleccion.set(datosProyecto.tecnicasRecoleccion);
-          this.subprocesos.set(datosProyecto.subprocesos);
-          this.cargarTecnicas();
-          console.log(this.procesos());
-        },
-        error: (error) => {
-          console.error(error);
-          this.toastr.error('Ocurrió un error al obtener los datos del proyecto', '', {
-            toastClass: 'toastr-error',
-          });
-        },
-      });
+    const cambioProyecto = changes['proyectoSeleccionado'];
+    const modalAbierto = changes['toggler']?.currentValue === true;
+
+    if ((cambioProyecto || modalAbierto) && this.proyectoSeleccionado !== undefined) {
+      this.cargarDatosProyecto();
     }
+  }
+
+  cargarDatosProyecto() {
+    this.api.obtenerDatosGeneralesProyecto(this.proyectoSeleccionado?.idproyecto!).subscribe({
+      next: (datosProyecto) => {
+        this.procesos.set(datosProyecto.procesos);
+        this.roles.set(datosProyecto.roles);
+        this.participantes.set(datosProyecto.participantes);
+        this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
+        this.tecnicasRecoleccion.set(datosProyecto.tecnicasRecoleccion);
+        this.subprocesos.set(datosProyecto.subprocesos);
+        this.cargarTecnicas();
+        this.seleccionarProcesoPorDefecto();
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Ocurrió un error al obtener los datos del proyecto', '', {
+          toastClass: 'toastr-error',
+        });
+      },
+    });
   }
 
   cerrarModalConfigurarProyecto() {
@@ -245,10 +251,18 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   cargarTecnicas() {
-    if (this.tecnicasAsociadas.length < 1) {
-      const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
-      controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
-    }
+    this.tecnicasAsociadas.clear();
+    const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
+    controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
+    this.tecnicasAsociadas.updateValueAndValidity();
+  }
+
+  seleccionarProcesoPorDefecto() {
+    const controlProceso = this.formularioSubprocesos.get('idProcesoAsociado');
+
+    if (controlProceso?.value || this.procesos().length < 1) return;
+
+    controlProceso?.setValue(this.procesos()[0].idproceso.toString());
   }
 
   obtenerTecnicasSeleccionadas() {
@@ -303,6 +317,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (subprocesoCreado) => {
         this.toastr.success('Subproceso creado correctamente');
         crear(this.subprocesos, subprocesoCreado);
+        this.limpiarFormularioSubproceso();
       },
       error: (error) => {
         console.error(error);
@@ -312,7 +327,12 @@ export class ModalConfiguracionProyecto implements OnChanges {
       },
     });
 
+  }
+
+  limpiarFormularioSubproceso() {
     this.formularioSubprocesos.reset();
+    this.cargarTecnicas();
+    this.seleccionarProcesoPorDefecto();
   }
 
   eliminarSubproceso(subprocesoEliminado: Subproceso) {

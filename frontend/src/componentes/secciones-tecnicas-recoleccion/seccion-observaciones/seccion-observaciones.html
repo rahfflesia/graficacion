@@ -135,7 +135,12 @@
     <div class="input-wrapper-row">
       <div class="input-wrapper flex-column sm-gap">
         <label for="informacion-persona">Selecciona la persona que recopiló la observación</label>
-        <select name="informacion-persona" class="custom-select" formControlName="idPersona">
+        <select
+          name="informacion-persona"
+          class="custom-select"
+          formControlName="idPersona"
+          (change)="actualizarValidezCampoBusqueda()"
+        >
           @for (participante of participantes(); track participante.idpersona) {
             <option value="{{ participante.idpersona }}">
               {{ participante.nombre }} {{ participante.apellidouno }}
@@ -188,6 +193,7 @@
     </div>
     <div>
       <button
+        type="button"
         class="default-button"
         (click)="crearObservacion()"
         [disabled]="formularioObservaciones.invalid"

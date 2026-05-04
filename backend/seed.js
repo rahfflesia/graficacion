@@ -10,8 +10,16 @@ const tecnicas = [
 ];
 
 for (const t of tecnicas) {
-  await prisma.tecnicasrecoleccion.create({ data: t });
+  const tecnicaExistente = await prisma.tecnicasrecoleccion.findFirst({
+    where: {
+      nombre: t.nombre,
+    },
+  });
+
+  if (!tecnicaExistente) {
+    await prisma.tecnicasrecoleccion.create({ data: t });
+  }
 }
 
-console.log('Técnicas insertadas');
+console.log('Técnicas sincronizadas');
 process.exit(0);

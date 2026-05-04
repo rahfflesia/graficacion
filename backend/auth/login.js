@@ -1,9 +1,31 @@
 import { Router } from "express";
-import { prisma } from "../db/db";
+import { prisma } from "../lib/prisma.ts";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const login = Router();
+
+login.get("/sesion", async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+
+    if (!token) {
+      return res.status(401).json({ error: "No hay una sesión activa" });
+    }
+
+    const usuario = jwt.verify(token, process.env.JWT_SECRET);
+
+    return res.status(200).json({
+      token,
+      usuario,
+    });
+  } catch (error) {
+    return res.status(401).json({
+      error: "La sesión expiró o es inválida",
+      detalle: error.message,
+    });
+  }
+});
 
 login.post("/iniciar-sesion", async (req, res) => {
   try {

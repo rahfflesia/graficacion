@@ -79,8 +79,8 @@ export class FormEntrevistas implements OnInit, OnChanges {
   indicePreguntaEditar: number | null = null;
 
   ngOnInit(): void {
-    const checkboxEntrevistados = this.participantes.map(() => new FormControl(false));
-    checkboxEntrevistados.forEach((control) => this.checkboxFormArray.push(control));
+    this.inicializarCheckboxesEntrevistados();
+    this.seleccionarEntrevistadorPorDefecto();
 
     if (this.modo === 'editar' && this.entrevista) {
       this.cargarDatosEntrevista();
@@ -93,6 +93,10 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   cargarDatosEntrevista() {
     if (!this.entrevista) return;
+
+    this.entrevistados = [];
+    this.preguntasEntrevista = [];
+    this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
 
     const datosEntrevista = this.entrevista.entrevista;
 
@@ -120,16 +124,6 @@ export class FormEntrevistas implements OnInit, OnChanges {
     const arrayEntrevistados = [...(this.entrevista.entrevistados ?? [])];
     const arrayPreguntasEntrevista = [...(this.entrevista.preguntasentrevista ?? [])];
 
-    if (
-      !arrayEntrevistados ||
-      !arrayPreguntasEntrevista ||
-      arrayEntrevistados.length < 1 ||
-      arrayPreguntasEntrevista.length < 1
-    ) {
-      console.error('Los array no pueden estar vacíos');
-      return;
-    }
-
     this.entrevistados = arrayEntrevistados;
     this.actualizarValidezBusqueda();
 
@@ -147,11 +141,15 @@ export class FormEntrevistas implements OnInit, OnChanges {
     });
 
     this.formularioEntrevistas.markAsPristine();
-    console.log(this.formularioEntrevistas.status);
-    console.log(this.formularioEntrevistas.errors);
+    this.formularioEntrevistas.updateValueAndValidity();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['participantes'] !== undefined && !changes['participantes'].firstChange) {
+      this.inicializarCheckboxesEntrevistados();
+      this.seleccionarEntrevistadorPorDefecto();
+    }
+
     if (
       changes['toggler'] !== undefined &&
       changes['toggler'].currentValue === true &&
@@ -163,6 +161,21 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   get checkboxFormArray() {
     return this.formularioEntrevistas.get('checkboxesEntrevistados') as FormArray;
+  }
+
+  inicializarCheckboxesEntrevistados() {
+    this.checkboxFormArray.clear();
+    const checkboxEntrevistados = this.participantes.map(() => new FormControl(false));
+    checkboxEntrevistados.forEach((control) => this.checkboxFormArray.push(control));
+  }
+
+  seleccionarEntrevistadorPorDefecto() {
+    const controlEntrevistador = this.obtenerControlFormularioEntrevistas('idEntrevistador');
+
+    if (controlEntrevistador?.value || this.participantes.length < 1) return;
+
+    controlEntrevistador?.setValue(this.participantes[0].idpersona.toString());
+    this.actualizarEntrevistador();
   }
 
   obtenerControlFormularioEntrevistas(nombreControl: string) {
@@ -181,7 +194,7 @@ export class FormEntrevistas implements OnInit, OnChanges {
         fechahorainicio: copiaDatosEntrevista.fechaHoraInicio!,
         fechahorafinalizacion: copiaDatosEntrevista.fechaHoraFinalizacion!,
         lugar: copiaDatosEntrevista.lugar!,
-        idsubproceso: this.subproceso?.idproceso!,
+        idsubproceso: this.subproceso?.idsubproceso!,
       },
       entrevistados: this.entrevistados,
     };
@@ -190,9 +203,17 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
     this.api.crearEntrevista(datosFinalesEntrevista).subscribe({
       next: (entrevista) => {
+        if (!this.esRespuestaEntrevistaValida(entrevista)) {
+          console.error('La respuesta de crear entrevista no es válida', entrevista);
+          this.toastr.error('No se pudo crear la entrevista', '', {
+            toastClass: 'toastr-error',
+          });
+          return;
+        }
+
         this.toastr.success('Entrevista creada correctamente');
         this.entrevistaCreada.emit(entrevista);
-        console.log(entrevista);
+        this.reiniciarFormularioEntrevista();
       },
       error: (error) => {
         console.error(error);
@@ -201,11 +222,19 @@ export class FormEntrevistas implements OnInit, OnChanges {
         });
       },
     });
+  }
 
-    this.formularioEntrevistas.reset();
-    this.formularioEntrevistas.updateValueAndValidity();
+  reiniciarFormularioEntrevista() {
     this.entrevistados = [];
     this.preguntasEntrevista = [];
+    this.formularioEntrevistas.reset();
+    this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
+    this.seleccionarEntrevistadorPorDefecto();
+    this.formularioEntrevistas.updateValueAndValidity();
+  }
+
+  esRespuestaEntrevistaValida(entrevista: Entrevista) {
+    return !!entrevista?.entrevista?.identrevista;
   }
 
   eliminarParticipante(indice: number, participante?: Participante) {
@@ -265,11 +294,15 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   filtrarParticipantes() {
     const campoBusqueda = this.formularioEntrevistas.value.busqueda ?? '';
+    const idEntrevistador = this.obtenerIdEntrevistador();
     const resultados = this.participantes
       .map((participante, index) => ({ participante, indiceOriginal: index }))
       .filter(({ participante }) => {
         const nombreCompleto = `${participante.nombre} ${participante.apellidouno} ${participante.apellidodos ?? ''}`;
-        return nombreCompleto.toLowerCase().includes(campoBusqueda?.toLowerCase());
+        return (
+          participante.idpersona !== idEntrevistador &&
+          nombreCompleto.toLowerCase().includes(campoBusqueda?.toLowerCase())
+        );
       });
     this.participantesFiltrados.set(resultados);
   }
@@ -280,12 +313,31 @@ export class FormEntrevistas implements OnInit, OnChanges {
     const checkboxesParticipantes = this.formularioEntrevistas.value
       .checkboxesEntrevistados as Boolean[];
     const checkboxSeleccionada = checkboxesParticipantes[objetoParticipante.indiceOriginal];
-    if (checkboxSeleccionada) this.entrevistados.push(participante);
+
+    if (checkboxSeleccionada && participante.idpersona === this.obtenerIdEntrevistador()) {
+      this.checkboxFormArray.controls[objetoParticipante.indiceOriginal]?.setValue(false);
+      campoBusqueda?.setValue('');
+      this.participantesFiltrados.set([]);
+      campoBusqueda?.updateValueAndValidity();
+      this.toastr.error('El entrevistador no puede agregarse como entrevistado', '', {
+        toastClass: 'toastr-error',
+      });
+      return;
+    }
+
+    if (checkboxSeleccionada) {
+      const yaEstaAgregado = this.entrevistados.some(
+        (entrevistado) => entrevistado.idpersona === participante.idpersona,
+      );
+      if (!yaEstaAgregado) this.entrevistados.push(participante);
+      campoBusqueda?.setValue('');
+      this.participantesFiltrados.set([]);
+    }
     else {
       const indiceParticipanteAEliminar = this.entrevistados.findIndex(
         (entrevistado) => entrevistado.idpersona === objetoParticipante.participante.idpersona,
       );
-      this.eliminarParticipante(indiceParticipanteAEliminar);
+      if (indiceParticipanteAEliminar >= 0) this.eliminarParticipante(indiceParticipanteAEliminar);
     }
     campoBusqueda?.updateValueAndValidity();
     console.log(this.entrevistados);
@@ -384,5 +436,90 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   actualizarValidezBusqueda() {
     this.obtenerControlFormularioEntrevistas('busqueda')?.updateValueAndValidity();
+  }
+
+  actualizarEntrevistador() {
+    const idEntrevistador = this.obtenerIdEntrevistador();
+    const indiceEntrevistadorEnLista = this.entrevistados.findIndex(
+      (entrevistado) => entrevistado.idpersona === idEntrevistador,
+    );
+
+    if (indiceEntrevistadorEnLista >= 0) {
+      this.entrevistados.splice(indiceEntrevistadorEnLista, 1);
+    }
+
+    this.participantes.forEach((participante, index) => {
+      if (participante.idpersona === idEntrevistador) {
+        this.checkboxFormArray.controls[index]?.setValue(false);
+      }
+    });
+
+    const campoBusqueda = this.obtenerControlFormularioEntrevistas('busqueda');
+    campoBusqueda?.setValue('');
+    this.participantesFiltrados.set([]);
+    this.actualizarValidezBusqueda();
+  }
+
+  obtenerIdEntrevistador() {
+    const idEntrevistador = this.obtenerControlFormularioEntrevistas('idEntrevistador')?.value;
+    return Number(idEntrevistador);
+  }
+
+  controlTieneError(nombreControl: string, nombreError: string) {
+    return this.obtenerControlFormularioEntrevistas(nombreControl)?.hasError(nombreError);
+  }
+
+  obtenerMotivosFormularioIncompleto() {
+    const motivos: string[] = [];
+
+    if (this.controlTieneError('nombre', 'required')) {
+      motivos.push('Completa el nombre.');
+    }
+
+    if (this.controlTieneError('descripcion', 'required')) {
+      motivos.push('Completa la descripción.');
+    }
+
+    if (this.controlTieneError('idEntrevistador', 'required')) {
+      motivos.push('Selecciona un entrevistador.');
+    }
+
+    if (this.controlTieneError('fechaHoraInicio', 'required')) {
+      motivos.push('Completa la fecha y hora de inicio.');
+    }
+
+    if (this.controlTieneError('fechaHoraInicio', 'fechaFutura')) {
+      motivos.push('La fecha de inicio no puede ser futura.');
+    }
+
+    if (this.controlTieneError('fechaHoraInicio', 'inicioMayorQueFinal')) {
+      motivos.push('La fecha de inicio no puede ser posterior a la finalización.');
+    }
+
+    if (this.controlTieneError('fechaHoraFinalizacion', 'required')) {
+      motivos.push('Completa la fecha y hora de finalización.');
+    }
+
+    if (this.controlTieneError('fechaHoraFinalizacion', 'fechaFutura')) {
+      motivos.push('La fecha de finalización no puede ser futura.');
+    }
+
+    if (this.controlTieneError('lugar', 'required')) {
+      motivos.push('Completa el lugar.');
+    }
+
+    if (this.controlTieneError('busqueda', 'entrevistadorEnListaEntrevistados')) {
+      motivos.push('El entrevistador no puede estar también como entrevistado.');
+    }
+
+    if (this.entrevistados.length < 1) {
+      motivos.push('Agrega al menos un entrevistado distinto al entrevistador.');
+    }
+
+    if (this.preguntasEntrevista.length < 1) {
+      motivos.push('Guarda al menos una pregunta.');
+    }
+
+    return motivos;
   }
 }
