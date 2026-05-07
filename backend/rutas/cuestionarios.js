@@ -1,6 +1,13 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const cuestionarios = Router();
 
@@ -9,14 +16,25 @@ cuestionarios.use(validarToken);
 cuestionarios.post("/crear", async (req, res) => {
   try {
     const { idSubproceso, nombre, descripcion, idCreador, preguntas } = req.body;
+    const camposFaltantes = validarCamposRequeridos(req.body, [
+      "idSubproceso",
+      "nombre",
+      "descripcion",
+      "idCreador",
+      "preguntas",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!Array.isArray(preguntas) || preguntas.length < 1) {
+      return res.status(400).json({ error: "El cuestionario debe tener al menos una pregunta" });
+    }
 
     const resultado = await prisma.$transaction(async (tx) => {
       const cuestionarioCreado = await tx.cuestionarios.create({
         data: {
-          idsubproceso: idSubproceso,
+          idsubproceso: Number(idSubproceso),
           nombre: nombre,
           descripcion: descripcion,
-          idcreador: idCreador,
+          idcreador: Number(idCreador),
         },
       });
 
@@ -37,33 +55,35 @@ cuestionarios.post("/crear", async (req, res) => {
       return cuestionarioCreado;
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       mensaje: "Cuestionario creado exitosamente",
       cuestionario: resultado,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al crear el cuestionario" });
+    return enviarError(res, error, "Error al crear el cuestionario");
   }
 });
 
 cuestionarios.get("/obtener/:idsubproceso", async (req, res) => {
   try {
-    const idsubproceso = parseInt(req.params.idsubproceso);
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+
     const listaCuestionarios = await prisma.cuestionarios.findMany({
       where: { idsubproceso },
       include: { preguntascuestionario: { orderBy: { orden: "asc" } } },
     });
     return res.status(200).json(listaCuestionarios);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener cuestionarios" });
+    return enviarError(res, error, "Error al obtener cuestionarios");
   }
 });
 
 cuestionarios.delete("/eliminar/:idcuestionario", async (req, res) => {
   try {
-    const idcuestionario = parseInt(req.params.idcuestionario);
+    const idcuestionario = parseId(req.params.idcuestionario);
+    if (!idcuestionario) return responderIdInvalido(res, "idcuestionario");
+
     const cuestionarioEliminado = await prisma.cuestionarios.delete({
       where: { idicuestionario: idcuestionario },
     });
@@ -72,15 +92,26 @@ cuestionarios.delete("/eliminar/:idcuestionario", async (req, res) => {
       cuestionario: cuestionarioEliminado,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al eliminar el cuestionario" });
+    return enviarError(res, error, "Error al eliminar el cuestionario");
   }
 });
 
 cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
   try {
-    const idcuestionario = parseInt(req.params.idcuestionario);
+    const idcuestionario = parseId(req.params.idcuestionario);
+    if (!idcuestionario) return responderIdInvalido(res, "idcuestionario");
+
     const { nombre, descripcion, idCreador, preguntas } = req.body;
+    const camposFaltantes = validarCamposRequeridos(req.body, [
+      "nombre",
+      "descripcion",
+      "idCreador",
+      "preguntas",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!Array.isArray(preguntas) || preguntas.length < 1) {
+      return res.status(400).json({ error: "El cuestionario debe tener al menos una pregunta" });
+    }
 
     const resultado = await prisma.$transaction(async (tx) => {
       const cuestionarioActualizado = await tx.cuestionarios.update({
@@ -88,7 +119,7 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
         data: {
           nombre,
           descripcion,
-          idcreador: idCreador,
+          idcreador: Number(idCreador),
         },
       });
 
@@ -120,8 +151,7 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
       cuestionario: resultado,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al actualizar el cuestionario" });
+    return enviarError(res, error, "Error al actualizar el cuestionario");
   }
 });
 

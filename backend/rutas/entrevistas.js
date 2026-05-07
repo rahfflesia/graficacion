@@ -1,8 +1,15 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderIdInvalido,
+} from "../utils/http.js";
 
 const entrevistas = Router();
+
+entrevistas.use(validarToken);
 
 function formatearEntrevistados(arrayEntrevistados) {
   return arrayEntrevistados.flatMap((entrevistado) => {
@@ -33,10 +40,12 @@ function formatearEntrevistados(arrayEntrevistados) {
 
 entrevistas.get("/obtener/:idsubproceso", async (req, res) => {
   try {
-    const { idsubproceso } = req.params;
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+
     const entrevistas = await prisma.entrevistas.findMany({
       where: {
-        idsubproceso: parseInt(idsubproceso),
+        idsubproceso,
       },
       include: {
         entrevistadosentrevista: true,
@@ -93,33 +102,44 @@ entrevistas.get("/obtener/:idsubproceso", async (req, res) => {
 
     return res.status(200).json(entrevistasFormateadas);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      error: "Error al obtener entrevistas",
-      detalle: error.message,
-    });
+    return enviarError(res, error, "Error al obtener entrevistas");
   }
 });
 
 entrevistas.post("/crear", async (req, res) => {
   try {
+    const datos = req.body;
+
+    if (!datos?.entrevista) {
+      return res.status(400).json({ error: "Los datos de la entrevista son requeridos" });
+    }
+
+    if (!Array.isArray(datos.entrevistados) || datos.entrevistados.length < 1) {
+      return res.status(400).json({ error: "La entrevista debe tener al menos un entrevistado" });
+    }
+
+    if (!Array.isArray(datos.preguntasentrevista) || datos.preguntasentrevista.length < 1) {
+      return res.status(400).json({ error: "La entrevista debe tener al menos una pregunta" });
+    }
+
+    const camposEntrevista = [
+      "nombre",
+      "descripcion",
+      "identrevistador",
+      "fechahorainicio",
+      "fechahorafinalizacion",
+      "lugar",
+      "idsubproceso",
+    ];
+    const camposFaltantes = camposEntrevista.filter((campo) => {
+      const valor = datos.entrevista[campo];
+      return valor === undefined || valor === null || valor === "";
+    });
+    if (camposFaltantes.length > 0) {
+      return res.status(400).json({ error: "Faltan campos requeridos", campos: camposFaltantes });
+    }
+
     const entrevistaFormateada = await prisma.$transaction(async (tx) => {
-      const datos = req.body;
-
-      if (!datos?.entrevista) {
-        throw new Error("Los datos de la entrevista son requeridos");
-      }
-
-      if (!Array.isArray(datos.entrevistados) || datos.entrevistados.length < 1) {
-        throw new Error("La entrevista debe tener al menos un entrevistado");
-      }
-
-      if (
-        !Array.isArray(datos.preguntasentrevista) ||
-        datos.preguntasentrevista.length < 1
-      ) {
-        throw new Error("La entrevista debe tener al menos una pregunta");
-      }
 
       const entrevista = await tx.entrevistas.create({
         data: {
@@ -212,28 +232,29 @@ entrevistas.post("/crear", async (req, res) => {
 
     return res.status(201).json(entrevistaFormateada);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      error: "Error al crear la entrevista",
-      detalle: error.message,
-    });
+    return enviarError(res, error, "Error al crear la entrevista");
   }
 });
 
 entrevistas.put("/editar/:identrevista", async (req, res) => {
   try {
     await prisma.$transaction(async (tx) => {
-      const { identrevista } = req.params;
-      const id = parseInt(identrevista);
+      const id = parseId(req.params.identrevista);
+      if (!id) return responderIdInvalido(res, "identrevista");
+
       const datos = req.body;
 
-      if (datos.entrevistados.length < 1) {
+      if (!datos?.entrevista) {
+        return res.status(400).json({ error: "Los datos de la entrevista son requeridos" });
+      }
+
+      if (!Array.isArray(datos.entrevistados) || datos.entrevistados.length < 1) {
         return res
           .status(400)
           .json({ error: "El array de entrevistados no puede estar vacío" });
       }
 
-      if (datos.preguntasentrevista.length < 1) {
+      if (!Array.isArray(datos.preguntasentrevista) || datos.preguntasentrevista.length < 1) {
         return res
           .status(400)
           .json({ error: "El array de preguntas no puede estar vacío" });
@@ -335,19 +356,15 @@ entrevistas.put("/editar/:identrevista", async (req, res) => {
       return res.status(200).json(entrevistaEditadaFormateada);
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      error: "Error al editar la entrevista",
-      detalle: error.message,
-    });
+    return enviarError(res, error, "Error al editar la entrevista");
   }
 });
 
 entrevistas.delete("/eliminar/:identrevista", async (req, res) => {
   try {
     await prisma.$transaction(async (tx) => {
-      const { identrevista } = req.params;
-      const id = parseInt(identrevista);
+      const id = parseId(req.params.identrevista);
+      if (!id) return responderIdInvalido(res, "identrevista");
 
       await tx.preguntasentrevista.deleteMany({
         where: {
@@ -370,11 +387,7 @@ entrevistas.delete("/eliminar/:identrevista", async (req, res) => {
       return res.status(200).json({ entrevista: entrevistaEliminada });
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      error: "Error al eliminar la entrevista",
-      detalle: error.message,
-    });
+    return enviarError(res, error, "Error al eliminar la entrevista");
   }
 });
 

@@ -1,56 +1,108 @@
-import { error } from "node:console";
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const diagramas = Router();
 
+diagramas.use(validarToken);
+
+const TIPOS_DIAGRAMA = ["clase", "secuencia", "paquetes", "casos_uso"];
+
 diagramas.get("/obtener/id/:idproyecto/tipo/:tipo", async (req, res) => {
   try {
-    const { idproyecto, tipo } = req.params;
+    const idproyecto = parseId(req.params.idproyecto);
+    if (!idproyecto) return responderIdInvalido(res, "idproyecto");
+
+    const { tipo } = req.params;
+    if (!TIPOS_DIAGRAMA.includes(tipo)) {
+      return res.status(400).json({ error: "El tipo de diagrama no es válido" });
+    }
+
     const diagrama = await prisma.diagramasproyectos.findUnique({
       where: {
         idproyecto_tipo: {
-          idproyecto: parseInt(idproyecto),
+          idproyecto,
           tipo: tipo,
         },
       },
     });
     return res.status(200).json(diagrama);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al obtener el diagrama");
   }
 });
 
 diagramas.post("/crear", async (req, res) => {
   try {
     const datosDiagrama = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosDiagrama, [
+      "idproyecto",
+      "nombre",
+      "tipo",
+      "contenido",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!TIPOS_DIAGRAMA.includes(datosDiagrama.tipo)) {
+      return res.status(400).json({ error: "El tipo de diagrama no es válido" });
+    }
+
     const diagramaCreado = await prisma.diagramasproyectos.create({
-      data: datosDiagrama,
+      data: {
+        idproyecto: Number(datosDiagrama.idproyecto),
+        nombre: datosDiagrama.nombre,
+        tipo: datosDiagrama.tipo,
+        contenido: datosDiagrama.contenido,
+      },
     });
-    return res.status(201).json(datosDiagrama);
+    return res.status(201).json(diagramaCreado);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al crear el diagrama");
   }
 });
 
-diagramas.delete("/eliminar/:iddiagrama", async () => {});
+diagramas.delete("/eliminar/:iddiagrama", async (req, res) => {
+  try {
+    const iddiagrama = parseId(req.params.iddiagrama);
+    if (!iddiagrama) return responderIdInvalido(res, "iddiagrama");
+
+    const diagramaEliminado = await prisma.diagramasproyectos.delete({
+      where: { iddiagrama },
+    });
+    return res.status(200).json(diagramaEliminado);
+  } catch (error) {
+    return enviarError(res, error, "Error al eliminar el diagrama");
+  }
+});
 
 diagramas.put("/editar/:iddiagrama", async (req, res) => {
   try {
-    const { iddiagrama } = req.params;
+    const iddiagrama = parseId(req.params.iddiagrama);
+    if (!iddiagrama) return responderIdInvalido(res, "iddiagrama");
+
     const datosDiagrama = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosDiagrama, ["nombre", "contenido"]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+
     const diagramaActualizado = await prisma.diagramasproyectos.update({
       where: {
-        iddiagrama: parseInt(iddiagrama),
+        iddiagrama,
       },
-      data: datosDiagrama,
+      data: {
+        nombre: datosDiagrama.nombre,
+        contenido: datosDiagrama.contenido,
+        ultimaedicion: new Date(),
+      },
     });
     return res.status(200).json(diagramaActualizado);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al editar el diagrama");
   }
 });
 
