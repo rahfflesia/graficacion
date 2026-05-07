@@ -1,0 +1,15 @@
+.imagen-actor {
+  display: grid;
+  place-items: center;
+}
+
+.imagen-actor > img {
+  width: 150px;
+  height: 150px;
+}
+
+.wrapper-texto-actor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

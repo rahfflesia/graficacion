@@ -1,0 +1,7 @@
+.shape-boundary {
+  padding: 1.5rem;
+  border: 2px solid black;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}

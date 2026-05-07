@@ -108,6 +108,11 @@ export type respuestascuestionario = Prisma.respuestascuestionarioModel
  */
 export type respuestaspreguntas = Prisma.respuestaspreguntasModel
 /**
+ * Model historiasusuario
+ * 
+ */
+export type historiasusuario = Prisma.historiasusuarioModel
+/**
  * Model focusgroups
  * 
  */
@@ -132,3 +137,8 @@ export type analisisDocumentos = Prisma.analisisDocumentosModel
  * 
  */
 export type hallazgosanalisis = Prisma.hallazgosanalisisModel
+/**
+ * Model diagramasproyectos
+ * 
+ */
+export type diagramasproyectos = Prisma.diagramasproyectosModel

@@ -19,7 +19,7 @@
   --border-radius: 0.75rem;
   --body-bg-color: #f4f5f7;
   --font-color: #111c2d;
-  --blue: #0085db;
+  --blue: rgb(0, 133, 219);
   --lightgreen: rgb(223, 255, 243);
   --grayish: rgb(231, 236, 240);
   --lightblue: rgb(229, 243, 251);
@@ -151,7 +151,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 99999999999999;
   display: grid;
   place-items: center;
   opacity: 0;
@@ -165,7 +165,7 @@ img {
     opacity ease 300ms 0ms;
   transform: scale(0);
   opacity: 0;
-  min-width: 750px;
+  z-index: 99999999999999;
 }
 
 .overlay.animar {
@@ -421,4 +421,18 @@ img {
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+}
+
+.name-input {
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  min-width: 0 !important;
+  border: none;
+  padding: 0rem 0.25rem;
+}
+
+.name-input:focus {
+  border: none;
+  outline: 2px solid rgb(58, 107, 211);
 }

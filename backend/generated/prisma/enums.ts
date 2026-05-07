@@ -50,3 +50,13 @@ export const tipopregunta = {
 } as const
 
 export type tipopregunta = (typeof tipopregunta)[keyof typeof tipopregunta]
+
+
+export const diagrama = {
+  clase: 'clase',
+  secuencia: 'secuencia',
+  casos_uso: 'casos_uso',
+  paquetes: 'paquetes'
+} as const
+
+export type diagrama = (typeof diagrama)[keyof typeof diagrama]

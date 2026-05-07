@@ -216,8 +216,8 @@ export type respuestaspreguntasWhereInput = {
   idrespuesta?: Prisma.IntFilter<"respuestaspreguntas"> | number
   idpregunta?: Prisma.IntFilter<"respuestaspreguntas"> | number
   valor?: Prisma.StringFilter<"respuestaspreguntas"> | string
-  respuestascuestionario?: Prisma.XOR<Prisma.RespuestascuestionarioScalarRelationFilter, Prisma.respuestascuestionarioWhereInput>
   preguntascuestionario?: Prisma.XOR<Prisma.PreguntascuestionarioScalarRelationFilter, Prisma.preguntascuestionarioWhereInput>
+  respuestascuestionario?: Prisma.XOR<Prisma.RespuestascuestionarioScalarRelationFilter, Prisma.respuestascuestionarioWhereInput>
 }
 
 export type respuestaspreguntasOrderByWithRelationInput = {
@@ -225,8 +225,8 @@ export type respuestaspreguntasOrderByWithRelationInput = {
   idrespuesta?: Prisma.SortOrder
   idpregunta?: Prisma.SortOrder
   valor?: Prisma.SortOrder
-  respuestascuestionario?: Prisma.respuestascuestionarioOrderByWithRelationInput
   preguntascuestionario?: Prisma.preguntascuestionarioOrderByWithRelationInput
+  respuestascuestionario?: Prisma.respuestascuestionarioOrderByWithRelationInput
 }
 
 export type respuestaspreguntasWhereUniqueInput = Prisma.AtLeast<{
@@ -237,8 +237,8 @@ export type respuestaspreguntasWhereUniqueInput = Prisma.AtLeast<{
   idrespuesta?: Prisma.IntFilter<"respuestaspreguntas"> | number
   idpregunta?: Prisma.IntFilter<"respuestaspreguntas"> | number
   valor?: Prisma.StringFilter<"respuestaspreguntas"> | string
-  respuestascuestionario?: Prisma.XOR<Prisma.RespuestascuestionarioScalarRelationFilter, Prisma.respuestascuestionarioWhereInput>
   preguntascuestionario?: Prisma.XOR<Prisma.PreguntascuestionarioScalarRelationFilter, Prisma.preguntascuestionarioWhereInput>
+  respuestascuestionario?: Prisma.XOR<Prisma.RespuestascuestionarioScalarRelationFilter, Prisma.respuestascuestionarioWhereInput>
 }, "idrespuestapregunta">
 
 export type respuestaspreguntasOrderByWithAggregationInput = {
@@ -265,8 +265,8 @@ export type respuestaspreguntasScalarWhereWithAggregatesInput = {
 
 export type respuestaspreguntasCreateInput = {
   valor: string
-  respuestascuestionario: Prisma.respuestascuestionarioCreateNestedOneWithoutRespuestaspreguntasInput
   preguntascuestionario: Prisma.preguntascuestionarioCreateNestedOneWithoutRespuestaspreguntasInput
+  respuestascuestionario: Prisma.respuestascuestionarioCreateNestedOneWithoutRespuestaspreguntasInput
 }
 
 export type respuestaspreguntasUncheckedCreateInput = {
@@ -278,8 +278,8 @@ export type respuestaspreguntasUncheckedCreateInput = {
 
 export type respuestaspreguntasUpdateInput = {
   valor?: Prisma.StringFieldUpdateOperationsInput | string
-  respuestascuestionario?: Prisma.respuestascuestionarioUpdateOneRequiredWithoutRespuestaspreguntasNestedInput
   preguntascuestionario?: Prisma.preguntascuestionarioUpdateOneRequiredWithoutRespuestaspreguntasNestedInput
+  respuestascuestionario?: Prisma.respuestascuestionarioUpdateOneRequiredWithoutRespuestaspreguntasNestedInput
 }
 
 export type respuestaspreguntasUncheckedUpdateInput = {
@@ -571,8 +571,8 @@ export type respuestaspreguntasSelect<ExtArgs extends runtime.Types.Extensions.I
   idrespuesta?: boolean
   idpregunta?: boolean
   valor?: boolean
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["respuestaspreguntas"]>
 
 export type respuestaspreguntasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -580,8 +580,8 @@ export type respuestaspreguntasSelectCreateManyAndReturn<ExtArgs extends runtime
   idrespuesta?: boolean
   idpregunta?: boolean
   valor?: boolean
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["respuestaspreguntas"]>
 
 export type respuestaspreguntasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -589,8 +589,8 @@ export type respuestaspreguntasSelectUpdateManyAndReturn<ExtArgs extends runtime
   idrespuesta?: boolean
   idpregunta?: boolean
   valor?: boolean
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["respuestaspreguntas"]>
 
 export type respuestaspreguntasSelectScalar = {
@@ -602,23 +602,23 @@ export type respuestaspreguntasSelectScalar = {
 
 export type respuestaspreguntasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idrespuestapregunta" | "idrespuesta" | "idpregunta" | "valor", ExtArgs["result"]["respuestaspreguntas"]>
 export type respuestaspreguntasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }
 export type respuestaspreguntasIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }
 export type respuestaspreguntasIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
   preguntascuestionario?: boolean | Prisma.preguntascuestionarioDefaultArgs<ExtArgs>
+  respuestascuestionario?: boolean | Prisma.respuestascuestionarioDefaultArgs<ExtArgs>
 }
 
 export type $respuestaspreguntasPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "respuestaspreguntas"
   objects: {
-    respuestascuestionario: Prisma.$respuestascuestionarioPayload<ExtArgs>
     preguntascuestionario: Prisma.$preguntascuestionarioPayload<ExtArgs>
+    respuestascuestionario: Prisma.$respuestascuestionarioPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idrespuestapregunta: number
@@ -1019,8 +1019,8 @@ readonly fields: respuestaspreguntasFieldRefs;
  */
 export interface Prisma__respuestaspreguntasClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  respuestascuestionario<T extends Prisma.respuestascuestionarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.respuestascuestionarioDefaultArgs<ExtArgs>>): Prisma.Prisma__respuestascuestionarioClient<runtime.Types.Result.GetResult<Prisma.$respuestascuestionarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   preguntascuestionario<T extends Prisma.preguntascuestionarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.preguntascuestionarioDefaultArgs<ExtArgs>>): Prisma.Prisma__preguntascuestionarioClient<runtime.Types.Result.GetResult<Prisma.$preguntascuestionarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  respuestascuestionario<T extends Prisma.respuestascuestionarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.respuestascuestionarioDefaultArgs<ExtArgs>>): Prisma.Prisma__respuestascuestionarioClient<runtime.Types.Result.GetResult<Prisma.$respuestascuestionarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
