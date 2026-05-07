@@ -6,20 +6,33 @@ import {
   NgDiagramMinimapComponent,
   NgDiagramNodeTemplateMap,
   NgDiagramModelService,
+  type NgDiagramConfig,
 } from 'ng-diagram';
 import { ShapeClase } from '../componentes-diagramas-clase/shape-clase/shape-clase';
 import { ShapeInterfaz } from '../componentes-diagramas-clase/shape-interfaz/shape-interfaz';
 import { ShapeEnum } from '../componentes-diagramas-clase/shape-enum/shape-enum';
 import { ShapeLabel } from '../componentes-generales/shape-label/shape-label';
 import { ShapePaquete } from '../componentes-diagramas-clase/shape-paquete/shape-paquete';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiagramaClase } from '../../../../models/diagramas';
 import { Api } from '../../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
+import { ShapeActor } from '../../diagramas-casos-uso/componentes-diagramas-casos-uso/shape-actor/shape-actor';
+import { ShapeCasoUso } from '../../diagramas-casos-uso/componentes-diagramas-casos-uso/shape-caso-uso/shape-caso-uso';
+import { ShapeBoundary } from '../../diagramas-casos-uso/componentes-diagramas-casos-uso/shape-boundary/shape-boundary';
+import { FormsModule } from '@angular/forms';
+import { ModalEliminarDiagrama } from '../../../modales/modal-eliminar-diagrama/modal-eliminar-diagrama';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'canvas-diagrama-clase',
-  imports: [NgDiagramComponent, NgDiagramMinimapComponent],
+  imports: [
+    NgDiagramComponent,
+    NgDiagramMinimapComponent,
+    FormsModule,
+    ModalEliminarDiagrama,
+    DatePipe,
+  ],
   templateUrl: './canvas-diagrama-clase.html',
   styleUrl: './canvas-diagrama-clase.css',
   providers: [provideNgDiagram()],
@@ -30,6 +43,7 @@ export class CanvasDiagramaClase implements OnInit {
   private router = inject(ActivatedRoute);
   private api = inject(Api);
   private toastr = inject(ToastrService);
+  private routerRutas = inject(Router);
 
   datosDiagrama = signal<DiagramaClase | null>(null);
 
@@ -48,35 +62,99 @@ export class CanvasDiagramaClase implements OnInit {
     ['diagramaEnum', ShapeEnum],
     ['etiqueta', ShapeLabel],
     ['paquete', ShapePaquete],
+    ['actor', ShapeActor],
+    ['casoUso', ShapeCasoUso],
+    ['boundary', ShapeBoundary],
   ]);
+
+  nombreDiagrama = 'Sin nombre';
+  estaEdicionNombreDiagramaActiva = false;
+
+  nombreProyecto = '';
 
   model = initializeModel({
     nodes: [],
     edges: [],
   });
 
+  intervalId = 0;
+
+  tipoDiagramaSeleccionado = signal<string | null>(null);
+
+  // Vacío porque no tengo acceso aún
+  config: NgDiagramConfig = {};
+
+  esModalEliminarDiagramaVisible = false;
+
+  ultimoModeloGuardado = '';
+
   ngOnInit(): void {
     this.idproyecto = parseInt(this.router.snapshot.paramMap.get('idproyecto')!);
+    const tipo = this.router.snapshot.paramMap.get('tipo');
 
-    this.api.obtenerDiagrama({ idproyecto: this.idproyecto!, tipo: 'clase' }).subscribe({
-      next: (diagrama) => {
-        if (diagrama.contenido) {
-          const diagramaParseado = JSON.parse(diagrama.contenido);
-          this.model = initializeModel(diagramaParseado, this.injector);
-          this.esDiagramaExistente = true;
-        } else {
-          console.log('No se encontró un diagrama asociado (es la primera vez que lo crea)');
-        }
+    this.tipoDiagramaSeleccionado.set(tipo);
 
-        if (diagrama) this.datosDiagrama.set(diagrama);
+    // Aquí hago la declaración porque ya tengo acceso al tipo
+    this.config = {
+      edgeRouting: {
+        defaultRouting: this.tipoDiagramaSeleccionado() === 'casos_uso' ? 'polyline' : 'orthogonal',
+      },
+    };
+
+    this.api
+      .obtenerDiagrama({
+        idproyecto: this.idproyecto!,
+        tipo: this.tipoDiagramaSeleccionado() as 'paquetes' | 'casos_uso' | 'secuencia' | 'clase',
+      })
+      .subscribe({
+        next: (diagrama) => {
+          if (diagrama && diagrama.contenido) {
+            const diagramaParseado = JSON.parse(diagrama.contenido);
+            this.model = initializeModel(diagramaParseado, this.injector);
+            this.esDiagramaExistente = true;
+            // Detector de cambios para realizar autoguardado
+            // Instancia del componente cuando ya es existente
+          } else {
+            console.log('No se encontró un diagrama asociado (es la primera vez que lo crea)');
+          }
+
+          if (diagrama) {
+            this.datosDiagrama.set(diagrama);
+            this.nombreDiagrama = diagrama.nombre;
+          }
+        },
+        error: (error) => {
+          console.error(error);
+          this.toastr.error('Ha ocurrido un error', '', {
+            toastClass: 'toastr-error',
+          });
+        },
+      });
+
+    this.api.obtenerDatosProyecto(this.idproyecto).subscribe({
+      next: (datosProyecto) => {
+        this.nombreProyecto = datosProyecto.nombre;
+        console.log(datosProyecto);
       },
       error: (error) => {
         console.error(error);
-        this.toastr.error('Ha ocurrido un error', '', {
+        this.toastr.error('Ha ocurrido un error al obtener los datos del proyecto', '', {
           toastClass: 'toastr-error',
         });
       },
     });
+  }
+
+  activarEdicionNombreDiagrama() {
+    this.estaEdicionNombreDiagramaActiva = true;
+  }
+
+  desactivarEdicionNombreDiagrama() {
+    if (!this.nombreDiagrama.trim()) {
+      this.nombreDiagrama = this.datosDiagrama()?.nombre ?? 'Sin nombre';
+    }
+
+    this.estaEdicionNombreDiagramaActiva = false;
   }
 
   abrirMenuLateral() {
@@ -87,25 +165,53 @@ export class CanvasDiagramaClase implements OnInit {
     this.estaAbiertoMenuLateral = false;
   }
 
+  mostrarModalEliminarDiagrama() {
+    this.esModalEliminarDiagramaVisible = true;
+  }
+
+  ocultarModalEliminarDiagrama() {
+    this.esModalEliminarDiagramaVisible = false;
+  }
+
   agregarForma(
     tipoForma: string,
     origen: 'click' | 'drag',
     coordenadas?: { x: number; y: number },
   ) {
-    const idShape = (this.nodos().length + 1).toString();
+    const idShape = crypto.randomUUID();
     this.modelService.addNodes([
-      {
-        id: idShape,
-        position: origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 },
-        type: tipoForma,
-        data: {
-          etiqueta: 'Texto de prueba',
-          nombre: 'Nombre',
-          atributos: ['Atributo 1', 'Atributo 2'],
-          metodos: ['métodoUno()', 'métodoDos()'],
-          valores: ['valor1', 'valor2'],
-        },
-      },
+      tipoForma === 'boundary'
+        ? {
+            id: idShape,
+            position: origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 },
+            type: tipoForma,
+            data: {
+              etiqueta: 'Texto de prueba',
+              nombre: 'Nombre',
+              atributos: ['Atributo 1', 'Atributo 2'],
+              metodos: ['métodoUno()', 'métodoDos()'],
+              valores: ['valor1', 'valor2'],
+              textoActor: 'Texto de prueba',
+              textoCasoUso: 'Texto caso de uso',
+              nombreBoundary: 'Nombre',
+            },
+            // Propiedad para poder agrupar componentes dentro del boundary
+            isGroup: true,
+          }
+        : {
+            id: idShape,
+            position: origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 },
+            type: tipoForma,
+            data: {
+              etiqueta: 'Texto de prueba',
+              nombre: 'Nombre',
+              atributos: ['Atributo 1', 'Atributo 2'],
+              metodos: ['métodoUno()', 'métodoDos()'],
+              valores: ['valor1', 'valor2'],
+              textoActor: 'Texto de prueba',
+              textoCasoUso: 'Texto caso de uso',
+            },
+          },
     ]);
   }
 
@@ -115,6 +221,7 @@ export class CanvasDiagramaClase implements OnInit {
 
   onDrop(event: DragEvent) {
     event.preventDefault();
+    event.stopPropagation();
 
     const x = event.clientX;
     const y = event.clientY;
@@ -128,7 +235,11 @@ export class CanvasDiagramaClase implements OnInit {
     this.agregarForma(tipo, 'drag', { x: x, y: y });
   }
 
-  crearDiagramaClase() {
+  onDragover(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  crearDiagrama() {
     const jsonString = this.model.toJSON();
 
     if (!this.idproyecto) {
@@ -138,14 +249,16 @@ export class CanvasDiagramaClase implements OnInit {
 
     const datosDiagrama: DiagramaClase = {
       idproyecto: this.idproyecto,
-      tipo: 'clase',
-      nombre: 'diagrama_clase',
+      tipo: this.tipoDiagramaSeleccionado() as 'clase' | 'paquetes' | 'casos_uso' | 'secuencia',
+      nombre: this.nombreDiagrama,
       contenido: jsonString,
     };
 
     this.api.crearDiagrama(datosDiagrama).subscribe({
-      next: () => {
+      next: (datosDiagrama) => {
         this.toastr.success('Se ha guardado el diagrama');
+        this.esDiagramaExistente = true;
+        this.datosDiagrama.set(datosDiagrama);
       },
       error: (error) => {
         console.error(error);
@@ -156,23 +269,26 @@ export class CanvasDiagramaClase implements OnInit {
     });
   }
 
-  editarDiagramaClase() {
+  editarDiagrama() {
     const jsonString = this.model.toJSON();
 
     if (!this.idproyecto || !this.datosDiagrama()) {
       return;
     }
 
+    const { iddiagrama, ...resto } = this.datosDiagrama()!;
+
     const datosDiagrama: DiagramaClase = {
-      ...this.datosDiagrama()!,
+      ...resto,
+      nombre: this.nombreDiagrama,
       contenido: jsonString,
+      ultimaedicion: new Date().toISOString(),
     };
 
-    delete datosDiagrama.iddiagrama;
-
-    this.api.editarDiagrama(this.datosDiagrama()?.iddiagrama!, datosDiagrama).subscribe({
-      next: () => {
+    this.api.editarDiagrama(iddiagrama!, datosDiagrama).subscribe({
+      next: (datosDiagramaEditado) => {
         this.toastr.success('Diagrama guardado correctamente');
+        this.datosDiagrama.set(datosDiagramaEditado);
       },
       error: (error) => {
         console.error(error);
@@ -181,5 +297,30 @@ export class CanvasDiagramaClase implements OnInit {
         });
       },
     });
+  }
+
+  eliminarDiagrama() {
+    if (this.esDiagramaExistente) {
+      const idDiagrama = this.datosDiagrama()?.iddiagrama;
+
+      if (!idDiagrama) {
+        console.error('Ha ocurrido un error al eliminar el diagrama');
+        return;
+      }
+
+      this.api.eliminarDiagrama(idDiagrama).subscribe({
+        next: () => {
+          this.toastr.success('Diagrama eliminado correctamente');
+          this.ocultarModalEliminarDiagrama();
+          this.routerRutas.navigateByUrl('/proyectos');
+        },
+        error: (error) => {
+          console.error(error);
+          this.toastr.error('Ha ocurrido un error al eliminar el diagrama', '', {
+            toastClass: 'toastr-error',
+          });
+        },
+      });
+    }
   }
 }

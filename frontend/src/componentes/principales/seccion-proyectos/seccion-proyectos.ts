@@ -153,24 +153,13 @@ export class SeccionProyectos implements OnInit {
 
   irSeccionDiagramas(tipoDiagramaSeleccionado: 'clase' | 'paquetes' | 'casos_uso' | 'secuencia') {
     const idProyecto = this.proyectoSeleccionado()?.idproyecto;
+    const ruta = '/crear-diagrama-clase';
 
     if (!idProyecto) {
       console.error('El id del proyecto no está definido');
       return;
     }
 
-    switch (tipoDiagramaSeleccionado) {
-      case 'clase':
-        this.router.navigate(['/crear-diagrama-clase', idProyecto]);
-        break;
-      case 'paquetes':
-        break;
-      case 'casos_uso':
-        break;
-      case 'secuencia':
-        break;
-      default:
-        console.error('Tipo de diagrama inválido');
-    }
+    this.router.navigate([ruta, idProyecto, tipoDiagramaSeleccionado]);
   }
 }

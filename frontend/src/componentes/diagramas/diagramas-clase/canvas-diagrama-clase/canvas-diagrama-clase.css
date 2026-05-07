@@ -86,21 +86,59 @@
 }
 
 .abrir-menu,
-.guardar {
+.guardar,
+.eliminar,
+.undo,
+.redo {
   cursor: pointer;
 }
 
 .abrir-menu img,
-.guardar img {
+.guardar img,
+.undo img,
+.redo img {
   width: 20px;
   height: 20px;
 }
 
-.guardar {
+.eliminar img {
+  width: 25px;
+  height: 25px;
+}
+
+.redo,
+.undo {
   background-color: var(--blue);
   padding: 1rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+  border: none;
+}
+
+.guardar,
+.eliminar,
+.abrir-menu {
+  padding: 1rem;
+  border: none;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.guardar {
+  background-color: var(--blue);
+}
+
+.eliminar {
+  background-color: rgba(237, 63, 63);
+}
+
+.guardar:disabled {
+  background-color: rgba(0, 133, 219, 0.5);
+}
+
+.eliminar:disabled {
+  background-color: rgba(237, 63, 63, 0.5) !important;
 }
 
 header {
@@ -160,4 +198,63 @@ ng-diagram-minimap {
 .paquete-shape span,
 .paquete-shape div {
   border: 1px solid lightgray;
+}
+
+.actor-content-wrapper,
+.caso-uso,
+.boundary {
+  display: grid;
+  place-items: center;
+}
+
+.actor-image-wrapper > img {
+  width: 50px;
+  height: 60px;
+}
+
+.caso-uso {
+  border: none;
+}
+
+.caso-uso-texto-wrapper {
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.boundary {
+  border: 2px solid black;
+}
+
+.nombre-diagrama-cu {
+  max-width: 40ch;
+  line-clamp: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eliminar {
+  background-color: rgb(237, 63, 63) !important;
+}
+
+.opciones {
+  position: absolute;
+  border-radius: var(--border-radius);
+  left: 0;
+  z-index: 1;
+  top: 260%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.ultima-edicion,
+.tipo-diagrama {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.datos-proyecto h3,
+.tipo-diagrama {
+  align-self: flex-start;
 }

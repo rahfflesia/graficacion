@@ -1,0 +1,41 @@
+.modal-eliminar-diagrama {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  background-color: var(--primary-color);
+}
+
+.botones {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 1rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.botones > button {
+  flex: 1;
+}
+
+.botones button:first-child {
+  background-color: rgb(247, 47, 47);
+}
+
+.botones button:last-child {
+  background-color: var(--blue);
+}
+
+.botones button:first-child,
+.botones button:last-child {
+  color: var(--primary-color);
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}

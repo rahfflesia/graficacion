@@ -53,6 +53,9 @@ export class Api {
   private proyectosEliminarUrl = 'eliminar/';
   private proyectosEditarUrl = 'editar/';
   private proyectoObtenerDatosUrl = 'obtenerdatos/';
+  // Este endpoint solo me retorna un proyecto y contiene solo los campos de la tabla proyectos
+  // Lo uso en la creación de diagramas para obtener el nombre del proyecto
+  private proyectoObtenerDatosProyecto = 'obtenerdatosproyecto/';
 
   private procesosUrl = 'procesos/';
   private procesosCrearUrl = 'crear/';
@@ -178,6 +181,12 @@ export class Api {
   obtenerDatosGeneralesProyecto(idProyecto: number): Observable<DatosGeneralesProyecto> {
     return this.http.get<DatosGeneralesProyecto>(
       this.baseUrl + this.proyectosUrl + this.proyectoObtenerDatosUrl + idProyecto,
+    );
+  }
+
+  obtenerDatosProyecto(idProyecto: number): Observable<any> {
+    return this.http.get<any>(
+      this.baseUrl + this.proyectosUrl + this.proyectoObtenerDatosProyecto + idProyecto,
     );
   }
 
@@ -494,6 +503,12 @@ export class Api {
     return this.http.put<DiagramaClase>(
       this.baseUrl + this.diagramasUrl + this.diagramasEditarUrl + idDiagrama,
       datosDiagrama,
+    );
+  }
+
+  eliminarDiagrama(idDiagrama: number): Observable<DiagramaClase> {
+    return this.http.delete<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasEliminarUrl + idDiagrama,
     );
   }
 }
