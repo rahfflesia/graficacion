@@ -10,7 +10,7 @@ export function validarToken(req, res, next) {
   if (!token)
     return res.status(403).json({ mensaje: "No se ha proporcionado un token" });
 
-  jwt.verify(token, process.env.JWT_SECRET, function (error) {
+  jwt.verify(token, process.env.JWT_SECRET, function (error, usuario) {
     if (error) {
       console.error(error.message);
       return res
@@ -18,6 +18,7 @@ export function validarToken(req, res, next) {
         .json({ mensaje: "El token se encuentra expirado o es inválido" });
     }
 
+    req.usuario = usuario;
     next();
   });
 }

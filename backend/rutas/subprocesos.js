@@ -1,6 +1,13 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
-import { validarToken } from "../middleware/authMiddleware";
+import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const subprocesos = Router();
 
@@ -8,22 +15,57 @@ subprocesos.use(validarToken);
 
 subprocesos.get("/obtener/:idsubproceso", async (req, res) => {
   try {
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+
+    const subproceso = await prisma.subprocesos.findUnique({
+      where: { idsubproceso },
+      include: {
+        procesos: { select: { nombre: true, idproceso: true } },
+        metodossubprocesos: {
+          select: { tecnicasrecoleccion: true },
+        },
+      },
+    });
+
+    if (!subproceso) return res.status(404).json({ error: "Subproceso no encontrado" });
+
+    return res.status(200).json({
+      nombreproceso: subproceso.procesos.nombre,
+      idproceso: subproceso.procesos.idproceso,
+      fechacreacion: subproceso.fechacreacion,
+      nombresubproceso: subproceso.nombre,
+      descripcionsubproceso: subproceso.descripcion,
+      idsubproceso: subproceso.idsubproceso,
+      tecnicasasociadas: subproceso.metodossubprocesos.map(
+        (metodo) => metodo.tecnicasrecoleccion,
+      ),
+    });
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al obtener el subproceso");
   }
 });
 
 subprocesos.post("/crear", async (req, res) => {
   try {
     const datosSubproceso = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosSubproceso, [
+      "nombreSubproceso",
+      "descripcionSubproceso",
+      "idProcesoAsociado",
+      "tecnicasSeleccionadas",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!Array.isArray(datosSubproceso.tecnicasSeleccionadas)) {
+      return res.status(400).json({ error: "tecnicasSeleccionadas debe ser una lista" });
+    }
 
-    await prisma.$transaction(async (tx) => {
+    const subprocesoCreadoFormateado = await prisma.$transaction(async (tx) => {
       const subprocesoCreado = await tx.subprocesos.create({
         data: {
           nombre: datosSubproceso.nombreSubproceso,
           descripcion: datosSubproceso.descripcionSubproceso,
-          idproceso: datosSubproceso.idProcesoAsociado,
+          idproceso: Number(datosSubproceso.idProcesoAsociado),
         },
         // No me acordaba que se hacía así en prisma
         include: {
@@ -56,27 +98,41 @@ subprocesos.post("/crear", async (req, res) => {
         tecnicasasociadas: tecnicasSeleccionadas,
       };
 
-      return res.status(201).json(subprocesoCreadoFormateado);
+      return subprocesoCreadoFormateado;
     });
+
+    return res.status(201).json(subprocesoCreadoFormateado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al crear el subproceso");
   }
 });
 
 subprocesos.put("/editar/:idsubproceso", async (req, res) => {
   try {
-    const { idsubproceso } = req.params;
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+
     const datosSubproceso = req.body;
-    await prisma.$transaction(async (tx) => {
+    const camposFaltantes = validarCamposRequeridos(datosSubproceso, [
+      "nombreSubproceso",
+      "descripcionSubproceso",
+      "idProcesoAsociado",
+      "tecnicasSeleccionadas",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!Array.isArray(datosSubproceso.tecnicasSeleccionadas)) {
+      return res.status(400).json({ error: "tecnicasSeleccionadas debe ser una lista" });
+    }
+
+    const datosSubprocesoEditadoFormateados = await prisma.$transaction(async (tx) => {
       const subprocesoEditado = await tx.subprocesos.update({
         data: {
           nombre: datosSubproceso.nombreSubproceso,
           descripcion: datosSubproceso.descripcionSubproceso,
-          idproceso: datosSubproceso.idProcesoAsociado,
+          idproceso: Number(datosSubproceso.idProcesoAsociado),
         },
         where: {
-          idsubproceso: parseInt(idsubproceso),
+          idsubproceso,
         },
         include: {
           procesos: {
@@ -88,12 +144,12 @@ subprocesos.put("/editar/:idsubproceso", async (req, res) => {
       });
 
       await tx.metodossubprocesos.deleteMany({
-        where: { idsubproceso: parseInt(idsubproceso) },
+        where: { idsubproceso },
       });
 
       await tx.metodossubprocesos.createMany({
         data: datosSubproceso.tecnicasSeleccionadas.map((tecnica) => ({
-          idsubproceso: parseInt(idsubproceso),
+          idsubproceso,
           idtecnicarecoleccion: tecnica.idtecnicarecoleccion,
         })),
       });
@@ -114,29 +170,32 @@ subprocesos.put("/editar/:idsubproceso", async (req, res) => {
   idproceso: number;
   idsubproceso: number;
   tecnicasasociadas: TecnicaRecoleccion[]; */
-      return res.status(200).json(datosSubprocesoEditadoFormateados);
+      return datosSubprocesoEditadoFormateados;
     });
+
+    return res.status(200).json(datosSubprocesoEditadoFormateados);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al editar el subproceso");
   }
 });
 
 subprocesos.delete("/eliminar/:idsubproceso", async (req, res) => {
   try {
-    const { idsubproceso } = req.params;
-    await prisma.$transaction(async (tx) => {
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+
+    const subprocesoEliminadoFormateado = await prisma.$transaction(async (tx) => {
       // Acá elimino las referencias que hay en la tabla de los métodos al subproceso
       await tx.metodossubprocesos.deleteMany({
         where: {
-          idsubproceso: parseInt(idsubproceso),
+          idsubproceso,
         },
       });
 
       // En esta elimino el subproceso directamente
       const subprocesoEliminado = await tx.subprocesos.delete({
         where: {
-          idsubproceso: parseInt(idsubproceso),
+          idsubproceso,
         },
         include: {
           procesos: {
@@ -157,11 +216,12 @@ subprocesos.delete("/eliminar/:idsubproceso", async (req, res) => {
         idsubproceso: subprocesoEliminado.idsubproceso,
       };
 
-      return res.status(200).json(subprocesoEliminadoFormateado);
+      return subprocesoEliminadoFormateado;
     });
+
+    return res.status(200).json(subprocesoEliminadoFormateado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al eliminar el subproceso");
   }
 });
 

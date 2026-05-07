@@ -1,6 +1,13 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const proyectos = Router();
 
@@ -48,19 +55,18 @@ proyectos.use(validarToken);
 // Id del usuario
 proyectos.get("/obtenertodos/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = parseId(req.params.id);
+    if (!id) return responderIdInvalido(res, "id");
+
     const proyectosUsuario = await prisma.proyectos.findMany({
       where: {
-        idusuario: parseInt(id),
+        idusuario: id,
       },
     });
 
-    if (proyectosUsuario) return res.json(proyectosUsuario);
-
-    return res.json([]);
+    return res.status(200).json(proyectosUsuario);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al obtener los proyectos");
   }
 });
 
@@ -68,10 +74,12 @@ proyectos.get("/obtenertodos/:id", async (req, res) => {
 // Este endpoint está muy desordenado porque no me acordaba que en prisma se usaba 'include', una disculpa
 proyectos.get("/obtenerdatos/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = parseId(req.params.id);
+    if (!id) return responderIdInvalido(res, "id");
+
     const datosProyecto = await prisma.proyectos.findUnique({
       where: {
-        idproyecto: parseInt(id),
+        idproyecto: id,
       },
       select: {
         procesos: {
@@ -113,6 +121,10 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
         },
       },
     });
+
+    if (!datosProyecto) {
+      return res.status(404).json({ error: "Proyecto no encontrado" });
+    }
 
     let subprocesos = [];
     for (let i = 0; i < datosProyecto.procesos.length; i++) {
@@ -170,20 +182,26 @@ proyectos.get("/obtenerdatos/:id", async (req, res) => {
     };
     return res.status(200).json(datosFormateadosProyecto);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al obtener los datos del proyecto");
   }
 });
 
 proyectos.post("/crear", async (req, res) => {
   try {
     const proyecto = req.body;
-    await prisma.$transaction(async (tx) => {
+    const camposFaltantes = validarCamposRequeridos(proyecto, [
+      "nombre",
+      "descripcion",
+      "idusuario",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+
+    const nuevoProyecto = await prisma.$transaction(async (tx) => {
       const nuevoProyecto = await tx.proyectos.create({
         data: {
           nombre: proyecto.nombre,
           descripcion: proyecto.descripcion,
-          idusuario: proyecto.idusuario,
+          idusuario: Number(proyecto.idusuario),
           estado: "Activo",
         },
       });
@@ -199,18 +217,31 @@ proyectos.post("/crear", async (req, res) => {
       await tx.roles.createMany({
         data: rolesPorDefecto,
       });
-      return res.status(201).json(nuevoProyecto);
+      return nuevoProyecto;
     });
+
+    return res.status(201).json(nuevoProyecto);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al crear el proyecto");
   }
 });
 
 proyectos.put("/editar/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = parseId(req.params.id);
+    if (!id) return responderIdInvalido(res, "id");
+
     const proyectoSinActualizar = req.body;
+    const camposFaltantes = validarCamposRequeridos(proyectoSinActualizar, [
+      "nombre",
+      "descripcion",
+      "estado",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!["Activo", "Pausado", "Cancelado", "En_revisi_n"].includes(proyectoSinActualizar.estado)) {
+      return res.status(400).json({ error: "El estado del proyecto no es válido" });
+    }
+
     const proyectoActualizado = await prisma.proyectos.update({
       data: {
         nombre: proyectoSinActualizar.nombre,
@@ -218,34 +249,29 @@ proyectos.put("/editar/:id", async (req, res) => {
         estado: proyectoSinActualizar.estado,
       },
       where: {
-        idproyecto: parseInt(id),
+        idproyecto: id,
       },
     });
     return res.json(proyectoActualizado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al editar el proyecto");
   }
 });
 
 proyectos.delete("/eliminar/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log(id);
+    const id = parseId(req.params.id);
+    if (!id) return responderIdInvalido(res, "id");
+
     const proyectoEliminado = await prisma.proyectos.delete({
       where: {
-        idproyecto: parseInt(id),
+        idproyecto: id,
       },
     });
 
-    if (proyectoEliminado) return res.json(proyectoEliminado);
-
-    return res.json({
-      error: "No se encontró ningún proyecto asociado a ese id",
-    });
+    return res.status(200).json(proyectoEliminado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al eliminar el proyecto");
   }
 });
 

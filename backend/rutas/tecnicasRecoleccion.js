@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import { enviarError } from "../utils/http.js";
 
 const tecnicasRecoleccion = Router();
 
@@ -43,8 +44,7 @@ tecnicasRecoleccion.get("/obtener", async (req, res) => {
 
     return res.json(tecnicas);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al obtener técnicas de recolección");
   }
 });
 

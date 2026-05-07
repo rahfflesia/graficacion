@@ -1,6 +1,13 @@
 import express from "express";
-import { prisma } from "../db/db.js";
+import { prisma } from "../lib/prisma.ts";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const roles = express.Router();
 
@@ -9,16 +16,17 @@ roles.use(validarToken);
 // Obtener todos los roles asociados a un proyecto
 roles.get("/obtener/:idproyecto", async (req, res) => {
   try {
-    const { idproyecto } = req.params;
+    const idproyecto = parseId(req.params.idproyecto);
+    if (!idproyecto) return responderIdInvalido(res, "idproyecto");
+
     const roles = await prisma.roles.findMany({
       where: {
-        idproyecto: parseInt(idproyecto),
+        idproyecto,
       },
     });
     return res.status(200).json(roles);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al obtener roles");
   }
 });
 
@@ -34,55 +42,66 @@ roles.get("/obtener/:idproyecto", async (req, res) => {
 roles.post("/crear", async (req, res) => {
   try {
     const datosRol = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosRol, ["nombre", "tipo", "idproyecto"]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!["Interno", "Externo"].includes(datosRol.tipo)) {
+      return res.status(400).json({ error: "El tipo de rol no es válido" });
+    }
+
     const nuevoRol = await prisma.roles.create({
       data: {
         nombre: datosRol.nombre,
         tipo: datosRol.tipo,
-        idproyecto: datosRol.idproyecto,
+        idproyecto: Number(datosRol.idproyecto),
       },
     });
-    res.status(200).json(nuevoRol);
+    return res.status(201).json(nuevoRol);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al crear el rol");
   }
 });
 
 roles.put("/editar/:idrol", async (req, res) => {
   try {
-    const { idrol } = req.params;
+    const idrol = parseId(req.params.idrol);
+    if (!idrol) return responderIdInvalido(res, "idrol");
+
     const datosRol = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosRol, ["nombre", "tipo"]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!["Interno", "Externo"].includes(datosRol.tipo)) {
+      return res.status(400).json({ error: "El tipo de rol no es válido" });
+    }
+
     const rolActualizado = await prisma.roles.update({
       data: {
         nombre: datosRol.nombre,
         tipo: datosRol.tipo,
       },
       where: {
-        idrol: parseInt(idrol),
+        idrol,
       },
     });
     return res.status(200).json(rolActualizado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al editar el rol");
   }
 });
 
 roles.delete("/eliminar/:idrol", async (req, res) => {
   try {
-    const { idrol } = req.params;
+    const idrol = parseId(req.params.idrol);
+    if (!idrol) return responderIdInvalido(res, "idrol");
+
     const rolEliminado = await prisma.roles.delete({
       where: {
-        idrol: parseInt(idrol),
+        idrol,
       },
     });
 
-    if (rolEliminado) return res.status(200).json(rolEliminado);
-
-    return res.status(400).json({ error: "Ha ocurrido un error" });
+    return res.status(200).json(rolEliminado);
   } catch (error) {
-    console.error(error);
-    return res.status(403).json(error);
+    return enviarError(res, error, "Error al eliminar el rol");
   }
 });
 
