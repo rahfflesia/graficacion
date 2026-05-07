@@ -13,7 +13,10 @@ const proyectos = Router();
 
 const tecnicasPorDefecto = [
   { nombre: "Entrevista", descripcion: "Recolección mediante entrevistas" },
-  { nombre: "Observacion", descripcion: "Recolección mediante observación directa" },
+  {
+    nombre: "Observacion",
+    descripcion: "Recolección mediante observación directa",
+  },
   { nombre: "Cuestionario", descripcion: "Recolección mediante cuestionarios" },
   {
     nombre: "Historia de usuario",
@@ -269,6 +272,21 @@ proyectos.delete("/eliminar/:id", async (req, res) => {
     return res.status(200).json(proyectoEliminado);
   } catch (error) {
     return enviarError(res, error, "Error al eliminar el proyecto");
+  }
+});
+
+proyectos.get("/obtenerdatosproyecto/:idproyecto", async (req, res) => {
+  try {
+    const { idproyecto } = req.params;
+    const datosProyecto = await prisma.proyectos.findUnique({
+      where: {
+        idproyecto: parseInt(idproyecto),
+      },
+    });
+    return res.status(200).json(datosProyecto);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(error);
   }
 });
 

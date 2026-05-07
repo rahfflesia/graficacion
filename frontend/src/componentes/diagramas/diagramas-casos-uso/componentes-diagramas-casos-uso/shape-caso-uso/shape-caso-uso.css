@@ -1,0 +1,17 @@
+.shape-caso-uso {
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
+
+span {
+  max-width: 20ch;
+  overflow-wrap: break-word;
+  font-size: 0.8rem;
+}

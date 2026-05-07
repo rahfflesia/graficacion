@@ -1,0 +1,12 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-eliminar-diagrama flex-column sm-gap" [class.animar]="toggler">
+    <header>
+      <h2>¿Quieres borrar este diagrama?</h2>
+      <div class="close-button" (click)="cerrar.emit()">X</div>
+    </header>
+    <div class="botones">
+      <button (click)="confirmar.emit()">Sí</button>
+      <button (click)="cancelar.emit()">No</button>
+    </div>
+  </div>
+</div>

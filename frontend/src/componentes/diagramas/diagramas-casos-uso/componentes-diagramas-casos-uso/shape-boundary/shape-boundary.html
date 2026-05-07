@@ -1,0 +1,16 @@
+<ng-diagram-node-resize-adornment>
+  <div class="shape-boundary">
+    @if (estaModoEdicionBoundaryActivado) {
+      <input
+        type="text"
+        class="shape-input"
+        [(ngModel)]="node().data.nombreBoundary"
+        (keydown.enter)="desactivarModoEdicionBoundary()"
+      />
+    } @else {
+      <span (dblclick)="activarModoEdicionBoundary()">{{ node().data.nombreBoundary }}</span>
+    }
+    <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
+    <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+  </div>
+</ng-diagram-node-resize-adornment>

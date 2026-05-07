@@ -30,6 +30,5 @@ export class ShapeLabel implements NgDiagramNodeTemplate {
   establecerValorEtiqueta() {
     this.node().data.etiqueta = this.textoEtiqueta;
     this.desactivarModoEdicion();
-    console.log(this.node().data.etiqueta);
   }
 }
