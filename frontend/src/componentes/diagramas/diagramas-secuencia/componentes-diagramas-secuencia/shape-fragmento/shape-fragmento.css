@@ -1,0 +1,51 @@
+.shape-fragmento {
+  width: 100%;
+  min-width: 260px;
+  height: 100%;
+  min-height: 150px;
+  border: 2px solid var(--blackish);
+  background-color: rgba(255, 255, 255, 0.35);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.cabecera-fragmento {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 32px;
+  border-right: 2px solid var(--blackish);
+  border-bottom: 2px solid var(--blackish);
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.25rem 0.55rem;
+  background-color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.operador {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.condicion {
+  color: rgb(80, 80, 80);
+  overflow-wrap: anywhere;
+}
+
+.shape-input {
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 0.2rem 0.35rem;
+  font: inherit;
+}
+
+.operador-input {
+  width: 4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.condicion-input {
+  width: 10rem;
+}

@@ -1,0 +1,34 @@
+<ng-diagram-node-resize-adornment>
+  <div class="shape-fragmento">
+    <div class="cabecera-fragmento">
+      @if (estaEditandoOperador) {
+        <input
+          type="text"
+          class="shape-input operador-input"
+          [(ngModel)]="node().data.operador"
+          (keydown.enter)="desactivarEdicionOperador()"
+          (blur)="desactivarEdicionOperador()"
+        />
+      } @else {
+        <span class="operador" (dblclick)="activarEdicionOperador()">
+          {{ node().data.operador }}
+        </span>
+      }
+      @if (estaEditandoCondicion) {
+        <input
+          type="text"
+          class="shape-input condicion-input"
+          [(ngModel)]="node().data.condicion"
+          (keydown.enter)="desactivarEdicionCondicion()"
+          (blur)="desactivarEdicionCondicion()"
+        />
+      } @else {
+        <span class="condicion" (dblclick)="activarEdicionCondicion()">
+          [{{ node().data.condicion }}]
+        </span>
+      }
+    </div>
+    <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
+    <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+  </div>
+</ng-diagram-node-resize-adornment>
