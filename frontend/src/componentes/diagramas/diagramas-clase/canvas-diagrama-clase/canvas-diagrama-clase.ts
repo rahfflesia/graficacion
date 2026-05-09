@@ -115,7 +115,7 @@ export class CanvasDiagramaClase implements OnInit {
       .subscribe({
         next: (diagrama) => {
           if (diagrama && diagrama.contenido) {
-            const diagramaParseado = JSON.parse(diagrama.contenido);
+            const diagramaParseado = this.obtenerContenidoDiagrama(diagrama.contenido);
             this.model = initializeModel(diagramaParseado, this.injector);
             this.esDiagramaExistente = true;
             // Detector de cambios para realizar autoguardado
@@ -131,6 +131,10 @@ export class CanvasDiagramaClase implements OnInit {
         },
         error: (error) => {
           console.error(error);
+          if (this.esDiagramaSecuencia() && error?.status === 404) {
+            console.log('No se encontró un diagrama de secuencia asociado');
+            return;
+          }
           this.toastr.error('Ha ocurrido un error', '', {
             toastClass: 'toastr-error',
           });
@@ -153,6 +157,14 @@ export class CanvasDiagramaClase implements OnInit {
 
   activarEdicionNombreDiagrama() {
     this.estaEdicionNombreDiagramaActiva = true;
+  }
+
+  private esDiagramaSecuencia() {
+    return this.tipoDiagramaSeleccionado() === 'secuencia';
+  }
+
+  private obtenerContenidoDiagrama(contenido: DiagramaClase['contenido']) {
+    return typeof contenido === 'string' ? JSON.parse(contenido) : contenido;
   }
 
   desactivarEdicionNombreDiagrama() {
