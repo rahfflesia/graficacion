@@ -23,6 +23,9 @@ import { ShapeBoundary } from '../../diagramas-casos-uso/componentes-diagramas-c
 import { FormsModule } from '@angular/forms';
 import { ModalEliminarDiagrama } from '../../../modales/modal-eliminar-diagrama/modal-eliminar-diagrama';
 import { DatePipe } from '@angular/common';
+import { ShapeLineaVida } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-linea-vida/shape-linea-vida';
+import { ShapeActivacion } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-activacion/shape-activacion';
+import { ShapeFragmento } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-fragmento/shape-fragmento';
 
 @Component({
   selector: 'canvas-diagrama-clase',
@@ -65,6 +68,9 @@ export class CanvasDiagramaClase implements OnInit {
     ['actor', ShapeActor],
     ['casoUso', ShapeCasoUso],
     ['boundary', ShapeBoundary],
+    ['lineaVida', ShapeLineaVida],
+    ['activacion', ShapeActivacion],
+    ['fragmento', ShapeFragmento],
   ]);
 
   nombreDiagrama = 'Sin nombre';
@@ -179,39 +185,36 @@ export class CanvasDiagramaClase implements OnInit {
     coordenadas?: { x: number; y: number },
   ) {
     const idShape = crypto.randomUUID();
+    const position = origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 };
+    const datosBase = {
+      etiqueta: 'mensaje()',
+      nombre: 'Nombre',
+      atributos: ['Atributo 1', 'Atributo 2'],
+      metodos: ['métodoUno()', 'métodoDos()'],
+      valores: ['valor1', 'valor2'],
+      textoActor: 'Texto de prueba',
+      textoCasoUso: 'Texto caso de uso',
+      nombreBoundary: 'Nombre',
+      nombreParticipante: 'Participante',
+      operador: 'alt',
+      condicion: 'condición',
+    };
+
+    const dimensionesPorTipo: Record<string, { width: number; height: number }> = {
+      lineaVida: { width: 170, height: 420 },
+      activacion: { width: 24, height: 140 },
+      fragmento: { width: 420, height: 230 },
+    };
+
     this.modelService.addNodes([
-      tipoForma === 'boundary'
-        ? {
-            id: idShape,
-            position: origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 },
-            type: tipoForma,
-            data: {
-              etiqueta: 'Texto de prueba',
-              nombre: 'Nombre',
-              atributos: ['Atributo 1', 'Atributo 2'],
-              metodos: ['métodoUno()', 'métodoDos()'],
-              valores: ['valor1', 'valor2'],
-              textoActor: 'Texto de prueba',
-              textoCasoUso: 'Texto caso de uso',
-              nombreBoundary: 'Nombre',
-            },
-            // Propiedad para poder agrupar componentes dentro del boundary
-            isGroup: true,
-          }
-        : {
-            id: idShape,
-            position: origen === 'drag' && coordenadas ? coordenadas : { x: 100, y: 200 },
-            type: tipoForma,
-            data: {
-              etiqueta: 'Texto de prueba',
-              nombre: 'Nombre',
-              atributos: ['Atributo 1', 'Atributo 2'],
-              metodos: ['métodoUno()', 'métodoDos()'],
-              valores: ['valor1', 'valor2'],
-              textoActor: 'Texto de prueba',
-              textoCasoUso: 'Texto caso de uso',
-            },
-          },
+      {
+        id: idShape,
+        position,
+        type: tipoForma,
+        data: datosBase,
+        ...(dimensionesPorTipo[tipoForma] ? { size: dimensionesPorTipo[tipoForma] } : {}),
+        ...(tipoForma === 'boundary' || tipoForma === 'fragmento' ? { isGroup: true } : {}),
+      },
     ]);
   }
 

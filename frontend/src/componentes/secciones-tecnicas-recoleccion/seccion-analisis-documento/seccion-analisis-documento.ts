@@ -23,6 +23,7 @@ export class SeccionAnalisisDocumento {
   participantes = signal<Participante[]>([]);
   analisisExistentes = signal<AnalisisDocumento[]>([]);
   analisisEnEdicion = signal<AnalisisDocumento | null>(null);
+  private readonly claveDatosTecnica = 'datosTecnicaActual';
 
   tiposDocumento = [
     'Informe técnico',
@@ -49,15 +50,28 @@ export class SeccionAnalisisDocumento {
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
-    if (!datosNavegacion?.extras.state) return;
+    const datosTecnica = this.obtenerDatosTecnica(datosNavegacion?.extras.state?.['datosTecnica']);
 
-    const datosTecnica = datosNavegacion.extras.state['datosTecnica'];
     if (!datosTecnica) return;
 
     this.participantes.set(datosTecnica.participantes ?? []);
     this.subproceso = datosTecnica.subproceso;
 
     this.cargarAnalisisExistentes();
+  }
+
+  private obtenerDatosTecnica(datosNavegacion: any) {
+    if (datosNavegacion) return datosNavegacion;
+
+    const datosGuardados = localStorage.getItem(this.claveDatosTecnica);
+    if (!datosGuardados) return null;
+
+    try {
+      return JSON.parse(datosGuardados);
+    } catch {
+      localStorage.removeItem(this.claveDatosTecnica);
+      return null;
+    }
   }
 
   get hallazgosFormArray(): FormArray {

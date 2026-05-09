@@ -34,11 +34,13 @@ import { DatosEntrevista, Entrevista } from '../models/entrevista';
 import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
 import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
 import { DiagramaClase } from '../models/diagramas';
+import { Usuario as UsuarioService } from './usuario';
 @Injectable({
   providedIn: 'root',
 })
 export class Api {
   private http = inject(HttpClient);
+  private usuarioService = inject(UsuarioService);
   private baseUrl = 'http://localhost:3000/';
 
   private registroUrl = 'registro/';
@@ -130,6 +132,22 @@ export class Api {
   private diagramasEditarUrl = 'editar/';
   private diagramasObtenerUrl = 'obtener/';
   private diagramasEliminarUrl = 'eliminar/';
+
+  private obtenerOpcionesAutenticadas(): {
+    withCredentials: true;
+    headers?: { Authorization: string };
+  } {
+    const token = this.usuarioService.obtenerUsuario()?.token;
+
+    if (!token) return { withCredentials: true };
+
+    return {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
 
   registrarUsuario(datosRegistro: RegistroUsuario): Observable<Usuario> {
     return this.http.post<Usuario>(
@@ -481,6 +499,7 @@ export class Api {
     return this.http.post<DiagramaClase>(
       this.baseUrl + this.diagramasUrl + this.diagramasCrearUrl,
       datosDiagrama,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
@@ -496,6 +515,7 @@ export class Api {
         datosDiagrama.idproyecto +
         '/tipo/' +
         datosDiagrama.tipo,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
@@ -503,12 +523,14 @@ export class Api {
     return this.http.put<DiagramaClase>(
       this.baseUrl + this.diagramasUrl + this.diagramasEditarUrl + idDiagrama,
       datosDiagrama,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   eliminarDiagrama(idDiagrama: number): Observable<DiagramaClase> {
     return this.http.delete<DiagramaClase>(
       this.baseUrl + this.diagramasUrl + this.diagramasEliminarUrl + idDiagrama,
+      this.obtenerOpcionesAutenticadas(),
     );
   }
 }
