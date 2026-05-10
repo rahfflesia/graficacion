@@ -13,28 +13,24 @@ const cuestionarios = Router();
 
 cuestionarios.use(validarToken);
 
+const mapaTiposPregunta = {
+  Abierta: "Abierta",
+  Escala: "Escala",
+  "Opción múltiple": "Opcion_multiple",
+};
+
 cuestionarios.post("/crear", async (req, res) => {
   try {
-    const { idSubproceso, nombre, descripcion, idCreador, preguntas } = req.body;
-    const camposFaltantes = validarCamposRequeridos(req.body, [
-      "idSubproceso",
-      "nombre",
-      "descripcion",
-      "idCreador",
-      "preguntas",
-    ]);
-    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
-    if (!Array.isArray(preguntas) || preguntas.length < 1) {
-      return res.status(400).json({ error: "El cuestionario debe tener al menos una pregunta" });
-    }
+    const { idSubproceso, nombre, descripcion, idCreador, preguntas } =
+      req.body;
 
     const resultado = await prisma.$transaction(async (tx) => {
       const cuestionarioCreado = await tx.cuestionarios.create({
         data: {
-          idsubproceso: Number(idSubproceso),
-          nombre: nombre,
-          descripcion: descripcion,
-          idcreador: Number(idCreador),
+          idsubproceso: idSubproceso,
+          nombre,
+          descripcion,
+          idcreador: idCreador,
         },
       });
 
@@ -42,7 +38,7 @@ cuestionarios.post("/crear", async (req, res) => {
         const datosPreguntas = preguntas.map((pregunta, index) => ({
           idcuestionario: cuestionarioCreado.idicuestionario,
           textopregunta: pregunta.textoPregunta,
-          tipopregunta: pregunta.tipoPregunta,
+          tipopregunta: mapaTiposPregunta[pregunta.tipoPregunta] || "Abierta",
           opciones: pregunta.opciones || [],
           orden: index + 1,
         }));
@@ -60,46 +56,60 @@ cuestionarios.post("/crear", async (req, res) => {
       cuestionario: resultado,
     });
   } catch (error) {
-    return enviarError(res, error, "Error al crear el cuestionario");
+    console.error(error);
+    return res.status(500).json({
+      error: "Error al crear el cuestionario",
+    });
   }
 });
 
 cuestionarios.get("/obtener/:idsubproceso", async (req, res) => {
   try {
-    const idsubproceso = parseId(req.params.idsubproceso);
-    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
+    const idsubproceso = parseInt(req.params.idsubproceso);
 
     const listaCuestionarios = await prisma.cuestionarios.findMany({
       where: { idsubproceso },
-      include: { preguntascuestionario: { orderBy: { orden: "asc" } } },
+      include: {
+        preguntascuestionario: {
+          orderBy: { orden: "asc" },
+        },
+      },
     });
+
     return res.status(200).json(listaCuestionarios);
   } catch (error) {
-    return enviarError(res, error, "Error al obtener cuestionarios");
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error al obtener cuestionarios",
+    });
   }
 });
 
 cuestionarios.delete("/eliminar/:idcuestionario", async (req, res) => {
   try {
-    const idcuestionario = parseId(req.params.idcuestionario);
-    if (!idcuestionario) return responderIdInvalido(res, "idcuestionario");
+    const idcuestionario = parseInt(req.params.idcuestionario);
 
     const cuestionarioEliminado = await prisma.cuestionarios.delete({
       where: { idicuestionario: idcuestionario },
     });
+
     return res.status(200).json({
       mensaje: "Cuestionario eliminado",
       cuestionario: cuestionarioEliminado,
     });
   } catch (error) {
-    return enviarError(res, error, "Error al eliminar el cuestionario");
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error al eliminar el cuestionario",
+    });
   }
 });
 
 cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
   try {
-    const idcuestionario = parseId(req.params.idcuestionario);
-    if (!idcuestionario) return responderIdInvalido(res, "idcuestionario");
+    const idcuestionario = parseInt(req.params.idcuestionario);
 
     const { nombre, descripcion, idCreador, preguntas } = req.body;
     const camposFaltantes = validarCamposRequeridos(req.body, [
@@ -115,7 +125,9 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
 
     const resultado = await prisma.$transaction(async (tx) => {
       const cuestionarioActualizado = await tx.cuestionarios.update({
-        where: { idicuestionario: idcuestionario },
+        where: {
+          idicuestionario: idcuestionario,
+        },
         data: {
           nombre,
           descripcion,
@@ -125,15 +137,17 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
 
       // Eliminar preguntas anteriores
       await tx.preguntascuestionario.deleteMany({
-        where: { idcuestionario: idcuestionario },
+        where: {
+          idcuestionario: idcuestionario,
+        },
       });
 
-      // Crear las nuevas preguntas
+      // Crear nuevas preguntas
       if (preguntas && preguntas.length > 0) {
         const datosPreguntas = preguntas.map((pregunta, index) => ({
           idcuestionario: idcuestionario,
           textopregunta: pregunta.textoPregunta,
-          tipopregunta: pregunta.tipoPregunta,
+          tipopregunta: mapaTiposPregunta[pregunta.tipoPregunta] || "Abierta",
           opciones: pregunta.opciones || [],
           orden: index + 1,
         }));
@@ -151,7 +165,11 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
       cuestionario: resultado,
     });
   } catch (error) {
-    return enviarError(res, error, "Error al actualizar el cuestionario");
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error al actualizar el cuestionario",
+    });
   }
 });
 
