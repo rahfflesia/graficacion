@@ -1,6 +1,13 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const cuestionarios = Router();
 
@@ -44,7 +51,7 @@ cuestionarios.post("/crear", async (req, res) => {
       return cuestionarioCreado;
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       mensaje: "Cuestionario creado exitosamente",
       cuestionario: resultado,
     });
@@ -105,6 +112,16 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
     const idcuestionario = parseInt(req.params.idcuestionario);
 
     const { nombre, descripcion, idCreador, preguntas } = req.body;
+    const camposFaltantes = validarCamposRequeridos(req.body, [
+      "nombre",
+      "descripcion",
+      "idCreador",
+      "preguntas",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!Array.isArray(preguntas) || preguntas.length < 1) {
+      return res.status(400).json({ error: "El cuestionario debe tener al menos una pregunta" });
+    }
 
     const resultado = await prisma.$transaction(async (tx) => {
       const cuestionarioActualizado = await tx.cuestionarios.update({
@@ -114,7 +131,7 @@ cuestionarios.put("/editar/:idcuestionario", async (req, res) => {
         data: {
           nombre,
           descripcion,
-          idcreador: idCreador,
+          idcreador: Number(idCreador),
         },
       });
 

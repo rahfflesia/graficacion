@@ -50,6 +50,20 @@ app.use("/entrevistas", entrevistas);
 app.use("/diagramas", diagramas);
 app.use("/especificaciones", especificaciones);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
+});
+
+process.on("SIGINT", () => {
+  server.close(() => {
+    console.log("Servidor detenido");
+    process.exit(0);
+  });
+});
+
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Servidor detenido");
+    process.exit(0);
+  });
 });

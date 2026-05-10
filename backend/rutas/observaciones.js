@@ -1,6 +1,13 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const observaciones = Router();
 
@@ -82,25 +89,44 @@ observaciones.post("/crear", async (req, res) => {
       tipo,
       idsubproceso,
     } = req.body;
+    const camposFaltantes = validarCamposRequeridos(req.body, [
+      "nombre",
+      "descripcion",
+      "idobservador",
+      "lugar",
+      "listaobservados",
+      "tipo",
+      "idsubproceso",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!["Activa", "Pasiva"].includes(tipo)) {
+      return res.status(400).json({ error: "El tipo de observación no es válido" });
+    }
+    if (!Array.isArray(listaobservados)) {
+      return res.status(400).json({ error: "listaobservados debe ser una lista" });
+    }
+    if (tipo === "Activa" && listaobservados.length < 1) {
+      return res.status(400).json({ error: "La observación activa requiere observados" });
+    }
 
     const resultado = await prisma.$transaction(async (tx) => {
       const datosObservacion = fechahoracaptura
         ? {
             nombre,
             descripcion,
-            idobservador,
+            idobservador: Number(idobservador),
             lugar,
             tipo,
-            idsubproceso,
+            idsubproceso: Number(idsubproceso),
             fechahoracaptura,
           }
         : {
             nombre,
             descripcion,
-            idobservador,
+            idobservador: Number(idobservador),
             lugar,
             tipo,
-            idsubproceso,
+            idsubproceso: Number(idsubproceso),
           };
 
       const observacionCreada = await tx.observaciones.create({
@@ -123,20 +149,20 @@ observaciones.post("/crear", async (req, res) => {
 
     const observacionFormateada = await formatearObservacion(resultado);
 
-    return res.status(200).json(observacionFormateada);
+    return res.status(201).json(observacionFormateada);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al crear la observación");
   }
 });
 
 observaciones.get("/obtener/:idsubproceso", async (req, res) => {
   try {
-    const { idsubproceso } = req.params;
+    const idsubproceso = parseId(req.params.idsubproceso);
+    if (!idsubproceso) return responderIdInvalido(res, "idsubproceso");
 
     const observacionesSubproceso = await prisma.observaciones.findMany({
       where: {
-        idsubproceso: parseInt(idsubproceso),
+        idsubproceso,
       },
     });
 
@@ -220,21 +246,22 @@ observaciones.get("/obtener/:idsubproceso", async (req, res) => {
 
     return res.status(200).json(observacionesSubprocesoFormateados);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
+    return enviarError(res, error, "Error al obtener observaciones");
   }
 });
 
 observaciones.delete("/eliminar/:idobservacion", async (req, res) => {
   try {
-    const { idobservacion } = req.params;
-    await prisma.$transaction(async (tx) => {
-      const idObservacion = parseInt(idobservacion);
+    const idObservacion = parseId(req.params.idobservacion);
+    if (!idObservacion) return responderIdInvalido(res, "idobservacion");
+
+    const observacionEliminada = await prisma.$transaction(async (tx) => {
       const observacion = await tx.observaciones.findUnique({
         where: {
           idobservacion: idObservacion,
         },
       });
+      if (!observacion) throw { code: "P2025" };
 
       if (observacion.tipo === "Activa") {
         await tx.observacionesobservados.deleteMany({
@@ -250,17 +277,19 @@ observaciones.delete("/eliminar/:idobservacion", async (req, res) => {
         },
       });
 
-      return res.status(200).json(observacionEliminada);
+      return observacionEliminada;
     });
+    return res.status(200).json(observacionEliminada);
   } catch (error) {
-    console.error(error);
-    res.json(error);
+    return enviarError(res, error, "Error al eliminar la observación");
   }
 });
 
 observaciones.put("/editar/:idobservacion", async (req, res) => {
   try {
-    const { idobservacion } = req.params;
+    const idObservacion = parseId(req.params.idobservacion);
+    if (!idObservacion) return responderIdInvalido(res, "idobservacion");
+
     const {
       nombre,
       descripcion,
@@ -270,11 +299,30 @@ observaciones.put("/editar/:idobservacion", async (req, res) => {
       fechahoracaptura,
       listaparticipantes,
     } = req.body;
+    const camposFaltantes = validarCamposRequeridos(req.body, [
+      "nombre",
+      "descripcion",
+      "idobservador",
+      "lugar",
+      "tipo",
+      "listaparticipantes",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+    if (!["Activa", "Pasiva"].includes(tipo)) {
+      return res.status(400).json({ error: "El tipo de observación no es válido" });
+    }
+    if (!Array.isArray(listaparticipantes)) {
+      return res.status(400).json({ error: "listaparticipantes debe ser una lista" });
+    }
+    if (tipo === "Activa" && listaparticipantes.length < 1) {
+      return res.status(400).json({ error: "La observación activa requiere observados" });
+    }
+
     const observacionEditar = fechahoracaptura
       ? {
           nombre,
           descripcion,
-          idobservador,
+          idobservador: Number(idobservador),
           lugar,
           tipo,
           fechahoracaptura,
@@ -283,14 +331,12 @@ observaciones.put("/editar/:idobservacion", async (req, res) => {
       : {
           nombre,
           descripcion,
-          idobservador,
+          idobservador: Number(idobservador),
           lugar,
           tipo,
           listaparticipantes,
         };
-    const idObservacion = parseInt(idobservacion);
-
-    await prisma.$transaction(async (tx) => {
+    const observacionEditadaFormateada = await prisma.$transaction(async (tx) => {
       if (observacionEditar.tipo === "Activa") {
         await tx.observacionesobservados.deleteMany({
           where: {
@@ -384,21 +430,21 @@ observaciones.put("/editar/:idobservacion", async (req, res) => {
           }),
         );
 
-        return res.status(200).json({
+        return {
           ...observacionEditada,
           observador,
           listaparticipantes: arrayDatosObservados,
-        });
+        };
       }
-      return res.status(200).json({
+      return {
         ...observacionEditada,
         observador,
         listaparticipantes: [],
-      });
+      };
     });
+    return res.status(200).json(observacionEditadaFormateada);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al editar la observación");
   }
 });
 

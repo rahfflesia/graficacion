@@ -226,6 +226,73 @@ ng-diagram-minimap {
   border: 2px solid black;
 }
 
+.secuencia-participante,
+.secuencia-activacion,
+.secuencia-fragmento,
+.secuencia-mensaje {
+  display: grid;
+  place-items: center;
+  min-height: 74px;
+  padding: 0.35rem;
+  background-color: var(--primary-color);
+}
+
+.participante-preview {
+  border: 1px solid var(--blackish);
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.45rem;
+  font-weight: bold;
+}
+
+.linea-vida-preview {
+  height: 34px;
+  border-left: 1px dashed var(--blackish);
+}
+
+.secuencia-activacion div {
+  width: 10px;
+  height: 44px;
+  border: 1px solid var(--blackish);
+  background-color: white;
+}
+
+.secuencia-activacion span,
+.secuencia-fragmento span,
+.secuencia-mensaje span {
+  font-weight: bold;
+}
+
+.secuencia-fragmento {
+  border: 1px solid var(--blackish);
+}
+
+.fragmento-preview-header {
+  justify-self: start;
+  align-self: start;
+  border-right: 1px solid var(--blackish);
+  border-bottom: 1px solid var(--blackish);
+  padding: 0.15rem 0.35rem;
+  font-weight: bold;
+}
+
+.mensaje-preview {
+  width: 76px;
+  border-top: 1px solid var(--blackish);
+  position: relative;
+}
+
+.mensaje-preview::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--blackish);
+  border-right: 1px solid var(--blackish);
+  transform: rotate(45deg);
+}
+
 .nombre-diagrama-cu {
   max-width: 40ch;
   line-clamp: 1;

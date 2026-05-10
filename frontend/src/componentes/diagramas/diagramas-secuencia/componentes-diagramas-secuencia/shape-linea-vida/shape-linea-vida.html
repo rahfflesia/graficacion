@@ -1,0 +1,20 @@
+<ng-diagram-node-resize-adornment>
+  <div class="shape-linea-vida">
+    <div class="cabecera-participante">
+      @if (estaEditandoNombre) {
+        <input
+          type="text"
+          class="shape-input"
+          [(ngModel)]="node().data.nombreParticipante"
+          (keydown.enter)="desactivarEdicionNombre()"
+          (blur)="desactivarEdicionNombre()"
+        />
+      } @else {
+        <span (dblclick)="activarEdicionNombre()">{{ node().data.nombreParticipante }}</span>
+      }
+    </div>
+    <div class="linea-vida"></div>
+    <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
+    <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+  </div>
+</ng-diagram-node-resize-adornment>

@@ -2,6 +2,11 @@ import { Router } from "express";
 import { prisma } from "../lib/prisma.ts";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {
+  enviarError,
+  responderCamposFaltantes,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const login = Router();
 
@@ -30,6 +35,8 @@ login.get("/sesion", async (req, res) => {
 login.post("/iniciar-sesion", async (req, res) => {
   try {
     const datosSesion = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosSesion, ["correo", "contrasena"]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
 
     const datosUsuario = await prisma.usuarios.findUnique({
       where: {
@@ -71,10 +78,7 @@ login.post("/iniciar-sesion", async (req, res) => {
       usuario: datosUsuarioFormateados,
     });
   } catch (error) {
-    return res.status(500).json({
-      error: "Error interno del servidor",
-      detalle: error.message,
-    });
+    return enviarError(res, error, "Error interno del servidor");
   }
 });
 
