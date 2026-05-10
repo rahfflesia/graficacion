@@ -1,11 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Participante } from '../../../models/participantesProyecto.interface';
 import { Subproceso } from '../../../models/subprocesos.interface';
@@ -104,10 +98,23 @@ export class SeccionCuestionarios {
 
   cargarCuestionariosExistentes() {
     if (!this.subproceso?.idsubproceso) return;
+
     this.api.obtenerCuestionarios(this.subproceso.idsubproceso).subscribe({
       next: (cuestionarios) => {
-        this.cuestionariosExistentes.set(cuestionarios);
+        const cuestionariosTransformados = cuestionarios.map((cuestionario: any) => ({
+          ...cuestionario,
+          preguntascuestionario: cuestionario.preguntascuestionario.map((pregunta: any) => ({
+            ...pregunta,
+            tipopregunta:
+              pregunta.tipopregunta === 'Opcion_multiple'
+                ? 'Opción múltiple'
+                : pregunta.tipopregunta,
+          })),
+        }));
+
+        this.cuestionariosExistentes.set(cuestionariosTransformados);
       },
+
       error: (error) => {
         console.error('Error al cargar cuestionarios:', error);
       },
@@ -178,12 +185,16 @@ export class SeccionCuestionarios {
 
     for (const pregunta of cuestionario.preguntascuestionario) {
       const opcionesArray = this.formBuilder.array(
-        pregunta.opciones.map((op) => this.formBuilder.control(op, Validators.required))
+        pregunta.opciones.map((op) => this.formBuilder.control(op, Validators.required)),
       );
+
+      // Convertir enum del backend al texto que usa el frontend
+      const tipoPreguntaFrontend =
+        pregunta.tipopregunta === 'Opcion_multiple' ? 'Opción múltiple' : pregunta.tipopregunta;
 
       const grupoPregunta = this.formBuilder.group({
         textoPregunta: [pregunta.textopregunta, [Validators.required]],
-        tipoPregunta: [pregunta.tipopregunta, [Validators.required]],
+        tipoPregunta: [tipoPreguntaFrontend, [Validators.required]],
         opciones: opcionesArray,
       });
 
@@ -196,7 +207,6 @@ export class SeccionCuestionarios {
     this.formularioCuestionario.reset();
     this.preguntasFormArray.clear();
   }
-
 
   editarCuestionario() {
     const cuestionario = this.cuestionarioEnEdicion();
@@ -235,14 +245,14 @@ export class SeccionCuestionarios {
   }
 
   abrirResponder(cuestionario: Cuestionario) {
-  this.cuestionarioRespondiendo.set(cuestionario);
+    this.cuestionarioRespondiendo.set(cuestionario);
   }
 
   cerrarResponder() {
-  this.cuestionarioRespondiendo.set(null);
+    this.cuestionarioRespondiendo.set(null);
   }
 
   alGuardarRespuesta() {
-  this.cuestionarioRespondiendo.set(null);
+    this.cuestionarioRespondiendo.set(null);
   }
 }

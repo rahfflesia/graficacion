@@ -26,7 +26,7 @@ export interface PreguntaCuestionario {
   idpregunta: number;
   idcuestionario: number;
   textopregunta: string;
-  tipopregunta: 'Abierta' | 'Opción múltiple' | 'Escala';
+  tipopregunta: 'Abierta' | 'Opcion_multiple' | 'Escala';
   opciones: string[];
   orden: number;
 }

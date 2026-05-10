@@ -1,0 +1,59 @@
+DIAGRAMAS DEL PROYECTO Todo app
+Nombre del diagrama: Todo app diagrama clases
+Tipo de diagrama:  clase
+
+Clase: Círculo
+Atributos
+Área
+Perímetro
+
+Métodos
+calcularÁrea()
+calcularPerímetro()
+
+Relaciones:
+- Círculo -> Operaciones
+
+Interfaz Operaciones
+Atributos
+Atributo 1
+Atributo 2
+
+Métodos
+calcularÁrea()
+calcularPerímetro()
+
+Relaciones:
+- Operaciones -> Círculo
+- Operaciones -> Rectángulo
+
+Clase: Rectángulo
+Atributos
+Área
+Perímetro
+
+Métodos
+calcularÁrea()
+calcularPerímetro()
+
+Relaciones:
+- Rectángulo -> Operaciones
+
+Nombre del diagrama: Todo app diagrama de casos de uso
+Tipo de diagrama:  casos_uso
+
+Diagrama de casos de uso
+
+Sistema: Sistema dummy
+
+Actores:
+- Texto de prueba
+
+Casos de uso:
+- Caso uso 1
+- Caso uso 2
+
+Relaciones:
+- Texto de prueba interactúa con Caso uso 1
+- Texto de prueba interactúa con Caso uso 2
+
