@@ -1,0 +1,35 @@
+.shape-flecha-secuencia {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+}
+
+.shape-flecha-secuencia svg {
+  overflow: visible;
+  fill: none;
+  stroke: #6b7280;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.shape-flecha-secuencia:not(.vertical) svg {
+  width: 100%;
+  height: 24px;
+}
+
+.shape-flecha-secuencia.vertical svg {
+  width: 24px;
+  height: 100%;
+}
+
+.shape-flecha-secuencia line,
+.shape-flecha-secuencia polyline {
+  vector-effect: non-scaling-stroke;
+}
+
+.linea-punteada svg {
+  stroke-dasharray: 10 8;
+}
