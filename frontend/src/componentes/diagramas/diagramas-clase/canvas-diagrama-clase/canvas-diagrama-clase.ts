@@ -26,6 +26,8 @@ import { DatePipe } from '@angular/common';
 import { ShapeLineaVida } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-linea-vida/shape-linea-vida';
 import { ShapeActivacion } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-activacion/shape-activacion';
 import { ShapeFragmento } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-fragmento/shape-fragmento';
+import { ShapeActorSecuencia } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-actor-secuencia/shape-actor-secuencia';
+import { ShapeFlechaSecuencia } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-flecha-secuencia/shape-flecha-secuencia';
 
 @Component({
   selector: 'canvas-diagrama-clase',
@@ -69,8 +71,12 @@ export class CanvasDiagramaClase implements OnInit {
     ['casoUso', ShapeCasoUso],
     ['boundary', ShapeBoundary],
     ['lineaVida', ShapeLineaVida],
+    ['actorSecuencia', ShapeActorSecuencia],
     ['activacion', ShapeActivacion],
     ['fragmento', ShapeFragmento],
+    ['flechaSecuencia', ShapeFlechaSecuencia],
+    ['flechaRetornoSecuencia', ShapeFlechaSecuencia],
+    ['lineaPunteadaSecuencia', ShapeFlechaSecuencia],
   ]);
 
   nombreDiagrama = 'Sin nombre';
@@ -212,10 +218,20 @@ export class CanvasDiagramaClase implements OnInit {
       condicion: 'condición',
     };
 
+    const datosPorTipo: Record<string, Record<string, string>> = {
+      flechaSecuencia: { tipoFlecha: 'normal', orientacion: 'horizontal', angulo: '0' },
+      flechaRetornoSecuencia: { tipoFlecha: 'punteada', orientacion: 'horizontal', angulo: '0' },
+      lineaPunteadaSecuencia: { tipoFlecha: 'linea', orientacion: 'horizontal', angulo: '0' },
+    };
+
     const dimensionesPorTipo: Record<string, { width: number; height: number }> = {
-      lineaVida: { width: 170, height: 420 },
+      lineaVida: { width: 170, height: 90 },
+      actorSecuencia: { width: 150, height: 170 },
       activacion: { width: 24, height: 140 },
       fragmento: { width: 420, height: 230 },
+      flechaSecuencia: { width: 260, height: 40 },
+      flechaRetornoSecuencia: { width: 260, height: 40 },
+      lineaPunteadaSecuencia: { width: 260, height: 40 },
     };
 
     this.modelService.addNodes([
@@ -223,7 +239,10 @@ export class CanvasDiagramaClase implements OnInit {
         id: idShape,
         position,
         type: tipoForma,
-        data: datosBase,
+        data: {
+          ...datosBase,
+          ...(datosPorTipo[tipoForma] ?? {}),
+        },
         ...(dimensionesPorTipo[tipoForma] ? { size: dimensionesPorTipo[tipoForma] } : {}),
         ...(tipoForma === 'boundary' || tipoForma === 'fragmento' ? { isGroup: true } : {}),
       },

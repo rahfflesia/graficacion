@@ -1,0 +1,26 @@
+<ng-diagram-node-resize-adornment>
+  <div
+    class="shape-flecha-secuencia"
+    [class.linea-punteada]="
+      node().data.tipoFlecha === 'punteada' || node().data.tipoFlecha === 'linea'
+    "
+    [class.vertical]="esVertical()"
+    (dblclick)="alternarOrientacion()"
+  >
+    @if (esVertical()) {
+      <svg viewBox="0 0 24 260" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="12" y1="2" x2="12" y2="250"></line>
+        @if (node().data.tipoFlecha !== 'linea') {
+          <polyline points="4,240 12,252 20,240"></polyline>
+        }
+      </svg>
+    } @else {
+      <svg viewBox="0 0 260 24" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="2" y1="12" x2="250" y2="12"></line>
+        @if (node().data.tipoFlecha !== 'linea') {
+          <polyline points="240,4 252,12 240,20"></polyline>
+        }
+      </svg>
+    }
+  </div>
+</ng-diagram-node-resize-adornment>

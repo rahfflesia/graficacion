@@ -102,6 +102,21 @@
         @case ('secuencia') {
           <div
             draggable="true"
+            (dragstart)="onDragStart($event, 'actorSecuencia')"
+            (click)="agregarForma('actorSecuencia', 'click')"
+            class="menu-shape secuencia-actor"
+          >
+            <svg class="actor-preview" viewBox="0 0 72 96" aria-hidden="true">
+              <circle cx="36" cy="15" r="13"></circle>
+              <line x1="36" y1="28" x2="36" y2="58"></line>
+              <line x1="12" y1="40" x2="60" y2="40"></line>
+              <line x1="36" y1="58" x2="16" y2="88"></line>
+              <line x1="36" y1="58" x2="56" y2="88"></line>
+            </svg>
+            <span>Actor</span>
+          </div>
+          <div
+            draggable="true"
             (dragstart)="onDragStart($event, 'lineaVida')"
             (click)="agregarForma('lineaVida', 'click')"
             class="menu-shape secuencia-participante"
@@ -129,12 +144,38 @@
           </div>
           <div
             draggable="true"
+            (dragstart)="onDragStart($event, 'flechaSecuencia')"
+            (click)="agregarForma('flechaSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview"></div>
+            <span>Flecha</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'flechaRetornoSecuencia')"
+            (click)="agregarForma('flechaRetornoSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview flecha-retorno-preview"></div>
+            <span>Retorno</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'lineaPunteadaSecuencia')"
+            (click)="agregarForma('lineaPunteadaSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview linea-punteada-preview"></div>
+            <span>Línea</span>
+          </div>
+          <div
+            draggable="true"
             (dragstart)="onDragStart($event, 'etiqueta')"
             (click)="agregarForma('etiqueta', 'click')"
             class="menu-shape secuencia-mensaje"
           >
             <span>mensaje()</span>
-            <div class="mensaje-preview"></div>
           </div>
         }
       }
