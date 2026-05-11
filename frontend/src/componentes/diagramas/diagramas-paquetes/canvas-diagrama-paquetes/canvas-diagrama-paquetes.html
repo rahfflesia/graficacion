@@ -1,0 +1,40 @@
+<div class="canvas-wrapper">
+  <ng-diagram
+    [model]="model"
+    class="canvas"
+    [nodeTemplateMap]="nodeTemplateMap"
+    [edgeTemplateMap]="edgeTemplateMap"
+    (drop)="onDrop($event)"
+    (edgeDrawEnded)="onEdgeDrawEnded($event)"
+  ></ng-diagram>
+  <div class="menu-lateral flex-column md-gap" [class.animar-menu-lateral]="estaAbiertoMenuLateral">
+    <header>
+      <div>
+        <h3>Menú de componentes</h3>
+        <span>Selecciona uno</span>
+      </div>
+      <div class="close-button" (click)="cerrarMenuLateral()">X</div>
+    </header>
+    <div class="seccion-componentes">
+      <button (click)="agregarForma('paquete')">Paquete</button>
+      <button (click)="agregarForma('etiqueta')">Etiqueta</button>
+      <div draggable="true" (dragstart)="onDragStart($event, 'paquete')">Paquete</div>
+      <div draggable="true" (dragstart)="onDragStart($event, 'etiqueta')">Etiqueta</div>
+    </div>
+  </div>
+  <div class="barra-flotante">
+    <div>
+      <h3>Diagrama de paquetes</h3>
+    </div>
+    @if (!estaAbiertoMenuLateral) {
+      <div class="abrir-menu" (click)="abrirMenuLateral()">
+        <img
+          src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000"
+          alt="hamburger-menu"
+        />
+      </div>
+    }
+    <button class="default-button" (click)="guardarDiagramaPaquetes()">Guardar</button>
+  </div>
+  <ng-diagram-minimap></ng-diagram-minimap>
+</div>
