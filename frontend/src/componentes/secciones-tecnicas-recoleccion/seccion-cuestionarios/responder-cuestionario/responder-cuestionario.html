@@ -19,7 +19,11 @@
       </div>
 
       <div formArrayName="respuestas" class="flex-column sm-gap">
-        @for (pregunta of cuestionario.preguntascuestionario; track pregunta.idpregunta; let i = $index) {
+        @for (
+          pregunta of cuestionario.preguntascuestionario;
+          track pregunta.idpregunta;
+          let i = $index
+        ) {
           <div class="pregunta-respuesta flex-column sm-gap" [formGroupName]="i">
             <label class="pregunta-texto">{{ i + 1 }}. {{ pregunta.textopregunta }}</label>
 
@@ -31,7 +35,7 @@
               ></textarea>
             }
 
-            @if (pregunta.tipopregunta === 'Opción múltiple') {
+            @if (pregunta.tipopregunta === 'Opcion_multiple') {
               <div class="opciones-respuesta flex-column sm-gap">
                 @for (opcion of pregunta.opciones; track opcion) {
                   <label class="opcion-label">
