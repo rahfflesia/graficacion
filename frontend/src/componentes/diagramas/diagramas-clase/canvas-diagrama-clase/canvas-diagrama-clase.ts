@@ -227,7 +227,7 @@ export class CanvasDiagramaClase implements OnInit {
     const dimensionesPorTipo: Record<string, { width: number; height: number }> = {
       lineaVida: { width: 170, height: 90 },
       actorSecuencia: { width: 150, height: 170 },
-      activacion: { width: 24, height: 140 },
+      activacion: { width: 22, height: 90 },
       fragmento: { width: 420, height: 230 },
       flechaSecuencia: { width: 260, height: 40 },
       flechaRetornoSecuencia: { width: 260, height: 40 },
