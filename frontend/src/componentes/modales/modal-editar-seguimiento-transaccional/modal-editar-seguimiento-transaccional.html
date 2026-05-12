@@ -1,0 +1,198 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-editar-seguimiento" [class.animar]="toggler">
+    <header class="header-modal">
+      <h2>Editar seguimiento transaccional</h2>
+      <button class="close-button" (click)="cerrar.emit()">X</button>
+    </header>
+    <form
+      class="flex-column sm-gap formulario-modal-editar formulario-seguimiento"
+      [formGroup]="formularioSeguimiento"
+    >
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="nombre-seguimiento">Nombre del seguimiento</label>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Ingresa el nombre del seguimiento"
+          formControlName="nombre"
+        />
+
+        @let controlNombre = obtenerControlFormulario('nombre');
+
+        @if (controlNombre?.hasError('required') && controlNombre?.dirty) {
+          <div class="error-span">El nombre del seguimiento no puede quedar vacío</div>
+        }
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label for="descripcion-seguimiento">Descripción</label>
+        <textarea
+          class="search-input observacion-desc"
+          placeholder="Describe el seguimiento transaccional"
+          formControlName="descripcion"
+        ></textarea>
+
+        @let controlDescripcion = obtenerControlFormulario('descripcion');
+
+        @if (controlDescripcion?.hasError('required') && controlDescripcion?.dirty) {
+          <div class="error-span">La descripción no puede quedar vacía</div>
+        }
+      </div>
+
+      <div class="input-wrapper-row">
+        <div class="input-wrapper flex-column sm-gap">
+          <label>Tipo de transacción</label>
+          <select class="custom-select" formControlName="tipotransaccion">
+            <option value="Manual">Manual</option>
+            <option value="Autom_tica">Automática</option>
+            <option value="Sistema_externo">Sistema externo</option>
+          </select>
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label>Estado</label>
+          <select class="custom-select" formControlName="estado">
+            <option value="Pendiente">Pendiente</option>
+            <option value="En_proceso">En proceso</option>
+            <option value="Finalizado">Finalizado</option>
+            <option value="Error">Error</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-wrapper-row">
+        <div class="input-wrapper flex-column sm-gap">
+          <label>Responsable</label>
+          <select class="custom-select" formControlName="idresponsable">
+            @for (participante of participantes; track participante.idpersona) {
+              <option value="{{ participante.idpersona }}">
+                {{ participante.nombre }}
+                {{ participante.apellidouno }}
+                {{ participante.apellidodos ?? '' }}
+              </option>
+            }
+          </select>
+
+          @let controlResponsable = obtenerControlFormulario('idresponsable');
+
+          @if (controlResponsable?.hasError('required') && controlResponsable?.dirty) {
+            <div class="error-span">Debes seleccionar un responsable</div>
+          }
+        </div>
+        <div class="input-wrapper flex-column sm-gap">
+          <label>Fecha de ejecución</label>
+          <input type="datetime-local" class="search-input" formControlName="fechaejecucion" />
+
+          @let controlFecha = obtenerControlFormulario('fechaejecucion');
+
+          @if (controlFecha?.hasError('required') && controlFecha?.dirty) {
+            <div class="error-span">Debes ingresar una fecha de ejecución</div>
+          }
+        </div>
+      </div>
+
+      <div class="input-wrapper flex-column sm-gap resultados-busqueda-padre">
+        <label>Agregar involucrados</label>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Busca participantes del proyecto"
+          formControlName="campobusqueda"
+          (input)="filtrarParticipantes()"
+        />
+
+        @let campoBusqueda = obtenerControlFormulario('campobusqueda');
+        @let valorBusqueda = campoBusqueda?.value ?? '';
+
+        @if (valorBusqueda.length > 0) {
+          <div class="resultados-busqueda">
+            <h4>Resultados ({{ participantesFiltrados.length }})</h4>
+
+            @for (objeto of participantesFiltrados; track objeto.participante.idpersona) {
+              <div class="wrapper-participante">
+                <span class="nombre-participante">
+                  {{ objeto.participante.nombre }}
+                  {{ objeto.participante.apellidouno }}
+                  {{ objeto.participante.apellidodos ?? '' }}
+                </span>
+
+                <div class="datos-rol">
+                  <span class="nombre-rol">
+                    {{ objeto.participante.nombrerol }}
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    [checked]="estaInvolucrado(objeto.participante.idpersona)"
+                    (change)="toggleInvolucrado(objeto.participante)"
+                  />
+                </div>
+              </div>
+            } @empty {
+              <div class="sin-participantes">No se encontraron participantes</div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (listaInvolucrados.length > 0) {
+        <div class="lista-involucrados">
+          @for (participante of listaInvolucrados; track participante.idpersona; let i = $index) {
+            <div class="involucrado">
+              <span>
+                {{ participante.nombre }}
+                {{ participante.apellidouno }}
+                {{ participante.apellidodos ?? '' }}
+              </span>
+
+              <div class="info-roles">
+                <span class="nombre-rol">
+                  {{ participante.nombrerol }}
+                </span>
+                <button type="button" class="eliminar" (click)="eliminarInvolucrado(i)">X</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Resultado esperado</label>
+        <textarea
+          class="search-input observacion-desc"
+          placeholder="¿Qué debería ocurrir?"
+          formControlName="resultadoesperado"
+        ></textarea>
+
+        @let controlResultadoEsperado = obtenerControlFormulario('resultadoesperado');
+
+        @if (controlResultadoEsperado?.hasError('required') && controlResultadoEsperado?.dirty) {
+          <div class="error-span">El resultado esperado no puede quedar vacío</div>
+        }
+      </div>
+
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Resultado obtenido</label>
+        <textarea
+          class="search-input observacion-desc"
+          placeholder="¿Qué ocurrió realmente?"
+          formControlName="resultadoobtenido"
+        ></textarea>
+
+        @let controlResultadoObtenido = obtenerControlFormulario('resultadoobtenido');
+
+        @if (controlResultadoObtenido?.hasError('required') && controlResultadoObtenido?.dirty) {
+          <div class="error-span">El resultado obtenido no puede quedar vacío</div>
+        }
+      </div>
+
+      <div>
+        <button
+          type="button"
+          class="default-button"
+          [disabled]="formularioSeguimiento.invalid"
+          (click)="editarSeguimientoTransaccional()"
+        >
+          Editar seguimiento
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

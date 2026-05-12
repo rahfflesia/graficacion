@@ -1,0 +1,177 @@
+<modal-carga
+  [mensaje]="'Obteniendo seguimientos transaccionales...'"
+  [toggler]="estanCargandoSeguimientos"
+></modal-carga>
+<modal-editar-seguimiento-transaccional
+  [toggler]="esModalEditarSeguimientoTransaccionalVisible"
+  (cerrar)="ocultarModalEditarSeguimientoTransaccional()"
+  [seguimientoTransaccional]="seguimientoSeleccionado"
+  (editarSeguimiento)="editarListaSeguimientosTransaccionales($event)"
+  [participantes]="datosTecnica()?.participantes!"
+></modal-editar-seguimiento-transaccional>
+<section class="seguimiento-section flex-column md-gap">
+  <div class="flex-column sm-gap">
+    <h1>Seguimiento transaccional</h1>
+    <h3>Subproceso: {{ datosTecnica()?.subproceso?.nombreproceso }}</h3>
+  </div>
+  <form class="formulario-seguimiento flex-column sm-gap" [formGroup]="formularioSeguimiento">
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="nombre-seguimiento">Nombre del seguimiento</label>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Ingresa el nombre del seguimiento"
+        formControlName="nombre"
+      />
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label for="descripcion-seguimiento">Descripción</label>
+      <textarea
+        class="search-input observacion-desc"
+        placeholder="Describe el seguimiento transaccional"
+        formControlName="descripcion"
+      ></textarea>
+    </div>
+    <div class="input-wrapper-row">
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Tipo de transacción</label>
+        <select class="custom-select" formControlName="tipotransaccion">
+          <option value="Manual">Manual</option>
+          <option value="Autom_tica">Automática</option>
+          <option value="Sistema_externo">Sistema externo</option>
+        </select>
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Estado</label>
+        <select class="custom-select" formControlName="estado">
+          <option value="Pendiente">Pendiente</option>
+          <option value="En_proceso">En proceso</option>
+          <option value="Finalizado">Finalizado</option>
+          <option value="Error">Error</option>
+        </select>
+      </div>
+    </div>
+    <div class="input-wrapper-row">
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Responsable</label>
+        <select class="custom-select" formControlName="idresponsable">
+          @for (participante of datosTecnica()?.participantes; track participante.idpersona) {
+            <option value="{{ participante.idpersona }}">
+              {{ participante.nombre }}
+              {{ participante.apellidouno }}
+              {{ participante.apellidodos ?? '' }}
+            </option>
+          }
+        </select>
+      </div>
+      <div class="input-wrapper flex-column sm-gap">
+        <label>Fecha de ejecución</label>
+        <input type="datetime-local" class="search-input" formControlName="fechaejecucion" />
+      </div>
+    </div>
+    <div class="input-wrapper flex-column sm-gap resultados-busqueda-padre">
+      <label>Agregar involucrados</label>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Busca participantes del proyecto"
+        formControlName="campobusqueda"
+        (input)="filtrarParticipantes()"
+      />
+
+      @let campoBusqueda = controlCampoBusqueda;
+      @let valorBusqueda = campoBusqueda?.value ?? '';
+
+      @if (valorBusqueda.length > 0) {
+        <div class="resultados-busqueda">
+          <h4>Resultados ({{ participantesFiltrados.length }})</h4>
+
+          @for (objeto of participantesFiltrados; track objeto.participante.idpersona) {
+            <div class="wrapper-participante">
+              <span class="nombre-participante">
+                {{ objeto.participante.nombre }}
+                {{ objeto.participante.apellidouno }}
+                {{ objeto.participante.apellidodos ?? '' }}
+              </span>
+
+              <div class="datos-rol">
+                <span class="nombre-rol">
+                  {{ objeto.participante.nombrerol }}
+                </span>
+
+                <input
+                  type="checkbox"
+                  [checked]="estaInvolucrado(objeto.participante.idpersona)"
+                  (change)="toggleInvolucrado(objeto.participante)"
+                />
+              </div>
+            </div>
+          } @empty {
+            <div class="sin-participantes">No se encontraron participantes</div>
+          }
+        </div>
+      }
+    </div>
+    @if (listaInvolucrados.length > 0) {
+      <div class="lista-involucrados">
+        @for (participante of listaInvolucrados; track participante.idpersona; let i = $index) {
+          <div class="involucrado">
+            <span>
+              {{ participante.nombre }}
+              {{ participante.apellidouno }}
+              {{ participante.apellidodos ?? '' }}
+            </span>
+
+            <div class="info-roles">
+              <span class="nombre-rol">
+                {{ participante.nombrerol }}
+              </span>
+
+              <button type="button" class="eliminar" (click)="eliminarInvolucrado(i)">X</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Resultado esperado</label>
+      <textarea
+        class="search-input observacion-desc"
+        placeholder="¿Qué debería ocurrir?"
+        formControlName="resultadoesperado"
+      ></textarea>
+    </div>
+    <div class="input-wrapper flex-column sm-gap">
+      <label>Resultado obtenido</label>
+      <textarea
+        class="search-input observacion-desc"
+        placeholder="¿Qué ocurrió realmente?"
+        formControlName="resultadoobtenido"
+      ></textarea>
+    </div>
+    <div>
+      <button
+        type="button"
+        class="default-button"
+        [disabled]="formularioSeguimiento.invalid"
+        (click)="crearSeguimientoTransaccional()"
+      >
+        Guardar seguimiento
+      </button>
+    </div>
+  </form>
+  <div class="flex-column sm-gap">
+    <h3>Seguimientos transaccionales asociados ({{ seguimientosTransaccionales().length }})</h3>
+    <div class="lista-seguimientos">
+      @for (seguimiento of seguimientosTransaccionales(); track seguimiento.idseguimiento) {
+        <seguimiento-transaccional-card
+          [seguimiento]="seguimiento"
+          (eliminar)="actualizarListaSeguimientosTransaccionales($event)"
+          (editar)="mostrarModalEditarSeguimientoTransaccional(seguimiento)"
+        ></seguimiento-transaccional-card>
+      } @empty {
+        <div class="sin-seguimientos">No se encontraron seguimientos transaccionales asociados</div>
+      }
+    </div>
+  </div>
+</section>

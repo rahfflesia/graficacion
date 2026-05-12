@@ -75,7 +75,9 @@ export const ModelName = {
   participantesfg: 'participantesfg',
   analisisDocumentos: 'analisisDocumentos',
   hallazgosanalisis: 'hallazgosanalisis',
-  diagramasproyectos: 'diagramasproyectos'
+  diagramasproyectos: 'diagramasproyectos',
+  seguimientotransaccional: 'seguimientotransaccional',
+  involucradosseguimiento: 'involucradosseguimiento'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -369,6 +371,32 @@ export const DiagramasproyectosScalarFieldEnum = {
 } as const
 
 export type DiagramasproyectosScalarFieldEnum = (typeof DiagramasproyectosScalarFieldEnum)[keyof typeof DiagramasproyectosScalarFieldEnum]
+
+
+export const SeguimientotransaccionalScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idsubproceso: 'idsubproceso',
+  tipotransaccion: 'tipotransaccion',
+  estado: 'estado',
+  idresponsable: 'idresponsable',
+  fechaejecucion: 'fechaejecucion',
+  resultadoesperado: 'resultadoesperado',
+  resultadoobtenido: 'resultadoobtenido',
+  fechacreacion: 'fechacreacion',
+  fechaactualizacion: 'fechaactualizacion'
+} as const
+
+export type SeguimientotransaccionalScalarFieldEnum = (typeof SeguimientotransaccionalScalarFieldEnum)[keyof typeof SeguimientotransaccionalScalarFieldEnum]
+
+
+export const InvolucradosseguimientoScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  idpersona: 'idpersona'
+} as const
+
+export type InvolucradosseguimientoScalarFieldEnum = (typeof InvolucradosseguimientoScalarFieldEnum)[keyof typeof InvolucradosseguimientoScalarFieldEnum]
 
 
 export const SortOrder = {

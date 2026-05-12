@@ -56,23 +56,25 @@ model tecnicasrecoleccion {
 }
 
 model personas {
-  idpersona               Int                       @id @default(autoincrement())
-  nombre                  String                    @db.VarChar(255)
-  apellidouno             String                    @db.VarChar(255)
-  apellidodos             String?                   @db.VarChar(255)
-  correo                  String?                   @db.VarChar(255)
-  telefono                String?                   @db.VarChar(255)
-  analisisDocumentos      analisisDocumentos[]
-  cuestionarios           cuestionarios[]
-  entrevistadosentrevista entrevistadosentrevista[]
-  entrevistas             entrevistas[]
-  focusgroups             focusgroups[]
-  historiasusuario        historiasusuario[]
-  observaciones           observaciones[]
-  observacionesobservados observacionesobservados[]
-  participantesfg         participantesfg[]
-  respuestascuestionario  respuestascuestionario[]
-  rolespersonasproyecto   rolespersonasproyecto[]
+  idpersona                Int                        @id @default(autoincrement())
+  nombre                   String                     @db.VarChar(255)
+  apellidouno              String                     @db.VarChar(255)
+  apellidodos              String?                    @db.VarChar(255)
+  correo                   String?                    @db.VarChar(255)
+  telefono                 String?                    @db.VarChar(255)
+  analisisDocumentos       analisisDocumentos[]
+  cuestionarios            cuestionarios[]
+  entrevistadosentrevista  entrevistadosentrevista[]
+  entrevistas              entrevistas[]
+  focusgroups              focusgroups[]
+  historiasusuario         historiasusuario[]
+  involucradosseguimiento  involucradosseguimiento[]
+  observaciones            observaciones[]
+  observacionesobservados  observacionesobservados[]
+  participantesfg          participantesfg[]
+  respuestascuestionario   respuestascuestionario[]
+  rolespersonasproyecto    rolespersonasproyecto[]
+  seguimientotransaccional seguimientotransaccional[]
 }
 
 model rolespersonasproyecto {
@@ -89,19 +91,20 @@ model rolespersonasproyecto {
 }
 
 model subprocesos {
-  idsubproceso       Int                  @id @default(autoincrement())
-  idproceso          Int
-  nombre             String               @db.VarChar(255)
-  descripcion        String
-  fechacreacion      DateTime             @default(now()) @db.Timestamptz(6)
-  analisisDocumentos analisisDocumentos[]
-  cuestionarios      cuestionarios[]
-  entrevistas        entrevistas[]
-  focusgroups        focusgroups[]
-  historiasusuario   historiasusuario[]
-  metodossubprocesos metodossubprocesos[]
-  observaciones      observaciones[]
-  procesos           procesos             @relation(fields: [idproceso], references: [idproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_subprocesos_procesos")
+  idsubproceso             Int                        @id @default(autoincrement())
+  idproceso                Int
+  nombre                   String                     @db.VarChar(255)
+  descripcion              String
+  fechacreacion            DateTime                   @default(now()) @db.Timestamptz(6)
+  analisisDocumentos       analisisDocumentos[]
+  cuestionarios            cuestionarios[]
+  entrevistas              entrevistas[]
+  focusgroups              focusgroups[]
+  historiasusuario         historiasusuario[]
+  metodossubprocesos       metodossubprocesos[]
+  observaciones            observaciones[]
+  seguimientotransaccional seguimientotransaccional[]
+  procesos                 procesos                   @relation(fields: [idproceso], references: [idproceso], onDelete: Cascade, onUpdate: NoAction, map: "fk_subprocesos_procesos")
 }
 
 model usuarios {
@@ -291,6 +294,33 @@ model diagramasproyectos {
   @@unique([idproyecto, tipo], map: "tipo_proyecto_unico")
 }
 
+model seguimientotransaccional {
+  idseguimiento           Int                                     @id @default(autoincrement())
+  nombre                  String                                  @db.VarChar(255)
+  descripcion             String
+  idsubproceso            Int
+  tipotransaccion         tipotransaccionseguimientotransaccional
+  estado                  estadoseguimientotransaccional
+  idresponsable           Int
+  fechaejecucion          DateTime                                @db.Timestamptz(6)
+  resultadoesperado       String
+  resultadoobtenido       String
+  fechacreacion           DateTime                                @default(now()) @db.Timestamptz(6)
+  fechaactualizacion      DateTime                                @default(now()) @db.Timestamptz(6)
+  involucradosseguimiento involucradosseguimiento[]
+  personas                personas                                @relation(fields: [idresponsable], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  subprocesos             subprocesos                             @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model involucradosseguimiento {
+  idseguimiento            Int
+  idpersona                Int
+  personas                 personas                 @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  seguimientotransaccional seguimientotransaccional @relation(fields: [idseguimiento], references: [idseguimiento], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([idseguimiento, idpersona])
+}
+
 enum tiporol {
   Interno
   Externo
@@ -324,4 +354,17 @@ enum diagrama {
   secuencia
   casos_uso
   paquetes
+}
+
+enum estadoseguimientotransaccional {
+  Pendiente
+  En_proceso @map("En proceso")
+  Finalizado
+  Error
+}
+
+enum tipotransaccionseguimientotransaccional {
+  Manual
+  Autom_tica      @map("Automática")
+  Sistema_externo @map("Sistema externo")
 }

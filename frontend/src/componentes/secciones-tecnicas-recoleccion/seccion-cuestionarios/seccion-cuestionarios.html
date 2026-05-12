@@ -74,12 +74,12 @@
                 (change)="alCambiarTipoPregunta(i)"
               >
                 <option value="Abierta">Abierta</option>
-                <option value="Opción múltiple">Opción múltiple</option>
+                <option value="Opción_multiple">Opción múltiple</option>
                 <option value="Escala">Escala (1-5)</option>
               </select>
             </div>
 
-            @if (obtenerTipoPregunta(i) === 'Opción múltiple') {
+            @if (obtenerTipoPregunta(i) === 'Opción_multiple') {
               <div class="opciones-wrapper flex-column sm-gap">
                 <label>Opciones de respuesta</label>
                 <div formArrayName="opciones" class="flex-column sm-gap">
@@ -128,7 +128,10 @@
           </div>
         } @empty {
           <div class="sin-preguntas">
-            <span>No hay preguntas agregadas. Agrega al menos una pregunta para crear el cuestionario.</span>
+            <span
+              >No hay preguntas agregadas. Agrega al menos una pregunta para crear el
+              cuestionario.</span
+            >
           </div>
         }
       </div>
@@ -170,16 +173,10 @@
           </span>
         </div>
         <div class="cuestionario-acciones">
-          <button
-            class="btn-responder-cuestionario"
-            (click)="abrirResponder(cuestionario)"
-          >
+          <button class="btn-responder-cuestionario" (click)="abrirResponder(cuestionario)">
             Responder
           </button>
-          <button
-            class="btn-editar-cuestionario"
-            (click)="cargarParaEdicion(cuestionario)"
-          >
+          <button class="btn-editar-cuestionario" (click)="cargarParaEdicion(cuestionario)">
             Editar
           </button>
           <button

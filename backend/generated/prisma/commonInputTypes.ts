@@ -290,6 +290,40 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
+export type EnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipotransaccionseguimientotransaccional | Prisma.EnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel> | $Enums.tipotransaccionseguimientotransaccional
+}
+
+export type EnumestadoseguimientotransaccionalFilter<$PrismaModel = never> = {
+  equals?: $Enums.estadoseguimientotransaccional | Prisma.EnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel> | $Enums.estadoseguimientotransaccional
+}
+
+export type EnumtipotransaccionseguimientotransaccionalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipotransaccionseguimientotransaccional | Prisma.EnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalWithAggregatesFilter<$PrismaModel> | $Enums.tipotransaccionseguimientotransaccional
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel>
+}
+
+export type EnumestadoseguimientotransaccionalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.estadoseguimientotransaccional | Prisma.EnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumestadoseguimientotransaccionalWithAggregatesFilter<$PrismaModel> | $Enums.estadoseguimientotransaccional
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -550,6 +584,40 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipotransaccionseguimientotransaccional | Prisma.EnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel> | $Enums.tipotransaccionseguimientotransaccional
+}
+
+export type NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel = never> = {
+  equals?: $Enums.estadoseguimientotransaccional | Prisma.EnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel> | $Enums.estadoseguimientotransaccional
+}
+
+export type NestedEnumtipotransaccionseguimientotransaccionalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.tipotransaccionseguimientotransaccional | Prisma.EnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.tipotransaccionseguimientotransaccional[] | Prisma.ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalWithAggregatesFilter<$PrismaModel> | $Enums.tipotransaccionseguimientotransaccional
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtipotransaccionseguimientotransaccionalFilter<$PrismaModel>
+}
+
+export type NestedEnumestadoseguimientotransaccionalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.estadoseguimientotransaccional | Prisma.EnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  in?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  notIn?: $Enums.estadoseguimientotransaccional[] | Prisma.ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumestadoseguimientotransaccionalWithAggregatesFilter<$PrismaModel> | $Enums.estadoseguimientotransaccional
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumestadoseguimientotransaccionalFilter<$PrismaModel>
 }
 
 

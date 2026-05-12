@@ -164,3 +164,13 @@ export type hallazgosanalisis = Prisma.hallazgosanalisisModel
  * 
  */
 export type diagramasproyectos = Prisma.diagramasproyectosModel
+/**
+ * Model seguimientotransaccional
+ * 
+ */
+export type seguimientotransaccional = Prisma.seguimientotransaccionalModel
+/**
+ * Model involucradosseguimiento
+ * 
+ */
+export type involucradosseguimiento = Prisma.involucradosseguimientoModel

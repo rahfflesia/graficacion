@@ -1,0 +1,76 @@
+.seguimiento-card {
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 1.75rem;
+  box-shadow: var(--box-shadow);
+}
+
+.seguimiento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fecha-creacion-seguimiento-card {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.botones-seguimiento-card {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.botones-seguimiento-card button {
+  border: 1px solid lightgrey;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  font-size: 0.7rem;
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.descripcion-seguimiento-card {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.mensaje-confirmacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mensaje-confirmacion span {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.mensaje-confirmacion button {
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+}
+
+.boton-confirmar {
+  background-color: red;
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 0.2rem 0.6rem;
+}
+
+.boton-cancelar {
+  outline: 1px solid rgb(158, 158, 158);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  font-size: 0.7rem;
+  background-color: var(--primary-color);
+  margin-left: 0.5rem;
+}
