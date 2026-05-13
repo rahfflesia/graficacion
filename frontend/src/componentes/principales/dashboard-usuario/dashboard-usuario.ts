@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatosUsuario, Proyectos } from '../../../models/proceso.interface';
 import { Api } from '../../../servicios/api';
 import { Usuario } from '../../../servicios/usuario';
+import { TemaService } from '../../../servicios/tema';
 
 @Component({
   selector: 'dashboard-usuario',
@@ -17,10 +18,12 @@ export class DashboardUsuario implements OnInit {
   private servicioUsuario = inject(Usuario);
   private router = inject(Router);
   private toastr = inject(ToastrService);
+  private temaService = inject(TemaService);
 
   usuario = signal<DatosUsuario | null>(null);
   proyectos = signal<Proyectos[]>([]);
   estaCargando = signal(true);
+  temaActual = this.temaService.tema;
 
   totalProyectos = computed(() => this.proyectos().length);
   proyectosActivos = computed(() => this.contarPorEstado('Activo'));
@@ -55,6 +58,16 @@ export class DashboardUsuario implements OnInit {
 
   irAProyectos() {
     this.router.navigate(['/proyectos']);
+  }
+
+  alternarTema() {
+    this.temaService.alternarTema();
+  }
+
+  obtenerIconoTema() {
+    return this.temaActual() === 'oscuro'
+      ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
+      : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d';
   }
 
   private obtenerProyectos(idUsuario: number) {

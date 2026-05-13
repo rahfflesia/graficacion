@@ -17,6 +17,12 @@
   gap: 1rem;
 }
 
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .eyebrow,
 .metrica span,
 .panel-header,
@@ -148,6 +154,17 @@
 
 .accion:hover {
   background-color: var(--lightblue);
+}
+
+:host-context(body.modo-oscuro) .metrica,
+:host-context(body.modo-oscuro) .panel,
+:host-context(body.modo-oscuro) .fila-proyecto,
+:host-context(body.modo-oscuro) .accion {
+  border-color: #263449;
+}
+
+:host-context(body.modo-oscuro) .estado {
+  color: #9ef0c7;
 }
 
 .dashboard-loading,

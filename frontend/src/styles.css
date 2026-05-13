@@ -91,6 +91,42 @@ body.modo-oscuro #toast-container > div {
   color: var(--font-color);
 }
 
+.boton-tema {
+  width: 42px;
+  height: 42px;
+  border: var(--soft-border);
+  border-radius: 999px;
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    background-color ease 180ms,
+    border-color ease 180ms,
+    transform ease 180ms;
+}
+
+.boton-tema:hover {
+  background-color: var(--lightblue);
+  border-color: rgba(8, 126, 208, 0.35);
+  transform: translateY(-1px);
+}
+
+.boton-tema img {
+  width: 20px;
+  height: 20px;
+}
+
+body.modo-oscuro .boton-tema {
+  background-color: #111827;
+  border-color: #334155;
+}
+
+body.modo-oscuro .boton-tema img {
+  filter: none;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;

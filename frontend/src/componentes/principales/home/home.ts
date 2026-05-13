@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TemaService } from '../../../servicios/tema';
 
 @Component({
   selector: 'app-home',
@@ -8,5 +9,16 @@ import { RouterModule } from '@angular/router';
   styleUrl: './home.css',
 })
 export class Home {
+  private temaService = inject(TemaService);
+  temaActual = this.temaService.tema;
 
+  alternarTema() {
+    this.temaService.alternarTema();
+  }
+
+  obtenerIconoTema() {
+    return this.temaActual() === 'oscuro'
+      ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
+      : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d';
+  }
 }

@@ -493,3 +493,44 @@ footer > * {
 .newsletter-footer-section h2 {
   margin-bottom: 0;
 }
+
+:host-context(body.modo-oscuro) .home-container,
+:host-context(body.modo-oscuro) .features-section {
+  background-color: var(--body-bg-color);
+}
+
+:host-context(body.modo-oscuro) .hero {
+  background: linear-gradient(135deg, #0b1220 0%, #101c2d 55%, #132e45 100%);
+}
+
+:host-context(body.modo-oscuro) .hero h1,
+:host-context(body.modo-oscuro) .features-inner > h2,
+:host-context(body.modo-oscuro) .feature-card h3 {
+  color: var(--font-color);
+}
+
+:host-context(body.modo-oscuro) .hero-description,
+:host-context(body.modo-oscuro) .feature-card p,
+:host-context(body.modo-oscuro) .hc-text {
+  color: var(--muted-text);
+}
+
+:host-context(body.modo-oscuro) .hero-card,
+:host-context(body.modo-oscuro) .feature-card,
+:host-context(body.modo-oscuro) .secondary-btn {
+  background-color: var(--primary-color);
+  border-color: #263449;
+}
+
+:host-context(body.modo-oscuro) .hc-row {
+  background-color: #0f172a;
+}
+
+:host-context(body.modo-oscuro) .secondary-btn {
+  color: var(--font-color) !important;
+}
+
+:host-context(body.modo-oscuro) .why-section,
+:host-context(body.modo-oscuro) footer {
+  background-color: #080e19;
+}

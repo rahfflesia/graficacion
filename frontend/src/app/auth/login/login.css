@@ -25,6 +25,13 @@
   margin: 2rem;
 }
 
+.login-card > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 .login-card h2 {
   font-weight: 700;
   font-size: 1.875rem;
@@ -127,4 +134,9 @@ section > * {
 
 .login-button:disabled {
   background-color: rgba(0, 133, 219, 0.4);
+}
+
+:host-context(body.modo-oscuro) .circulo-naranja,
+:host-context(body.modo-oscuro) .circulo-azul {
+  opacity: 0.22;
 }

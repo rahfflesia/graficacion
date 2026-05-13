@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RegistroUsuario } from '../../../models/proceso.interface';
 import { Router } from '@angular/router';
 import { ModalCarga } from '../../../componentes/modales/modal-carga/modal-carga';
+import { TemaService } from '../../../servicios/tema';
 
 @Component({
   selector: 'app-registro',
@@ -24,8 +25,10 @@ export class Registro {
   private formBuilder = inject(FormBuilder);
   private toastr = inject(ToastrService);
   private router = inject(Router);
+  private temaService = inject(TemaService);
   private emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   esModalCargaVisible = signal<boolean>(false);
+  temaActual = this.temaService.tema;
   formularioRegistro = this.formBuilder.group({
     nombre: ['', [Validators.required]],
     correo: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
@@ -70,5 +73,15 @@ export class Registro {
         ? { contrasenasDiferentes: { value: control.value } }
         : null;
     };
+  }
+
+  alternarTema() {
+    this.temaService.alternarTema();
+  }
+
+  obtenerIconoTema() {
+    return this.temaActual() === 'oscuro'
+      ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
+      : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d';
   }
 }

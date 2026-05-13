@@ -5,7 +5,12 @@
       <h1>Hola, {{ usuario()?.usuario?.nombre || 'usuario' }}</h1>
       <p>Resumen rápido de tus proyectos y su estado actual.</p>
     </div>
-    <button class="default-button" (click)="irAProyectos()">Ver proyectos</button>
+    <div class="dashboard-actions">
+      <button type="button" class="boton-tema" (click)="alternarTema()" title="Cambiar tema">
+        <img [src]="obtenerIconoTema()" alt="Cambiar tema" />
+      </button>
+      <button class="default-button" (click)="irAProyectos()">Ver proyectos</button>
+    </div>
   </header>
 
   @if (estaCargando()) {
