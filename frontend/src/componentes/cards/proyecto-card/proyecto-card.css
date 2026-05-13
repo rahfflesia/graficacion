@@ -41,7 +41,7 @@
 }
 
 .opciones-proyecto > button:first-child:hover {
-  color: #fff;
+  color: var(--blue);
   background-color: var(--blue);
   border-color: var(--blue);
   transform: translateY(-1px);
