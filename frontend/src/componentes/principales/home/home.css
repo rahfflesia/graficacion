@@ -358,6 +358,11 @@ a {
   height: 100%;
 }
 
+.fc-icon svg,
+.fc-icon svg * {
+  color: inherit;
+}
+
 .blue-icon {
   background: #dbeafe;
   color: #1d4ed8;
@@ -512,7 +517,7 @@ footer > * {
 :host-context(body.modo-oscuro) .hero-description,
 :host-context(body.modo-oscuro) .feature-card p,
 :host-context(body.modo-oscuro) .hc-text {
-  color: var(--muted-text);
+  color: #b9c8dc;
 }
 
 :host-context(body.modo-oscuro) .hero-card,
@@ -533,4 +538,83 @@ footer > * {
 :host-context(body.modo-oscuro) .why-section,
 :host-context(body.modo-oscuro) footer {
   background-color: #080e19;
+}
+
+:host-context(body.modo-oscuro) .why-item {
+  border-color: #2b3a50;
+  background-color: #0f1726;
+}
+
+:host-context(body.modo-oscuro) .why-icon {
+  color: #60a5fa;
+}
+
+:host-context(body.modo-oscuro) .why-icon > svg > * {
+  color: #60a5fa;
+  opacity: 1;
+}
+
+:host-context(body.modo-oscuro) .why-item p {
+  color: #b9c8dc;
+}
+
+:host-context(body.modo-oscuro) .feature-card {
+  background-color: #111b2b;
+  border-color: #2b3a50;
+}
+
+:host-context(body.modo-oscuro) .blue-icon {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+:host-context(body.modo-oscuro) .green-icon {
+  background: #d1fae5;
+  color: #047857;
+}
+
+:host-context(body.modo-oscuro) .purple-icon {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+:host-context(body.modo-oscuro) .orange-icon {
+  background: #fed7aa;
+  color: #c2410c;
+}
+
+:host-context(body.modo-oscuro) .teal-icon {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
+:host-context(body.modo-oscuro) .red-icon {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+:host-context(body.modo-oscuro) footer h2,
+:host-context(body.modo-oscuro) .seccion-footer h2 {
+  color: #e5eefb;
+}
+
+:host-context(body.modo-oscuro) footer a,
+:host-context(body.modo-oscuro) .seccion-footer > .mensaje-suscripcion,
+:host-context(body.modo-oscuro) .seccion-footer span {
+  color: #b9c8dc;
+}
+
+:host-context(body.modo-oscuro) .newsletter-input {
+  background-color: #111827;
+  border-color: #334155;
+  color: #e5eefb;
+}
+
+:host-context(body.modo-oscuro) .newsletter-input::placeholder {
+  color: #9aa9bd;
+}
+
+:host-context(body.modo-oscuro) .boton-suscribirte {
+  background-color: var(--blue);
+  color: #fff;
 }
