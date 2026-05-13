@@ -11,7 +11,7 @@
 ></modal-crear-proyecto>
 <modal-configuracion-proyecto
   (cerrar)="cerrarModalConfigurarProyecto()"
-  (editarProyecto)="abrirEdicionDesdeConfiguracion()"
+  (proyectoEditado)="editarProyecto($event)"
   [toggler]="esConfigurarProyectoModalVisible"
   [proyectoSeleccionado]="proyectoSeleccionado()"
 ></modal-configuracion-proyecto>

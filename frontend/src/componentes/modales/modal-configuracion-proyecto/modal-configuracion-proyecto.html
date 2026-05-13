@@ -50,6 +50,82 @@
       </div>
       <div class="area-principal flex-column md-gap">
         @switch (opcionSeleccionada()) {
+          @case ('Editar proyecto') {
+            <div class="procesos-wrapper flex-column sm-gap">
+              <header class="header-config">
+                <h2>Editar proyecto</h2>
+              </header>
+              <form
+                action=""
+                class="flex-column sm-gap formulario"
+                [formGroup]="formularioEditarProyecto"
+              >
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Nombre del proyecto</label>
+                  <input
+                    type="text"
+                    placeholder="Ingresa el nuevo nombre del proyecto"
+                    class="search-input"
+                    formControlName="nombre"
+                  />
+                  @if (
+                    obtenerControlFormularioEditarProyecto('nombre')?.hasError('required') &&
+                    obtenerControlFormularioEditarProyecto('nombre')?.dirty
+                  ) {
+                    <span class="error-span">El nombre del proyecto no puede quedar vacío</span>
+                  }
+                  @if (
+                    obtenerControlFormularioEditarProyecto('nombre')?.hasError('minlength') &&
+                    obtenerControlFormularioEditarProyecto('nombre')?.dirty
+                  ) {
+                    <span class="error-span">
+                      El nombre del proyecto debe contener al menos 5 caracteres
+                    </span>
+                  }
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Descripción del proyecto</label>
+                  <textarea
+                    placeholder="Ingresa la nueva descripción del proyecto"
+                    class="search-input"
+                    formControlName="descripcion"
+                  ></textarea>
+                  @if (
+                    obtenerControlFormularioEditarProyecto('descripcion')?.hasError('required') &&
+                    obtenerControlFormularioEditarProyecto('descripcion')?.dirty
+                  ) {
+                    <span class="error-span">La descripción del proyecto no puede quedar vacía</span>
+                  }
+                  @if (
+                    obtenerControlFormularioEditarProyecto('descripcion')?.hasError('minlength') &&
+                    obtenerControlFormularioEditarProyecto('descripcion')?.dirty
+                  ) {
+                    <span class="error-span">
+                      La descripción debe tener al menos 10 caracteres
+                    </span>
+                  }
+                </div>
+                <div class="input-wrapper flex-column sm-gap">
+                  <label for="">Estado del proyecto</label>
+                  <select class="custom-select" formControlName="estadoProyecto">
+                    <option value="Activo">Activo</option>
+                    <option value="Pausado">Pausado</option>
+                    <option value="Cancelado">Cancelado</option>
+                    <option value="En_revisi_n">En revisión</option>
+                  </select>
+                </div>
+                <div>
+                  <button
+                    class="default-button"
+                    (click)="editarProyecto()"
+                    [disabled]="formularioEditarProyecto.invalid"
+                  >
+                    Guardar cambios
+                  </button>
+                </div>
+              </form>
+            </div>
+          }
           @case ('Procesos') {
             <div class="procesos-wrapper flex-column sm-gap">
               <header class="header-config">

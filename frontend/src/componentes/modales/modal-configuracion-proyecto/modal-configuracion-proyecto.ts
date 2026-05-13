@@ -20,7 +20,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Api } from '../../../servicios/api';
-import { Proyectos } from '../../../models/proceso.interface';
+import { ProyectoEditar, Proyectos } from '../../../models/proceso.interface';
 import { ToastrService } from 'ngx-toastr';
 import { DatosProceso, Proceso } from '../../../models/procesos.interface';
 import { ProcesoCard } from '../../cards/proceso-card/proceso-card';
@@ -47,10 +47,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
   @Input() toggler: boolean = false;
   @Input() proyectoSeleccionado: Proyectos | undefined = undefined;
   @Output() cerrar = new EventEmitter<void>();
-  @Output() editarProyecto = new EventEmitter<void>();
+  @Output() proyectoEditado = new EventEmitter<Proyectos>();
   formBuilder = inject(FormBuilder);
   private api = inject(Api);
   private toastr = inject(ToastrService);
+  private espaciosEnBlancoRegex: RegExp = /\S/;
 
   // Con esto controlo si le muestro el mensaje de eliminar proceso o no
   // Me parece mejor que terminar como con 20 modales por todos los cruds
@@ -85,6 +86,26 @@ export class ModalConfiguracionProyecto implements OnChanges {
     telefono: ['', [Validators.required]],
     idrol: ['', [Validators.required]],
   });
+  formularioEditarProyecto = this.formBuilder.group({
+    nombre: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(255),
+        Validators.pattern(this.espaciosEnBlancoRegex),
+      ],
+    ],
+    descripcion: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.pattern(this.espaciosEnBlancoRegex),
+      ],
+    ],
+    estadoProyecto: ['', [Validators.required]],
+  });
 
   opcionSeleccionada = signal<
     'Editar proyecto' | 'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles'
@@ -115,8 +136,19 @@ export class ModalConfiguracionProyecto implements OnChanges {
     const modalAbierto = changes['toggler']?.currentValue === true;
 
     if ((cambioProyecto || modalAbierto) && this.proyectoSeleccionado !== undefined) {
+      this.cargarFormularioEditarProyecto();
       this.cargarDatosProyecto();
     }
+  }
+
+  cargarFormularioEditarProyecto() {
+    this.formularioEditarProyecto.get('nombre')?.setValue(this.proyectoSeleccionado?.nombre!);
+    this.formularioEditarProyecto
+      .get('descripcion')
+      ?.setValue(this.proyectoSeleccionado?.descripcion!);
+    this.formularioEditarProyecto
+      .get('estadoProyecto')
+      ?.setValue(this.proyectoSeleccionado?.estado ?? 'Activo');
   }
 
   cargarDatosProyecto() {
@@ -149,14 +181,41 @@ export class ModalConfiguracionProyecto implements OnChanges {
   ) {
     this.opcionSeleccionada.update((opcionPrevia) => (opcionPrevia = opcion));
 
-    if (opcion === 'Editar proyecto') {
-      this.editarProyecto.emit();
-      return;
-    }
-
     // Opción para actualizar el valor del select de los roles
     if (opcion === 'Participantes')
       this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
+  }
+
+  obtenerControlFormularioEditarProyecto(nombreControl: string) {
+    return this.formularioEditarProyecto.get(nombreControl);
+  }
+
+  editarProyecto() {
+    if (!this.proyectoSeleccionado?.idproyecto || this.formularioEditarProyecto.invalid) return;
+
+    const datosProyectoEditar: ProyectoEditar = {
+      nombre: this.formularioEditarProyecto.get('nombre')?.value ?? '',
+      descripcion: this.formularioEditarProyecto.get('descripcion')?.value ?? '',
+      estado:
+        (this.formularioEditarProyecto.get('estadoProyecto')?.value as
+          | 'Activo'
+          | 'Cancelado'
+          | 'Pausado'
+          | 'En_revisi_n') ?? 'Activo',
+    };
+
+    this.api.editarProyecto(this.proyectoSeleccionado.idproyecto, datosProyectoEditar).subscribe({
+      next: (respuesta) => {
+        this.proyectoEditado.emit(respuesta);
+        this.toastr.success('Proyecto editado correctamente');
+      },
+      error: (error) => {
+        this.toastr.error('No se pudo editar el proyecto', '', {
+          toastClass: 'toastr-error',
+        });
+        console.error(error);
+      },
+    });
   }
 
   limpiarFormularioProceso() {

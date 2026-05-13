@@ -1,8 +1,11 @@
 .modal {
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
-  max-height: 95dvh;
-  overflow-y: auto;
+  width: min(1120px, calc(100vw - 2rem));
+  height: min(780px, calc(100dvh - 2rem));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 ul {
@@ -18,21 +21,30 @@ ul > li {
 }
 
 .main-header {
-  border-bottom: 1px solid lightgray;
+  border-bottom: var(--soft-border);
   padding: 1rem;
+  flex: none;
 }
 
 main {
   display: flex;
+  flex: 1;
+  min-height: 0;
 }
 
 .menu-configuracion {
-  margin: 1.5rem;
+  width: 220px;
+  flex: none;
+  margin: 0;
+  padding: 1.5rem;
+  overflow-y: auto;
 }
 
 .area-principal {
-  padding: 1.5rem 1.5rem 1.5rem 0rem;
-  border-left: 1px solid lightgray;
+  padding: 1.5rem;
+  border-left: var(--soft-border);
+  overflow-y: auto;
+  min-width: 0;
 }
 
 .procesos-wrapper,
@@ -41,8 +53,8 @@ main {
   flex: 1;
 }
 
-.area-principal {
-  padding-left: 1.5rem;
+.procesos-wrapper {
+  max-width: 980px;
 }
 
 .sin-procesos {
@@ -64,7 +76,7 @@ header.header-config {
 .formulario {
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  border: 1px solid lightgray;
+  border: var(--soft-border);
 }
 
 .apellidos-wrapper {
@@ -88,6 +100,11 @@ header.header-config {
 
 .checkbox-wrapper > span {
   font-size: 0.8rem;
+}
+
+:host-context(body.modo-oscuro) .modal,
+:host-context(body.modo-oscuro) .formulario {
+  background-color: var(--primary-color);
 }
 /* */
 #formulario-participantes-modal {
