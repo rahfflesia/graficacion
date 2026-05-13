@@ -7,12 +7,6 @@
         [style.backgroundColor]="obtenerColorFondo(datosProyecto.estado)"
         >{{ datosProyecto.estado === 'En_revisi_n' ? 'En revisión' : datosProyecto.estado }}</span
       >
-      <img
-        src="https://img.icons8.com/?size=100&id=H6C79JoP90DH&format=png&color=7C7B7B"
-        alt="icono-configuracion"
-        class="config-icon"
-        (click)="configurarProyecto()"
-      />
       <button type="button" class="crear-diagrama" (click)="crearDiagramaProyecto()">
         Crear diagrama
       </button>
@@ -27,7 +21,7 @@
       [style.backgroundColor]="obtenerColorFuente(datosProyecto.estado)"
     ></div>
     <div class="opciones-proyecto">
-      <button (click)="editarProyecto()" class="editar">Editar</button>
+      <button (click)="configurarProyecto()" class="configurar">Configurar</button>
       <button (click)="eliminarProyecto()">Eliminar</button>
     </div>
   </div>

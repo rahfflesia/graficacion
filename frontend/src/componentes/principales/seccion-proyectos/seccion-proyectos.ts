@@ -108,6 +108,11 @@ export class SeccionProyectos implements OnInit {
     console.log(JSON.stringify(this.proyectoSeleccionado()));
   }
 
+  abrirEdicionDesdeConfiguracion() {
+    this.cerrarModalConfigurarProyecto();
+    this.mostrarModalEditarProyecto();
+  }
+
   cerrarModalCrearProyecto() {
     this.esCrearProyectoModalVisible = false;
   }

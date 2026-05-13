@@ -12,16 +12,11 @@ export class ProyectoCard {
   @Input() datosProyecto!: Proyectos;
 
   @Output() eliminar = new EventEmitter<void>();
-  @Output() editar = new EventEmitter<void>();
   @Output() configurar = new EventEmitter<void>();
   @Output() crearDiagrama = new EventEmitter<void>();
 
   eliminarProyecto() {
     this.eliminar.emit();
-  }
-
-  editarProyecto() {
-    this.editar.emit();
   }
 
   configurarProyecto() {

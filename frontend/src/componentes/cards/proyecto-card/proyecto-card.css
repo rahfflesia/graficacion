@@ -14,11 +14,6 @@
   gap: 0.75rem;
 }
 
-.project-header > img {
-  width: 15px;
-  height: 15px;
-}
-
 .fecha-creacion {
   display: flex;
   justify-content: flex-end;
@@ -112,8 +107,4 @@ p {
 :host-context(body.modo-oscuro) .crear-diagrama {
   background-color: #111827;
   border-color: #334155;
-}
-
-:host-context(body.modo-oscuro) .project-header > img {
-  filter: invert(1) brightness(0.9);
 }

@@ -47,6 +47,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
   @Input() toggler: boolean = false;
   @Input() proyectoSeleccionado: Proyectos | undefined = undefined;
   @Output() cerrar = new EventEmitter<void>();
+  @Output() editarProyecto = new EventEmitter<void>();
   formBuilder = inject(FormBuilder);
   private api = inject(Api);
   private toastr = inject(ToastrService);
@@ -85,9 +86,9 @@ export class ModalConfiguracionProyecto implements OnChanges {
     idrol: ['', [Validators.required]],
   });
 
-  opcionSeleccionada = signal<'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles'>(
-    'Procesos',
-  );
+  opcionSeleccionada = signal<
+    'Editar proyecto' | 'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles'
+  >('Procesos');
 
   get tecnicasAsociadas() {
     return this.formularioSubprocesos.get('tecnicasAsociadas') as FormArray;
@@ -143,8 +144,15 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.cerrar.emit();
   }
 
-  seleccionarSeccion(opcion: 'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles') {
+  seleccionarSeccion(
+    opcion: 'Editar proyecto' | 'Procesos' | 'Subprocesos' | 'Roles' | 'Participantes' | 'Detalles',
+  ) {
     this.opcionSeleccionada.update((opcionPrevia) => (opcionPrevia = opcion));
+
+    if (opcion === 'Editar proyecto') {
+      this.editarProyecto.emit();
+      return;
+    }
 
     // Opción para actualizar el valor del select de los roles
     if (opcion === 'Participantes')

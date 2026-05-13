@@ -11,6 +11,12 @@
       <div class="menu-configuracion">
         <ul class="flex-column sm-gap">
           <li
+            (click)="seleccionarSeccion('Editar proyecto')"
+            [class.seleccionado]="opcionSeleccionada() === 'Editar proyecto'"
+          >
+            Editar proyecto
+          </li>
+          <li
             (click)="seleccionarSeccion('Procesos')"
             [class.seleccionado]="opcionSeleccionada() === 'Procesos'"
           >

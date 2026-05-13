@@ -11,6 +11,7 @@
 ></modal-crear-proyecto>
 <modal-configuracion-proyecto
   (cerrar)="cerrarModalConfigurarProyecto()"
+  (editarProyecto)="abrirEdicionDesdeConfiguracion()"
   [toggler]="esConfigurarProyectoModalVisible"
   [proyectoSeleccionado]="proyectoSeleccionado()"
 ></modal-configuracion-proyecto>
@@ -92,7 +93,6 @@
         <proyecto-card
           [datosProyecto]="proyecto"
           (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
-          (editar)="seleccionarProyecto(proyecto); mostrarModalEditarProyecto()"
           (configurar)="mostrarModalConfigurarProyecto(); seleccionarProyecto(proyecto)"
           (crearDiagrama)="seleccionarProyecto(proyecto); mostrarModalMenuDiagramas()"
         ></proyecto-card>
