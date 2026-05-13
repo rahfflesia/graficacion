@@ -16,7 +16,7 @@
   margin-left: 1rem;
 }
 
-.barra-flotante > *:not(button) {
+.barra-flotante > *:not(.guardar) {
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -85,13 +85,60 @@
   flex: 1;
 }
 
-.abrir-menu {
+.abrir-menu,
+.guardar,
+.eliminar,
+.undo,
+.redo {
   cursor: pointer;
 }
 
-.abrir-menu img {
+.abrir-menu img,
+.guardar img,
+.undo img,
+.redo img {
   width: 20px;
   height: 20px;
+}
+
+.eliminar img {
+  width: 25px;
+  height: 25px;
+}
+
+.redo,
+.undo {
+  background-color: var(--blue);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: none;
+}
+
+.guardar,
+.eliminar,
+.abrir-menu {
+  padding: 1rem;
+  border: none;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.guardar {
+  background-color: var(--blue);
+}
+
+.eliminar {
+  background-color: rgba(237, 63, 63);
+}
+
+.guardar:disabled {
+  background-color: rgba(0, 133, 219, 0.5);
+}
+
+.eliminar:disabled {
+  background-color: rgba(237, 63, 63, 0.5) !important;
 }
 
 header {
@@ -110,4 +157,200 @@ ng-diagram-minimap {
   left: 1rem;
   bottom: 1rem;
   right: unset !important;
+}
+
+.menu-shape {
+  border: 1px solid lightgray;
+  font-size: 0.5rem;
+  cursor: grab;
+}
+
+.nombre-shape {
+  background-color: var(--blue);
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+.atributos-shape {
+  border-bottom: 1px solid lightgrey;
+}
+
+.metodos-shape,
+.atributos-shape,
+.nombre-shape {
+  padding: 0.1rem;
+}
+
+.paquete-shape span {
+  padding: 0rem 0.25rem;
+  color: var(--primary-color);
+  font-size: 0.5rem;
+}
+
+.paquete-shape div {
+  padding: 0.7rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.5rem;
+}
+
+.paquete-shape span,
+.paquete-shape div {
+  border: 1px solid lightgray;
+}
+
+.actor-content-wrapper,
+.caso-uso,
+.boundary {
+  display: grid;
+  place-items: center;
+}
+
+.actor-image-wrapper > img {
+  width: 50px;
+  height: 60px;
+}
+
+.caso-uso {
+  border: none;
+}
+
+.caso-uso-texto-wrapper {
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.boundary {
+  border: 2px solid black;
+}
+
+.secuencia-actor,
+.secuencia-participante,
+.secuencia-activacion,
+.secuencia-fragmento,
+.secuencia-flecha,
+.secuencia-mensaje {
+  display: grid;
+  place-items: center;
+  min-height: 74px;
+  padding: 0.35rem;
+  background-color: var(--primary-color);
+}
+
+.actor-preview {
+  width: 34px;
+  height: 45px;
+  fill: none;
+  stroke: #111827;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.secuencia-actor span {
+  font-weight: bold;
+}
+
+.participante-preview {
+  border: 1px solid var(--blackish);
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.45rem;
+  font-weight: bold;
+}
+
+.linea-vida-preview {
+  height: 34px;
+  border-left: 1px dashed var(--blackish);
+}
+
+.secuencia-activacion div {
+  width: 10px;
+  height: 44px;
+  border: 1px solid var(--blackish);
+  background-color: white;
+}
+
+.secuencia-activacion span,
+.secuencia-fragmento span,
+.secuencia-flecha span,
+.secuencia-mensaje span {
+  font-weight: bold;
+}
+
+.secuencia-fragmento {
+  border: 1px solid var(--blackish);
+}
+
+.fragmento-preview-header {
+  justify-self: start;
+  align-self: start;
+  border-right: 1px solid var(--blackish);
+  border-bottom: 1px solid var(--blackish);
+  padding: 0.15rem 0.35rem;
+  font-weight: bold;
+}
+
+.flecha-preview {
+  width: 76px;
+  border-top: 1px solid var(--blackish);
+  position: relative;
+}
+
+.flecha-preview::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--blackish);
+  border-right: 1px solid var(--blackish);
+  transform: rotate(45deg);
+}
+
+.flecha-retorno-preview {
+  border-top-style: dashed;
+}
+
+.linea-punteada-preview {
+  border-top-style: dashed;
+}
+
+.linea-punteada-preview::after {
+  content: none;
+}
+
+.nombre-diagrama-cu {
+  max-width: 40ch;
+  line-clamp: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eliminar {
+  background-color: rgb(237, 63, 63) !important;
+}
+
+.opciones {
+  position: absolute;
+  border-radius: var(--border-radius);
+  left: 0;
+  z-index: 1;
+  top: 260%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.ultima-edicion,
+.tipo-diagrama {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.datos-proyecto h3,
+.tipo-diagrama {
+  align-self: flex-start;
 }

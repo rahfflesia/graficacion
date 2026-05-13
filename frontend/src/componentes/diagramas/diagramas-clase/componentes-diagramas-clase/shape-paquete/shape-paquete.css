@@ -1,0 +1,14 @@
+.pestana-paquete {
+  padding: 0rem 2.5rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.cuerpo-paquete {
+  padding: 2.25rem 4.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.pestana-paquete,
+.cuerpo-paquete {
+  background-color: var(--primary-color);
+}

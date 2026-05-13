@@ -1,0 +1,31 @@
+<ng-diagram-node-resize-adornment>
+  <div class="shape-actor-secuencia">
+    <svg class="actor-stickman" viewBox="0 0 72 96" aria-hidden="true">
+      <circle cx="36" cy="15" r="13"></circle>
+      <line x1="36" y1="28" x2="36" y2="58"></line>
+      <line x1="12" y1="40" x2="60" y2="40"></line>
+      <line x1="36" y1="58" x2="16" y2="88"></line>
+      <line x1="36" y1="58" x2="56" y2="88"></line>
+    </svg>
+
+    <div class="nombre-actor">
+      @if (estaEditandoNombre) {
+        <input
+          type="text"
+          class="shape-input"
+          [(ngModel)]="node().data.nombreParticipante"
+          (keydown.enter)="desactivarEdicionNombre()"
+          (blur)="desactivarEdicionNombre()"
+        />
+      } @else {
+        <span (dblclick)="activarEdicionNombre()">{{ node().data.nombreParticipante }}</span>
+      }
+    </div>
+
+    <div class="linea-vida"></div>
+    <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
+    <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+    <ng-diagram-port [side]="'top'" [type]="'both'" [id]="'port-top'" />
+    <ng-diagram-port [side]="'bottom'" [type]="'both'" [id]="'port-bottom'" />
+  </div>
+</ng-diagram-node-resize-adornment>

@@ -23,6 +23,7 @@
 <modal-crear-diagrama
   [toggler]="esModalCrearDiagramaVisible"
   (cerrar)="cerrarModalMenuDiagramas()"
+  (seleccionarDiagrama)="irSeccionDiagramas($event)"
 ></modal-crear-diagrama>
 <section class="flex-column">
   <div class="section-header flex-center">
@@ -89,7 +90,7 @@
           (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
           (editar)="seleccionarProyecto(proyecto); mostrarModalEditarProyecto()"
           (configurar)="mostrarModalConfigurarProyecto(); seleccionarProyecto(proyecto)"
-          (crearDiagrama)="mostrarModalMenuDiagramas()"
+          (crearDiagrama)="seleccionarProyecto(proyecto); mostrarModalMenuDiagramas()"
         ></proyecto-card>
       }
     </div>

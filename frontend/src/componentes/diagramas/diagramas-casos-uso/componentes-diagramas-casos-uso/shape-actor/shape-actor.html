@@ -1,0 +1,23 @@
+<div class="shape-actor">
+  <div class="imagen-actor">
+    <img
+      src="https://static.thenounproject.com/png/968079-200.png"
+      alt="actor-shape"
+      draggable="false"
+    />
+  </div>
+  @if (estaModoEdicionActorActivado) {
+    <input
+      type="text"
+      class="shape-input"
+      (keydown.enter)="desactivarModoEdicionActor()"
+      [(ngModel)]="node().data.textoActor"
+    />
+  } @else {
+    <div class="wrapper-texto-actor" (dblclick)="activarModoEdicionActor()">
+      <span>{{ node().data.textoActor }}</span>
+    </div>
+  }
+  <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
+  <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+</div>

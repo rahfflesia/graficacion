@@ -1,17 +1,53 @@
-<div class="shape-enum">
+<div class="shape">
   <span class="tipo-componente">ENUM</span>
-  <div class="cabecera">
-    <div class="cabecera-contenido-interno">Colores</div>
-  </div>
-  <div class="metodos">
-    <div class="metodos-contenido-interno">
-      <ul>
-        <li>Rojo</li>
-        <li>Verde</li>
-        <li>Azul</li>
-      </ul>
+  <main class="shape-main-content">
+    <div class="cabecera">
+      <div class="cabecera-contenido-interno" (dblclick)="activarModoEdicionNombre()">
+        @if (estaModoEdicionNombreActivado) {
+          <input
+            type="text"
+            class="shape-input"
+            [(ngModel)]="node().data.nombre"
+            (keydown.enter)="desactivarModoEdicionNombre()"
+          />
+        } @else {
+          {{ node().data.nombre }}
+        }
+      </div>
     </div>
-  </div>
+    <div class="metodos">
+      <div class="cabecera-seccion">
+        <span>Valores</span>
+        <button (click)="agregarValor()">+</button>
+      </div>
+      <div class="metodos-contenido-interno">
+        <ul>
+          @for (valor of node().data.valores; track $index; let i = $index) {
+            @if (indiceValorEditando === i) {
+              <input
+                type="text"
+                [(ngModel)]="node().data.valores[i]"
+                (keydown.enter)="desactivarModoEdicionValor()"
+                class="shape-input"
+              />
+            } @else {
+              <div class="metodo-wrapper">
+                <li (dblclick)="activarModoEdicionValor(i)">{{ valor }}</li>
+                <div class="shape-boton-borrar" (click)="borrarValor(i)">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=79023&format=png&color=0085db"
+                    alt="icono-borrar"
+                  />
+                </div>
+              </div>
+            }
+          } @empty {
+            <span>Aún no has agregado un método</span>
+          }
+        </ul>
+      </div>
+    </div>
+  </main>
   <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
   <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
 </div>

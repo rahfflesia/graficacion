@@ -1,0 +1,139 @@
+.seguimiento-section {
+  padding: 2rem;
+  min-height: 100dvh;
+  background-color: var(--body-bg-color);
+}
+
+.formulario-seguimiento {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+}
+
+.input-wrapper-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-wrapper span {
+  font-size: 0.8rem;
+  color: rgb(130, 130, 130);
+}
+
+.lista-seguimientos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.seguimiento-titulo {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.estado {
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--border-radius);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.estado-correcto {
+  background-color: var(--green-fg-color);
+  color: var(--green);
+}
+
+.estado-error {
+  background-color: var(--red-fg-color);
+  color: var(--red);
+}
+
+.estado-proceso {
+  background-color: var(--orange-fg-color);
+  color: var(--orange);
+}
+
+.seguimiento-info {
+  font-size: 0.85rem;
+  color: rgb(120, 120, 120);
+}
+
+.seguimiento-acciones {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.seguimiento-acciones button {
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.btn-editar {
+  background-color: var(--blue-fg-color);
+  color: var(--blue);
+}
+
+.btn-eliminar {
+  background-color: var(--red-fg-color);
+  color: var(--red);
+}
+
+.involucrado {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--orange);
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.lista-involucrados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.info-roles {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.info-roles > * {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.eliminar {
+  font-size: 0.6rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.sin-seguimientos {
+  grid-template-columns: 1 / -1;
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: var(--box-shadow);
+}
+
+@media (max-width: 900px) {
+  .lista-seguimientos,
+  .input-wrapper-row {
+    grid-template-columns: 1fr;
+  }
+}

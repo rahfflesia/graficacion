@@ -1,8 +1,10 @@
 @if (estaModoEdicionActivado) {
-  <div class="wrapper-edicion">
-    <input type="text" />
-    <button (click)="desactivarModoEdicion()">Cerrar</button>
-  </div>
+  <input
+    type="text"
+    [(ngModel)]="textoEtiqueta"
+    (keydown.enter)="establecerValorEtiqueta()"
+    class="shape-input"
+  />
 } @else {
-  <label for="" (dblclick)="activarModoEdicion()">Etiqueta</label>
+  <label for="" (dblclick)="activarModoEdicion()">{{ node().data.etiqueta }}</label>
 }

@@ -1,17 +1,55 @@
-<div class="shape-interfaz">
+<div class="shape">
   <span class="tipo-componente">INTERFAZ</span>
-  <div class="cabecera">
-    <div class="cabecera-contenido-interno">Interfaz</div>
-  </div>
-  <div class="metodos">
-    <div class="metodos-contenido-interno">
-      <ul>
-        <li>metodo1()</li>
-        <li>metodo2()</li>
-        <li>metodo3()</li>
-      </ul>
+  <main class="shape-main-content">
+    <div class="cabecera">
+      <div class="cabecera-contenido-interno" (dblclick)="activarModoEdicionInterfaz()">
+        @if (estaModoEdicionInterfazActivado) {
+          <input
+            type="text"
+            class="shape-input"
+            (keydown.enter)="desactivarModoEdicionInterfaz()"
+            [(ngModel)]="node().data.nombre"
+          />
+        } @else {
+          {{ node().data.nombre }}
+        }
+      </div>
     </div>
-  </div>
+    <div class="metodos">
+      <div class="cabecera-seccion">
+        <span>Métodos</span>
+        <button (click)="agregarMetodo()">+</button>
+      </div>
+      <div class="metodos-contenido-interno">
+        <ul>
+          @for (metodo of node().data.metodos; track $index; let i = $index) {
+            @if (indiceMetodoEditando === i) {
+              <input
+                type="text"
+                [(ngModel)]="node().data.metodos[i]"
+                (keydown.enter)="desactivarModoEdicionMetodo()"
+                class="shape-input"
+              />
+            } @else {
+              <div class="metodo-wrapper">
+                <li (dblclick)="activarModoEdicion(i)">{{ metodo }}</li>
+                <div class="shape-boton-borrar" (click)="borrarMetodo(i)">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=79023&format=png&color=0085db"
+                    alt="icono-borrar"
+                  />
+                </div>
+              </div>
+            }
+          } @empty {
+            <span>Aún no has agregado un método</span>
+          }
+        </ul>
+      </div>
+    </div>
+  </main>
   <ng-diagram-port [side]="'left'" [type]="'both'" [id]="'port-left'" />
   <ng-diagram-port [side]="'right'" [type]="'both'" [id]="'port-right'" />
+  <ng-diagram-port [side]="'top'" [type]="'both'" [id]="'port-top'" />
+  <ng-diagram-port [side]="'bottom'" [type]="'both'" [id]="'port-bottom'" />
 </div>

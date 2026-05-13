@@ -1,12 +1,24 @@
 import { Router } from "express";
-import { prisma } from "../db/db.js";
+import { prisma } from "../lib/prisma.ts";
 import bcrypt from "bcrypt";
+import {
+  enviarError,
+  responderCamposFaltantes,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const registro = Router();
 
 registro.post("/registrar", async (req, res) => {
   try {
     const datosRegistro = req.body;
+    const camposFaltantes = validarCamposRequeridos(datosRegistro, [
+      "nombre",
+      "correo",
+      "contrasena",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+
     const datosCuenta = await prisma.usuarios.create({
       data: {
         nombre: datosRegistro.nombre,
@@ -15,12 +27,9 @@ registro.post("/registrar", async (req, res) => {
       },
     });
 
-    if (datosCuenta) return res.json(datosCuenta);
-
-    return res.json({ error: "Ha ocurrido un error" });
+    return res.status(201).json(datosCuenta);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al registrar el usuario");
   }
 });
 

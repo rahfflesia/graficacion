@@ -50,3 +50,32 @@ export const tipopregunta = {
 } as const
 
 export type tipopregunta = (typeof tipopregunta)[keyof typeof tipopregunta]
+
+
+export const diagrama = {
+  clase: 'clase',
+  secuencia: 'secuencia',
+  casos_uso: 'casos_uso',
+  paquetes: 'paquetes'
+} as const
+
+export type diagrama = (typeof diagrama)[keyof typeof diagrama]
+
+
+export const estadoseguimientotransaccional = {
+  Pendiente: 'Pendiente',
+  En_proceso: 'En_proceso',
+  Finalizado: 'Finalizado',
+  Error: 'Error'
+} as const
+
+export type estadoseguimientotransaccional = (typeof estadoseguimientotransaccional)[keyof typeof estadoseguimientotransaccional]
+
+
+export const tipotransaccionseguimientotransaccional = {
+  Manual: 'Manual',
+  Autom_tica: 'Autom_tica',
+  Sistema_externo: 'Sistema_externo'
+} as const
+
+export type tipotransaccionseguimientotransaccional = (typeof tipotransaccionseguimientotransaccional)[keyof typeof tipotransaccionseguimientotransaccional]

@@ -1,6 +1,13 @@
 import { prisma } from "../lib/prisma.ts";
 import { Router } from "express";
 import { validarToken } from "../middleware/authMiddleware.js";
+import {
+  enviarError,
+  parseId,
+  responderCamposFaltantes,
+  responderIdInvalido,
+  validarCamposRequeridos,
+} from "../utils/http.js";
 
 const participantes = Router();
 
@@ -52,7 +59,15 @@ participantes.post("/registrar", async (req, res) => {
   try {
     const datosParticipante = req.body;
     const { idrol, idproyecto } = datosParticipante;
-    await prisma.$transaction(async (tx) => {
+    const camposFaltantes = validarCamposRequeridos(datosParticipante, [
+      "nombre",
+      "apellidoUno",
+      "idrol",
+      "idproyecto",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+
+    const participanteFormateado = await prisma.$transaction(async (tx) => {
       const participanteRegistrado = await tx.personas.create({
         data: {
           nombre: datosParticipante.nombre,
@@ -66,8 +81,8 @@ participantes.post("/registrar", async (req, res) => {
         await tx.rolespersonasproyecto.create({
           data: {
             idpersona: participanteRegistrado.idpersona,
-            idrol: idrol,
-            idproyecto: idproyecto,
+            idrol: Number(idrol),
+            idproyecto: Number(idproyecto),
             tipo: "Persona",
           },
           select: {
@@ -87,11 +102,12 @@ participantes.post("/registrar", async (req, res) => {
           detallesParticipanteRegistrado.idrolpersonaproyecto,
         idrol: detallesParticipanteRegistrado.idrol,
       };
-      return res.status(201).json(datosParticipanteFormateados);
+      return datosParticipanteFormateados;
     });
+
+    return res.status(201).json(participanteFormateado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al registrar el participante");
   }
 });
 
@@ -109,9 +125,19 @@ nombre: string;
 
 participantes.put("/editar/:idparticipante", async (req, res) => {
   try {
-    const { idparticipante } = req.params;
+    const idparticipante = parseId(req.params.idparticipante);
+    if (!idparticipante) return responderIdInvalido(res, "idparticipante");
+
     const datosParticipante = req.body;
-    await prisma.$transaction(async (tx) => {
+    const camposFaltantes = validarCamposRequeridos(datosParticipante, [
+      "nombre",
+      "apellidouno",
+      "idrol",
+      "idrolpersonaproyecto",
+    ]);
+    if (camposFaltantes.length > 0) return responderCamposFaltantes(res, camposFaltantes);
+
+    const participanteEditado = await prisma.$transaction(async (tx) => {
       const datosParticipanteEditados = await tx.personas.update({
         data: {
           nombre: datosParticipante.nombre,
@@ -121,7 +147,7 @@ participantes.put("/editar/:idparticipante", async (req, res) => {
           telefono: datosParticipante.telefono,
         },
         where: {
-          idpersona: parseInt(idparticipante),
+          idpersona: idparticipante,
         },
       });
       const rolParticipanteEditado = await tx.rolespersonasproyecto.update({
@@ -134,6 +160,8 @@ participantes.put("/editar/:idparticipante", async (req, res) => {
           ),
         },
         select: {
+          idrol: true,
+          idrolpersonaproyecto: true,
           roles: {
             select: {
               nombre: true,
@@ -147,27 +175,29 @@ participantes.put("/editar/:idparticipante", async (req, res) => {
         idrolpersonaproyecto: rolParticipanteEditado.idrolpersonaproyecto,
         nombrerol: rolParticipanteEditado.roles.nombre,
       };
-      return res.status(200).json(datosParticipanteEditadoFormateados);
+      return datosParticipanteEditadoFormateados;
     });
+
+    return res.status(200).json(participanteEditado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al editar el participante");
   }
 });
 
 participantes.delete("/eliminar/:idrolpersonaproyecto", async (req, res) => {
   try {
-    const { idrolpersonaproyecto } = req.params;
+    const idrolpersonaproyecto = parseId(req.params.idrolpersonaproyecto);
+    if (!idrolpersonaproyecto) return responderIdInvalido(res, "idrolpersonaproyecto");
+
     // Acá retorno una interfaz diferente porque nomás ocupo el id para comparar y actualizar la interfaz de usuario en el frontend
     const participanteEliminado = await prisma.rolespersonasproyecto.delete({
       where: {
-        idrolpersonaproyecto: parseInt(idrolpersonaproyecto),
+        idrolpersonaproyecto,
       },
     });
     return res.status(200).json(participanteEliminado);
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al eliminar el participante");
   }
 });
 

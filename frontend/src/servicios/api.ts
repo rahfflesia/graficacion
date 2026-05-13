@@ -22,13 +22,20 @@ import {
 import { TecnicaRecoleccion } from '../models/tecnicasRecoleccion.interface';
 import { DatosFormularioSubproceso, Subproceso } from '../models/subprocesos.interface';
 import { DatosFormularioObservacion, Observacion } from '../models/observacion';
-import { DatosFormularioCuestionario, Cuestionario, DatosRespuestaCuestionario, RespuestaCuestionario } from '../models/cuestionario';
+import {
+  DatosFormularioCuestionario,
+  Cuestionario,
+  DatosRespuestaCuestionario,
+  RespuestaCuestionario,
+} from '../models/cuestionario';
 import { DatosFormularioHistoriaUsuario, HistoriaUsuario } from '../models/historiaUsuario';
 import { DatosEntrevista, Entrevista } from '../models/entrevista';
 
 import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
 import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
+import { DiagramaClase } from '../models/diagramas';
 import { Usuario as UsuarioService } from './usuario';
+import { SeguimientoTransaccional } from '../models/seguimientoTransaccional';
 @Injectable({
   providedIn: 'root',
 })
@@ -49,6 +56,9 @@ export class Api {
   private proyectosEliminarUrl = 'eliminar/';
   private proyectosEditarUrl = 'editar/';
   private proyectoObtenerDatosUrl = 'obtenerdatos/';
+  // Este endpoint solo me retorna un proyecto y contiene solo los campos de la tabla proyectos
+  // Lo uso en la creación de diagramas para obtener el nombre del proyecto
+  private proyectoObtenerDatosProyecto = 'obtenerdatosproyecto/';
 
   private procesosUrl = 'procesos/';
   private procesosCrearUrl = 'crear/';
@@ -99,7 +109,7 @@ export class Api {
   private historiasUsuarioObtenerUrl = 'obtener/';
   private historiasUsuarioEliminarUrl = 'eliminar/';
   private historiasUsuarioEditarUrl = 'editar/';
-  
+
   private entrevistasUrl = 'entrevistas/';
   private entrevistasCrearUrl = 'crear/';
   private entrevistasObtenerUrl = 'obtener/';
@@ -118,7 +128,22 @@ export class Api {
   private analisisDocumentosEliminarUrl = 'eliminar/';
   private analisisDocumentosEditarUrl = 'editar/';
 
-  private obtenerOpcionesAutenticadas() {
+  private diagramasUrl = 'diagramas/';
+  private diagramasCrearUrl = 'crear/';
+  private diagramasEditarUrl = 'editar/';
+  private diagramasObtenerUrl = 'obtener/';
+  private diagramasEliminarUrl = 'eliminar/';
+
+  private seguimientoTransaccionalUrl = 'seguimiento-transaccional/';
+  private seguimientoTransaccionalCrearUrl = 'crear/';
+  private seguimientoTransaccionalEditarUrl = 'editar/';
+  private seguimientoTransaccionalObtenerUrl = 'obtener/';
+  private seguimientoTransaccionalEliminarUrl = 'eliminar/';
+
+  private obtenerOpcionesAutenticadas(): {
+    withCredentials: true;
+    headers?: { Authorization: string };
+  } {
     const token = this.usuarioService.obtenerUsuario()?.token;
 
     if (!token) return { withCredentials: true };
@@ -156,21 +181,18 @@ export class Api {
     return this.http.post<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosCrearUrl,
       proyecto,
-      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   obtenerProyectos(idUsuario: number): Observable<Proyectos[]> {
     return this.http.get<Proyectos[]>(
       this.baseUrl + this.proyectosUrl + this.proyectosObtenerTodosUrl + idUsuario,
-      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   eliminarProyecto(idProyecto: number): Observable<Proyectos> {
     return this.http.delete<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosEliminarUrl + idProyecto,
-      this.obtenerOpcionesAutenticadas(),
     );
   }
 
@@ -178,14 +200,18 @@ export class Api {
     return this.http.put<Proyectos>(
       this.baseUrl + this.proyectosUrl + this.proyectosEditarUrl + idProyecto,
       proyectoEditar,
-      this.obtenerOpcionesAutenticadas(),
     );
   }
 
   obtenerDatosGeneralesProyecto(idProyecto: number): Observable<DatosGeneralesProyecto> {
     return this.http.get<DatosGeneralesProyecto>(
       this.baseUrl + this.proyectosUrl + this.proyectoObtenerDatosUrl + idProyecto,
-      this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  obtenerDatosProyecto(idProyecto: number): Observable<any> {
+    return this.http.get<any>(
+      this.baseUrl + this.proyectosUrl + this.proyectoObtenerDatosProyecto + idProyecto,
     );
   }
 
@@ -473,6 +499,83 @@ export class Api {
   eliminarHistoriaUsuario(id: number) {
     return this.http.delete(
       this.baseUrl + this.historiasUsuarioUrl + this.historiasUsuarioEliminarUrl + id,
+    );
+  }
+
+  crearDiagrama(datosDiagrama: DiagramaClase): Observable<DiagramaClase> {
+    return this.http.post<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasCrearUrl,
+      datosDiagrama,
+      this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  obtenerDiagrama(datosDiagrama: {
+    idproyecto: number;
+    tipo: 'clase' | 'secuencia' | 'casos_uso' | 'paquetes';
+  }): Observable<DiagramaClase> {
+    return this.http.get<DiagramaClase>(
+      this.baseUrl +
+        this.diagramasUrl +
+        this.diagramasObtenerUrl +
+        'id/' +
+        datosDiagrama.idproyecto +
+        '/tipo/' +
+        datosDiagrama.tipo,
+      this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  editarDiagrama(idDiagrama: number, datosDiagrama: DiagramaClase): Observable<DiagramaClase> {
+    return this.http.put<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasEditarUrl + idDiagrama,
+      datosDiagrama,
+      this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  eliminarDiagrama(idDiagrama: number): Observable<DiagramaClase> {
+    return this.http.delete<DiagramaClase>(
+      this.baseUrl + this.diagramasUrl + this.diagramasEliminarUrl + idDiagrama,
+      this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  obtenerSeguimientosTransaccionales(idSubproceso: number): Observable<SeguimientoTransaccional[]> {
+    return this.http.get<SeguimientoTransaccional[]>(
+      this.baseUrl +
+        this.seguimientoTransaccionalUrl +
+        this.seguimientoTransaccionalObtenerUrl +
+        idSubproceso,
+    );
+  }
+
+  crearSeguimientoTransaccional(
+    datosSeguimientoTransaccional: SeguimientoTransaccional,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.post<SeguimientoTransaccional>(
+      this.baseUrl + this.seguimientoTransaccionalUrl + this.seguimientoTransaccionalCrearUrl,
+      datosSeguimientoTransaccional,
+    );
+  }
+
+  editarSeguimientoTransaccional(
+    seguimientoTransaccionalEditar: SeguimientoTransaccional,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.put<SeguimientoTransaccional>(
+      this.baseUrl + this.seguimientoTransaccionalUrl + this.seguimientoTransaccionalEditarUrl,
+      seguimientoTransaccionalEditar,
+    );
+  }
+
+  eliminarSeguimientoTransaccional(
+    idSeguimientoTransaccional: number,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.delete<SeguimientoTransaccional>(
+      this.baseUrl +
+        this.seguimientoTransaccionalUrl +
+        this.seguimientoTransaccionalEliminarUrl +
+        idSeguimientoTransaccional,
     );
   }
 }

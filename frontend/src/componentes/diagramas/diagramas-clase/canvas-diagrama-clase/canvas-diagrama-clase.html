@@ -1,44 +1,269 @@
+<modal-eliminar-diagrama
+  [toggler]="esModalEliminarDiagramaVisible"
+  (cerrar)="ocultarModalEliminarDiagrama()"
+  (confirmar)="eliminarDiagrama()"
+  (cancelar)="ocultarModalEliminarDiagrama()"
+></modal-eliminar-diagrama>
 <div class="canvas-wrapper">
   <ng-diagram
     [model]="model"
     class="canvas"
     [nodeTemplateMap]="nodeTemplateMap"
-    (drop)="f($event)"
+    (drop)="onDrop($event)"
+    (dragover)="onDragover($event)"
+    [config]="config"
   ></ng-diagram>
   <div class="menu-lateral flex-column md-gap" [class.animar-menu-lateral]="estaAbiertoMenuLateral">
     <header>
       <div>
         <h3>Menú de componentes</h3>
-        <span>Selecciona uno</span>
+        <span>Suelta y arrastra o haz click sobre un componente</span>
       </div>
       <div class="close-button" (click)="cerrarMenuLateral()">X</div>
     </header>
     <div class="seccion-componentes">
-      <button (click)="agregarForma('diagramaClase')" draggable="true">Diagrama de clase</button>
-      <button (click)="agregarForma('diagramaInterfaz')">Interfaz</button>
-      <button (click)="agregarForma('diagramaEnum')">Enum</button>
-      <button (click)="agregarForma('etiqueta')">Etiqueta</button>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaClase')">
-        Diagrama de clase
-      </div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaInterfaz')">Interfaz</div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'diagramaEnum')">Enum</div>
-      <div draggable="true" (dragstart)="onDragStart($event, 'etiqueta')">Etiqueta</div>
+      @switch (tipoDiagramaSeleccionado()) {
+        @case ('clase') {
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'diagramaClase')"
+            (click)="agregarForma('diagramaClase', 'click')"
+            class="menu-shape"
+          >
+            <div class="nombre-shape">Clase</div>
+            <div class="atributos-shape">Atributos</div>
+            <div class="metodos-shape">Métodos</div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'diagramaInterfaz')"
+            (click)="agregarForma('diagramaInterfaz', 'click')"
+            class="menu-shape"
+          >
+            <div class="nombre-shape">Interfaz</div>
+            <div class="metodos-shape">Métodos</div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'diagramaEnum')"
+            (click)="agregarForma('diagramaEnum', 'click')"
+            class="menu-shape"
+          >
+            <div class="nombre-shape">Enum</div>
+            <div class="metodos-shape">Valores</div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'paquete')"
+            (click)="agregarForma('paquete', 'click')"
+            class="paquete-shape"
+            style="cursor: grab"
+          >
+            <span>texto</span>
+            <div>Paquete</div>
+          </div>
+        }
+        @case ('casos_uso') {
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'actor')"
+            (click)="agregarForma('actor', 'click')"
+            class="menu-shape"
+          >
+            <div class="actor-content-wrapper">
+              <div class="actor-image-wrapper">
+                <img
+                  src="https://static.thenounproject.com/png/968079-200.png"
+                  alt="actor-imagen"
+                />
+              </div>
+              <div>
+                <span>Actor</span>
+              </div>
+            </div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'casoUso')"
+            (click)="agregarForma('casoUso', 'click')"
+            class="menu-shape caso-uso"
+          >
+            <div class="caso-uso-texto-wrapper">Caso uso</div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'boundary')"
+            (click)="agregarForma('boundary', 'click')"
+            class="menu-shape boundary"
+          >
+            Boundary
+          </div>
+        }
+        @case ('secuencia') {
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'actorSecuencia')"
+            (click)="agregarForma('actorSecuencia', 'click')"
+            class="menu-shape secuencia-actor"
+          >
+            <svg class="actor-preview" viewBox="0 0 72 96" aria-hidden="true">
+              <circle cx="36" cy="15" r="13"></circle>
+              <line x1="36" y1="28" x2="36" y2="58"></line>
+              <line x1="12" y1="40" x2="60" y2="40"></line>
+              <line x1="36" y1="58" x2="16" y2="88"></line>
+              <line x1="36" y1="58" x2="56" y2="88"></line>
+            </svg>
+            <span>Actor</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'lineaVida')"
+            (click)="agregarForma('lineaVida', 'click')"
+            class="menu-shape secuencia-participante"
+          >
+            <div class="participante-preview">Participante</div>
+            <div class="linea-vida-preview"></div>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'activacion')"
+            (click)="agregarForma('activacion', 'click')"
+            class="menu-shape secuencia-activacion"
+          >
+            <div></div>
+            <span>Activación</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'fragmento')"
+            (click)="agregarForma('fragmento', 'click')"
+            class="menu-shape secuencia-fragmento"
+          >
+            <div class="fragmento-preview-header">alt [condición]</div>
+            <span>Fragmento</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'flechaSecuencia')"
+            (click)="agregarForma('flechaSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview"></div>
+            <span>Flecha</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'flechaRetornoSecuencia')"
+            (click)="agregarForma('flechaRetornoSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview flecha-retorno-preview"></div>
+            <span>Retorno</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'lineaPunteadaSecuencia')"
+            (click)="agregarForma('lineaPunteadaSecuencia', 'click')"
+            class="menu-shape secuencia-flecha"
+          >
+            <div class="flecha-preview linea-punteada-preview"></div>
+            <span>Línea</span>
+          </div>
+          <div
+            draggable="true"
+            (dragstart)="onDragStart($event, 'etiqueta')"
+            (click)="agregarForma('etiqueta', 'click')"
+            class="menu-shape secuencia-mensaje"
+          >
+            <span>mensaje()</span>
+          </div>
+        }
+      }
+      @if (tipoDiagramaSeleccionado() !== 'secuencia') {
+        <div
+          draggable="true"
+          (dragstart)="onDragStart($event, 'etiqueta')"
+          (click)="agregarForma('etiqueta', 'click')"
+          style="display: grid; place-items: center"
+        >
+          <div class="menu-shape" style="padding: 0.25rem 0.5rem">Etiqueta</div>
+        </div>
+      }
     </div>
   </div>
   <div class="barra-flotante">
-    <div>
-      <h3>Creación de diagramas de clase</h3>
-    </div>
-    @if (!estaAbiertoMenuLateral) {
-      <div class="abrir-menu" (click)="abrirMenuLateral()">
-        <img
-          src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000"
-          alt="hamburger-menu"
+    <div class="nombre-diagrama">
+      @if (estaEdicionNombreDiagramaActiva) {
+        <input
+          type="text"
+          [(ngModel)]="nombreDiagrama"
+          (keydown.enter)="desactivarEdicionNombreDiagrama()"
+          class="name-input"
+          autofocus
         />
-      </div>
-    }
-    <button class="default-button" (click)="guardarDiagramaClase()">Guardar</button>
+      } @else {
+        <h4 (dblclick)="activarEdicionNombreDiagrama()" class="nombre-diagrama-cu">
+          <div class="flex-column">
+            {{ esDiagramaExistente ? '(Editando)' : '' }} {{ nombreDiagrama }}
+            @if (datosDiagrama()?.ultimaedicion) {
+              <span class="ultima-edicion"
+                >Última edición: {{ datosDiagrama()?.ultimaedicion ?? '' | date: 'short' }}</span
+              >
+            }
+          </div>
+        </h4>
+      }
+    </div>
+    <div class="datos-proyecto flex-column">
+      <h3>{{ nombreProyecto }}</h3>
+      <h4 class="tipo-diagrama">
+        @switch (tipoDiagramaSeleccionado()) {
+          @case ('clase') {
+            Diagrama de clases
+          }
+          @case ('casos_uso') {
+            Diagrama de casos de uso
+          }
+          @case ('paquetes') {
+            Diagrama de paquetes
+          }
+          @case ('secuencia') {
+            Diagrama de secuencia
+          }
+        }
+      </h4>
+    </div>
+    <div class="opciones flex-column">
+      @if (!estaAbiertoMenuLateral) {
+        <div class="abrir-menu" (click)="abrirMenuLateral()">
+          <img
+            src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000"
+            alt="hamburger-menu"
+          />
+        </div>
+      }
+      <button
+        class="guardar"
+        (click)="esDiagramaExistente ? editarDiagrama() : crearDiagrama()"
+        style="border: none"
+        [disabled]="!nombreDiagrama.trim()"
+      >
+        <img
+          src="https://img.icons8.com/?size=100&id=18764&format=png&color=ffffff"
+          alt="icono-guardar"
+        />
+      </button>
+      <button
+        class="eliminar"
+        [disabled]="!esDiagramaExistente"
+        (click)="mostrarModalEliminarDiagrama()"
+      >
+        <img
+          src="https://img.icons8.com/?size=100&id=VlO1zjsC88sT&format=png&color=ffffff"
+          alt="icono-eliminar"
+        />
+      </button>
+    </div>
   </div>
   <ng-diagram-minimap></ng-diagram-minimap>
 </div>

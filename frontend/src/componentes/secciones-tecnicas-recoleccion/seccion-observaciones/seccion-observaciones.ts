@@ -63,7 +63,7 @@ export class SeccionObservaciones implements OnInit {
 
     this.seleccionarOpcion('Pasiva');
     this.actualizarValidezCheckbox();
-    // Aquí usé el operador de non null assertion, tengo que cambiar eso, no olvidar!!
+
     if (
       this.datosTecnica()?.participantes === undefined ||
       this.datosTecnica()?.participantes === null

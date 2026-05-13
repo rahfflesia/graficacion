@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { validarToken } from "../middleware/authMiddleware";
+import { validarToken } from "../middleware/authMiddleware.js";
+import { enviarError } from "../utils/http.js";
 
 const logout = Router();
 
@@ -10,8 +11,7 @@ logout.post("/", async (req, res) => {
     res.clearCookie("token");
     res.status(200).json({ mensaje: "La cookie ha sido eliminada" });
   } catch (error) {
-    console.error(error);
-    return res.json(error);
+    return enviarError(res, error, "Error al cerrar sesión");
   }
 });
 

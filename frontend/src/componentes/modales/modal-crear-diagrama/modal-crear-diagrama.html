@@ -5,19 +5,19 @@
       <div class="close-button" (click)="cerrar.emit()">X</div>
     </header>
     <div class="opciones-diagramas flex-column md-gap">
-      <button class="boton-menu-diagrama">
+      <button class="boton-menu-diagrama" (click)="seleccionarDiagrama.emit('clase')">
         <span>Crear diagrama de clases</span>
         <span>Descripción simple</span>
       </button>
-      <button class="boton-menu-diagrama">
+      <button class="boton-menu-diagrama" (click)="seleccionarDiagrama.emit('casos_uso')">
         <span>Crear diagrama de casos de uso</span>
         <span>Descripción simple</span>
       </button>
-      <button class="boton-menu-diagrama">
+      <button class="boton-menu-diagrama" (click)="seleccionarDiagrama.emit('secuencia')">
         <span>Crear diagrama de secuencia</span>
         <span>Descripción simple</span>
       </button>
-      <button class="boton-menu-diagrama">
+      <button class="boton-menu-diagrama" (click)="seleccionarDiagrama.emit('paquetes')">
         <span>Crear diagrama de paquetes</span>
         <span>Descripción simple</span>
       </button>

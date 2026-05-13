@@ -256,8 +256,8 @@ export type analisisDocumentosWhereInput = {
   fuente?: Prisma.StringFilter<"analisisDocumentos"> | string
   fechaanalisis?: Prisma.DateTimeFilter<"analisisDocumentos"> | Date | string
   notas?: Prisma.StringNullableFilter<"analisisDocumentos"> | string | null
-  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   hallazgosanalisis?: Prisma.HallazgosanalisisListRelationFilter
 }
 
@@ -271,8 +271,8 @@ export type analisisDocumentosOrderByWithRelationInput = {
   fuente?: Prisma.SortOrder
   fechaanalisis?: Prisma.SortOrder
   notas?: Prisma.SortOrderInput | Prisma.SortOrder
-  subprocesos?: Prisma.subprocesosOrderByWithRelationInput
   personas?: Prisma.personasOrderByWithRelationInput
+  subprocesos?: Prisma.subprocesosOrderByWithRelationInput
   hallazgosanalisis?: Prisma.hallazgosanalisisOrderByRelationAggregateInput
 }
 
@@ -289,8 +289,8 @@ export type analisisDocumentosWhereUniqueInput = Prisma.AtLeast<{
   fuente?: Prisma.StringFilter<"analisisDocumentos"> | string
   fechaanalisis?: Prisma.DateTimeFilter<"analisisDocumentos"> | Date | string
   notas?: Prisma.StringNullableFilter<"analisisDocumentos"> | string | null
-  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   hallazgosanalisis?: Prisma.HallazgosanalisisListRelationFilter
 }, "idanalisis">
 
@@ -333,8 +333,8 @@ export type analisisDocumentosCreateInput = {
   fuente: string
   fechaanalisis?: Date | string
   notas?: string | null
-  subprocesos: Prisma.subprocesosCreateNestedOneWithoutAnalisisDocumentosInput
   personas: Prisma.personasCreateNestedOneWithoutAnalisisDocumentosInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutAnalisisDocumentosInput
   hallazgosanalisis?: Prisma.hallazgosanalisisCreateNestedManyWithoutAnalisisDocumentosInput
 }
 
@@ -358,8 +358,8 @@ export type analisisDocumentosUpdateInput = {
   fuente?: Prisma.StringFieldUpdateOperationsInput | string
   fechaanalisis?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notas?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
   personas?: Prisma.personasUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
   hallazgosanalisis?: Prisma.hallazgosanalisisUpdateManyWithoutAnalisisDocumentosNestedInput
 }
 
@@ -690,8 +690,8 @@ export type analisisDocumentosCreateWithoutHallazgosanalisisInput = {
   fuente: string
   fechaanalisis?: Date | string
   notas?: string | null
-  subprocesos: Prisma.subprocesosCreateNestedOneWithoutAnalisisDocumentosInput
   personas: Prisma.personasCreateNestedOneWithoutAnalisisDocumentosInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutAnalisisDocumentosInput
 }
 
 export type analisisDocumentosUncheckedCreateWithoutHallazgosanalisisInput = {
@@ -729,8 +729,8 @@ export type analisisDocumentosUpdateWithoutHallazgosanalisisInput = {
   fuente?: Prisma.StringFieldUpdateOperationsInput | string
   fechaanalisis?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notas?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
   personas?: Prisma.personasUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutAnalisisDocumentosNestedInput
 }
 
 export type analisisDocumentosUncheckedUpdateWithoutHallazgosanalisisInput = {
@@ -876,8 +876,8 @@ export type analisisDocumentosSelect<ExtArgs extends runtime.Types.Extensions.In
   fuente?: boolean
   fechaanalisis?: boolean
   notas?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   hallazgosanalisis?: boolean | Prisma.analisisDocumentos$hallazgosanalisisArgs<ExtArgs>
   _count?: boolean | Prisma.AnalisisDocumentosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["analisisDocumentos"]>
@@ -892,8 +892,8 @@ export type analisisDocumentosSelectCreateManyAndReturn<ExtArgs extends runtime.
   fuente?: boolean
   fechaanalisis?: boolean
   notas?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["analisisDocumentos"]>
 
 export type analisisDocumentosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -906,8 +906,8 @@ export type analisisDocumentosSelectUpdateManyAndReturn<ExtArgs extends runtime.
   fuente?: boolean
   fechaanalisis?: boolean
   notas?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["analisisDocumentos"]>
 
 export type analisisDocumentosSelectScalar = {
@@ -924,25 +924,25 @@ export type analisisDocumentosSelectScalar = {
 
 export type analisisDocumentosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idanalisis" | "idsubproceso" | "nombre" | "descripcion" | "idanalista" | "tipodocumento" | "fuente" | "fechaanalisis" | "notas", ExtArgs["result"]["analisisDocumentos"]>
 export type analisisDocumentosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   hallazgosanalisis?: boolean | Prisma.analisisDocumentos$hallazgosanalisisArgs<ExtArgs>
   _count?: boolean | Prisma.AnalisisDocumentosCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type analisisDocumentosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }
 export type analisisDocumentosIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }
 
 export type $analisisDocumentosPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "analisisDocumentos"
   objects: {
-    subprocesos: Prisma.$subprocesosPayload<ExtArgs>
     personas: Prisma.$personasPayload<ExtArgs>
+    subprocesos: Prisma.$subprocesosPayload<ExtArgs>
     hallazgosanalisis: Prisma.$hallazgosanalisisPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1349,8 +1349,8 @@ readonly fields: analisisDocumentosFieldRefs;
  */
 export interface Prisma__analisisDocumentosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   personas<T extends Prisma.personasDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personasDefaultArgs<ExtArgs>>): Prisma.Prisma__personasClient<runtime.Types.Result.GetResult<Prisma.$personasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   hallazgosanalisis<T extends Prisma.analisisDocumentos$hallazgosanalisisArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.analisisDocumentos$hallazgosanalisisArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$hallazgosanalisisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

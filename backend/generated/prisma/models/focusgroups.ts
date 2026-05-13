@@ -240,10 +240,10 @@ export type focusgroupsWhereInput = {
   idmoderador?: Prisma.IntFilter<"focusgroups"> | number
   lugar?: Prisma.StringFilter<"focusgroups"> | string
   fechahora?: Prisma.DateTimeFilter<"focusgroups"> | Date | string
-  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
-  temasfocusgroup?: Prisma.TemasfocusgroupListRelationFilter
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   participantesfg?: Prisma.ParticipantesfgListRelationFilter
+  temasfocusgroup?: Prisma.TemasfocusgroupListRelationFilter
 }
 
 export type focusgroupsOrderByWithRelationInput = {
@@ -254,10 +254,10 @@ export type focusgroupsOrderByWithRelationInput = {
   idmoderador?: Prisma.SortOrder
   lugar?: Prisma.SortOrder
   fechahora?: Prisma.SortOrder
-  subprocesos?: Prisma.subprocesosOrderByWithRelationInput
   personas?: Prisma.personasOrderByWithRelationInput
-  temasfocusgroup?: Prisma.temasfocusgroupOrderByRelationAggregateInput
+  subprocesos?: Prisma.subprocesosOrderByWithRelationInput
   participantesfg?: Prisma.participantesfgOrderByRelationAggregateInput
+  temasfocusgroup?: Prisma.temasfocusgroupOrderByRelationAggregateInput
 }
 
 export type focusgroupsWhereUniqueInput = Prisma.AtLeast<{
@@ -271,10 +271,10 @@ export type focusgroupsWhereUniqueInput = Prisma.AtLeast<{
   idmoderador?: Prisma.IntFilter<"focusgroups"> | number
   lugar?: Prisma.StringFilter<"focusgroups"> | string
   fechahora?: Prisma.DateTimeFilter<"focusgroups"> | Date | string
-  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   personas?: Prisma.XOR<Prisma.PersonasScalarRelationFilter, Prisma.personasWhereInput>
-  temasfocusgroup?: Prisma.TemasfocusgroupListRelationFilter
+  subprocesos?: Prisma.XOR<Prisma.SubprocesosScalarRelationFilter, Prisma.subprocesosWhereInput>
   participantesfg?: Prisma.ParticipantesfgListRelationFilter
+  temasfocusgroup?: Prisma.TemasfocusgroupListRelationFilter
 }, "idfocusgroup">
 
 export type focusgroupsOrderByWithAggregationInput = {
@@ -310,10 +310,10 @@ export type focusgroupsCreateInput = {
   descripcion: string
   lugar: string
   fechahora?: Date | string
-  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   personas: Prisma.personasCreateNestedOneWithoutFocusgroupsInput
-  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsUncheckedCreateInput = {
@@ -324,8 +324,8 @@ export type focusgroupsUncheckedCreateInput = {
   idmoderador: number
   lugar: string
   fechahora?: Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsUpdateInput = {
@@ -333,10 +333,10 @@ export type focusgroupsUpdateInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   personas?: Prisma.personasUpdateOneRequiredWithoutFocusgroupsNestedInput
-  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsUncheckedUpdateInput = {
@@ -347,8 +347,8 @@ export type focusgroupsUncheckedUpdateInput = {
   idmoderador?: Prisma.IntFieldUpdateOperationsInput | number
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsCreateManyInput = {
@@ -553,8 +553,8 @@ export type focusgroupsCreateWithoutPersonasInput = {
   lugar: string
   fechahora?: Date | string
   subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
-  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsUncheckedCreateWithoutPersonasInput = {
@@ -564,8 +564,8 @@ export type focusgroupsUncheckedCreateWithoutPersonasInput = {
   descripcion: string
   lugar: string
   fechahora?: Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsCreateOrConnectWithoutPersonasInput = {
@@ -613,8 +613,8 @@ export type focusgroupsCreateWithoutSubprocesosInput = {
   lugar: string
   fechahora?: Date | string
   personas: Prisma.personasCreateNestedOneWithoutFocusgroupsInput
-  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsUncheckedCreateWithoutSubprocesosInput = {
@@ -624,8 +624,8 @@ export type focusgroupsUncheckedCreateWithoutSubprocesosInput = {
   idmoderador: number
   lugar: string
   fechahora?: Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgUncheckedCreateNestedManyWithoutFocusgroupsInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedCreateNestedManyWithoutFocusgroupsInput
 }
 
 export type focusgroupsCreateOrConnectWithoutSubprocesosInput = {
@@ -659,8 +659,8 @@ export type focusgroupsCreateWithoutTemasfocusgroupInput = {
   descripcion: string
   lugar: string
   fechahora?: Date | string
-  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   personas: Prisma.personasCreateNestedOneWithoutFocusgroupsInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   participantesfg?: Prisma.participantesfgCreateNestedManyWithoutFocusgroupsInput
 }
 
@@ -696,8 +696,8 @@ export type focusgroupsUpdateWithoutTemasfocusgroupInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   personas?: Prisma.personasUpdateOneRequiredWithoutFocusgroupsNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUpdateManyWithoutFocusgroupsNestedInput
 }
 
@@ -717,8 +717,8 @@ export type focusgroupsCreateWithoutParticipantesfgInput = {
   descripcion: string
   lugar: string
   fechahora?: Date | string
-  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   personas: Prisma.personasCreateNestedOneWithoutFocusgroupsInput
+  subprocesos: Prisma.subprocesosCreateNestedOneWithoutFocusgroupsInput
   temasfocusgroup?: Prisma.temasfocusgroupCreateNestedManyWithoutFocusgroupsInput
 }
 
@@ -754,8 +754,8 @@ export type focusgroupsUpdateWithoutParticipantesfgInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   personas?: Prisma.personasUpdateOneRequiredWithoutFocusgroupsNestedInput
+  subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
   temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
 }
 
@@ -785,8 +785,8 @@ export type focusgroupsUpdateWithoutPersonasInput = {
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subprocesos?: Prisma.subprocesosUpdateOneRequiredWithoutFocusgroupsNestedInput
-  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsUncheckedUpdateWithoutPersonasInput = {
@@ -796,8 +796,8 @@ export type focusgroupsUncheckedUpdateWithoutPersonasInput = {
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsUncheckedUpdateManyWithoutPersonasInput = {
@@ -824,8 +824,8 @@ export type focusgroupsUpdateWithoutSubprocesosInput = {
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personas?: Prisma.personasUpdateOneRequiredWithoutFocusgroupsNestedInput
-  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsUncheckedUpdateWithoutSubprocesosInput = {
@@ -835,8 +835,8 @@ export type focusgroupsUncheckedUpdateWithoutSubprocesosInput = {
   idmoderador?: Prisma.IntFieldUpdateOperationsInput | number
   lugar?: Prisma.StringFieldUpdateOperationsInput | string
   fechahora?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
   participantesfg?: Prisma.participantesfgUncheckedUpdateManyWithoutFocusgroupsNestedInput
+  temasfocusgroup?: Prisma.temasfocusgroupUncheckedUpdateManyWithoutFocusgroupsNestedInput
 }
 
 export type focusgroupsUncheckedUpdateManyWithoutSubprocesosInput = {
@@ -854,13 +854,13 @@ export type focusgroupsUncheckedUpdateManyWithoutSubprocesosInput = {
  */
 
 export type FocusgroupsCountOutputType = {
-  temasfocusgroup: number
   participantesfg: number
+  temasfocusgroup: number
 }
 
 export type FocusgroupsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  temasfocusgroup?: boolean | FocusgroupsCountOutputTypeCountTemasfocusgroupArgs
   participantesfg?: boolean | FocusgroupsCountOutputTypeCountParticipantesfgArgs
+  temasfocusgroup?: boolean | FocusgroupsCountOutputTypeCountTemasfocusgroupArgs
 }
 
 /**
@@ -876,15 +876,15 @@ export type FocusgroupsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
 /**
  * FocusgroupsCountOutputType without action
  */
-export type FocusgroupsCountOutputTypeCountTemasfocusgroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.temasfocusgroupWhereInput
+export type FocusgroupsCountOutputTypeCountParticipantesfgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.participantesfgWhereInput
 }
 
 /**
  * FocusgroupsCountOutputType without action
  */
-export type FocusgroupsCountOutputTypeCountParticipantesfgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.participantesfgWhereInput
+export type FocusgroupsCountOutputTypeCountTemasfocusgroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.temasfocusgroupWhereInput
 }
 
 
@@ -896,10 +896,10 @@ export type focusgroupsSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   idmoderador?: boolean
   lugar?: boolean
   fechahora?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
-  temasfocusgroup?: boolean | Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   participantesfg?: boolean | Prisma.focusgroups$participantesfgArgs<ExtArgs>
+  temasfocusgroup?: boolean | Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>
   _count?: boolean | Prisma.FocusgroupsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusgroups"]>
 
@@ -911,8 +911,8 @@ export type focusgroupsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   idmoderador?: boolean
   lugar?: boolean
   fechahora?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusgroups"]>
 
 export type focusgroupsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -923,8 +923,8 @@ export type focusgroupsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   idmoderador?: boolean
   lugar?: boolean
   fechahora?: boolean
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusgroups"]>
 
 export type focusgroupsSelectScalar = {
@@ -939,28 +939,28 @@ export type focusgroupsSelectScalar = {
 
 export type focusgroupsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idfocusgroup" | "idsubproceso" | "nombre" | "descripcion" | "idmoderador" | "lugar" | "fechahora", ExtArgs["result"]["focusgroups"]>
 export type focusgroupsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
-  temasfocusgroup?: boolean | Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   participantesfg?: boolean | Prisma.focusgroups$participantesfgArgs<ExtArgs>
+  temasfocusgroup?: boolean | Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>
   _count?: boolean | Prisma.FocusgroupsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type focusgroupsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }
 export type focusgroupsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
   personas?: boolean | Prisma.personasDefaultArgs<ExtArgs>
+  subprocesos?: boolean | Prisma.subprocesosDefaultArgs<ExtArgs>
 }
 
 export type $focusgroupsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "focusgroups"
   objects: {
-    subprocesos: Prisma.$subprocesosPayload<ExtArgs>
     personas: Prisma.$personasPayload<ExtArgs>
-    temasfocusgroup: Prisma.$temasfocusgroupPayload<ExtArgs>[]
+    subprocesos: Prisma.$subprocesosPayload<ExtArgs>
     participantesfg: Prisma.$participantesfgPayload<ExtArgs>[]
+    temasfocusgroup: Prisma.$temasfocusgroupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idfocusgroup: number
@@ -1364,10 +1364,10 @@ readonly fields: focusgroupsFieldRefs;
  */
 export interface Prisma__focusgroupsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   personas<T extends Prisma.personasDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.personasDefaultArgs<ExtArgs>>): Prisma.Prisma__personasClient<runtime.Types.Result.GetResult<Prisma.$personasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  temasfocusgroup<T extends Prisma.focusgroups$temasfocusgroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$temasfocusgroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subprocesos<T extends Prisma.subprocesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesosDefaultArgs<ExtArgs>>): Prisma.Prisma__subprocesosClient<runtime.Types.Result.GetResult<Prisma.$subprocesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   participantesfg<T extends Prisma.focusgroups$participantesfgArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.focusgroups$participantesfgArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$participantesfgPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  temasfocusgroup<T extends Prisma.focusgroups$temasfocusgroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.focusgroups$temasfocusgroupArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$temasfocusgroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1800,30 +1800,6 @@ export type focusgroupsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * focusgroups.temasfocusgroup
- */
-export type focusgroups$temasfocusgroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the temasfocusgroup
-   */
-  select?: Prisma.temasfocusgroupSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the temasfocusgroup
-   */
-  omit?: Prisma.temasfocusgroupOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.temasfocusgroupInclude<ExtArgs> | null
-  where?: Prisma.temasfocusgroupWhereInput
-  orderBy?: Prisma.temasfocusgroupOrderByWithRelationInput | Prisma.temasfocusgroupOrderByWithRelationInput[]
-  cursor?: Prisma.temasfocusgroupWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TemasfocusgroupScalarFieldEnum | Prisma.TemasfocusgroupScalarFieldEnum[]
-}
-
-/**
  * focusgroups.participantesfg
  */
 export type focusgroups$participantesfgArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1845,6 +1821,30 @@ export type focusgroups$participantesfgArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.ParticipantesfgScalarFieldEnum | Prisma.ParticipantesfgScalarFieldEnum[]
+}
+
+/**
+ * focusgroups.temasfocusgroup
+ */
+export type focusgroups$temasfocusgroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the temasfocusgroup
+   */
+  select?: Prisma.temasfocusgroupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the temasfocusgroup
+   */
+  omit?: Prisma.temasfocusgroupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.temasfocusgroupInclude<ExtArgs> | null
+  where?: Prisma.temasfocusgroupWhereInput
+  orderBy?: Prisma.temasfocusgroupOrderByWithRelationInput | Prisma.temasfocusgroupOrderByWithRelationInput[]
+  cursor?: Prisma.temasfocusgroupWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TemasfocusgroupScalarFieldEnum | Prisma.TemasfocusgroupScalarFieldEnum[]
 }
 
 /**

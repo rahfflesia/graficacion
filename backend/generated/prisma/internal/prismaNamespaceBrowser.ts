@@ -69,11 +69,15 @@ export const ModelName = {
   preguntascuestionario: 'preguntascuestionario',
   respuestascuestionario: 'respuestascuestionario',
   respuestaspreguntas: 'respuestaspreguntas',
+  historiasusuario: 'historiasusuario',
   focusgroups: 'focusgroups',
   temasfocusgroup: 'temasfocusgroup',
   participantesfg: 'participantesfg',
   analisisDocumentos: 'analisisDocumentos',
-  hallazgosanalisis: 'hallazgosanalisis'
+  hallazgosanalisis: 'hallazgosanalisis',
+  diagramasproyectos: 'diagramasproyectos',
+  seguimientotransaccional: 'seguimientotransaccional',
+  involucradosseguimiento: 'involucradosseguimiento'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -287,6 +291,21 @@ export const RespuestaspreguntasScalarFieldEnum = {
 export type RespuestaspreguntasScalarFieldEnum = (typeof RespuestaspreguntasScalarFieldEnum)[keyof typeof RespuestaspreguntasScalarFieldEnum]
 
 
+export const HistoriasusuarioScalarFieldEnum = {
+  idhistoriausuario: 'idhistoriausuario',
+  idsubproceso: 'idsubproceso',
+  idcreador: 'idcreador',
+  rolusuario: 'rolusuario',
+  necesidad: 'necesidad',
+  beneficio: 'beneficio',
+  criteriosaceptacion: 'criteriosaceptacion',
+  prioridad: 'prioridad',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type HistoriasusuarioScalarFieldEnum = (typeof HistoriasusuarioScalarFieldEnum)[keyof typeof HistoriasusuarioScalarFieldEnum]
+
+
 export const FocusgroupsScalarFieldEnum = {
   idfocusgroup: 'idfocusgroup',
   idsubproceso: 'idsubproceso',
@@ -341,12 +360,58 @@ export const HallazgosanalisisScalarFieldEnum = {
 export type HallazgosanalisisScalarFieldEnum = (typeof HallazgosanalisisScalarFieldEnum)[keyof typeof HallazgosanalisisScalarFieldEnum]
 
 
+export const DiagramasproyectosScalarFieldEnum = {
+  iddiagrama: 'iddiagrama',
+  idproyecto: 'idproyecto',
+  nombre: 'nombre',
+  tipo: 'tipo',
+  contenido: 'contenido',
+  fechacreacion: 'fechacreacion',
+  ultimaedicion: 'ultimaedicion'
+} as const
+
+export type DiagramasproyectosScalarFieldEnum = (typeof DiagramasproyectosScalarFieldEnum)[keyof typeof DiagramasproyectosScalarFieldEnum]
+
+
+export const SeguimientotransaccionalScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idsubproceso: 'idsubproceso',
+  tipotransaccion: 'tipotransaccion',
+  estado: 'estado',
+  idresponsable: 'idresponsable',
+  fechaejecucion: 'fechaejecucion',
+  resultadoesperado: 'resultadoesperado',
+  resultadoobtenido: 'resultadoobtenido',
+  fechacreacion: 'fechacreacion',
+  fechaactualizacion: 'fechaactualizacion'
+} as const
+
+export type SeguimientotransaccionalScalarFieldEnum = (typeof SeguimientotransaccionalScalarFieldEnum)[keyof typeof SeguimientotransaccionalScalarFieldEnum]
+
+
+export const InvolucradosseguimientoScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  idpersona: 'idpersona'
+} as const
+
+export type InvolucradosseguimientoScalarFieldEnum = (typeof InvolucradosseguimientoScalarFieldEnum)[keyof typeof InvolucradosseguimientoScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -363,4 +428,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

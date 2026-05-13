@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalCrearDiagramaClase } from './modal-crear-diagrama-clase';
+import { ShapePaquete } from './shape-paquete';
 
-describe('ModalCrearDiagramaClase', () => {
-  let component: ModalCrearDiagramaClase;
-  let fixture: ComponentFixture<ModalCrearDiagramaClase>;
+describe('ShapePaquete', () => {
+  let component: ShapePaquete;
+  let fixture: ComponentFixture<ShapePaquete>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalCrearDiagramaClase]
+      imports: [ShapePaquete]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalCrearDiagramaClase);
+    fixture = TestBed.createComponent(ShapePaquete);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

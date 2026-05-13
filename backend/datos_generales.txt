@@ -1,0 +1,108 @@
+PROYECTO: Todo app
+
+DESCRIPCIÓN: Todo app en la que podrás agregar tareas, recordatorios, etc
+
+PROCESO
+ID: 6
+Nombre: Crear tareas
+Descripción: El usuario podrá crear tareas
+
+SUBPROCESOS ASOCIADOS AL PROCESO Crear tareas (ID: 6)
+
+ID: 6
+Nombre: Especificaciones creación de tareas
+Descripción: El usuario podrá crear las tareas, los datos que incluirá serán los datos básicos que se utilizan en la mayoría de todos, también incluiremos fechas como la de creación y ultima fecha de edición, la app debe poder ser usada independientemente de la zona horaria
+
+OBSERVACIONES ASOCIADAS AL SUBPROCESO Especificaciones creación de tareas (ID: 6)
+
+ID: 7
+Nombre: Especificaciones recordatorios
+Descripción: Para seleccionar el recordatorio se utilizará un componente de calendario moderno, no debe de ser el que proporciona el navegador por defecto, igualmente los recordatorios deben de funcionar independientemente de la zona horaria y se enviarán notificaciones dentro de la app cuando un recordatorio está por vencer
+
+ID: 11
+Nombre: Subproceso analisis documentos
+Descripción: Descripcion subproceso analisis documentos
+
+ID: 12
+Nombre: Subproceso focus group
+Descripción: Descripcion subproceso focus group
+
+
+PROCESO
+ID: 7
+Nombre: Agregar recordatorios
+Descripción: El usuario podrá crear recordatorios
+
+SUBPROCESOS ASOCIADOS AL PROCESO Agregar recordatorios (ID: 7)
+
+ID: 10
+Nombre: Subproceso historia de usuario
+Descripción: Descripcion subproceso historia de usuario
+
+HISTORIAS DE USUARIO ASOCIADAS AL SUBPROCESO Subproceso historia de usuario (ID: 10)
+ID Historia de usuario: 1
+Rol de la persona que solicitó la historia de usuario: Cliente
+Necesidad que cubre la historia de usuario: Como cliente quiero que me hagan un software bien chilito
+Beneficios que se obtienen de la historia de usuario: Para beneficio propio
+Criterios de aceptación:
+100% de casos de uso cubiertos
+100% de requerimientos funcionales implementados
+
+PROCESO
+ID: 8
+Nombre: Diseño
+Descripción: La aplicación será una webapp con interfaz moderna y con una paleta de colores azul y blanca.
+
+SUBPROCESOS ASOCIADOS AL PROCESO Diseño (ID: 8)
+
+ID: 9
+Nombre: Subproceso de prueba 1000
+Descripción: Descripcion del subproceso diseño
+
+CUESTIONARIOS ASOCIADOS AL SUBPROCESO Subproceso de prueba 1000 (ID: 9)
+
+NOMBRE DEL CUESTIONARIO: Cuestionario de prueba (ID: 10)
+DESCRIPCIÓN: Descripción cuestionario prueba
+
+PREGUNTAS ASOCIADAS AL CUESTIONARIO Cuestionario de prueba (ID: 10)
+
+ID: 13
+Nombre de la pregunta del cuestionario: ¿Por qué te gusta la sandía?
+Tipo de pregunta: Abierta 
+Respuesta: porque está buena
+ID: 14
+Nombre de la pregunta del cuestionario: ¿Qué tanto te disgusta la cebolla?
+Tipo de pregunta: Escala (1-5)
+Respuesta: 5
+ID: 15
+Nombre de la pregunta del cuestionario: ¿Cuál es tu deporte favorito?
+Tipo de pregunta: Opcion_multiple 
+Respuesta: Fútbol
+
+PROCESO
+ID: 9
+Nombre: Tecnologías
+Descripción: Stack de desarrollo del proyecto, debido a que requerimos un enfoque moderno utilizaremos las siguientes: React + TS, Django y PostgreSQL
+
+SUBPROCESOS ASOCIADOS AL PROCESO Tecnologías (ID: 9)
+
+ID: 8
+Nombre: Subproceso de prueba
+Descripción: Descripcion
+
+ENTREVISTAS ASOCIADAS AL SUBPROCESO Subproceso de prueba (ID: 8)
+
+NOMBRE DE LA ENTREVISTA: Entrevista requerimientos
+DESCRIPCIÓN: Entrevista realizada para obtener detalles mejores sobre las especificaciones requeridas para el software
+
+PREGUNTAS ASOCIADAS A LA ENTREVISTA Entrevista requerimientos (ID: 38)
+
+ID: 58
+Nombre: Pregunta 1
+Respuesta: Respuesta pregunta 1
+
+ID: 59
+Nombre: Pregunta 2
+Respuesta: Respuesta pregunta 2
+
+

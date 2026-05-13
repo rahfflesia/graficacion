@@ -1,0 +1,29 @@
+Antipatrones Prohibidos
+
+- Clases dios
+
+- Controladores con lógica de negocio
+
+- Utility classes gigantes
+
+- Dependencias circulares
+
+- Herencia profunda innecesaria
+
+- Abstracciones prematuras
+
+- Código preparado para escenarios hipotéticos
+
+- Estado global mutable
+
+- Duplicación de lógica
+
+- Funciones excesivamente largas
+
+- Acoplamiento fuerte entre módulos
+
+- Comentarios redundantes que expliquen código obvio.
+
+- Uso innecesario de patrones de diseño
+
+- Métodos con demasiadas responsabilidades

@@ -1,0 +1,42 @@
+.shape-linea-vida {
+  min-width: 150px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.cabecera-participante {
+  min-width: 130px;
+  max-width: 220px;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid var(--blackish);
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.cabecera-participante span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.linea-vida {
+  flex: 1;
+  min-height: 0;
+  border-left: 2px dashed var(--blackish);
+  margin-top: 0.5rem;
+  pointer-events: none;
+}
+
+.shape-input {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  padding: 0.25rem;
+  font: inherit;
+  text-align: center;
+}
