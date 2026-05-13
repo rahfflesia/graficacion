@@ -10,6 +10,7 @@ import { Usuario } from '../../../servicios/usuario';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalCrearDiagrama } from '../../modales/modal-crear-diagrama/modal-crear-diagrama';
+import { TemaService } from '../../../servicios/tema';
 
 @Component({
   selector: 'seccion-proyectos',
@@ -29,6 +30,7 @@ export class SeccionProyectos implements OnInit {
   private ServicioUsuario = inject(Usuario);
   private toastr = inject(ToastrService);
   private router = inject(Router);
+  private temaService = inject(TemaService);
 
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
@@ -39,6 +41,7 @@ export class SeccionProyectos implements OnInit {
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
   usuario = signal<DatosUsuario | null>(null);
+  temaActual = this.temaService.tema;
 
   ngOnInit(): void {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
@@ -62,6 +65,10 @@ export class SeccionProyectos implements OnInit {
         this.router.navigate(['/login']);
       },
     });
+  }
+
+  alternarTema() {
+    this.temaService.alternarTema();
   }
 
   obtenerProyectos(idUsuario: number) {

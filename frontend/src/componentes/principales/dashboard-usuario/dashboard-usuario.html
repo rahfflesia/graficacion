@@ -1,0 +1,78 @@
+<section class="dashboard flex-column">
+  <header class="dashboard-header">
+    <div>
+      <span class="eyebrow">Dashboard</span>
+      <h1>Hola, {{ usuario()?.usuario?.nombre || 'usuario' }}</h1>
+      <p>Resumen rápido de tus proyectos y su estado actual.</p>
+    </div>
+    <button class="default-button" (click)="irAProyectos()">Ver proyectos</button>
+  </header>
+
+  @if (estaCargando()) {
+    <div class="dashboard-loading">
+      <strong>Cargando dashboard...</strong>
+    </div>
+  } @else {
+    <div class="metricas">
+      <article class="metrica metrica-principal">
+        <span>Total</span>
+        <strong>{{ totalProyectos() }}</strong>
+        <p>Proyectos registrados</p>
+      </article>
+      <article class="metrica">
+        <span>Activos</span>
+        <strong>{{ proyectosActivos() }}</strong>
+      </article>
+      <article class="metrica">
+        <span>Pausados</span>
+        <strong>{{ proyectosPausados() }}</strong>
+      </article>
+      <article class="metrica">
+        <span>En revisión</span>
+        <strong>{{ proyectosRevision() }}</strong>
+      </article>
+      <article class="metrica">
+        <span>Cancelados</span>
+        <strong>{{ proyectosCancelados() }}</strong>
+      </article>
+    </div>
+
+    <div class="dashboard-grid">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Proyectos recientes</h2>
+          <button class="gray-button" (click)="irAProyectos()">Abrir lista</button>
+        </div>
+
+        @if (proyectosRecientes().length > 0) {
+          <div class="lista-proyectos">
+            @for (proyecto of proyectosRecientes(); track proyecto.idproyecto) {
+              <article class="fila-proyecto">
+                <div>
+                  <h3>{{ proyecto.nombre }}</h3>
+                  <p>{{ proyecto.descripcion }}</p>
+                </div>
+                <div class="detalle-proyecto">
+                  <span class="estado">{{ obtenerEstadoLegible(proyecto.estado) }}</span>
+                  <small>{{ obtenerFecha(proyecto) | date: 'shortDate' }}</small>
+                </div>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="estado-vacio">
+            <strong>Aún no tienes proyectos</strong>
+            <p>Crea tu primer proyecto para ver actividad en el dashboard.</p>
+          </div>
+        }
+      </section>
+
+      <aside class="panel panel-acciones">
+        <h2>Acciones rápidas</h2>
+        <button class="accion" (click)="irAProyectos()">Gestionar proyectos</button>
+        <button class="accion" (click)="irAProyectos()">Crear diagrama</button>
+        <button class="accion" (click)="irAProyectos()">Configurar proyecto</button>
+      </aside>
+    </div>
+  }
+</section>

@@ -43,7 +43,7 @@ export class Login {
         this.toastr.success('Sesión iniciada');
         this.esModalCargaVisible.set(false);
 
-        this.router.navigate(['/proyectos']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.toastr.error('Ocurrió un error al iniciar sesión', '', {

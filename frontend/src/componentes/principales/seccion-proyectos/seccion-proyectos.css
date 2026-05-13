@@ -5,11 +5,11 @@
 }
 
 section {
-  border-radius: var(--border-radius);
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  background-color: var(--body-bg-color);
 }
 
 .grid {
@@ -36,11 +36,9 @@ header {
 
 .section-header {
   background-color: var(--primary-color);
-  padding: 0.75rem 2rem;
-}
-
-.section-header {
-  border-bottom: 1px solid lightgray;
+  padding: 0.9rem 2rem;
+  border-bottom: var(--soft-border);
+  box-shadow: 0 8px 24px rgba(17, 28, 45, 0.03);
 }
 
 .projects-section,
@@ -49,7 +47,7 @@ header {
 }
 
 .projects-section {
-  padding: 0 2rem 2rem 2rem;
+  padding: 0 2rem 2rem;
 }
 
 .hamburger-menu,
@@ -82,9 +80,10 @@ header {
   display: flex;
   gap: 1rem;
   align-items: center;
-  border: 1px solid lightgray;
+  border: var(--soft-border);
   border-radius: var(--border-radius);
-  padding: 0.25rem 0.6rem;
+  padding: 0.35rem 0.7rem;
+  background-color: #fbfdff;
 }
 
 .username {
@@ -99,13 +98,18 @@ header {
 
 .section-title {
   font-weight: bolder;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .section-description {
   font-size: 0.8rem;
   font-weight: 400;
-  color: rgb(128, 128, 128);
+  color: var(--muted-text);
+}
+
+.modo,
+.notificaciones {
+  cursor: pointer;
 }
 
 .projects-section {
@@ -113,16 +117,33 @@ header {
 }
 
 .projects-section > * {
-  border-radius: 1rem;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: transform ease-in 300ms;
+  transition:
+    transform ease 180ms,
+    box-shadow ease 180ms;
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
   position: relative;
+  border: var(--soft-border);
+}
+
+:host-context(body.modo-oscuro) .section-header,
+:host-context(body.modo-oscuro) .info-perfil,
+:host-context(body.modo-oscuro) .content-loading,
+:host-context(body.modo-oscuro) .content-loading-wrapper,
+:host-context(body.modo-oscuro) .no-results-wrapper {
+  background-color: var(--primary-color);
+}
+
+:host-context(body.modo-oscuro) .hamburger-menu img,
+:host-context(body.modo-oscuro) .notificaciones img {
+  filter: invert(1) brightness(0.9);
 }
 
 .projects-section > *:hover {
-  transform: scale(1.025);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(17, 28, 45, 0.08);
 }
 
 .loading-wrapper > p {
@@ -148,6 +169,7 @@ header {
   background-color: var(--primary-color);
   padding: 1.5rem;
   border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   display: grid;
   place-items: center;
 }
@@ -158,6 +180,7 @@ header {
   place-items: center;
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
+  border: var(--soft-border);
 }
 
 .bola-1 {
@@ -183,6 +206,8 @@ header {
   display: grid;
   place-items: center;
   flex: 1;
+  border: var(--soft-border);
+  box-shadow: var(--box-shadow);
 }
 
 .no-results {
