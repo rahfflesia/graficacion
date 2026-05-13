@@ -1,0 +1,113 @@
+.canvas-wrapper {
+  width: 100%;
+  height: 100dvh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.barra-flotante {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.barra-flotante > *:not(button) {
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.nombre-diagrama-clase {
+  gap: 1rem;
+}
+
+.boton-crear-diagrama {
+  color: var(--primary-color);
+  background-color: var(--blackish);
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: none;
+  box-shadow: var(--box-shadow);
+}
+
+.wrapper-boton {
+  display: grid;
+  place-items: center;
+}
+
+.wrapper-boton button {
+  cursor: pointer;
+}
+
+.menu-lateral {
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  height: 100dvh;
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition:
+    transform ease 300ms,
+    opacity ease 300ms;
+  transform: translateX(100%);
+}
+
+.animar-menu-lateral {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.cabecera-menu-lateral {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.formas {
+  display: flex;
+  gap: 1rem;
+}
+
+.formas > * {
+  flex: 1;
+}
+
+.abrir-menu {
+  cursor: pointer;
+}
+
+.abrir-menu img {
+  width: 20px;
+  height: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seccion-componentes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+ng-diagram-minimap {
+  left: 1rem;
+  bottom: 1rem;
+  right: unset !important;
+}

@@ -227,6 +227,7 @@ export type subprocesosWhereInput = {
   historiasusuario?: Prisma.HistoriasusuarioListRelationFilter
   metodossubprocesos?: Prisma.MetodossubprocesosListRelationFilter
   observaciones?: Prisma.ObservacionesListRelationFilter
+  seguimientotransaccional?: Prisma.SeguimientotransaccionalListRelationFilter
   procesos?: Prisma.XOR<Prisma.ProcesosScalarRelationFilter, Prisma.procesosWhereInput>
 }
 
@@ -243,6 +244,7 @@ export type subprocesosOrderByWithRelationInput = {
   historiasusuario?: Prisma.historiasusuarioOrderByRelationAggregateInput
   metodossubprocesos?: Prisma.metodossubprocesosOrderByRelationAggregateInput
   observaciones?: Prisma.observacionesOrderByRelationAggregateInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalOrderByRelationAggregateInput
   procesos?: Prisma.procesosOrderByWithRelationInput
 }
 
@@ -262,6 +264,7 @@ export type subprocesosWhereUniqueInput = Prisma.AtLeast<{
   historiasusuario?: Prisma.HistoriasusuarioListRelationFilter
   metodossubprocesos?: Prisma.MetodossubprocesosListRelationFilter
   observaciones?: Prisma.ObservacionesListRelationFilter
+  seguimientotransaccional?: Prisma.SeguimientotransaccionalListRelationFilter
   procesos?: Prisma.XOR<Prisma.ProcesosScalarRelationFilter, Prisma.procesosWhereInput>
 }, "idsubproceso">
 
@@ -300,6 +303,7 @@ export type subprocesosCreateInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -316,6 +320,7 @@ export type subprocesosUncheckedCreateInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosUpdateInput = {
@@ -329,6 +334,7 @@ export type subprocesosUpdateInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -345,6 +351,7 @@ export type subprocesosUncheckedUpdateInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateManyInput = {
@@ -558,6 +565,20 @@ export type subprocesosUpdateOneRequiredWithoutAnalisisDocumentosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.subprocesosUpdateToOneWithWhereWithoutAnalisisDocumentosInput, Prisma.subprocesosUpdateWithoutAnalisisDocumentosInput>, Prisma.subprocesosUncheckedUpdateWithoutAnalisisDocumentosInput>
 }
 
+export type subprocesosCreateNestedOneWithoutSeguimientotransaccionalInput = {
+  create?: Prisma.XOR<Prisma.subprocesosCreateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedCreateWithoutSeguimientotransaccionalInput>
+  connectOrCreate?: Prisma.subprocesosCreateOrConnectWithoutSeguimientotransaccionalInput
+  connect?: Prisma.subprocesosWhereUniqueInput
+}
+
+export type subprocesosUpdateOneRequiredWithoutSeguimientotransaccionalNestedInput = {
+  create?: Prisma.XOR<Prisma.subprocesosCreateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedCreateWithoutSeguimientotransaccionalInput>
+  connectOrCreate?: Prisma.subprocesosCreateOrConnectWithoutSeguimientotransaccionalInput
+  upsert?: Prisma.subprocesosUpsertWithoutSeguimientotransaccionalInput
+  connect?: Prisma.subprocesosWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.subprocesosUpdateToOneWithWhereWithoutSeguimientotransaccionalInput, Prisma.subprocesosUpdateWithoutSeguimientotransaccionalInput>, Prisma.subprocesosUncheckedUpdateWithoutSeguimientotransaccionalInput>
+}
+
 export type subprocesosCreateWithoutMetodossubprocesosInput = {
   nombre: string
   descripcion: string
@@ -568,6 +589,7 @@ export type subprocesosCreateWithoutMetodossubprocesosInput = {
   focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutSubprocesosInput
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -583,6 +605,7 @@ export type subprocesosUncheckedCreateWithoutMetodossubprocesosInput = {
   focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutSubprocesosInput
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutMetodossubprocesosInput = {
@@ -611,6 +634,7 @@ export type subprocesosUpdateWithoutMetodossubprocesosInput = {
   focusgroups?: Prisma.focusgroupsUpdateManyWithoutSubprocesosNestedInput
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -626,6 +650,7 @@ export type subprocesosUncheckedUpdateWithoutMetodossubprocesosInput = {
   focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutSubprocesosNestedInput
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutProcesosInput = {
@@ -639,6 +664,7 @@ export type subprocesosCreateWithoutProcesosInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosUncheckedCreateWithoutProcesosInput = {
@@ -653,6 +679,7 @@ export type subprocesosUncheckedCreateWithoutProcesosInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutProcesosInput = {
@@ -702,6 +729,7 @@ export type subprocesosCreateWithoutObservacionesInput = {
   focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutSubprocesosInput
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -717,6 +745,7 @@ export type subprocesosUncheckedCreateWithoutObservacionesInput = {
   focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutSubprocesosInput
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutObservacionesInput = {
@@ -745,6 +774,7 @@ export type subprocesosUpdateWithoutObservacionesInput = {
   focusgroups?: Prisma.focusgroupsUpdateManyWithoutSubprocesosNestedInput
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -760,6 +790,7 @@ export type subprocesosUncheckedUpdateWithoutObservacionesInput = {
   focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutSubprocesosNestedInput
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutEntrevistasInput = {
@@ -772,6 +803,7 @@ export type subprocesosCreateWithoutEntrevistasInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -787,6 +819,7 @@ export type subprocesosUncheckedCreateWithoutEntrevistasInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutEntrevistasInput = {
@@ -815,6 +848,7 @@ export type subprocesosUpdateWithoutEntrevistasInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -830,6 +864,7 @@ export type subprocesosUncheckedUpdateWithoutEntrevistasInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutCuestionariosInput = {
@@ -842,6 +877,7 @@ export type subprocesosCreateWithoutCuestionariosInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -857,6 +893,7 @@ export type subprocesosUncheckedCreateWithoutCuestionariosInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutCuestionariosInput = {
@@ -885,6 +922,7 @@ export type subprocesosUpdateWithoutCuestionariosInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -900,6 +938,7 @@ export type subprocesosUncheckedUpdateWithoutCuestionariosInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutHistoriasusuarioInput = {
@@ -912,6 +951,7 @@ export type subprocesosCreateWithoutHistoriasusuarioInput = {
   focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -927,6 +967,7 @@ export type subprocesosUncheckedCreateWithoutHistoriasusuarioInput = {
   focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutHistoriasusuarioInput = {
@@ -955,6 +996,7 @@ export type subprocesosUpdateWithoutHistoriasusuarioInput = {
   focusgroups?: Prisma.focusgroupsUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -970,6 +1012,7 @@ export type subprocesosUncheckedUpdateWithoutHistoriasusuarioInput = {
   focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutFocusgroupsInput = {
@@ -982,6 +1025,7 @@ export type subprocesosCreateWithoutFocusgroupsInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -997,6 +1041,7 @@ export type subprocesosUncheckedCreateWithoutFocusgroupsInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutFocusgroupsInput = {
@@ -1025,6 +1070,7 @@ export type subprocesosUpdateWithoutFocusgroupsInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -1040,6 +1086,7 @@ export type subprocesosUncheckedUpdateWithoutFocusgroupsInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosCreateWithoutAnalisisDocumentosInput = {
@@ -1052,6 +1099,7 @@ export type subprocesosCreateWithoutAnalisisDocumentosInput = {
   historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalCreateNestedManyWithoutSubprocesosInput
   procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
 }
 
@@ -1067,6 +1115,7 @@ export type subprocesosUncheckedCreateWithoutAnalisisDocumentosInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
   observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedCreateNestedManyWithoutSubprocesosInput
 }
 
 export type subprocesosCreateOrConnectWithoutAnalisisDocumentosInput = {
@@ -1095,6 +1144,7 @@ export type subprocesosUpdateWithoutAnalisisDocumentosInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
   procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
 }
 
@@ -1104,6 +1154,81 @@ export type subprocesosUncheckedUpdateWithoutAnalisisDocumentosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion?: Prisma.StringFieldUpdateOperationsInput | string
   fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutSubprocesosNestedInput
+  entrevistas?: Prisma.entrevistasUncheckedUpdateManyWithoutSubprocesosNestedInput
+  focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutSubprocesosNestedInput
+  historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
+  metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
+  observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
+}
+
+export type subprocesosCreateWithoutSeguimientotransaccionalInput = {
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+  analisisDocumentos?: Prisma.analisisDocumentosCreateNestedManyWithoutSubprocesosInput
+  cuestionarios?: Prisma.cuestionariosCreateNestedManyWithoutSubprocesosInput
+  entrevistas?: Prisma.entrevistasCreateNestedManyWithoutSubprocesosInput
+  focusgroups?: Prisma.focusgroupsCreateNestedManyWithoutSubprocesosInput
+  historiasusuario?: Prisma.historiasusuarioCreateNestedManyWithoutSubprocesosInput
+  metodossubprocesos?: Prisma.metodossubprocesosCreateNestedManyWithoutSubprocesosInput
+  observaciones?: Prisma.observacionesCreateNestedManyWithoutSubprocesosInput
+  procesos: Prisma.procesosCreateNestedOneWithoutSubprocesosInput
+}
+
+export type subprocesosUncheckedCreateWithoutSeguimientotransaccionalInput = {
+  idsubproceso?: number
+  idproceso: number
+  nombre: string
+  descripcion: string
+  fechacreacion?: Date | string
+  analisisDocumentos?: Prisma.analisisDocumentosUncheckedCreateNestedManyWithoutSubprocesosInput
+  cuestionarios?: Prisma.cuestionariosUncheckedCreateNestedManyWithoutSubprocesosInput
+  entrevistas?: Prisma.entrevistasUncheckedCreateNestedManyWithoutSubprocesosInput
+  focusgroups?: Prisma.focusgroupsUncheckedCreateNestedManyWithoutSubprocesosInput
+  historiasusuario?: Prisma.historiasusuarioUncheckedCreateNestedManyWithoutSubprocesosInput
+  metodossubprocesos?: Prisma.metodossubprocesosUncheckedCreateNestedManyWithoutSubprocesosInput
+  observaciones?: Prisma.observacionesUncheckedCreateNestedManyWithoutSubprocesosInput
+}
+
+export type subprocesosCreateOrConnectWithoutSeguimientotransaccionalInput = {
+  where: Prisma.subprocesosWhereUniqueInput
+  create: Prisma.XOR<Prisma.subprocesosCreateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedCreateWithoutSeguimientotransaccionalInput>
+}
+
+export type subprocesosUpsertWithoutSeguimientotransaccionalInput = {
+  update: Prisma.XOR<Prisma.subprocesosUpdateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedUpdateWithoutSeguimientotransaccionalInput>
+  create: Prisma.XOR<Prisma.subprocesosCreateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedCreateWithoutSeguimientotransaccionalInput>
+  where?: Prisma.subprocesosWhereInput
+}
+
+export type subprocesosUpdateToOneWithWhereWithoutSeguimientotransaccionalInput = {
+  where?: Prisma.subprocesosWhereInput
+  data: Prisma.XOR<Prisma.subprocesosUpdateWithoutSeguimientotransaccionalInput, Prisma.subprocesosUncheckedUpdateWithoutSeguimientotransaccionalInput>
+}
+
+export type subprocesosUpdateWithoutSeguimientotransaccionalInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  analisisDocumentos?: Prisma.analisisDocumentosUpdateManyWithoutSubprocesosNestedInput
+  cuestionarios?: Prisma.cuestionariosUpdateManyWithoutSubprocesosNestedInput
+  entrevistas?: Prisma.entrevistasUpdateManyWithoutSubprocesosNestedInput
+  focusgroups?: Prisma.focusgroupsUpdateManyWithoutSubprocesosNestedInput
+  historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
+  metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
+  observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  procesos?: Prisma.procesosUpdateOneRequiredWithoutSubprocesosNestedInput
+}
+
+export type subprocesosUncheckedUpdateWithoutSeguimientotransaccionalInput = {
+  idsubproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  idproceso?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  fechacreacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  analisisDocumentos?: Prisma.analisisDocumentosUncheckedUpdateManyWithoutSubprocesosNestedInput
   cuestionarios?: Prisma.cuestionariosUncheckedUpdateManyWithoutSubprocesosNestedInput
   entrevistas?: Prisma.entrevistasUncheckedUpdateManyWithoutSubprocesosNestedInput
   focusgroups?: Prisma.focusgroupsUncheckedUpdateManyWithoutSubprocesosNestedInput
@@ -1130,6 +1255,7 @@ export type subprocesosUpdateWithoutProcesosInput = {
   historiasusuario?: Prisma.historiasusuarioUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosUncheckedUpdateWithoutProcesosInput = {
@@ -1144,6 +1270,7 @@ export type subprocesosUncheckedUpdateWithoutProcesosInput = {
   historiasusuario?: Prisma.historiasusuarioUncheckedUpdateManyWithoutSubprocesosNestedInput
   metodossubprocesos?: Prisma.metodossubprocesosUncheckedUpdateManyWithoutSubprocesosNestedInput
   observaciones?: Prisma.observacionesUncheckedUpdateManyWithoutSubprocesosNestedInput
+  seguimientotransaccional?: Prisma.seguimientotransaccionalUncheckedUpdateManyWithoutSubprocesosNestedInput
 }
 
 export type subprocesosUncheckedUpdateManyWithoutProcesosInput = {
@@ -1166,6 +1293,7 @@ export type SubprocesosCountOutputType = {
   historiasusuario: number
   metodossubprocesos: number
   observaciones: number
+  seguimientotransaccional: number
 }
 
 export type SubprocesosCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1176,6 +1304,7 @@ export type SubprocesosCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   historiasusuario?: boolean | SubprocesosCountOutputTypeCountHistoriasusuarioArgs
   metodossubprocesos?: boolean | SubprocesosCountOutputTypeCountMetodossubprocesosArgs
   observaciones?: boolean | SubprocesosCountOutputTypeCountObservacionesArgs
+  seguimientotransaccional?: boolean | SubprocesosCountOutputTypeCountSeguimientotransaccionalArgs
 }
 
 /**
@@ -1237,6 +1366,13 @@ export type SubprocesosCountOutputTypeCountObservacionesArgs<ExtArgs extends run
   where?: Prisma.observacionesWhereInput
 }
 
+/**
+ * SubprocesosCountOutputType without action
+ */
+export type SubprocesosCountOutputTypeCountSeguimientotransaccionalArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.seguimientotransaccionalWhereInput
+}
+
 
 export type subprocesosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idsubproceso?: boolean
@@ -1251,6 +1387,7 @@ export type subprocesosSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   historiasusuario?: boolean | Prisma.subprocesos$historiasusuarioArgs<ExtArgs>
   metodossubprocesos?: boolean | Prisma.subprocesos$metodossubprocesosArgs<ExtArgs>
   observaciones?: boolean | Prisma.subprocesos$observacionesArgs<ExtArgs>
+  seguimientotransaccional?: boolean | Prisma.subprocesos$seguimientotransaccionalArgs<ExtArgs>
   procesos?: boolean | Prisma.procesosDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SubprocesosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subprocesos"]>
@@ -1290,6 +1427,7 @@ export type subprocesosInclude<ExtArgs extends runtime.Types.Extensions.Internal
   historiasusuario?: boolean | Prisma.subprocesos$historiasusuarioArgs<ExtArgs>
   metodossubprocesos?: boolean | Prisma.subprocesos$metodossubprocesosArgs<ExtArgs>
   observaciones?: boolean | Prisma.subprocesos$observacionesArgs<ExtArgs>
+  seguimientotransaccional?: boolean | Prisma.subprocesos$seguimientotransaccionalArgs<ExtArgs>
   procesos?: boolean | Prisma.procesosDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SubprocesosCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1310,6 +1448,7 @@ export type $subprocesosPayload<ExtArgs extends runtime.Types.Extensions.Interna
     historiasusuario: Prisma.$historiasusuarioPayload<ExtArgs>[]
     metodossubprocesos: Prisma.$metodossubprocesosPayload<ExtArgs>[]
     observaciones: Prisma.$observacionesPayload<ExtArgs>[]
+    seguimientotransaccional: Prisma.$seguimientotransaccionalPayload<ExtArgs>[]
     procesos: Prisma.$procesosPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1719,6 +1858,7 @@ export interface Prisma__subprocesosClient<T, Null = never, ExtArgs extends runt
   historiasusuario<T extends Prisma.subprocesos$historiasusuarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesos$historiasusuarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$historiasusuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   metodossubprocesos<T extends Prisma.subprocesos$metodossubprocesosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesos$metodossubprocesosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$metodossubprocesosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   observaciones<T extends Prisma.subprocesos$observacionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesos$observacionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$observacionesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  seguimientotransaccional<T extends Prisma.subprocesos$seguimientotransaccionalArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.subprocesos$seguimientotransaccionalArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$seguimientotransaccionalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procesos<T extends Prisma.procesosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.procesosDefaultArgs<ExtArgs>>): Prisma.Prisma__procesosClient<runtime.Types.Result.GetResult<Prisma.$procesosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2315,6 +2455,30 @@ export type subprocesos$observacionesArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.ObservacionesScalarFieldEnum | Prisma.ObservacionesScalarFieldEnum[]
+}
+
+/**
+ * subprocesos.seguimientotransaccional
+ */
+export type subprocesos$seguimientotransaccionalArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the seguimientotransaccional
+   */
+  select?: Prisma.seguimientotransaccionalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the seguimientotransaccional
+   */
+  omit?: Prisma.seguimientotransaccionalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.seguimientotransaccionalInclude<ExtArgs> | null
+  where?: Prisma.seguimientotransaccionalWhereInput
+  orderBy?: Prisma.seguimientotransaccionalOrderByWithRelationInput | Prisma.seguimientotransaccionalOrderByWithRelationInput[]
+  cursor?: Prisma.seguimientotransaccionalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SeguimientotransaccionalScalarFieldEnum | Prisma.SeguimientotransaccionalScalarFieldEnum[]
 }
 
 /**

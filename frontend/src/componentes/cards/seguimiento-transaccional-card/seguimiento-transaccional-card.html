@@ -1,0 +1,27 @@
+<div class="seguimiento-card flex-column sm-gap">
+  <header class="seguimiento-header">
+    <h4>{{ seguimiento?.nombre }}</h4>
+    @if (!estaModoEliminarActivado) {
+      <div class="botones-seguimiento-card">
+        <button (click)="editarSeguimiento()">Editar</button>
+        <button (click)="activarModoEliminar()">Eliminar</button>
+      </div>
+    }
+  </header>
+  @if (estaModoEliminarActivado) {
+    <div class="mensaje-confirmacion">
+      <span>¿Seguro que deseas eliminar este seguimiento transaccional?</span>
+      <div>
+        <button class="boton-confirmar" (click)="eliminarSeguimiento()">Sí</button>
+        <button class="boton-cancelar" (click)="desactivarModoEliminar()">No</button>
+      </div>
+    </div>
+  } @else {
+    <div class="descripcion-seguimiento-card">
+      {{ seguimiento?.descripcion }}
+    </div>
+    <div class="fecha-creacion-seguimiento-card">
+      Creado el {{ seguimiento?.fechacreacion | date: 'short' }}
+    </div>
+  }
+</div>

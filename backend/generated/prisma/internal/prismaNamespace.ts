@@ -408,7 +408,9 @@ export const ModelName = {
   participantesfg: 'participantesfg',
   analisisDocumentos: 'analisisDocumentos',
   hallazgosanalisis: 'hallazgosanalisis',
-  diagramasproyectos: 'diagramasproyectos'
+  diagramasproyectos: 'diagramasproyectos',
+  seguimientotransaccional: 'seguimientotransaccional',
+  involucradosseguimiento: 'involucradosseguimiento'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -424,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios" | "observaciones" | "observacionesobservados" | "entrevistadosentrevista" | "entrevistas" | "preguntasentrevista" | "cuestionarios" | "preguntascuestionario" | "respuestascuestionario" | "respuestaspreguntas" | "historiasusuario" | "focusgroups" | "temasfocusgroup" | "participantesfg" | "analisisDocumentos" | "hallazgosanalisis" | "diagramasproyectos"
+    modelProps: "metodossubprocesos" | "procesos" | "proyectos" | "roles" | "tecnicasrecoleccion" | "personas" | "rolespersonasproyecto" | "subprocesos" | "usuarios" | "observaciones" | "observacionesobservados" | "entrevistadosentrevista" | "entrevistas" | "preguntasentrevista" | "cuestionarios" | "preguntascuestionario" | "respuestascuestionario" | "respuestaspreguntas" | "historiasusuario" | "focusgroups" | "temasfocusgroup" | "participantesfg" | "analisisDocumentos" | "hallazgosanalisis" | "diagramasproyectos" | "seguimientotransaccional" | "involucradosseguimiento"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2278,6 +2280,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    seguimientotransaccional: {
+      payload: Prisma.$seguimientotransaccionalPayload<ExtArgs>
+      fields: Prisma.seguimientotransaccionalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.seguimientotransaccionalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.seguimientotransaccionalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        findFirst: {
+          args: Prisma.seguimientotransaccionalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.seguimientotransaccionalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        findMany: {
+          args: Prisma.seguimientotransaccionalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>[]
+        }
+        create: {
+          args: Prisma.seguimientotransaccionalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        createMany: {
+          args: Prisma.seguimientotransaccionalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.seguimientotransaccionalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>[]
+        }
+        delete: {
+          args: Prisma.seguimientotransaccionalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        update: {
+          args: Prisma.seguimientotransaccionalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        deleteMany: {
+          args: Prisma.seguimientotransaccionalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.seguimientotransaccionalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.seguimientotransaccionalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>[]
+        }
+        upsert: {
+          args: Prisma.seguimientotransaccionalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seguimientotransaccionalPayload>
+        }
+        aggregate: {
+          args: Prisma.SeguimientotransaccionalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSeguimientotransaccional>
+        }
+        groupBy: {
+          args: Prisma.seguimientotransaccionalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SeguimientotransaccionalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.seguimientotransaccionalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SeguimientotransaccionalCountAggregateOutputType> | number
+        }
+      }
+    }
+    involucradosseguimiento: {
+      payload: Prisma.$involucradosseguimientoPayload<ExtArgs>
+      fields: Prisma.involucradosseguimientoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.involucradosseguimientoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.involucradosseguimientoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        findFirst: {
+          args: Prisma.involucradosseguimientoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.involucradosseguimientoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        findMany: {
+          args: Prisma.involucradosseguimientoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>[]
+        }
+        create: {
+          args: Prisma.involucradosseguimientoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        createMany: {
+          args: Prisma.involucradosseguimientoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.involucradosseguimientoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>[]
+        }
+        delete: {
+          args: Prisma.involucradosseguimientoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        update: {
+          args: Prisma.involucradosseguimientoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        deleteMany: {
+          args: Prisma.involucradosseguimientoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.involucradosseguimientoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.involucradosseguimientoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>[]
+        }
+        upsert: {
+          args: Prisma.involucradosseguimientoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$involucradosseguimientoPayload>
+        }
+        aggregate: {
+          args: Prisma.InvolucradosseguimientoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvolucradosseguimiento>
+        }
+        groupBy: {
+          args: Prisma.involucradosseguimientoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvolucradosseguimientoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.involucradosseguimientoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvolucradosseguimientoCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2594,6 +2744,32 @@ export const DiagramasproyectosScalarFieldEnum = {
 export type DiagramasproyectosScalarFieldEnum = (typeof DiagramasproyectosScalarFieldEnum)[keyof typeof DiagramasproyectosScalarFieldEnum]
 
 
+export const SeguimientotransaccionalScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  idsubproceso: 'idsubproceso',
+  tipotransaccion: 'tipotransaccion',
+  estado: 'estado',
+  idresponsable: 'idresponsable',
+  fechaejecucion: 'fechaejecucion',
+  resultadoesperado: 'resultadoesperado',
+  resultadoobtenido: 'resultadoobtenido',
+  fechacreacion: 'fechacreacion',
+  fechaactualizacion: 'fechaactualizacion'
+} as const
+
+export type SeguimientotransaccionalScalarFieldEnum = (typeof SeguimientotransaccionalScalarFieldEnum)[keyof typeof SeguimientotransaccionalScalarFieldEnum]
+
+
+export const InvolucradosseguimientoScalarFieldEnum = {
+  idseguimiento: 'idseguimiento',
+  idpersona: 'idpersona'
+} as const
+
+export type InvolucradosseguimientoScalarFieldEnum = (typeof InvolucradosseguimientoScalarFieldEnum)[keyof typeof InvolucradosseguimientoScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2781,6 +2957,34 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'tipotransaccionseguimientotransaccional'
+ */
+export type EnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipotransaccionseguimientotransaccional'>
+    
+
+
+/**
+ * Reference to a field of type 'tipotransaccionseguimientotransaccional[]'
+ */
+export type ListEnumtipotransaccionseguimientotransaccionalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'tipotransaccionseguimientotransaccional[]'>
+    
+
+
+/**
+ * Reference to a field of type 'estadoseguimientotransaccional'
+ */
+export type EnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'estadoseguimientotransaccional'>
+    
+
+
+/**
+ * Reference to a field of type 'estadoseguimientotransaccional[]'
+ */
+export type ListEnumestadoseguimientotransaccionalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'estadoseguimientotransaccional[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2913,6 +3117,8 @@ export type GlobalOmitConfig = {
   analisisDocumentos?: Prisma.analisisDocumentosOmit
   hallazgosanalisis?: Prisma.hallazgosanalisisOmit
   diagramasproyectos?: Prisma.diagramasproyectosOmit
+  seguimientotransaccional?: Prisma.seguimientotransaccionalOmit
+  involucradosseguimiento?: Prisma.involucradosseguimientoOmit
 }
 
 /* Types for Logging */

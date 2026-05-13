@@ -35,6 +35,7 @@ import { DatosFormularioFocusGroup, FocusGroup } from '../models/focusGroup';
 import { DatosFormularioAnalisis, AnalisisDocumento } from '../models/analisisDocumento';
 import { DiagramaClase } from '../models/diagramas';
 import { Usuario as UsuarioService } from './usuario';
+import { SeguimientoTransaccional } from '../models/seguimientoTransaccional';
 @Injectable({
   providedIn: 'root',
 })
@@ -132,6 +133,12 @@ export class Api {
   private diagramasEditarUrl = 'editar/';
   private diagramasObtenerUrl = 'obtener/';
   private diagramasEliminarUrl = 'eliminar/';
+
+  private seguimientoTransaccionalUrl = 'seguimiento-transaccional/';
+  private seguimientoTransaccionalCrearUrl = 'crear/';
+  private seguimientoTransaccionalEditarUrl = 'editar/';
+  private seguimientoTransaccionalObtenerUrl = 'obtener/';
+  private seguimientoTransaccionalEliminarUrl = 'eliminar/';
 
   private obtenerOpcionesAutenticadas(): {
     withCredentials: true;
@@ -531,6 +538,44 @@ export class Api {
     return this.http.delete<DiagramaClase>(
       this.baseUrl + this.diagramasUrl + this.diagramasEliminarUrl + idDiagrama,
       this.obtenerOpcionesAutenticadas(),
+    );
+  }
+
+  obtenerSeguimientosTransaccionales(idSubproceso: number): Observable<SeguimientoTransaccional[]> {
+    return this.http.get<SeguimientoTransaccional[]>(
+      this.baseUrl +
+        this.seguimientoTransaccionalUrl +
+        this.seguimientoTransaccionalObtenerUrl +
+        idSubproceso,
+    );
+  }
+
+  crearSeguimientoTransaccional(
+    datosSeguimientoTransaccional: SeguimientoTransaccional,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.post<SeguimientoTransaccional>(
+      this.baseUrl + this.seguimientoTransaccionalUrl + this.seguimientoTransaccionalCrearUrl,
+      datosSeguimientoTransaccional,
+    );
+  }
+
+  editarSeguimientoTransaccional(
+    seguimientoTransaccionalEditar: SeguimientoTransaccional,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.put<SeguimientoTransaccional>(
+      this.baseUrl + this.seguimientoTransaccionalUrl + this.seguimientoTransaccionalEditarUrl,
+      seguimientoTransaccionalEditar,
+    );
+  }
+
+  eliminarSeguimientoTransaccional(
+    idSeguimientoTransaccional: number,
+  ): Observable<SeguimientoTransaccional> {
+    return this.http.delete<SeguimientoTransaccional>(
+      this.baseUrl +
+        this.seguimientoTransaccionalUrl +
+        this.seguimientoTransaccionalEliminarUrl +
+        idSeguimientoTransaccional,
     );
   }
 }

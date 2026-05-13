@@ -15,9 +15,11 @@ import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recolecc
 import { SeccionHistoriasUsuario } from '../componentes/secciones-tecnicas-recoleccion/seccion-historias-usuario/seccion-historias-usuario';
 import { SeccionEntrevistas } from '../componentes/secciones-tecnicas-recoleccion/seccion-entrevistas/seccion-entrevistas';
 import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion/seccion-focus-group/seccion-focus-group';
+import { DashboardUsuario } from '../componentes/principales/dashboard-usuario/dashboard-usuario';
 import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
 import { CanvasDiagramaClase } from '../componentes/diagramas/diagramas-clase/canvas-diagrama-clase/canvas-diagrama-clase';
-import { DashboardUsuario } from '../componentes/principales/dashboard-usuario/dashboard-usuario';
+import { CanvasDiagramaPaquetes } from '../componentes/diagramas/diagramas-paquetes/canvas-diagrama-paquetes/canvas-diagrama-paquetes';
+import { SeccionSeguimientoTransaccional } from '../componentes/secciones-tecnicas-recoleccion/seccion-seguimiento-transaccional/seccion-seguimiento-transaccional';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -42,8 +44,10 @@ export const routes: Routes = [
       { path: 'entrevistas', component: SeccionEntrevistas },
       { path: 'focus-group', component: SeccionFocusGroup },
       { path: 'analisis-documento', component: SeccionAnalisisDocumento },
+      { path: 'seguimiento-transaccional', component: SeccionSeguimientoTransaccional },
     ],
   },
 
+  { path: 'crear-diagrama-paquetes', component: CanvasDiagramaPaquetes },
   { path: 'crear-diagrama-clase/:idproyecto/:tipo', component: CanvasDiagramaClase },
 ];

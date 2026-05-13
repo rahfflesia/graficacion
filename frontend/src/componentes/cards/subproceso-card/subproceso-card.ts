@@ -252,7 +252,7 @@ export class SubprocesoCard {
         this.router.navigate(['/analisis-documento'], { state: { datosTecnica } });
         break;
       case 'Seguimiento transaccional':
-        this.router.navigate(['/seguimientotransaccional']);
+        this.router.navigate(['/seguimiento-transaccional'], { state: { datosTecnica } });
         break;
       default:
         console.error('Valor inválido');
