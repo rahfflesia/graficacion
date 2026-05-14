@@ -6,6 +6,7 @@ import { SesionUsuario } from '../../../models/proceso.interface';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../../servicios/usuario';
 import { ModalCarga } from '../../../componentes/modales/modal-carga/modal-carga';
+import { TemaService } from '../../../servicios/tema';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,10 @@ export class Login {
   private api = inject(Api);
   private toastr = inject(ToastrService);
   private ServicioUsuario = inject(Usuario);
+  private temaService = inject(TemaService);
 
   esModalCargaVisible = signal<boolean>(false);
+  temaActual = this.temaService.tema;
 
   formularioInicioSesion = this.formBuilder.group({
     correo: ['', [Validators.required]],
@@ -43,7 +46,7 @@ export class Login {
         this.toastr.success('Sesión iniciada');
         this.esModalCargaVisible.set(false);
 
-        this.router.navigate(['/proyectos']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.toastr.error('Ocurrió un error al iniciar sesión', '', {
@@ -53,5 +56,15 @@ export class Login {
         console.error(error);
       },
     });
+  }
+
+  alternarTema() {
+    this.temaService.alternarTema();
+  }
+
+  obtenerIconoTema() {
+    return this.temaActual() === 'oscuro'
+      ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
+      : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d';
   }
 }

@@ -1,10 +1,11 @@
 nav {
   background-color: var(--primary-color);
   max-width: 270px;
-  padding: 1.5rem;
+  padding: 1.5rem 1.25rem;
   height: 100dvh;
-  border-right: 1px solid lightgray;
+  border-right: var(--soft-border);
   position: fixed;
+  box-shadow: 8px 0 24px rgba(17, 28, 45, 0.03);
 }
 
 .logo-wrapper {
@@ -14,10 +15,11 @@ nav {
 }
 
 .logo {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background-color: var(--blue);
   border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(8, 126, 208, 0.1);
 }
 
 .logo-wrapper > h4 {
@@ -32,11 +34,14 @@ ul {
 ul > li {
   font-weight: 600;
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
+  transition:
+    background-color ease 180ms,
+    transform ease 180ms;
 }
 
 li > img {
@@ -44,15 +49,22 @@ li > img {
   width: 20px;
 }
 
-ul > li:hover {
-  background-color: rgba(41, 41, 41, 0.5);
+ul > li:hover,
+ul > li.activo {
+  background-color: var(--lightblue);
+  transform: translateX(2px);
+}
+
+ul > li.activo span {
+  color: var(--blue);
+  opacity: 1;
 }
 
 span {
   font-weight: 700;
   font-size: 0.75rem;
-  color: #111c2d;
-  opacity: 0.5;
+  color: var(--muted-text);
+  opacity: 1;
   text-transform: uppercase;
 }
 
@@ -61,6 +73,7 @@ span {
   place-items: center;
   cursor: pointer;
   transition: background-color ease-in 300ms 0ms;
+  box-shadow: none;
 }
 
 .boton-inner-text {
@@ -74,4 +87,17 @@ span {
   .boton-inner-text {
     color: red;
   }
+}
+
+:host-context(body.modo-oscuro) nav {
+  background-color: #0f172a;
+}
+
+:host-context(body.modo-oscuro) ul > li:hover,
+:host-context(body.modo-oscuro) ul > li.activo {
+  background-color: #17253a;
+}
+
+:host-context(body.modo-oscuro) li > img {
+  filter: invert(1) brightness(0.9);
 }

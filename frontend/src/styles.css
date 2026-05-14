@@ -13,16 +13,17 @@
   --primary-color: #fff;
   --secondary-color: #0f0f0f;
   --box-shadow:
-    rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
-    rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
-    rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+    rgba(17, 28, 45, 0.06) 0px 1px 2px, rgba(17, 28, 45, 0.08) 0px 8px 24px -12px;
+  --soft-border: 1px solid #dbe3ea;
   --border-radius: 0.75rem;
-  --body-bg-color: #f4f5f7;
+  --body-bg-color: #f6f8fb;
   --font-color: #111c2d;
-  --blue: rgb(0, 133, 219);
+  --muted-text: #64748b;
+  --blue: #087ed0;
+  --blue-hover: #056fb8;
   --lightgreen: rgb(223, 255, 243);
-  --grayish: rgb(231, 236, 240);
-  --lightblue: rgb(229, 243, 251);
+  --grayish: #e7ecf0;
+  --lightblue: #e8f5ff;
   --yellowish: rgb(255, 246, 234);
   --red-color: #ef4444;
   --red-background-color: #fff1f2;
@@ -30,6 +31,100 @@
   --blue-fg-color: rgb(212, 244, 255);
   --orange: rgb(255, 119, 28);
   --orange-fg-color: rgb(255, 232, 196);
+}
+
+body {
+  background-color: var(--body-bg-color);
+}
+
+body.modo-oscuro {
+  --primary-color: #121b2a;
+  --secondary-color: #f8fafc;
+  --box-shadow:
+    rgba(0, 0, 0, 0.28) 0px 1px 2px, rgba(0, 0, 0, 0.32) 0px 12px 32px -16px;
+  --soft-border: 1px solid #263449;
+  --body-bg-color: #0b1220;
+  --font-color: #e5eefb;
+  --muted-text: #9aa9bd;
+  --blue: #38a7f5;
+  --blue-hover: #63bbf8;
+  --lightgreen: #143b31;
+  --grayish: #1f2b3b;
+  --lightblue: #132e45;
+  --yellowish: #3a2d17;
+  --red-background-color: #3b1720;
+  --blue-fg-color: #12344f;
+  --orange-fg-color: #402a13;
+}
+
+body.modo-oscuro img {
+  filter: brightness(0.92);
+}
+
+body.modo-oscuro input,
+body.modo-oscuro textarea,
+body.modo-oscuro select,
+body.modo-oscuro .custom-select {
+  background-color: #0f172a;
+  border-color: #334155;
+  color: var(--font-color);
+}
+
+body.modo-oscuro input::placeholder,
+body.modo-oscuro textarea::placeholder {
+  color: #7f8da3;
+}
+
+body.modo-oscuro .gray-button {
+  background-color: #111827;
+  border-color: #334155;
+  color: var(--font-color);
+}
+
+body.modo-oscuro .close-button {
+  background-color: #111827;
+  border-color: #334155;
+}
+
+body.modo-oscuro #toast-container > div {
+  background-color: #111827;
+  color: var(--font-color);
+}
+
+.boton-tema {
+  width: 42px;
+  height: 42px;
+  border: var(--soft-border);
+  border-radius: 999px;
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    background-color ease 180ms,
+    border-color ease 180ms,
+    transform ease 180ms;
+}
+
+.boton-tema:hover {
+  background-color: var(--lightblue);
+  border-color: rgba(8, 126, 208, 0.35);
+  transform: translateY(-1px);
+}
+
+.boton-tema img {
+  width: 20px;
+  height: 20px;
+}
+
+body.modo-oscuro .boton-tema {
+  background-color: #111827;
+  border-color: #334155;
+}
+
+body.modo-oscuro .boton-tema img {
+  filter: none;
 }
 
 .flex-column {
@@ -67,9 +162,14 @@ img {
   border-radius: var(--border-radius);
   font-weight: bold;
   background-color: var(--blue);
-  padding: 0.5rem;
+  padding: 0.65rem 1rem;
   color: var(--primary-color);
   font-size: 1rem;
+  box-shadow: 0 8px 18px rgba(8, 126, 208, 0.18);
+  transition:
+    background-color ease 180ms,
+    transform ease 180ms,
+    box-shadow ease 180ms;
 }
 
 .default-button:disabled {
@@ -80,16 +180,29 @@ img {
   border: none;
   border-radius: var(--border-radius);
   font-weight: bold;
-  border: 1px solid lightgray;
-  color: rgb(85, 85, 85);
-  padding: 0.5rem;
+  border: var(--soft-border);
+  color: #475569;
+  padding: 0.65rem 1rem;
   background-color: var(--primary-color);
   cursor: pointer;
   font-size: 1rem;
+  transition:
+    border-color ease 180ms,
+    background-color ease 180ms,
+    transform ease 180ms;
 }
 
 .default-button:hover {
   cursor: pointer;
+  background-color: var(--blue-hover);
+  box-shadow: 0 10px 24px rgba(8, 126, 208, 0.22);
+  transform: translateY(-1px);
+}
+
+.gray-button:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
 }
 
 .gray-background {
@@ -110,14 +223,28 @@ img {
 
 .search-input {
   border-radius: var(--border-radius);
-  padding: 0.5rem 1rem;
-  border: 1px solid lightgray;
+  padding: 0.65rem 1rem;
+  border: var(--soft-border);
   font-size: 0.8rem;
+  outline: none;
+  transition:
+    border-color ease 180ms,
+    box-shadow ease 180ms;
+}
+
+.search-input:focus,
+.custom-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(8, 126, 208, 0.5);
+  box-shadow: 0 0 0 3px rgba(8, 126, 208, 0.12);
+  outline: none;
 }
 
 .description-font {
   font-size: 0.95rem;
-  color: rgb(106, 106, 106);
+  color: var(--muted-text);
 }
 
 .input-wrapper {
@@ -134,13 +261,21 @@ img {
   padding: 0.5rem;
   font-weight: bold;
   cursor: pointer;
-  border: 2px solid lightgray;
+  border: var(--soft-border);
   width: 40px;
   height: 40px;
   display: grid;
   place-items: center;
   border-radius: 100%;
   background-color: var(--primary-color);
+  transition:
+    background-color ease 180ms,
+    transform ease 180ms;
+}
+
+.close-button:hover {
+  background-color: #f8fafc;
+  transform: scale(1.03);
 }
 
 /* Clase para el overlay que utilizan los modales */
@@ -219,7 +354,7 @@ img {
 
 .custom-select {
   background-color: var(--primary-color);
-  border: 1px solid lightgray;
+  border: var(--soft-border);
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   border-radius: var(--border-radius);

@@ -1,0 +1,192 @@
+:host {
+  flex: 1;
+  display: flex;
+}
+
+.dashboard {
+  flex: 1;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: var(--body-bg-color);
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.eyebrow,
+.metrica span,
+.panel-header,
+.detalle-proyecto small {
+  color: rgb(128, 128, 128);
+}
+
+.eyebrow,
+.metrica span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.dashboard-header p,
+.fila-proyecto p,
+.estado-vacio p {
+  color: rgb(106, 106, 106);
+}
+
+.metricas {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.metrica,
+.panel {
+  background-color: var(--primary-color);
+  border: 1px solid lightgray;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.metrica {
+  min-height: 110px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.metrica strong {
+  font-size: 2rem;
+}
+
+.metrica-principal {
+  background-color: var(--lightblue);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.panel {
+  padding: 1.25rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.panel h2 {
+  font-size: 1.15rem;
+}
+
+.lista-proyectos {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fila-proyecto {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+}
+
+.fila-proyecto h3 {
+  font-size: 1rem;
+}
+
+.detalle-proyecto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.estado {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background-color: var(--lightgreen);
+  color: #0f5132;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.panel-acciones {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.accion {
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  background-color: var(--primary-color);
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accion:hover {
+  background-color: var(--lightblue);
+}
+
+:host-context(body.modo-oscuro) .metrica,
+:host-context(body.modo-oscuro) .panel,
+:host-context(body.modo-oscuro) .fila-proyecto,
+:host-context(body.modo-oscuro) .accion {
+  border-color: #263449;
+}
+
+:host-context(body.modo-oscuro) .estado {
+  color: #9ef0c7;
+}
+
+.dashboard-loading,
+.estado-vacio {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  gap: 0.5rem;
+  min-height: 220px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+@media (max-width: 1100px) {
+  .metricas,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
