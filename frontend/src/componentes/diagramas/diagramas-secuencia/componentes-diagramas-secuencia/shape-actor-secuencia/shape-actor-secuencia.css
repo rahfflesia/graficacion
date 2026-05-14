@@ -24,6 +24,7 @@
   padding: 0.35rem 0.5rem;
   font-weight: 700;
   text-align: center;
+  color: #111c2d;
 }
 
 .nombre-actor span {
@@ -35,7 +36,7 @@
 .linea-vida {
   flex: 1;
   min-height: 0;
-  border-left: 2px dashed var(--blackish);
+  border-left: 2px dashed #6b7280;
   margin-top: 0.5rem;
   pointer-events: none;
 }

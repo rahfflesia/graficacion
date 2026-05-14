@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { Usuario } from '../../../servicios/usuario';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'navbar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

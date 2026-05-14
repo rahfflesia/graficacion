@@ -15,6 +15,7 @@ import { SeccionCuestionarios } from '../componentes/secciones-tecnicas-recolecc
 import { SeccionHistoriasUsuario } from '../componentes/secciones-tecnicas-recoleccion/seccion-historias-usuario/seccion-historias-usuario';
 import { SeccionEntrevistas } from '../componentes/secciones-tecnicas-recoleccion/seccion-entrevistas/seccion-entrevistas';
 import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion/seccion-focus-group/seccion-focus-group';
+import { DashboardUsuario } from '../componentes/principales/dashboard-usuario/dashboard-usuario';
 import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
 import { CanvasDiagramaClase } from '../componentes/diagramas/diagramas-clase/canvas-diagrama-clase/canvas-diagrama-clase';
 import { CanvasDiagramaPaquetes } from '../componentes/diagramas/diagramas-paquetes/canvas-diagrama-paquetes/canvas-diagrama-paquetes';
@@ -30,6 +31,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
+      { path: 'dashboard', component: DashboardUsuario },
       { path: 'proyectos', component: SeccionProyectos },
       { path: 'procesos', component: ProcesosPrincipales },
       { path: 'subprocesos', component: Subprocesos },

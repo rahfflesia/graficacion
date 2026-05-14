@@ -5,6 +5,9 @@
   <div class="login-card">
     <header>
       <h3 class="titulo-login">Gestor de proyectos</h3>
+      <button type="button" class="boton-tema" (click)="alternarTema()" title="Cambiar tema">
+        <img [src]="obtenerIconoTema()" alt="Cambiar tema" />
+      </button>
     </header>
     <section>
       <div class="imagen">
