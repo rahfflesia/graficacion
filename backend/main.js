@@ -20,11 +20,11 @@ import entrevistas from "./rutas/entrevistas";
 import diagramas from "./rutas/diagramas.js";
 import especificaciones from "./rutas/especificaciones.js";
 import seguimientoTransaccional from "./rutas/seguimientoTransaccional.js";
+import analisisDocumentos from "./rutas/analisisDocumentos.js";
 
 const app = express();
 const port = 3000;
 
-app.disable("etag");
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json());
 app.use(cookieParser());
@@ -47,6 +47,7 @@ app.use("/entrevistas", entrevistas);
 app.use("/diagramas", diagramas);
 app.use("/especificaciones", especificaciones);
 app.use("/seguimiento-transaccional", seguimientoTransaccional);
+app.use("/analisis-documentos", analisisDocumentos);
 
 const server = app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);

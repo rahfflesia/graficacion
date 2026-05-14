@@ -1,51 +1,43 @@
 .shape-actor-secuencia {
-  min-width: 130px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .actor-stickman {
   width: 72px;
   height: 96px;
-  overflow: visible;
-  fill: none;
-  stroke: #111827;
+  stroke: black;
   stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: none;
 }
 
 .nombre-actor {
-  min-width: 110px;
-  max-width: 180px;
-  padding: 0.35rem 0.5rem;
-  font-weight: 700;
+  margin-top: 8px;
+  font-weight: bold;
   text-align: center;
   color: #111c2d;
 }
 
-.nombre-actor span {
-  display: block;
-  overflow-wrap: anywhere;
-  text-decoration: underline;
+.lifeline-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
 }
 
 .linea-vida {
-  flex: 1;
-  min-height: 0;
-  border-left: 2px dashed #6b7280;
-  margin-top: 0.5rem;
-  pointer-events: none;
-}
-
-.shape-input {
-  width: 100%;
-  border: 1px solid lightgray;
-  border-radius: var(--border-radius);
-  padding: 0.25rem;
-  font: inherit;
-  text-align: center;
+  width: 2px;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #000 0px,
+    #000 8px,
+    transparent 8px,
+    transparent 16px
+  );
 }

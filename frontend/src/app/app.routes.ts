@@ -18,7 +18,6 @@ import { SeccionFocusGroup } from '../componentes/secciones-tecnicas-recoleccion
 import { DashboardUsuario } from '../componentes/principales/dashboard-usuario/dashboard-usuario';
 import { SeccionAnalisisDocumento } from '../componentes/secciones-tecnicas-recoleccion/seccion-analisis-documento/seccion-analisis-documento';
 import { CanvasDiagramaClase } from '../componentes/diagramas/diagramas-clase/canvas-diagrama-clase/canvas-diagrama-clase';
-import { CanvasDiagramaPaquetes } from '../componentes/diagramas/diagramas-paquetes/canvas-diagrama-paquetes/canvas-diagrama-paquetes';
 import { SeccionSeguimientoTransaccional } from '../componentes/secciones-tecnicas-recoleccion/seccion-seguimiento-transaccional/seccion-seguimiento-transaccional';
 
 export const routes: Routes = [
@@ -48,6 +47,5 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'crear-diagrama-paquetes', component: CanvasDiagramaPaquetes },
   { path: 'crear-diagrama-clase/:idproyecto/:tipo', component: CanvasDiagramaClase },
 ];

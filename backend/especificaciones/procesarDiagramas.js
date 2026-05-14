@@ -173,13 +173,105 @@ function procesarDiagramaPaquetes(diagramaPaquetes) {
     console.error("El diagrama de paquetes no se encuentra definido");
     return;
   }
+
+  const nodos = diagramaPaquetes.nodes;
+  const aristas = diagramaPaquetes.edges;
+
+  let contenido = `Diagrama de paquetes\n\n`;
+
+  const mapaNodos = new Map();
+
+  for (const nodo of nodos) {
+    mapaNodos.set(nodo.id, nodo);
+  }
+
+  const paquetes = nodos.filter(
+    (nodo) => nodo.type === "paquete" || nodo.type === "paquete_v2",
+  );
+
+  if (paquetes.length > 0) {
+    contenido += `Paquetes:\n`;
+
+    for (const paquete of paquetes) {
+      contenido += `- ${paquete.data.nombrePaquete}\n`;
+    }
+
+    contenido += "\n";
+  }
+
+  if (aristas.length > 0) {
+    contenido += `Dependencias:\n`;
+
+    for (const arista of aristas) {
+      const origen = mapaNodos.get(arista.source);
+      const destino = mapaNodos.get(arista.target);
+
+      if (!origen || !destino) continue;
+
+      const nombreOrigen = origen.data.nombrePaquete;
+      const nombreDestino = destino.data.nombrePaquete;
+
+      contenido += `- ${nombreOrigen} depende de ${nombreDestino}\n`;
+    }
+
+    contenido += "\n";
+  }
+
+  const paquetesPadre = paquetes.filter((paquete) => !paquete.groupId);
+
+  if (paquetesPadre.length > 0) {
+    contenido += `Jerarquía de paquetes:\n`;
+
+    for (const padre of paquetesPadre) {
+      const hijos = paquetes.filter((paquete) => paquete.groupId === padre.id);
+
+      if (hijos.length === 0) continue;
+
+      contenido += `\n${padre.data.nombrePaquete}\n`;
+
+      for (const hijo of hijos) {
+        contenido += `- ${hijo.data.nombrePaquete}\n`;
+      }
+    }
+  }
+
+  contenido += "\n";
+
+  return contenido;
 }
 
 function procesarDiagramaSecuencia(diagramaSecuencia) {
-  if (!diagramaSecuencia) {
-    console.error("El diagrama de secuencia no se encuentra definido");
-    return;
+  const nodos = diagramaSecuencia.nodes;
+  const aristas = diagramaSecuencia.edges;
+
+  const lifelines = new Map();
+
+  for (const nodo of nodos) {
+    if (nodo.type === "lineaVida" || nodo.type === "actorSecuencia") {
+      lifelines.set(nodo.id, nodo.data.nombreParticipante);
+    }
   }
+
+  const activacionAParticipante = new Map();
+
+  for (const nodo of nodos) {
+    if (nodo.type === "activacion") {
+      activacionAParticipante.set(nodo.id, lifelines.get(nodo.groupId));
+    }
+  }
+
+  const aristasOrdenados = [...aristas].sort(
+    (a, b) => a.points[0].y - b.points[0].y,
+  );
+
+  const lineas = aristasOrdenados.map((arista) => {
+    const origen = activacionAParticipante.get(arista.source);
+    const destino = activacionAParticipante.get(arista.target);
+
+    return `${origen} -> ${destino}: ${arista.data.label}`;
+  });
+
+  return lineas.join("\n");
 }
 
 function generarArchivoDiagrama(tipo, diagrama) {

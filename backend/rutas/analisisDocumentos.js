@@ -1,9 +1,21 @@
-const express = require('express');
-const router = express.Router();
-const prisma = require('../prisma');
+import { prisma } from "../lib/prisma.ts";
+import { Router } from "express";
+import { validarToken } from "../middleware/authMiddleware.js";
 
-router.post('/crear', async (req, res) => {
-  const { idsubproceso, nombre, descripcion, idanalista, tipodocumento, fuente, fechaanalisis, notas, hallazgos } = req.body;
+const analisisDocumentos = Router();
+
+analisisDocumentos.post("/crear", async (req, res) => {
+  const {
+    idsubproceso,
+    nombre,
+    descripcion,
+    idanalista,
+    tipodocumento,
+    fuente,
+    fechaanalisis,
+    notas,
+    hallazgos,
+  } = req.body;
   try {
     const nuevoAnalisis = await prisma.$transaction(async (tx) => {
       const analisis = await tx.analisisDocumentos.create({
@@ -39,12 +51,14 @@ router.post('/crear', async (req, res) => {
 
     res.status(201).json(nuevoAnalisis);
   } catch (error) {
-    console.error('Error al crear Análisis de Documento:', error);
-    res.status(500).json({ error: 'Hubo un error al crear el Análisis de Documento' });
+    console.error("Error al crear Análisis de Documento:", error);
+    res
+      .status(500)
+      .json({ error: "Hubo un error al crear el Análisis de Documento" });
   }
 });
 
-router.get('/obtener/:idsubproceso', async (req, res) => {
+analisisDocumentos.get("/obtener/:idsubproceso", async (req, res) => {
   const { idsubproceso } = req.params;
   try {
     const analisis = await prisma.analisisDocumentos.findMany({
@@ -53,31 +67,46 @@ router.get('/obtener/:idsubproceso', async (req, res) => {
         hallazgosanalisis: true,
         personas: true,
       },
-      orderBy: { fechaanalisis: 'desc' },
+      orderBy: { fechaanalisis: "desc" },
     });
     res.status(200).json(analisis);
   } catch (error) {
-    console.error('Error al obtener Análisis de Documentos:', error);
-    res.status(500).json({ error: 'Hubo un error al obtener los Análisis de Documentos' });
+    console.error("Error al obtener Análisis de Documentos:", error);
+    res
+      .status(500)
+      .json({ error: "Hubo un error al obtener los Análisis de Documentos" });
   }
 });
 
-router.delete('/eliminar/:idanalisis', async (req, res) => {
+analisisDocumentos.delete("/eliminar/:idanalisis", async (req, res) => {
   const { idanalisis } = req.params;
   try {
     await prisma.analisisDocumentos.delete({
       where: { idanalisis: parseInt(idanalisis) },
     });
-    res.status(200).json({ mensaje: 'Análisis de Documento eliminado correctamente' });
+    res
+      .status(200)
+      .json({ mensaje: "Análisis de Documento eliminado correctamente" });
   } catch (error) {
-    console.error('Error al eliminar Análisis de Documento:', error);
-    res.status(500).json({ error: 'Hubo un error al eliminar el Análisis de Documento' });
+    console.error("Error al eliminar Análisis de Documento:", error);
+    res
+      .status(500)
+      .json({ error: "Hubo un error al eliminar el Análisis de Documento" });
   }
 });
 
-router.put('/editar/:idanalisis', async (req, res) => {
+analisisDocumentos.put("/editar/:idanalisis", async (req, res) => {
   const { idanalisis } = req.params;
-  const { nombre, descripcion, idanalista, tipodocumento, fuente, fechaanalisis, notas, hallazgos } = req.body;
+  const {
+    nombre,
+    descripcion,
+    idanalista,
+    tipodocumento,
+    fuente,
+    fechaanalisis,
+    notas,
+    hallazgos,
+  } = req.body;
 
   try {
     const analisisEditado = await prisma.$transaction(async (tx) => {
@@ -117,9 +146,11 @@ router.put('/editar/:idanalisis', async (req, res) => {
 
     res.status(200).json(analisisEditado);
   } catch (error) {
-    console.error('Error al editar Análisis de Documento:', error);
-    res.status(500).json({ error: 'Hubo un error al editar el Análisis de Documento' });
+    console.error("Error al editar Análisis de Documento:", error);
+    res
+      .status(500)
+      .json({ error: "Hubo un error al editar el Análisis de Documento" });
   }
 });
 
-module.exports = router;
+export default analisisDocumentos;

@@ -12,7 +12,10 @@
     (drop)="onDrop($event)"
     (dragover)="onDragover($event)"
     [config]="config"
-  ></ng-diagram>
+    [edgeTemplateMap]="edgeTemplateMap"
+  >
+    <ng-diagram-background></ng-diagram-background>
+  </ng-diagram>
   <div class="menu-lateral flex-column md-gap" [class.animar-menu-lateral]="estaAbiertoMenuLateral">
     <header>
       <div>
@@ -142,40 +145,17 @@
             <div class="fragmento-preview-header">alt [condición]</div>
             <span>Fragmento</span>
           </div>
+        }
+        @case ('paquetes') {
           <div
             draggable="true"
-            (dragstart)="onDragStart($event, 'flechaSecuencia')"
-            (click)="agregarForma('flechaSecuencia', 'click')"
-            class="menu-shape secuencia-flecha"
+            (dragstart)="onDragStart($event, 'paquete_v2')"
+            (click)="agregarForma('paquete_v2', 'click')"
+            class="paquete-shape"
+            style="cursor: grab"
           >
-            <div class="flecha-preview"></div>
-            <span>Flecha</span>
-          </div>
-          <div
-            draggable="true"
-            (dragstart)="onDragStart($event, 'flechaRetornoSecuencia')"
-            (click)="agregarForma('flechaRetornoSecuencia', 'click')"
-            class="menu-shape secuencia-flecha"
-          >
-            <div class="flecha-preview flecha-retorno-preview"></div>
-            <span>Retorno</span>
-          </div>
-          <div
-            draggable="true"
-            (dragstart)="onDragStart($event, 'lineaPunteadaSecuencia')"
-            (click)="agregarForma('lineaPunteadaSecuencia', 'click')"
-            class="menu-shape secuencia-flecha"
-          >
-            <div class="flecha-preview linea-punteada-preview"></div>
-            <span>Línea</span>
-          </div>
-          <div
-            draggable="true"
-            (dragstart)="onDragStart($event, 'etiqueta')"
-            (click)="agregarForma('etiqueta', 'click')"
-            class="menu-shape secuencia-mensaje"
-          >
-            <span>mensaje()</span>
+            <span>texto</span>
+            <div>Paquete</div>
           </div>
         }
       }

@@ -1,0 +1,16 @@
+<ng-diagram-base-edge [edge]="edge()" stroke="var(--ngd-default-edge-stroke)">
+  <ng-diagram-base-edge-label [id]="'custom-label'" [positionOnEdge]="0.5">
+    @if (estaModoEdicionLabelActivado) {
+      <input
+        type="text"
+        class="shape-input"
+        (keydown.enter)="desactivarModoEdicionLabel()"
+        [(ngModel)]="edge().data.label"
+        data-no-pan="true"
+        data-no-drag="true"
+      />
+    } @else {
+      <div class="custom-label" (dblclick)="activarModoEdicionLabel()">{{ edge().data.label }}</div>
+    }
+  </ng-diagram-base-edge-label>
+</ng-diagram-base-edge>

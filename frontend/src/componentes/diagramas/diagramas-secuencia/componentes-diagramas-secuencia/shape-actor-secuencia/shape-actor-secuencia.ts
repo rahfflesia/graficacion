@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   NgDiagramNodeResizeAdornmentComponent,
@@ -7,6 +7,7 @@ import {
   NgDiagramPortComponent,
   type Node,
 } from 'ng-diagram';
+import { CanvasDiagramaClase } from '../../../diagramas-clase/canvas-diagrama-clase/canvas-diagrama-clase';
 
 @Component({
   selector: 'shape-actor-secuencia',
@@ -16,7 +17,7 @@ import {
       inputs: ['node'],
     },
   ],
-  imports: [FormsModule, NgDiagramNodeResizeAdornmentComponent, NgDiagramPortComponent],
+  imports: [FormsModule, NgDiagramNodeResizeAdornmentComponent],
   templateUrl: './shape-actor-secuencia.html',
   styleUrl: './shape-actor-secuencia.css',
 })

@@ -1,0 +1,18 @@
+.custom-label {
+  pointer-events: all;
+  background-color: var(--primary-color);
+  font-size: 14px;
+  box-shadow: var(--box-shadow);
+  font-weight: bold;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-width: 80px;
+  white-space: nowrap;
+}
+
+.shape-input {
+  pointer-events: all;
+}
