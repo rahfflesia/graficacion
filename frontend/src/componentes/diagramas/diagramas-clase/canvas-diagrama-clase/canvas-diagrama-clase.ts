@@ -7,6 +7,8 @@ import {
   NgDiagramNodeTemplateMap,
   NgDiagramModelService,
   type NgDiagramConfig,
+  NgDiagramEdgeTemplateMap,
+  NgDiagramBackgroundComponent,
 } from 'ng-diagram';
 import { ShapeClase } from '../componentes-diagramas-clase/shape-clase/shape-clase';
 import { ShapeInterfaz } from '../componentes-diagramas-clase/shape-interfaz/shape-interfaz';
@@ -27,7 +29,8 @@ import { ShapeLineaVida } from '../../diagramas-secuencia/componentes-diagramas-
 import { ShapeActivacion } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-activacion/shape-activacion';
 import { ShapeFragmento } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-fragmento/shape-fragmento';
 import { ShapeActorSecuencia } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-actor-secuencia/shape-actor-secuencia';
-import { ShapeFlechaSecuencia } from '../../diagramas-secuencia/componentes-diagramas-secuencia/shape-flecha-secuencia/shape-flecha-secuencia';
+import { ShapePaqueteV2 } from '../../diagramas-paquetes/componentes-diagramas-paquetes/shape-paquete-v2/shape-paquete-v2';
+import { CustomEdgeLabelComponent } from '../../diagramas-secuencia/componentes-diagramas-secuencia/custom-edge-label-component/custom-edge-label-component';
 
 @Component({
   selector: 'canvas-diagrama-clase',
@@ -37,6 +40,7 @@ import { ShapeFlechaSecuencia } from '../../diagramas-secuencia/componentes-diag
     FormsModule,
     ModalEliminarDiagrama,
     DatePipe,
+    NgDiagramBackgroundComponent,
   ],
   templateUrl: './canvas-diagrama-clase.html',
   styleUrl: './canvas-diagrama-clase.css',
@@ -74,10 +78,10 @@ export class CanvasDiagramaClase implements OnInit {
     ['actorSecuencia', ShapeActorSecuencia],
     ['activacion', ShapeActivacion],
     ['fragmento', ShapeFragmento],
-    ['flechaSecuencia', ShapeFlechaSecuencia],
-    ['flechaRetornoSecuencia', ShapeFlechaSecuencia],
-    ['lineaPunteadaSecuencia', ShapeFlechaSecuencia],
+    ['paquete_v2', ShapePaqueteV2],
   ]);
+
+  edgeTemplateMap = new NgDiagramEdgeTemplateMap([['customEdge', CustomEdgeLabelComponent]]);
 
   nombreDiagrama = 'Sin nombre';
   estaEdicionNombreDiagramaActiva = false;
@@ -89,16 +93,12 @@ export class CanvasDiagramaClase implements OnInit {
     edges: [],
   });
 
-  intervalId = 0;
-
   tipoDiagramaSeleccionado = signal<string | null>(null);
 
   // Vacío porque no tengo acceso aún
   config: NgDiagramConfig = {};
 
   esModalEliminarDiagramaVisible = false;
-
-  ultimoModeloGuardado = '';
 
   ngOnInit(): void {
     this.idproyecto = parseInt(this.router.snapshot.paramMap.get('idproyecto')!);
@@ -107,11 +107,33 @@ export class CanvasDiagramaClase implements OnInit {
     this.tipoDiagramaSeleccionado.set(tipo);
 
     // Aquí hago la declaración porque ya tengo acceso al tipo
-    this.config = {
-      edgeRouting: {
-        defaultRouting: this.tipoDiagramaSeleccionado() === 'casos_uso' ? 'polyline' : 'orthogonal',
-      },
-    };
+    if (this.tipoDiagramaSeleccionado() === 'secuencia') {
+      this.config = {
+        linking: {
+          finalEdgeDataBuilder: (defaultEdge: any) => ({
+            ...defaultEdge,
+            data: {
+              label: 'Etiqueta',
+            },
+            type: 'customEdge',
+          }),
+          temporaryEdgeDataBuilder: (defaultEdge: any) => ({
+            ...defaultEdge,
+            data: {
+              label: 'etiqueta',
+            },
+            type: 'customEdge',
+          }),
+        },
+      };
+    } else {
+      this.config = {
+        edgeRouting: {
+          defaultRouting:
+            this.tipoDiagramaSeleccionado() === 'casos_uso' ? 'polyline' : 'orthogonal',
+        },
+      };
+    }
 
     this.api
       .obtenerDiagrama({
@@ -124,8 +146,6 @@ export class CanvasDiagramaClase implements OnInit {
             const diagramaParseado = this.obtenerContenidoDiagrama(diagrama.contenido);
             this.model = initializeModel(diagramaParseado, this.injector);
             this.esDiagramaExistente = true;
-            // Detector de cambios para realizar autoguardado
-            // Instancia del componente cuando ya es existente
           } else {
             console.log('No se encontró un diagrama asociado (es la primera vez que lo crea)');
           }
@@ -216,22 +236,14 @@ export class CanvasDiagramaClase implements OnInit {
       nombreParticipante: 'Participante',
       operador: 'alt',
       condicion: 'condición',
-    };
-
-    const datosPorTipo: Record<string, Record<string, string>> = {
-      flechaSecuencia: { tipoFlecha: 'normal', orientacion: 'horizontal', angulo: '0' },
-      flechaRetornoSecuencia: { tipoFlecha: 'punteada', orientacion: 'horizontal', angulo: '0' },
-      lineaPunteadaSecuencia: { tipoFlecha: 'linea', orientacion: 'horizontal', angulo: '0' },
+      nombrePaquete: 'Paquete',
     };
 
     const dimensionesPorTipo: Record<string, { width: number; height: number }> = {
-      lineaVida: { width: 170, height: 90 },
-      actorSecuencia: { width: 150, height: 170 },
+      lineaVida: { width: 170, height: 600 },
+      actorSecuencia: { width: 150, height: 600 },
       activacion: { width: 22, height: 90 },
       fragmento: { width: 420, height: 230 },
-      flechaSecuencia: { width: 260, height: 40 },
-      flechaRetornoSecuencia: { width: 260, height: 40 },
-      lineaPunteadaSecuencia: { width: 260, height: 40 },
     };
 
     this.modelService.addNodes([
@@ -239,12 +251,18 @@ export class CanvasDiagramaClase implements OnInit {
         id: idShape,
         position,
         type: tipoForma,
+        resizable: true,
         data: {
           ...datosBase,
-          ...(datosPorTipo[tipoForma] ?? {}),
         },
         ...(dimensionesPorTipo[tipoForma] ? { size: dimensionesPorTipo[tipoForma] } : {}),
-        ...(tipoForma === 'boundary' || tipoForma === 'fragmento' ? { isGroup: true } : {}),
+        ...(tipoForma === 'boundary' ||
+        tipoForma === 'fragmento' ||
+        tipoForma === 'paquete_v2' ||
+        tipoForma === 'lineaVida' ||
+        tipoForma === 'actorSecuencia'
+          ? { isGroup: true }
+          : {}),
       },
     ]);
   }

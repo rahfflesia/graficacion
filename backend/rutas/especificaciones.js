@@ -1,8 +1,8 @@
 import Router from "express";
 import { prisma } from "../lib/prisma.ts";
-import { mkdir, writeFile } from "fs";
 import generarArchivos from "../especificaciones/generacionEspecificaciones.js";
 import { generarArchivoDiagrama } from "../especificaciones/procesarDiagramas.js";
+import fs from "node:fs/promises";
 
 function insertarDatos(arrayProcesos) {
   let contenido = "";
@@ -42,6 +42,15 @@ Descripción: ${subproceso.descripcion}
 
         if (subproceso.historiasusuario.length > 0)
           contenido += insertarHistoriasDeUsuario(subproceso);
+
+        if (subproceso.analisisDocumentos.length > 0)
+          contenido += insertarAnalisisDeDocumentos(subproceso);
+
+        if (subproceso.focusgroups.length > 0)
+          contenido += insertarFocusGroups(subproceso);
+
+        if (subproceso.seguimientotransaccional.length > 0)
+          contenido += insertarSeguimientosTransaccionales(subproceso);
       }
     }
 
@@ -89,7 +98,7 @@ function insertarDatosObservaciones(subproceso) {
 
 `;
 
-  for (let i = 0; i < subproceso.entrevistas.length; i++) {
+  for (let i = 0; i < subproceso.observaciones.length; i++) {
     const observacion = subproceso.observaciones[i];
 
     contenido += `NOMBRE DE LA OBSERVACION: ${observacion.nombre}
@@ -162,13 +171,48 @@ Criterios de aceptación:
   return contenido;
 }
 
-// De focus group y análisis de documentos están implementadas las tablas pero no hay interfaz en el frontend
-function insertarAnalisisDeDocumentos(subproceso) {}
+function insertarAnalisisDeDocumentos(subproceso) {
+  let contenido = `ANÁLISIS DE DOCUMENTOS ASOCIADOS AL SUBPROCESO ${subproceso.nombre} (ID: ${subproceso.idsubproceso})
+`;
+  for (let i = 0; i < subproceso.analisisDocumentos.length; i++) {
+    const analisisDocumento = subproceso.analisisDocumentos[i];
+    contenido += `Nombre: ${analisisDocumento.nombre}
+Descripcion: ${analisisDocumento.descripcion}
+Tipo de documento: ${analisisDocumento.tipodocumento}
+Fuente: ${analisisDocumento.fuente}
+Notas adicionales: ${analisisDocumento.notas}
+`;
+  }
+  return contenido;
+}
 
-function insertarFocusGroups(subproceso) {}
+function insertarFocusGroups(subproceso) {
+  let contenido = `FOCUS GROUPS ASOCIADOS AL SUBPROCESO ${subproceso.nombre} (ID: ${subproceso.idsubproceso})
+`;
+  for (let i = 0; i < subproceso.focusgroups.length; i++) {
+    const focusGroup = subproceso.focusgroups[i];
+    contenido += `Nombre: ${focusGroup.nombre}
+Descripcion: ${focusGroup.descripcion}
+Realizado en: ${focusGroup.lugar}
+`;
+  }
+  return contenido;
+}
 
-// De seguimiento transaccional no hay ni frontend ni tabla en la base de datos
-function insertarSeguimientoTransaccional(subproceso) {}
+function insertarSeguimientosTransaccionales(subproceso) {
+  let contenido = `SEGUIMIENTOS TRANSACCIONALES ASOCIADOS AL SUBPROCESO ${subproceso.nombre} (ID: ${subproceso.idsubproceso})
+`;
+  for (let i = 0; i < subproceso.seguimientotransaccional.length; i++) {
+    const seguimientoTransaccional = subproceso.seguimientotransaccional[i];
+    contenido += `Nombre: ${seguimientoTransaccional.nombre}
+Descripcion: ${seguimientoTransaccional.descripcion}
+Tipo de transacción: ${seguimientoTransaccional.tipotransaccion}
+Resultado esperado: ${seguimientoTransaccional.resultadoesperado}
+Resultado obtenido: ${seguimientoTransaccional.resultadoobtenido}
+`;
+  }
+  return contenido;
+}
 
 const especificaciones = Router();
 
@@ -208,6 +252,7 @@ especificaciones.get("/obtener/:idproyecto", async (req, res) => {
             historiasusuario: true,
             focusgroups: true,
             analisisDocumentos: true,
+            seguimientotransaccional: true,
           },
         },
       },
@@ -240,14 +285,7 @@ DESCRIPCIÓN: ${proyecto.descripcion}
 `;
     contenido += insertarDatos(procesos);
 
-    writeFile("datos_generales.txt", contenido, "utf-8", (err) => {
-      if (err) {
-        console.error(
-          "Ha ocurrido un error al crear el archivo de datos generales",
-        );
-        throw err;
-      }
-    });
+    fs.writeFile("datos_generales.txt", contenido);
 
     let contenidoArchivoDiagramas = `DIAGRAMAS DEL PROYECTO ${proyecto.nombre}
 `;
@@ -262,16 +300,9 @@ Tipo de diagrama:  ${diagrama.tipo}
         diagrama.tipo,
         JSON.parse(diagrama.contenido),
       );
-
-      if (diagrama.tipo === "casos_uso") console.log(diagrama.contenido);
     }
 
-    writeFile("diagramas.txt", contenidoArchivoDiagramas, "utf-8", (err) => {
-      if (err) {
-        console.error("Ha ocurrido un error al crear el archivo de diagramas");
-        throw err;
-      }
-    });
+    fs.writeFile("diagramas.txt", contenidoArchivoDiagramas);
 
     await generarArchivos();
 

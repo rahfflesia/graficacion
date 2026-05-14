@@ -246,6 +246,7 @@ Refactorización
 - Refactorizar únicamente cuando aporte claridad, mantenibilidad o exista un patrón lo suficientemente obvio o repetido que merezca ser convertido en abstracción
 
 - No refactorizar código estable sin razón clara`;
+    await fs.writeFile("flujo_trabajo.txt", contenido);
   } catch (error) {
     console.error("Error al crear el archivo", error);
   }

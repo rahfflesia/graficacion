@@ -7,6 +7,19 @@
     [class.vertical]="esVertical()"
     (dblclick)="alternarOrientacion()"
   >
+    @if (estaEditandoMensaje) {
+      <input
+        type="text"
+        class="input-mensaje"
+        [(ngModel)]="node().data.mensaje"
+        (blur)="desactivarEdicionMensaje()"
+        (keydown.enter)="desactivarEdicionMensaje()"
+      />
+    } @else {
+      <span class="texto-mensaje" (dblclick)="activarEdicionMensaje()">
+        {{ node().data.mensaje }}
+      </span>
+    }
     @if (esVertical()) {
       <svg viewBox="0 0 24 260" preserveAspectRatio="none" aria-hidden="true">
         <line x1="12" y1="2" x2="12" y2="250"></line>

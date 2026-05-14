@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   NgDiagramNodeResizeAdornmentComponent,
   NgDiagramNodeSelectedDirective,
@@ -14,12 +15,21 @@ import {
       inputs: ['node'],
     },
   ],
-  imports: [NgDiagramNodeResizeAdornmentComponent],
+  imports: [NgDiagramNodeResizeAdornmentComponent, FormsModule],
   templateUrl: './shape-flecha-secuencia.html',
   styleUrl: './shape-flecha-secuencia.css',
 })
 export class ShapeFlechaSecuencia implements NgDiagramNodeTemplate {
   node: any = input.required<Node>();
+  estaEditandoMensaje = false;
+
+  activarEdicionMensaje() {
+    this.estaEditandoMensaje = true;
+  }
+
+  desactivarEdicionMensaje() {
+    this.estaEditandoMensaje = false;
+  }
 
   esVertical() {
     const datos = this.node().data;

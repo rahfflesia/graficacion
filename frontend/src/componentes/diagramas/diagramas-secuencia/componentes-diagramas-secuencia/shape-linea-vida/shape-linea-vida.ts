@@ -16,7 +16,7 @@ import {
       inputs: ['node'],
     },
   ],
-  imports: [FormsModule, NgDiagramNodeResizeAdornmentComponent, NgDiagramPortComponent],
+  imports: [FormsModule, NgDiagramNodeResizeAdornmentComponent],
   templateUrl: './shape-linea-vida.html',
   styleUrl: './shape-linea-vida.css',
 })
