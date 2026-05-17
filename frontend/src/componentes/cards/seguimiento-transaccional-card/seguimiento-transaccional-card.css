@@ -1,3 +1,7 @@
+:host {
+  cursor: pointer;
+}
+
 .seguimiento-card {
   background-color: var(--primary-color);
   border-radius: var(--border-radius);

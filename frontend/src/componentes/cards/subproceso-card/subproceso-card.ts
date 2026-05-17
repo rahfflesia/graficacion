@@ -16,10 +16,11 @@ import { Proceso } from '../../../models/procesos.interface';
 import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interface';
 import { Router } from '@angular/router';
 import { Participante } from '../../../models/participantesProyecto.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'subproceso-card',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './subproceso-card.html',
   styleUrl: './subproceso-card.css',
 })

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, Inject, inject, OnInit, signal } from '@angular/core';
 import { ModalCrearProyecto } from '../../modales/modal-crear-proyecto/modal-crear-proyecto';
 import { ModalConfiguracionProyecto } from '../../modales/modal-configuracion-proyecto/modal-configuracion-proyecto';
 import { ProyectoCard } from '../../cards/proyecto-card/proyecto-card';
@@ -30,7 +30,6 @@ export class SeccionProyectos implements OnInit {
   private ServicioUsuario = inject(Usuario);
   private toastr = inject(ToastrService);
   private router = inject(Router);
-  private temaService = inject(TemaService);
 
   proyectos = signal<Proyectos[]>([]);
   esCrearProyectoModalVisible: boolean = false;
@@ -41,7 +40,17 @@ export class SeccionProyectos implements OnInit {
   estaCargando = signal<boolean>(true);
   proyectoSeleccionado = signal<Proyectos | undefined>(undefined);
   usuario = signal<DatosUsuario | null>(null);
-  temaActual = this.temaService.tema;
+
+  filtroProyecto = signal<'Activo' | 'Cancelado' | 'Pausado' | 'En_revisi_n' | 'Todos'>('Todos');
+  proyectosFiltrados = computed(() => {
+    const filtro = this.filtroProyecto();
+
+    if (filtro === 'Todos') {
+      return this.proyectos();
+    }
+
+    return this.proyectos().filter((proyecto) => proyecto.estado === filtro);
+  });
 
   ngOnInit(): void {
     this.usuario.set(this.ServicioUsuario.obtenerUsuario());
@@ -65,10 +74,6 @@ export class SeccionProyectos implements OnInit {
         this.router.navigate(['/login']);
       },
     });
-  }
-
-  alternarTema() {
-    this.temaService.alternarTema();
   }
 
   obtenerProyectos(idUsuario: number) {
@@ -168,5 +173,32 @@ export class SeccionProyectos implements OnInit {
     }
 
     this.router.navigate([ruta, idProyecto, tipoDiagramaSeleccionado]);
+  }
+
+  establecerFiltro(tipoFiltro: 'Activo' | 'Cancelado' | 'Pausado' | 'En_revisi_n' | 'Todos') {
+    this.filtroProyecto.set(tipoFiltro);
+  }
+
+  generarEspecificaciones() {
+    const idProyecto = this.proyectoSeleccionado()?.idproyecto;
+
+    if (!idProyecto) {
+      console.error('El id del proyecto no se encuentra definido');
+      return;
+    }
+
+    this.api.obtenerEspecificaciones(idProyecto).subscribe({
+      next: () => {
+        this.toastr.success('Especificaciones generadas exitosamente');
+      },
+      error: (error) => {
+        console.error(error);
+        const mensajeError =
+          error.error.mensaje ?? 'Ha ocurrido un error al generar las especificaciones';
+        this.toastr.error('', mensajeError, {
+          toastClass: 'toastr-error',
+        });
+      },
+    });
   }
 }

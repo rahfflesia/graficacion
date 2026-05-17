@@ -64,7 +64,7 @@
         </form>
       }
     </div>
-    @if (!estaEditando) {
+    @if (!estaEditando && !estaBorrando) {
       <span class="descripcion">{{ proceso?.descripcion }}</span>
     }
     @if (estaBorrando) {
@@ -76,9 +76,9 @@
         </div>
       </div>
     }
-    @if (!estaEditando) {
+    @if (!estaEditando && !estaBorrando) {
       <div class="fecha-creacion">
-        <span>Creado en {{ proceso?.fechacreacion | date }}</span>
+        <span>Creado el {{ proceso?.fechacreacion | date: 'short' }}</span>
       </div>
     }
   </div>

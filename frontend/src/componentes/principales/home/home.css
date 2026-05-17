@@ -618,3 +618,9 @@ footer > * {
   background-color: var(--blue);
   color: #fff;
 }
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}

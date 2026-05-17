@@ -4,6 +4,11 @@
   [idProyecto]="idproyecto()"
   (participanteCreado)="registrarParticipante($event)"
 ></modal-agregar-participante>
+<modal-detalle-entrevista
+  [toggler]="esModalDetalleEntrevistaVisible"
+  [entrevista]="entrevistaSeleccionada"
+  (cerrar)="cerrarModalDetalleEntrevista()"
+></modal-detalle-entrevista>
 <modal-carga [toggler]="estaCargando" [mensaje]="'Cargando entrevistas'"></modal-carga>
 <section class="flex-column md-gap">
   <header>
@@ -17,7 +22,7 @@
     (entrevistaCreada)="crearEntrevista($event)"
   ></form-entrevistas>
   <div class="flex-column md-gap">
-    <h3>Entrevistas asociadas</h3>
+    <h3>Entrevistas asociadas ({{ entrevistas().length }})</h3>
     <div class="entrevistas-wrapper flex-column sm-gap">
       @for (entrevista of entrevistas(); track entrevista.entrevista.identrevista) {
         <entrevista-card
@@ -25,6 +30,7 @@
           (eliminar)="eliminarEntrevista($event)"
           [listaParticipantes]="participantes()"
           (entrevistaEditada)="editarEntrevista($event)"
+          (click)="abrirModalDetalleEntrevista(entrevista)"
         ></entrevista-card>
       } @empty {
         <div class="sin-resultados">

@@ -1,7 +1,7 @@
 .configuracion-component {
   padding: 1rem 1.5rem;
   border-radius: var(--border-radius);
-  border: 1px solid lightgray;
+  border: var(--soft-border);
 }
 
 .descripcion {
@@ -85,4 +85,8 @@
 form,
 .nombre-proyecto {
   flex: 1;
+}
+
+.fecha-creacion {
+  font-size: 0.7rem;
 }

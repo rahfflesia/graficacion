@@ -34,13 +34,6 @@ header {
   padding: 2rem;
 }
 
-.section-header {
-  background-color: var(--primary-color);
-  padding: 0.9rem 2rem;
-  border-bottom: var(--soft-border);
-  box-shadow: 0 8px 24px rgba(17, 28, 45, 0.03);
-}
-
 .projects-section,
 header {
   background-color: var(--body-bg-color);
@@ -48,13 +41,6 @@ header {
 
 .projects-section {
   padding: 0 2rem 2rem;
-}
-
-.hamburger-menu,
-.modo,
-.notificaciones {
-  width: 18px;
-  height: 18px;
 }
 
 .foto {
@@ -249,4 +235,29 @@ header {
   to {
     transform: translateY(-50%);
   }
+}
+
+.filtros {
+  background-color: var(--primary-color);
+  border: var(--soft-border);
+  padding: 0.4rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  gap: 1rem;
+  margin: 0 2rem 2rem 2rem;
+  flex-wrap: wrap;
+}
+
+.filtros > button {
+  flex: 1;
+  border-radius: var(--border-radius);
+  border: none;
+  font-weight: bold;
+  padding: 0.5rem;
+  background-color: var(--body-bg-color);
+  cursor: pointer;
+}
+
+.filtros > button:hover {
+  background-color: rgb(226, 226, 226);
 }

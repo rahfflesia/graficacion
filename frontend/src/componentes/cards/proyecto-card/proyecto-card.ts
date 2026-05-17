@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Proyectos } from '../../../models/proceso.interface';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'proyecto-card',
-  imports: [DatePipe],
+  imports: [],
   templateUrl: './proyecto-card.html',
   styleUrl: './proyecto-card.css',
 })
@@ -14,17 +13,36 @@ export class ProyectoCard {
   @Output() eliminar = new EventEmitter<void>();
   @Output() configurar = new EventEmitter<void>();
   @Output() crearDiagrama = new EventEmitter<void>();
+  @Output() generarEspecificaciones = new EventEmitter<void>();
+
+  esMenuOpcionesVisible = false;
+
+  mostrarMenuOpciones() {
+    this.esMenuOpcionesVisible = true;
+  }
+
+  ocultarMenuOpciones() {
+    this.esMenuOpcionesVisible = false;
+  }
 
   eliminarProyecto() {
     this.eliminar.emit();
+    this.ocultarMenuOpciones();
   }
 
   configurarProyecto() {
     this.configurar.emit();
+    this.ocultarMenuOpciones();
   }
 
   crearDiagramaProyecto() {
     this.crearDiagrama.emit();
+    this.ocultarMenuOpciones();
+  }
+
+  generarEspecificacionesProyecto() {
+    this.generarEspecificaciones.emit();
+    this.ocultarMenuOpciones();
   }
 
   obtenerColorFondo(estado: string) {

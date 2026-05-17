@@ -1,5 +1,7 @@
-<modal-carga [toggler]="estanCargandoHistorias" [mensaje]="'Cargando historias de usuario'"></modal-carga>
-
+<modal-carga
+  [toggler]="estanCargandoHistorias"
+  [mensaje]="'Cargando historias de usuario...'"
+></modal-carga>
 <section class="flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Historias de Usuario</h1>
@@ -26,7 +28,10 @@
 
     <div class="input-wrapper flex-column sm-gap">
       <label>Necesidad</label>
-      <textarea formControlName="necesidad" placeholder="Como [rol], quiero [necesidad]..."></textarea>
+      <textarea
+        formControlName="necesidad"
+        placeholder="Como [rol], quiero [necesidad]..."
+      ></textarea>
     </div>
 
     <div class="input-wrapper flex-column sm-gap">
@@ -76,12 +81,14 @@
       <button type="button" (click)="crearHistoria()">Crear historia</button>
     }
   </form>
-
+  <h3>Historias de usuario asociadas ({{ historias().length }})</h3>
   <div class="lista-historias flex-column sm-gap">
     @for (historia of historias(); track historia.idhistoriausuario) {
       <div class="historia-card flex-column sm-gap">
         <div class="historia-header">
-          <span class="prioridad prioridad-{{ historia.prioridad.toLowerCase() }}">{{ historia.prioridad }}</span>
+          <span class="prioridad prioridad-{{ historia.prioridad.toLowerCase() }}">{{
+            historia.prioridad
+          }}</span>
           <div class="acciones">
             <button (click)="iniciarEdicion(historia)">Editar</button>
             <button class="btn-cancelar" (click)="eliminarHistoria(historia)">Eliminar</button>

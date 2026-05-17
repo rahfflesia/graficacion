@@ -36,10 +36,11 @@ import { TecnicaRecoleccion } from '../../../models/tecnicasRecoleccion.interfac
 import { Subproceso } from '../../../models/subprocesos.interface';
 import { SubprocesoCard } from '../../cards/subproceso-card/subproceso-card';
 import { crear, editar, eliminar } from '../../../crud-helpers/crudHelpers';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'modal-configuracion-proyecto',
-  imports: [ReactiveFormsModule, ProcesoCard, RolCard, ParticipanteCard, SubprocesoCard],
+  imports: [ReactiveFormsModule, ProcesoCard, RolCard, ParticipanteCard, SubprocesoCard, DatePipe],
   templateUrl: './modal-configuracion-proyecto.html',
   styleUrl: './modal-configuracion-proyecto.css',
 })
@@ -64,6 +65,11 @@ export class ModalConfiguracionProyecto implements OnChanges {
   tecnicasRecoleccion = signal<TecnicaRecoleccion[]>([]);
   tecnicasSeleccionadasIds = signal<Set<number>>(new Set());
   subprocesos = signal<Subproceso[]>([]);
+
+  participantesFiltrados: Participante[] = [];
+  rolesFiltrados: Rol[] = [];
+  subprocesosFiltrados: Subproceso[] = [];
+  procesosFiltrados: Proceso[] = [];
 
   formularioProcesos = this.formBuilder.group({
     nombreProceso: ['', Validators.required],
@@ -163,6 +169,12 @@ export class ModalConfiguracionProyecto implements OnChanges {
         this.subprocesos.set(datosProyecto.subprocesos);
         this.cargarTecnicas();
         this.seleccionarProcesoPorDefecto();
+
+        // Copias para realizar el filtrado, no puedo utilizar el mismo array porque lo estaría modificando
+        this.participantesFiltrados = [...this.participantes()];
+        this.rolesFiltrados = [...this.roles()];
+        this.subprocesosFiltrados = [...this.subprocesos()];
+        this.procesosFiltrados = [...this.procesos()];
       },
       error: (error) => {
         console.error(error);
@@ -241,6 +253,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (procesoCreado) => {
         this.toastr.success('Proceso creado correctamente');
         crear(this.procesos, procesoCreado);
+        this.procesosFiltrados = [...this.procesos()];
       },
       error: (error) => {
         this.toastr.error('Ha ocurrido un error al crear el proceso', '', {
@@ -254,10 +267,12 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
   borrarProceso(procesoEliminado: Proceso) {
     eliminar(this.procesos, procesoEliminado, 'idproceso');
+    this.procesosFiltrados = [...this.procesos()];
   }
 
   editarProceso(procesoEditado: Proceso) {
     editar(this.procesos, procesoEditado, 'idproceso');
+    this.procesosFiltrados = [...this.procesos()];
   }
 
   crearRol() {
@@ -270,6 +285,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (rolCreado) => {
         this.toastr.success('Rol creado correctamente');
         crear(this.roles, rolCreado);
+        this.rolesFiltrados = [...this.roles()];
       },
       error: (error) => {
         console.error(error);
@@ -284,11 +300,12 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
   eliminarRol(rolEliminado: Rol) {
     eliminar(this.roles, rolEliminado, 'idrol');
+    this.rolesFiltrados = [...this.roles()];
   }
 
-  // Hay mucha lógica duplicada con esto de los cruds, después le haré un refactor
   editarRol(rolEditado: Rol) {
     editar(this.roles, rolEditado, 'idrol');
+    this.rolesFiltrados = [...this.roles()];
   }
 
   registrarParticipante() {
@@ -302,6 +319,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (participanteRegistrado) => {
         this.toastr.success('Participante registrado exitosamente');
         crear(this.participantes, participanteRegistrado);
+        this.participantesFiltrados = [...this.participantes()];
       },
       error: (error) => {
         console.error(error);
@@ -314,8 +332,21 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.formularioParticipantes.get('idrol')?.setValue(this.primerRol());
   }
 
+  editarParticipante(participanteEditado: Participante) {
+    editar(this.participantes, participanteEditado, 'idpersona');
+    this.participantesFiltrados = [...this.participantes()];
+  }
+
   eliminarParticipante(participanteEliminado: RolParticipanteProyecto) {
     eliminar(this.participantes, participanteEliminado, 'idrolpersonaproyecto');
+    this.participantesFiltrados = [...this.participantes()];
+  }
+
+  cargarTecnicas() {
+    this.tecnicasAsociadas.clear();
+    const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
+    controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
+    this.tecnicasAsociadas.updateValueAndValidity();
   }
 
   cargarTecnicas() {
@@ -422,7 +453,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
       next: (subprocesoCreado) => {
         this.toastr.success('Subproceso creado correctamente');
         crear(this.subprocesos, subprocesoCreado);
-        this.limpiarFormularioSubproceso();
+        this.subprocesosFiltrados = [...this.subprocesos()];
       },
       error: (error) => {
         console.error(error);
@@ -447,9 +478,36 @@ export class ModalConfiguracionProyecto implements OnChanges {
 
   eliminarSubproceso(subprocesoEliminado: Subproceso) {
     eliminar(this.subprocesos, subprocesoEliminado, 'idsubproceso');
+    this.subprocesosFiltrados = [...this.subprocesos()];
   }
 
   editarSubproceso(subprocesoEditado: Subproceso) {
     editar(this.subprocesos, subprocesoEditado, 'idsubproceso');
+    this.subprocesosFiltrados = [...this.subprocesos()];
+  }
+
+  filtrarParticipantes(nombre: string) {
+    this.participantesFiltrados = this.participantes().filter((participante) => {
+      const nombreCompleto = `${participante.nombre} ${participante.apellidouno} ${participante.apellidodos}`;
+      return nombreCompleto.toLowerCase().includes(nombre.toLowerCase());
+    });
+  }
+
+  filtrarRoles(nombreRol: string) {
+    this.rolesFiltrados = this.roles().filter((rol) =>
+      rol.nombre.toLowerCase().includes(nombreRol.toLowerCase()),
+    );
+  }
+
+  filtrarSubprocesos(nombreSubproceso: string) {
+    this.subprocesosFiltrados = this.subprocesos().filter((subproceso) =>
+      subproceso.nombresubproceso.toLowerCase().includes(nombreSubproceso.toLowerCase()),
+    );
+  }
+
+  filtrarProcesos(nombreProceso: string) {
+    this.procesosFiltrados = this.procesos().filter((proceso) =>
+      proceso.nombre.toLowerCase().includes(nombreProceso.toLowerCase()),
+    );
   }
 }

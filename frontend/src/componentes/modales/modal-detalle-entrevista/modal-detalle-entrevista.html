@@ -1,0 +1,87 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-detalle-entrevista modal-editar" [class.animar]="toggler">
+    <header class="header-modal">
+      <div class="flex-column xs-gap">
+        <h2>Detalle de entrevista</h2>
+      </div>
+      <button class="close-button" (click)="cerrar.emit()">X</button>
+    </header>
+    <section class="contenido-modal flex-column md-gap">
+      <div class="detalle-wrapper flex-column sm-gap">
+        <h4>Nombre</h4>
+        <div class="detalle-box">
+          {{ entrevista?.entrevista?.nombre }}
+        </div>
+      </div>
+      <div class="detalle-wrapper flex-column sm-gap">
+        <h4>Descripción</h4>
+        <div class="detalle-box descripcion-box">
+          {{ entrevista?.entrevista?.descripcion }}
+        </div>
+      </div>
+      <div class="detalle-wrapper flex-column sm-gap">
+        <h4>Lugar</h4>
+        <div class="detalle-box">
+          {{ entrevista?.entrevista?.lugar }}
+        </div>
+      </div>
+      <div class="input-wrapper-row">
+        <div class="detalle-wrapper flex-column sm-gap">
+          <h4>Inicio</h4>
+          <div class="detalle-box">
+            {{ entrevista?.entrevista?.fechahorainicio | date: 'short' }}
+          </div>
+        </div>
+        <div class="detalle-wrapper flex-column sm-gap">
+          <h4>Finalización</h4>
+          <div class="detalle-box">
+            {{ entrevista?.entrevista?.fechahorafinalizacion | date: 'short' }}
+          </div>
+        </div>
+      </div>
+      @if (entrevista?.entrevistados && entrevista?.entrevistados!.length > 0) {
+        <div class="detalle-wrapper flex-column sm-gap">
+          <h4>Entrevistados</h4>
+          <div class="lista-elementos">
+            @for (participante of entrevista?.entrevistados; track participante.idpersona) {
+              <div class="elemento-lista">
+                <span>
+                  {{ participante.nombre }}
+                  {{ participante.apellidouno }}
+                  {{ participante.apellidodos ?? '' }}
+                </span>
+                <span class="nombre-rol">
+                  {{ participante.nombrerol }}
+                </span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+      @if (entrevista?.preguntasentrevista && entrevista?.preguntasentrevista!.length > 0) {
+        <div class="detalle-wrapper flex-column sm-gap">
+          <h4>Preguntas de la entrevista</h4>
+          <div class="lista-preguntas flex-column sm-gap">
+            @for (
+              pregunta of entrevista?.preguntasentrevista;
+              track pregunta.idpregunta;
+              let i = $index
+            ) {
+              <div class="pregunta-box flex-column sm-gap">
+                <div class="pregunta-header">Pregunta {{ i + 1 }}</div>
+
+                <div class="flex-column xs-gap">
+                  <strong>{{ pregunta.nombre }}</strong>
+
+                  <span class="description-font">
+                    {{ pregunta.descripcion }}
+                  </span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </section>
+  </div>
+</div>

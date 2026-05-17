@@ -6,10 +6,11 @@ import { Subproceso } from '../../../models/subprocesos.interface';
 import { FocusGroup, DatosFormularioFocusGroup } from '../../../models/focusGroup';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
+import { ModalCarga } from '../../modales/modal-carga/modal-carga';
 
 @Component({
   selector: 'seccion-focus-group',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ModalCarga],
   templateUrl: './seccion-focus-group.html',
   styleUrl: './seccion-focus-group.css',
 })
@@ -34,6 +35,8 @@ export class SeccionFocusGroup {
     temas: this.formBuilder.array([], [Validators.required]),
     participantes: this.formBuilder.array([]),
   });
+
+  estaCargando = true;
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
@@ -95,8 +98,14 @@ export class SeccionFocusGroup {
   cargarFocusGroupsExistentes() {
     if (!this.subproceso?.idsubproceso) return;
     this.api.obtenerFocusGroups(this.subproceso.idsubproceso).subscribe({
-      next: (lista) => this.focusGroupsExistentes.set(lista),
-      error: (e) => console.error('Error al cargar focus groups:', e),
+      next: (lista) => {
+        this.focusGroupsExistentes.set(lista);
+        this.estaCargando = false;
+      },
+      error: (e) => {
+        console.error('Error al cargar focus groups:', e);
+        this.estaCargando = false;
+      },
     });
   }
 
@@ -142,9 +151,7 @@ export class SeccionFocusGroup {
   cargarParaEdicion(fg: FocusGroup) {
     this.focusGroupEnEdicion.set(fg);
 
-    const fechaFormateada = fg.fechahora
-      ? new Date(fg.fechahora).toISOString().slice(0, 16)
-      : '';
+    const fechaFormateada = fg.fechahora ? new Date(fg.fechahora).toISOString().slice(0, 16) : '';
 
     this.formulario.patchValue({
       nombre: fg.nombre,

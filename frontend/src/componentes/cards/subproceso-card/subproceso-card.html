@@ -12,6 +12,9 @@
       }
     </div>
     @if (!estaBorrando && !estaEditando) {
+      <h5>Proceso asociado: {{ subproceso?.nombreproceso }}</h5>
+    }
+    @if (!estaBorrando && !estaEditando) {
       <div class="tecnicas">
         @for (tecnica of subproceso?.tecnicasasociadas; track tecnica.idtecnicarecoleccion) {
           <span (click)="goToSeccionTecnicaSeleccionada(tecnica.nombre)">{{ tecnica.nombre }}</span>
@@ -101,5 +104,6 @@
     <div class="descripcion-subproceso">
       <p>{{ subproceso?.descripcionsubproceso }}</p>
     </div>
+    <div class="fecha-creacion">Creado el: {{ subproceso?.fechacreacion | date: 'short' }}</div>
   }
 </div>

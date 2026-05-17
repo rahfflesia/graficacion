@@ -11,17 +11,28 @@
     <div class="mensaje-confirmacion">
       <span>¿Seguro que deseas eliminar esta entrevista?</span>
       <div class="wrapper-botones-eliminar input-wrapper-row">
-        <button class="default-button" (click)="eliminarEntrevista()">Sí</button>
-        <button class="default-button" (click)="desactivarModoEliminar()">No</button>
+        <button class="default-button" (click)="eliminarEntrevista(); $event.stopPropagation()">
+          Sí
+        </button>
+        <button class="default-button" (click)="desactivarModoEliminar(); $event.stopPropagation()">
+          No
+        </button>
       </div>
     </div>
   </div>
 } @else {
   <div class="entrevista-card">
-    <span>{{ entrevista?.entrevista?.nombre }}</span>
+    <h4>{{ entrevista?.entrevista?.nombre }}</h4>
     <div class="wrapper-botones input-wrapper-row">
-      <button class="default-button" (click)="mostrarModalEditarEntrevista()">Editar</button>
-      <button class="default-button" (click)="activarModoEliminar()">Eliminar</button>
+      <button
+        class="default-button"
+        (click)="mostrarModalEditarEntrevista(); $event.stopPropagation()"
+      >
+        Editar
+      </button>
+      <button class="default-button" (click)="activarModoEliminar(); $event.stopPropagation()">
+        Eliminar
+      </button>
     </div>
   </div>
 }

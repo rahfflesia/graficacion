@@ -10,6 +10,7 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 2rem;
 }
 
 .opciones-diagramas button {
@@ -32,16 +33,27 @@ header {
   transform: translateY(0);
 }
 
-.boton-menu-diagrama span:first-child,
-.boton-menu-diagrama span:last-child {
+.boton-menu-diagrama span:first-child {
   font-weight: 600;
-}
-
-.boton-menu-diagrama span:last-child {
-  font-size: 0.8rem;
-  color: rgb(158, 158, 158);
 }
 
 .boton-menu-diagrama:hover {
   transform: translateY(-5%);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+
+.close img {
+  width: 24px;
+  height: 24px;
+}
+
+.close:hover {
+  background-color: rgb(239, 239, 239);
 }

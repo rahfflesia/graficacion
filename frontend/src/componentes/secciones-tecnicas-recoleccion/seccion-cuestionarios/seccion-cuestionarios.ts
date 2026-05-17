@@ -7,10 +7,11 @@ import { Cuestionario, DatosFormularioCuestionario, Pregunta } from '../../../mo
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
 import { ResponderCuestionario } from './responder-cuestionario/responder-cuestionario';
+import { ModalCarga } from '../../modales/modal-carga/modal-carga';
 
 @Component({
   selector: 'seccion-cuestionarios',
-  imports: [ReactiveFormsModule, ResponderCuestionario],
+  imports: [ReactiveFormsModule, ResponderCuestionario, ModalCarga],
   templateUrl: './seccion-cuestionarios.html',
   styleUrl: './seccion-cuestionarios.css',
 })
@@ -32,6 +33,8 @@ export class SeccionCuestionarios {
     idPersona: ['', [Validators.required]],
     preguntas: this.formBuilder.array([], [Validators.required]),
   });
+
+  estaCargando = true;
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
@@ -113,10 +116,12 @@ export class SeccionCuestionarios {
         }));
 
         this.cuestionariosExistentes.set(cuestionariosTransformados);
+        this.estaCargando = false;
       },
 
       error: (error) => {
         console.error('Error al cargar cuestionarios:', error);
+        this.estaCargando = false;
       },
     });
   }

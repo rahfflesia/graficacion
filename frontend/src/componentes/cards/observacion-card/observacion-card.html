@@ -9,18 +9,25 @@
   <div class="flex-row-between">
     <span class="tipo-observacion">{{ observacion?.tipo }}</span>
     <div class="wrapper-botones">
-      <button (click)="mostrarModalEditar()" class="tipo-observacion">Editar</button>
-      <button (click)="mostrarMenuBorrar()" class="boton-eliminar">Eliminar</button>
+      <button (click)="mostrarModalEditar()" class="gray-button">Editar</button>
+      <button (click)="mostrarMenuBorrar()" class="gray-button">Eliminar</button>
     </div>
   </div>
   <header>
     <h4 class="nombre-observacion">{{ observacion?.nombre }}</h4>
   </header>
-  <div class="descripcion-observacion">{{ observacion?.descripcion }}</div>
+  <div class="descripcion-observacion" [class.expandido]="mostrarMasActivado">
+    {{ observacion?.descripcion }}
+  </div>
+  @if (observacion?.descripcion && observacion?.descripcion!.length > 100) {
+    <span (click)="alternarMostrarMas()" style="cursor: pointer" class="boton-expandir"
+      ><strong>{{ mostrarMasActivado ? 'mostrar más...' : 'mostrar menos...' }}</strong></span
+    >
+  }
   <footer>
     <div class="datos-captura">
       Recopilado el
-      {{ observacion?.fechahoracaptura | date }}
+      {{ observacion?.fechahoracaptura | date: 'short' }}
       por
       {{ observacion?.observador?.nombre }} {{ observacion?.observador?.apellidouno }}
       {{ observacion?.observador?.apellidodos ?? '' }}

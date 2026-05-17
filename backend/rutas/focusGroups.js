@@ -1,9 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const prisma = require('../prisma');
+import express, { Router } from "express";
+import { prisma } from "../lib/prisma.ts";
+import { validarToken } from "../middleware/authMiddleware.js";
 
-router.post('/crear', async (req, res) => {
-  const { idsubproceso, nombre, descripcion, idmoderador, lugar, fechahora, temas, participantes } = req.body;
+const focusGroup = Router();
+
+focusGroup.post("/crear", async (req, res) => {
+  const {
+    idsubproceso,
+    nombre,
+    descripcion,
+    idmoderador,
+    lugar,
+    fechahora,
+    temas,
+    participantes,
+  } = req.body;
   try {
     const nuevoFocusGroup = await prisma.$transaction(async (tx) => {
       const focusGroup = await tx.focusgroups.create({
@@ -47,12 +58,12 @@ router.post('/crear', async (req, res) => {
 
     res.status(201).json(nuevoFocusGroup);
   } catch (error) {
-    console.error('Error al crear Focus Group:', error);
-    res.status(500).json({ error: 'Hubo un error al crear el Focus Group' });
+    console.error("Error al crear Focus Group:", error);
+    res.status(500).json({ error: "Hubo un error al crear el Focus Group" });
   }
 });
 
-router.get('/obtener/:idsubproceso', async (req, res) => {
+focusGroup.get("/obtener/:idsubproceso", async (req, res) => {
   const { idsubproceso } = req.params;
   try {
     const focusGroups = await prisma.focusgroups.findMany({
@@ -62,31 +73,41 @@ router.get('/obtener/:idsubproceso', async (req, res) => {
         participantesfg: { include: { personas: true } },
         personas: true,
       },
-      orderBy: { fechahora: 'desc' },
+      orderBy: { fechahora: "desc" },
     });
     res.status(200).json(focusGroups);
   } catch (error) {
-    console.error('Error al obtener Focus Groups:', error);
-    res.status(500).json({ error: 'Hubo un error al obtener los Focus Groups' });
+    console.error("Error al obtener Focus Groups:", error);
+    res
+      .status(500)
+      .json({ error: "Hubo un error al obtener los Focus Groups" });
   }
 });
 
-router.delete('/eliminar/:idfocusgroup', async (req, res) => {
+focusGroup.delete("/eliminar/:idfocusgroup", async (req, res) => {
   const { idfocusgroup } = req.params;
   try {
     await prisma.focusgroups.delete({
       where: { idfocusgroup: parseInt(idfocusgroup) },
     });
-    res.status(200).json({ mensaje: 'Focus Group eliminado correctamente' });
+    res.status(200).json({ mensaje: "Focus Group eliminado correctamente" });
   } catch (error) {
-    console.error('Error al eliminar Focus Group:', error);
-    res.status(500).json({ error: 'Hubo un error al eliminar el Focus Group' });
+    console.error("Error al eliminar Focus Group:", error);
+    res.status(500).json({ error: "Hubo un error al eliminar el Focus Group" });
   }
 });
 
-router.put('/editar/:idfocusgroup', async (req, res) => {
+focusGroup.put("/editar/:idfocusgroup", async (req, res) => {
   const { idfocusgroup } = req.params;
-  const { nombre, descripcion, idmoderador, lugar, fechahora, temas, participantes } = req.body;
+  const {
+    nombre,
+    descripcion,
+    idmoderador,
+    lugar,
+    fechahora,
+    temas,
+    participantes,
+  } = req.body;
 
   try {
     const fgEditado = await prisma.$transaction(async (tx) => {
@@ -137,9 +158,9 @@ router.put('/editar/:idfocusgroup', async (req, res) => {
 
     res.status(200).json(fgEditado);
   } catch (error) {
-    console.error('Error al editar Focus Group:', error);
-    res.status(500).json({ error: 'Hubo un error al editar el Focus Group' });
+    console.error("Error al editar Focus Group:", error);
+    res.status(500).json({ error: "Hubo un error al editar el Focus Group" });
   }
 });
 
-module.exports = router;
+export default focusGroup;

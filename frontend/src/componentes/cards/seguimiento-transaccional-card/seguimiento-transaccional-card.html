@@ -3,8 +3,8 @@
     <h4>{{ seguimiento?.nombre }}</h4>
     @if (!estaModoEliminarActivado) {
       <div class="botones-seguimiento-card">
-        <button (click)="editarSeguimiento()">Editar</button>
-        <button (click)="activarModoEliminar()">Eliminar</button>
+        <button (click)="editarSeguimiento(); $event.stopPropagation()">Editar</button>
+        <button (click)="activarModoEliminar(); $event.stopPropagation()">Eliminar</button>
       </div>
     }
   </header>
@@ -12,8 +12,12 @@
     <div class="mensaje-confirmacion">
       <span>¿Seguro que deseas eliminar este seguimiento transaccional?</span>
       <div>
-        <button class="boton-confirmar" (click)="eliminarSeguimiento()">Sí</button>
-        <button class="boton-cancelar" (click)="desactivarModoEliminar()">No</button>
+        <button class="boton-confirmar" (click)="eliminarSeguimiento(); $event.stopPropagation()">
+          Sí
+        </button>
+        <button class="boton-cancelar" (click)="desactivarModoEliminar(); $event.stopPropagation()">
+          No
+        </button>
       </div>
     </div>
   } @else {

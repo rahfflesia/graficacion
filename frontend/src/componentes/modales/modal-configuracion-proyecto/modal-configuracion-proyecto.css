@@ -48,13 +48,8 @@ main {
 }
 
 .procesos-wrapper,
-.area-principal,
-.sin-procesos {
+.area-principal {
   flex: 1;
-}
-
-.procesos-wrapper {
-  max-width: 980px;
 }
 
 .sin-procesos {
@@ -95,6 +90,8 @@ header.header-config {
 
 .checkbox-wrapper {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -110,4 +107,67 @@ header.header-config {
 #formulario-participantes-modal {
   border: none;
   padding: 0;
+}
+
+.detalles-wrapper header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.estado-proyecto {
+  color: var(--blue);
+  background-color: var(--blue-fg-color);
+  border-radius: var(--border-radius);
+  padding: 0.3rem 0.6rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.descripcion-proyecto {
+  font-size: 1rem;
+  line-height: 1.3;
+  color: rgb(161, 161, 161);
+}
+
+.fecha-creacion {
+  font-weight: bold;
+}
+
+.barra-busqueda-wrapper {
+  padding: 0.5rem;
+  border: var(--soft-border);
+  display: flex;
+  gap: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.barra-busqueda {
+  border: none;
+  font-weight: bold;
+  flex: 1;
+  border-radius: var(--border-radius);
+  padding: 0.2rem 0.4rem;
+}
+
+.barra-busqueda::placeholder {
+  font-weight: bold;
+}
+
+.icono-busqueda {
+  background-color: var(--blue);
+  padding: 0.3rem;
+  border-radius: 50%;
+}
+
+.icono-busqueda img {
+  width: 24px;
+  height: 24px;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }

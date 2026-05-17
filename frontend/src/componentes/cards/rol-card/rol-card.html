@@ -58,6 +58,8 @@
     </div>
   }
   @if (!estaBorrando && !estaEditando) {
-    <span><span class="tipo">Tipo:</span> {{ rol?.tipo | lowercase }}</span>
+    <div>
+      <span class="tipo-rol">{{ rol?.tipo }}</span>
+    </div>
   }
 </div>

@@ -1,7 +1,7 @@
 .participante-card {
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  border: 1px solid lightgray;
+  border: var(--soft-border);
 }
 
 .flex-between {
@@ -16,17 +16,22 @@
   border-radius: var(--border-radius);
 }
 
-.rol {
-  border: 1px solid var(--font-color);
-  border-radius: var(--border-radius);
-  color: var(--font-color);
-}
-
 .rol,
 .correo-telefono > span {
-  font-weight: 700;
-  font-size: 0.8rem;
+  font-weight: bold;
+  font-size: 0.7rem;
   padding: 0.4rem 0.6rem;
+}
+
+.correo-telefono > span {
+  background-color: var(--blue-fg-color);
+  color: var(--blue);
+}
+
+.rol {
+  border-radius: var(--border-radius);
+  background-color: var(--orange-fg-color);
+  color: var(--orange);
 }
 
 .botones {
@@ -36,6 +41,7 @@
 
 .botones > .gray-button {
   font-size: 0.7rem;
+  padding: 0.4rem 0.8rem;
 }
 
 .correo-telefono {
@@ -44,6 +50,7 @@
 }
 
 .datos-participante {
+  display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
@@ -52,7 +59,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--primary-color);
+  background-color: var(--blue);
   display: inline-block;
   margin-right: 0.25rem;
 }
@@ -61,7 +68,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--font-color);
+  background-color: var(--orange);
   display: inline-block;
   margin-right: 0.25rem;
 }

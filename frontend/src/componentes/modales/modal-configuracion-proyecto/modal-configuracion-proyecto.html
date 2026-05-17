@@ -5,7 +5,12 @@
         <h3>Configuración de proyecto</h3>
         <span class="description-font">Ajusta tus proyectos a tus necesidades</span>
       </div>
-      <div class="close-button" (click)="cerrarModalConfigurarProyecto()">X</div>
+      <div class="close" (click)="cerrarModalConfigurarProyecto()">
+        <img
+          src="https://img.icons8.com/?size=100&id=8112&format=png&color=000000"
+          alt="close-icon"
+        />
+      </div>
     </header>
     <main>
       <div class="menu-configuracion">
@@ -94,7 +99,9 @@
                     obtenerControlFormularioEditarProyecto('descripcion')?.hasError('required') &&
                     obtenerControlFormularioEditarProyecto('descripcion')?.dirty
                   ) {
-                    <span class="error-span">La descripción del proyecto no puede quedar vacía</span>
+                    <span class="error-span"
+                      >La descripción del proyecto no puede quedar vacía</span
+                    >
                   }
                   @if (
                     obtenerControlFormularioEditarProyecto('descripcion')?.hasError('minlength') &&
@@ -176,16 +183,37 @@
                 </div>
               </form>
               <h3>Procesos del proyecto</h3>
-              @for (proceso of procesos(); track $index) {
-                <proceso-card
-                  [proceso]="proceso"
-                  (borrarProceso)="borrarProceso($event)"
-                  (editarProceso)="editarProceso($event)"
-                ></proceso-card>
-              } @empty {
+              <div class="barra-busqueda-wrapper">
+                <div class="icono-busqueda">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=DZe3wFKTc8IK&format=png&color=ffffff"
+                    alt="icono-busqueda"
+                  />
+                </div>
+                <input
+                  #inputProceso
+                  type="text"
+                  class="barra-busqueda"
+                  placeholder="Buscar proceso"
+                  (input)="filtrarProcesos(inputProceso.value)"
+                />
+              </div>
+              @if (procesos().length === 0) {
                 <div class="sin-procesos formulario">
                   <p class="empty">Aún no has creado ningún proceso</p>
                 </div>
+              } @else {
+                @for (proceso of procesosFiltrados; track proceso.idproceso) {
+                  <proceso-card
+                    [proceso]="proceso"
+                    (borrarProceso)="borrarProceso($event)"
+                    (editarProceso)="editarProceso($event)"
+                  ></proceso-card>
+                } @empty {
+                  <div class="sin-procesos formulario">
+                    <p class="empty">No se encontraron resultados</p>
+                  </div>
+                }
               }
             </div>
           }
@@ -246,19 +274,15 @@
                     <div class="error-span">El proceso asociado al subproceso es requerido</div>
                   }
                 </div>
-                <div class="input-wrapper flex-column sm-gap">
+                <div class="input-wrapper flex-column sm-gap" formArrayName="tecnicasAsociadas">
                   <label for="">Técnica de recolección utilizada</label>
                   <div class="checkbox-outer-wrapper">
                     <!-- Ciclo para renderizar los componentes -->
                     <!-- Los utilizo para saber que tecnicas asociadas seleccionó el usuario -->
-                    @for (tecnica of tecnicasRecoleccion(); track tecnica.idtecnicarecoleccion) {
+                    @for (tecnica of tecnicasAsociadas.controls; track $index; let i = $index) {
                       <div class="checkbox-wrapper">
-                        <input
-                          type="checkbox"
-                          [checked]="estaTecnicaSeleccionada(tecnica)"
-                          (change)="cambiarTecnicaSeleccionada(tecnica, $event)"
-                        />
-                        <span>{{ tecnica.nombre }}</span>
+                        <input type="checkbox" [formControlName]="i" />
+                        <span>{{ obtenerNombreCheckbox(i) }}</span>
                       </div>
                     } @empty {
                       <span class="sin-resultados">
@@ -269,7 +293,7 @@
                   @if (
                     obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.hasError(
                       'required'
-                    ) && obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.touched
+                    ) && obtenerControlFormularioProcesos('tecnicasAsociadas')?.touched
                   ) {
                     <div class="error-span">Al menos una técnica es requerida</div>
                   }
@@ -292,19 +316,40 @@
                 </div>
               </form>
               <h3>Subprocesos del proyecto</h3>
-              @for (subproceso of subprocesos(); track $index) {
-                <subproceso-card
-                  [subproceso]="subproceso"
-                  [procesosProyecto]="procesos()"
-                  [participantes]="participantes()"
-                  [tecnicasRecoleccion]="tecnicasRecoleccion()"
-                  (eliminar)="eliminarSubproceso($event)"
-                  (editar)="editarSubproceso($event)"
-                ></subproceso-card>
-              } @empty {
+              <div class="barra-busqueda-wrapper">
+                <div class="icono-busqueda">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=DZe3wFKTc8IK&format=png&color=ffffff"
+                    alt="icono-busqueda"
+                  />
+                </div>
+                <input
+                  #inputSubproceso
+                  type="text"
+                  class="barra-busqueda"
+                  placeholder="Buscar subproceso"
+                  (input)="filtrarSubprocesos(inputSubproceso.value)"
+                />
+              </div>
+              @if (subprocesos().length === 0) {
                 <div class="sin-procesos formulario">
                   <p class="empty">Aún no has creado ningún subproceso</p>
                 </div>
+              } @else {
+                @for (subproceso of subprocesosFiltrados; track subproceso.idsubproceso) {
+                  <subproceso-card
+                    [subproceso]="subproceso"
+                    [procesosProyecto]="procesos()"
+                    [participantes]="participantes()"
+                    [tecnicasRecoleccion]="tecnicasRecoleccion()"
+                    (eliminar)="eliminarSubproceso($event)"
+                    (editar)="editarSubproceso($event)"
+                  ></subproceso-card>
+                } @empty {
+                  <div class="sin-procesos formulario">
+                    <p class="empty">No se encontraron resultados</p>
+                  </div>
+                }
               }
             </div>
           }
@@ -353,17 +398,40 @@
                 </div>
               </form>
               <h3>Roles del proyecto</h3>
-              @for (rol of roles(); track $index) {
-                <rol-card
-                  [rol]="rol"
-                  (eliminarRol)="eliminarRol($event)"
-                  (modificarRol)="editarRol($event)"
-                ></rol-card>
-              } @empty {
-                <div class="sin-procesos formulario">
-                  <p class="empty">Aún no has creado ningún rol</p>
+              <div class="barra-busqueda-wrapper">
+                <div class="icono-busqueda">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=DZe3wFKTc8IK&format=png&color=ffffff"
+                    alt="icono-busqueda"
+                  />
                 </div>
-              }
+                <input
+                  #inputRoles
+                  type="text"
+                  class="barra-busqueda"
+                  placeholder="Buscar rol"
+                  (input)="filtrarRoles(inputRoles.value)"
+                />
+              </div>
+              <div class="roles-grid">
+                @if (roles().length === 0) {
+                  <div class="sin-procesos formulario" style="grid-column: 1 / -1">
+                    <p class="empty">Aún no has creado ningún rol</p>
+                  </div>
+                } @else {
+                  @for (rol of rolesFiltrados; track rol.idrol) {
+                    <rol-card
+                      [rol]="rol"
+                      (eliminarRol)="eliminarRol($event)"
+                      (modificarRol)="editarRol($event)"
+                    ></rol-card>
+                  } @empty {
+                    <div class="sin-procesos formulario" style="grid-column: 1 / -1">
+                      <p class="empty">No se encontraron resultados</p>
+                    </div>
+                  }
+                }
+              </div>
             </div>
           }
           @case ('Participantes') {
@@ -476,21 +544,57 @@
                 </div>
               </form>
               <h3>Participantes del proyecto</h3>
-              @for (participante of participantes(); track $index) {
-                <participante-card
-                  [participante]="participante"
-                  [roles]="roles()"
-                  (borrarParticipante)="eliminarParticipante($event)"
-                ></participante-card>
-              } @empty {
+              <div class="barra-busqueda-wrapper">
+                <div class="icono-busqueda">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=DZe3wFKTc8IK&format=png&color=ffffff"
+                    alt="icono-busqueda"
+                  />
+                </div>
+                <input
+                  #inputParticipante
+                  type="text"
+                  class="barra-busqueda"
+                  placeholder="Buscar participante"
+                  (input)="filtrarParticipantes(inputParticipante.value)"
+                />
+              </div>
+              @if (participantes().length === 0) {
                 <div class="sin-procesos formulario">
                   <p class="empty">Aún no has registrado ningún participante</p>
                 </div>
+              } @else {
+                @for (participante of participantesFiltrados; track participante.idpersona) {
+                  <participante-card
+                    [participante]="participante"
+                    [roles]="roles()"
+                    (borrarParticipante)="eliminarParticipante($event)"
+                    (editar)="editarParticipante($event)"
+                  ></participante-card>
+                } @empty {
+                  <div class="sin-procesos formulario">
+                    <p class="empty">No se encontraron resultados</p>
+                  </div>
+                }
               }
             </div>
           }
           @case ('Detalles') {
-            <p>Sección de detalles</p>
+            <div class="detalles-wrapper flex-column sm-gap">
+              <header>
+                <h2>{{ proyectoSeleccionado?.nombre }}</h2>
+                <span class="estado-proyecto">{{ proyectoSeleccionado?.estado }}</span>
+              </header>
+              <div class="descripcion-proyecto">
+                {{ proyectoSeleccionado?.descripcion }}
+              </div>
+              <div class="procesos">{{ procesos().length }} procesos registrados</div>
+              <div class="subprocesos">{{ subprocesos().length }} subprocesos registrados</div>
+              <div class="roles">{{ roles().length }} roles registrados</div>
+              <div class="fecha-creacion">
+                Fecha de creación: {{ proyectoSeleccionado?.fechacreacion | date: 'short' }}
+              </div>
+            </div>
           }
           @default {
             <p>Opción inválida</p>

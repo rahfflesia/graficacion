@@ -134,7 +134,7 @@ model observaciones {
 model observacionesobservados {
   idobservacion Int
   idobservado   Int
-  observaciones observaciones @relation(fields: [idobservacion], references: [idobservacion], onDelete: NoAction, onUpdate: NoAction)
+  observaciones observaciones @relation(fields: [idobservacion], references: [idobservacion], onDelete: Cascade, onUpdate: NoAction)
   personas      personas      @relation(fields: [idobservado], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([idobservacion, idobservado])
@@ -143,8 +143,8 @@ model observacionesobservados {
 model entrevistadosentrevista {
   identrevistado Int
   identrevista   Int
-  entrevistas    entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: NoAction, onUpdate: NoAction)
-  personas       personas    @relation(fields: [identrevistado], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  entrevistas    entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: Cascade, onUpdate: NoAction)
+  personas       personas    @relation(fields: [identrevistado], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([identrevista, identrevistado])
 }
@@ -159,8 +159,8 @@ model entrevistas {
   lugar                   String                    @db.VarChar(255)
   idsubproceso            Int
   entrevistadosentrevista entrevistadosentrevista[]
-  personas                personas                  @relation(fields: [identrevistador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas                personas                  @relation(fields: [identrevistador], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos             subprocesos               @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   preguntasentrevista     preguntasentrevista[]
 }
 
@@ -169,7 +169,7 @@ model preguntasentrevista {
   identrevista Int
   nombre       String      @db.VarChar(255)
   descripcion  String
-  entrevistas  entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: NoAction, onUpdate: NoAction)
+  entrevistas  entrevistas @relation(fields: [identrevista], references: [identrevista], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model cuestionarios {
@@ -179,8 +179,8 @@ model cuestionarios {
   descripcion            String
   idcreador              Int
   fechacreacion          DateTime                 @default(now()) @db.Timestamptz(6)
-  personas               personas                 @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos            subprocesos              @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas               personas                 @relation(fields: [idcreador], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos            subprocesos              @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   preguntascuestionario  preguntascuestionario[]
   respuestascuestionario respuestascuestionario[]
 }
@@ -202,7 +202,7 @@ model respuestascuestionario {
   idrespondente       Int
   fecharespuesta      DateTime              @default(now()) @db.Timestamptz(6)
   cuestionarios       cuestionarios         @relation(fields: [idcuestionario], references: [idicuestionario], onDelete: Cascade, onUpdate: NoAction)
-  personas            personas              @relation(fields: [idrespondente], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  personas            personas              @relation(fields: [idrespondente], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
   respuestaspreguntas respuestaspreguntas[]
 }
 
@@ -225,7 +225,7 @@ model historiasusuario {
   criteriosaceptacion String[]    @default([])
   prioridad           String      @db.VarChar(20)
   fechacreacion       DateTime    @default(now()) @db.Timestamptz(6)
-  personas            personas    @relation(fields: [idcreador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  personas            personas    @relation(fields: [idcreador], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
   subprocesos         subprocesos @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
 }
 
@@ -237,8 +237,8 @@ model focusgroups {
   idmoderador     Int
   lugar           String            @db.VarChar(255)
   fechahora       DateTime          @default(now()) @db.Timestamptz(6)
-  personas        personas          @relation(fields: [idmoderador], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos     subprocesos       @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas        personas          @relation(fields: [idmoderador], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos     subprocesos       @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   participantesfg participantesfg[]
   temasfocusgroup temasfocusgroup[]
 }
@@ -254,7 +254,7 @@ model participantesfg {
   idfocusgroup Int
   idpersona    Int
   focusgroups  focusgroups @relation(fields: [idfocusgroup], references: [idfocusgroup], onDelete: Cascade, onUpdate: NoAction)
-  personas     personas    @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
+  personas     personas    @relation(fields: [idpersona], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([idfocusgroup, idpersona])
 }
@@ -269,8 +269,8 @@ model analisisDocumentos {
   fuente            String              @db.VarChar(500)
   fechaanalisis     DateTime            @default(now()) @db.Timestamptz(6)
   notas             String?
-  personas          personas            @relation(fields: [idanalista], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos       subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas          personas            @relation(fields: [idanalista], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos       subprocesos         @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
   hallazgosanalisis hallazgosanalisis[]
 }
 
@@ -289,7 +289,7 @@ model diagramasproyectos {
   contenido     Json
   fechacreacion DateTime  @default(now()) @db.Timestamptz(6)
   ultimaedicion DateTime  @default(now()) @db.Timestamptz(6)
-  proyectos     proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: NoAction, onUpdate: NoAction)
+  proyectos     proyectos @relation(fields: [idproyecto], references: [idproyecto], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([idproyecto, tipo], map: "tipo_proyecto_unico")
 }
@@ -308,15 +308,15 @@ model seguimientotransaccional {
   fechacreacion           DateTime                                @default(now()) @db.Timestamptz(6)
   fechaactualizacion      DateTime                                @default(now()) @db.Timestamptz(6)
   involucradosseguimiento involucradosseguimiento[]
-  personas                personas                                @relation(fields: [idresponsable], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  subprocesos             subprocesos                             @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: NoAction, onUpdate: NoAction)
+  personas                personas                                @relation(fields: [idresponsable], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  subprocesos             subprocesos                             @relation(fields: [idsubproceso], references: [idsubproceso], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model involucradosseguimiento {
   idseguimiento            Int
   idpersona                Int
-  personas                 personas                 @relation(fields: [idpersona], references: [idpersona], onDelete: NoAction, onUpdate: NoAction)
-  seguimientotransaccional seguimientotransaccional @relation(fields: [idseguimiento], references: [idseguimiento], onDelete: NoAction, onUpdate: NoAction)
+  personas                 personas                 @relation(fields: [idpersona], references: [idpersona], onDelete: Cascade, onUpdate: NoAction)
+  seguimientotransaccional seguimientotransaccional @relation(fields: [idseguimiento], references: [idseguimiento], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([idseguimiento, idpersona])
 }

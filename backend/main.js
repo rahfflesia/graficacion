@@ -21,6 +21,7 @@ import diagramas from "./rutas/diagramas.js";
 import especificaciones from "./rutas/especificaciones.js";
 import seguimientoTransaccional from "./rutas/seguimientoTransaccional.js";
 import analisisDocumentos from "./rutas/analisisDocumentos.js";
+import focusGroup from "./rutas/focusGroups.js";
 
 const app = express();
 const port = 3000;
@@ -48,6 +49,7 @@ app.use("/diagramas", diagramas);
 app.use("/especificaciones", especificaciones);
 app.use("/seguimiento-transaccional", seguimientoTransaccional);
 app.use("/analisis-documentos", analisisDocumentos);
+app.use("/focusgroups", focusGroup);
 
 const server = app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
