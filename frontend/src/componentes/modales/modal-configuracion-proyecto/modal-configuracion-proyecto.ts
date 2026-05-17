@@ -62,6 +62,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
   participantes = signal<Participante[]>([]);
   primerRol = computed(() => this.roles()[0].idrol.toString());
   tecnicasRecoleccion = signal<TecnicaRecoleccion[]>([]);
+  tecnicasSeleccionadasIds = signal<Set<number>>(new Set());
   subprocesos = signal<Subproceso[]>([]);
 
   formularioProcesos = this.formBuilder.group({
@@ -321,7 +322,13 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.tecnicasAsociadas.clear();
     const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
     controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
+    this.tecnicasSeleccionadasIds.set(new Set());
+    this.actualizarValidacionTecnicas();
+  }
+
+  actualizarValidacionTecnicas() {
     this.tecnicasAsociadas.updateValueAndValidity();
+    this.formularioSubprocesos.updateValueAndValidity();
   }
 
   seleccionarProcesoPorDefecto() {
@@ -333,13 +340,43 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   obtenerTecnicasSeleccionadas() {
-    let tecnicasSeleccionadas: TecnicaRecoleccion[] = [];
-    const checkboxesTecnicasAsociadas = this.formularioSubprocesos.value
-      .tecnicasAsociadas as Boolean[];
-    checkboxesTecnicasAsociadas.forEach((boolean, index) => {
-      if (boolean) tecnicasSeleccionadas.push(this.tecnicasRecoleccion()[index]);
-    });
-    return tecnicasSeleccionadas;
+    return this.tecnicasRecoleccion().filter((tecnica) =>
+      this.tecnicasSeleccionadasIds().has(tecnica.idtecnicarecoleccion),
+    );
+  }
+
+  hayTecnicaSeleccionada() {
+    return this.tecnicasSeleccionadasIds().size > 0;
+  }
+
+  estaTecnicaSeleccionada(tecnica: TecnicaRecoleccion) {
+    return this.tecnicasSeleccionadasIds().has(tecnica.idtecnicarecoleccion);
+  }
+
+  cambiarTecnicaSeleccionada(tecnica: TecnicaRecoleccion, evento: Event) {
+    const input = evento.target as HTMLInputElement;
+    const tecnicasActuales = new Set(this.tecnicasSeleccionadasIds());
+
+    if (input.checked) {
+      tecnicasActuales.add(tecnica.idtecnicarecoleccion);
+    } else {
+      tecnicasActuales.delete(tecnica.idtecnicarecoleccion);
+    }
+
+    this.tecnicasSeleccionadasIds.set(tecnicasActuales);
+    this.actualizarValidacionTecnicas();
+  }
+
+  puedeCrearSubproceso() {
+    const { nombreSubproceso, descripcionSubproceso, idProcesoAsociado } =
+      this.formularioSubprocesos.value;
+
+    return Boolean(
+      nombreSubproceso?.trim() &&
+        descripcionSubproceso?.trim() &&
+        idProcesoAsociado &&
+        this.hayTecnicaSeleccionada(),
+    );
   }
 
   tieneTecnicaSeleccionada(): ValidatorFn {
@@ -369,6 +406,7 @@ export class ModalConfiguracionProyecto implements OnChanges {
     }
 
     if (tecnicasSeleccionadas.length === 0) {
+      this.tecnicasAsociadas.markAsDirty();
       console.error('No hay ninguna técnica seleccionada');
       return;
     }
@@ -397,9 +435,14 @@ export class ModalConfiguracionProyecto implements OnChanges {
   }
 
   limpiarFormularioSubproceso() {
-    this.formularioSubprocesos.reset();
+    this.formularioSubprocesos.get('nombreSubproceso')?.reset();
+    this.formularioSubprocesos.get('descripcionSubproceso')?.reset();
+    this.formularioSubprocesos.get('idProcesoAsociado')?.reset();
     this.cargarTecnicas();
     this.seleccionarProcesoPorDefecto();
+    this.formularioSubprocesos.markAsPristine();
+    this.formularioSubprocesos.markAsUntouched();
+    this.formularioSubprocesos.updateValueAndValidity();
   }
 
   eliminarSubproceso(subprocesoEliminado: Subproceso) {
