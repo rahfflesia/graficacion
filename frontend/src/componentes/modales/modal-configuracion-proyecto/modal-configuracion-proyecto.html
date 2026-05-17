@@ -246,15 +246,19 @@
                     <div class="error-span">El proceso asociado al subproceso es requerido</div>
                   }
                 </div>
-                <div class="input-wrapper flex-column sm-gap" formArrayName="tecnicasAsociadas">
+                <div class="input-wrapper flex-column sm-gap">
                   <label for="">Técnica de recolección utilizada</label>
                   <div class="checkbox-outer-wrapper">
                     <!-- Ciclo para renderizar los componentes -->
                     <!-- Los utilizo para saber que tecnicas asociadas seleccionó el usuario -->
-                    @for (tecnica of tecnicasAsociadas.controls; track $index; let i = $index) {
+                    @for (tecnica of tecnicasRecoleccion(); track tecnica.idtecnicarecoleccion) {
                       <div class="checkbox-wrapper">
-                        <input type="checkbox" [formControlName]="i" />
-                        <span>{{ obtenerNombreCheckbox(i) }}</span>
+                        <input
+                          type="checkbox"
+                          [checked]="estaTecnicaSeleccionada(tecnica)"
+                          (change)="cambiarTecnicaSeleccionada(tecnica, $event)"
+                        />
+                        <span>{{ tecnica.nombre }}</span>
                       </div>
                     } @empty {
                       <span class="sin-resultados">
@@ -265,7 +269,7 @@
                   @if (
                     obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.hasError(
                       'required'
-                    ) && obtenerControlFormularioProcesos('tecnicasAsociadas')?.touched
+                    ) && obtenerControlFormularioSubprocesos('tecnicasAsociadas')?.touched
                   ) {
                     <div class="error-span">Al menos una técnica es requerida</div>
                   }
@@ -281,7 +285,7 @@
                   <button
                     class="default-button"
                     (click)="crearSubproceso()"
-                    [disabled]="formularioSubprocesos.invalid"
+                    [disabled]="!puedeCrearSubproceso()"
                   >
                     Crear subproceso
                   </button>

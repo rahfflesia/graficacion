@@ -11,9 +11,47 @@ form {
   background-color: var(--primary-color);
 }
 
+input,
+select,
+textarea {
+  width: 100%;
+  background-color: var(--primary-color);
+  border: var(--soft-border);
+  border-radius: 0.35rem;
+  color: var(--font-color);
+  padding: 0.45rem;
+}
+
+textarea {
+  min-height: 44px;
+}
+
+button {
+  border: none;
+  border-radius: 0.35rem;
+  background-color: var(--blue);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.45rem 0.75rem;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .criterio-input-wrapper {
   display: flex;
   gap: 0.5rem;
+}
+
+.criterio-input-wrapper input {
+  flex: 1;
+}
+
+.criterio-input-wrapper button {
+  flex: 0 0 auto;
 }
 
 .lista-criterios {
@@ -29,9 +67,17 @@ form {
   justify-content: space-between;
   align-items: center;
   padding: 0.4rem 0.8rem;
-  border: 1px solid lightgray;
+  border: var(--soft-border);
   border-radius: var(--border-radius);
   font-size: 0.85rem;
+}
+
+.lista-criterios li button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: grid;
+  place-items: center;
 }
 
 .historia-card {
@@ -66,4 +112,9 @@ form {
 .btn-cancelar {
   background-color: #e74c3c;
   color: white;
+}
+
+:host-context(body.modo-oscuro) .lista-criterios li,
+:host-context(body.modo-oscuro) .historia-card {
+  border: 1px solid #263449;
 }
