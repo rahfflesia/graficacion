@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma.ts";
 import generarArchivos from "../especificaciones/generacionEspecificaciones.js";
 import { generarArchivoDiagrama } from "../especificaciones/procesarDiagramas.js";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 function insertarDatos(arrayProcesos) {
   let contenido = "";
@@ -214,6 +215,18 @@ Resultado obtenido: ${seguimientoTransaccional.resultadoobtenido}
   return contenido;
 }
 
+async function existeCarpeta(ruta) {
+  try {
+    const stats = await fs.stat(ruta);
+    return stats.isDirectory();
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return false;
+    }
+    throw error;
+  }
+}
+
 const especificaciones = Router();
 
 especificaciones.get("/obtener/:idproyecto", async (req, res) => {
@@ -265,18 +278,59 @@ especificaciones.get("/obtener/:idproyecto", async (req, res) => {
     });
 
     // Condicional para asegurarme de que el proyecto cuenta con todos los datos necesarios
-    /*if (
-      !procesos ||
-      !proyecto ||
-      procesos.length < 1 ||
-      !diagramas ||
-      diagramas.length < 1
-    ) {
-      return res.status(401).json({
-        error:
-          "El proyecto no cuenta con datos suficientes para generar las especificaciones",
+    let valido = true;
+    procesos.forEach((proceso) => {
+      if (!proceso.subprocesos || proceso.subprocesos.length < 1)
+        valido = false;
+      proceso.subprocesos.forEach((subproceso) => {
+        if (
+          subproceso.analisisDocumentos.length < 1 &&
+          subproceso.cuestionarios.length < 1 &&
+          subproceso.entrevistas.length < 1 &&
+          subproceso.observaciones.length < 1 &&
+          subproceso.focusgroups.length < 1 &&
+          subproceso.historiasusuario.length < 1 &&
+          subproceso.seguimientotransaccional.length < 1
+        ) {
+          valido = false;
+        }
       });
-    }*/
+    });
+
+    if (!proyecto) {
+      return res.status(404).json({
+        mensaje: "El proyecto no existe",
+      });
+    }
+
+    if (procesos.length < 1) {
+      return res.status(422).json({
+        mensaje: "El proyecto debe de tener al menos un proceso",
+      });
+    }
+
+    if (diagramas.length < 4) {
+      return res.status(422).json({
+        mensaje: "El proyecto debe contar con todos los diagramas",
+      });
+    }
+
+    if (!valido) {
+      return res.status(422).json({
+        mensaje:
+          "Cada proceso debe de contar con al menos un subproceso y cada subproceso debe de estar asociado a al menos una técnica de recolección",
+      });
+    }
+
+    const nombreCarpeta = proyecto.nombre;
+    const rutaCarpetaEspecificaciones = `C:/Users/chech/Downloads/${nombreCarpeta}`;
+    if (await existeCarpeta(rutaCarpetaEspecificaciones)) {
+      return res.status(409).json({
+        mensaje: "Las especificaciones de este proyecto ya han sido generadas",
+      });
+    }
+
+    await fs.mkdir(rutaCarpetaEspecificaciones);
 
     let contenido = `PROYECTO: ${proyecto.nombre}
 
@@ -285,7 +339,10 @@ DESCRIPCIÓN: ${proyecto.descripcion}
 `;
     contenido += insertarDatos(procesos);
 
-    fs.writeFile("datos_generales.txt", contenido);
+    await fs.writeFile(
+      `${rutaCarpetaEspecificaciones}/datos_generales.txt`,
+      contenido,
+    );
 
     let contenidoArchivoDiagramas = `DIAGRAMAS DEL PROYECTO ${proyecto.nombre}
 `;
@@ -302,9 +359,11 @@ Tipo de diagrama:  ${diagrama.tipo}
       );
     }
 
-    fs.writeFile("diagramas.txt", contenidoArchivoDiagramas);
-
-    await generarArchivos();
+    await fs.writeFile(
+      `${rutaCarpetaEspecificaciones}/diagramas.txt`,
+      contenidoArchivoDiagramas,
+    );
+    await generarArchivos(rutaCarpetaEspecificaciones);
 
     return res
       .status(200)

@@ -66,7 +66,7 @@ export class DashboardUsuario implements OnInit {
 
   obtenerIconoTema() {
     return this.temaActual() === 'oscuro'
-      ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
+      ? 'https://img.icons8.com/?size=100&id=URphhfIjBd0M&format=png&color=ffffff'
       : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d';
   }
 

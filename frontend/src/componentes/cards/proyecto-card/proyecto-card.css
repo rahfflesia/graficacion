@@ -41,7 +41,7 @@
 }
 
 .opciones-proyecto > button:first-child:hover {
-  color: var(--blue);
+  color: var(--primary-color);
   background-color: var(--blue);
   border-color: var(--blue);
   transform: translateY(-1px);
@@ -107,4 +107,45 @@ p {
 :host-context(body.modo-oscuro) .crear-diagrama {
   background-color: #111827;
   border-color: #334155;
+}
+
+.menu-opciones {
+  padding: 0.5rem;
+  transition: 300ms ease background-color 0ms;
+  background-color: rgb(255, 255, 255);
+  border-radius: var(--border-radius);
+  position: relative;
+}
+
+.menu-opciones img {
+  width: 24px;
+  height: 24px;
+}
+
+.menu-opciones:hover,
+.menu-opciones-interno button:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.menu-opciones-interno {
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  overflow: hidden;
+  transform: translateY(-25%);
+}
+
+.menu-opciones-interno button {
+  border: none;
+  background-color: var(--primary-color);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-bottom: var(--soft-border);
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 100%;
 }

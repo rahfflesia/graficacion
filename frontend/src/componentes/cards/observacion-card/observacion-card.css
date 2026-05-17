@@ -35,12 +35,19 @@
   gap: 0.5rem;
 }
 
+.wrapper-botones button {
+  border: var(--soft-border);
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
 .observacion {
-  background-color: rgb(245, 252, 255);
+  background-color: var(--primary-color);
   border-radius: var(--border-radius);
   padding: 1rem;
   font-weight: 500;
   height: 100%;
+  border: var(--soft-border);
 }
 
 .observacion > header {
@@ -55,8 +62,16 @@
   font-size: 0.8rem;
 }
 
-.descripcion-observacion {
-  color: rgb(169, 169, 169);
+.expandido {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  line-clamp: 3;
+}
+
+.boton-expandir {
+  font-size: 0.8rem;
 }
 
 .tipo-observacion {
@@ -65,14 +80,7 @@
   padding: 0.4rem 0.6rem;
   border-radius: var(--border-radius);
   font-size: 0.7rem;
-}
-
-.boton-eliminar {
-  background-color: pink;
-  color: var(--red-color);
-  padding: 0.4rem 0.6rem;
-  border-radius: var(--border-radius);
-  font-size: 0.7rem;
+  font-weight: bold;
 }
 
 button {

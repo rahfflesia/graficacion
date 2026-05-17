@@ -2,7 +2,14 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Participante } from '../../../models/participantesProyecto.interface';
 import { Subproceso } from '../../../models/subprocesos.interface';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
 import { SeguimientoTransaccional } from '../../../models/seguimientoTransaccional';
@@ -10,6 +17,7 @@ import { ModalCarga } from '../../modales/modal-carga/modal-carga';
 import { SeguimientoTransaccionalCard } from '../../cards/seguimiento-transaccional-card/seguimiento-transaccional-card';
 import { ModalEditarSeguimientoTransaccional } from '../../modales/modal-editar-seguimiento-transaccional/modal-editar-seguimiento-transaccional';
 import { editar } from '../../../crud-helpers/crudHelpers';
+import { ModalDetalleSeguimiento } from '../../modales/modal-detalle-seguimiento/modal-detalle-seguimiento';
 
 @Component({
   selector: 'seccion-seguimiento-transaccional',
@@ -18,6 +26,7 @@ import { editar } from '../../../crud-helpers/crudHelpers';
     ModalCarga,
     SeguimientoTransaccionalCard,
     ModalEditarSeguimientoTransaccional,
+    ModalDetalleSeguimiento,
   ],
   templateUrl: './seccion-seguimiento-transaccional.html',
   styleUrl: './seccion-seguimiento-transaccional.css',
@@ -42,10 +51,10 @@ export class SeccionSeguimientoTransaccional implements OnInit {
     tipotransaccion: ['', Validators.required],
     estado: ['', Validators.required],
     idresponsable: ['', Validators.required],
-    fechaejecucion: ['', Validators.required],
+    fechaejecucion: ['', [Validators.required, this.esFechaFutura()]],
     resultadoesperado: ['', Validators.required],
     resultadoobtenido: ['', Validators.required],
-    campobusqueda: [''],
+    campobusqueda: ['', [this.listaInvolucradosVacia(), this.responsableEnListaInvolucrados()]],
   });
 
   seguimientosTransaccionales = signal<SeguimientoTransaccional[]>([]);
@@ -53,6 +62,8 @@ export class SeccionSeguimientoTransaccional implements OnInit {
 
   estanCargandoSeguimientos = true;
   esModalEditarSeguimientoTransaccionalVisible = false;
+
+  esModalDetalleSeguimientoVisible = false;
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
@@ -130,6 +141,7 @@ export class SeccionSeguimientoTransaccional implements OnInit {
 
   eliminarInvolucrado(indice: number) {
     this.listaInvolucrados.splice(indice, 1);
+    this.actualizarValidezBusqueda();
   }
 
   estaInvolucrado(idPersona: number) {
@@ -146,6 +158,8 @@ export class SeccionSeguimientoTransaccional implements OnInit {
     } else {
       this.listaInvolucrados.push(participante);
     }
+
+    this.actualizarValidezBusqueda();
   }
 
   crearSeguimientoTransaccional() {
@@ -186,6 +200,14 @@ export class SeccionSeguimientoTransaccional implements OnInit {
     this.listaInvolucrados = [];
   }
 
+  obtenerControl(nombre: string) {
+    return this.formularioSeguimiento.get(nombre);
+  }
+
+  actualizarValidezBusqueda() {
+    this.obtenerControl('campobusqueda')?.updateValueAndValidity();
+  }
+
   actualizarListaSeguimientosTransaccionales(idSeguimientoEliminado: number) {
     this.seguimientosTransaccionales.update((seguimientos) =>
       seguimientos.filter((seguimiento) => seguimiento.idseguimiento !== idSeguimientoEliminado),
@@ -194,5 +216,45 @@ export class SeccionSeguimientoTransaccional implements OnInit {
 
   editarListaSeguimientosTransaccionales(seguimientoTransaccional: SeguimientoTransaccional) {
     editar(this.seguimientosTransaccionales, seguimientoTransaccional, 'idseguimiento');
+  }
+
+  mostrarModalDetalleSeguimiento(seguimiento: SeguimientoTransaccional) {
+    this.seguimientoSeleccionado = seguimiento;
+    this.esModalDetalleSeguimientoVisible = true;
+  }
+
+  ocultarModalDetalleSeguimiento() {
+    this.esModalDetalleSeguimientoVisible = false;
+    this.seguimientoSeleccionado = null;
+  }
+
+  esFechaFutura(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+
+      const fecha = new Date(control.value);
+      const ahora = new Date();
+
+      return fecha > ahora ? { fechaFutura: true } : null;
+    };
+  }
+
+  listaInvolucradosVacia(): ValidatorFn {
+    return (): ValidationErrors | null => {
+      return this.listaInvolucrados.length < 1 ? { listaInvolucradosVacia: true } : null;
+    };
+  }
+
+  responsableEnListaInvolucrados(): ValidatorFn {
+    return (): ValidationErrors | null => {
+      if (!this.formularioSeguimiento) return null;
+      const idResponsable = parseInt(this.formularioSeguimiento.value.idresponsable!);
+
+      const existe = this.listaInvolucrados.some(
+        (participante) => participante.idpersona === idResponsable,
+      );
+
+      return existe ? { responsableEnListaInvolucrados: true } : null;
+    };
   }
 }

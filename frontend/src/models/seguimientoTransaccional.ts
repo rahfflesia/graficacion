@@ -13,5 +13,6 @@ export interface SeguimientoTransaccional {
   resultadoobtenido: string;
   fechacreacion?: string;
   fechaactualizacion?: string;
+  responsable?: Participante;
   involucradosseguimiento?: Participante[];
 }

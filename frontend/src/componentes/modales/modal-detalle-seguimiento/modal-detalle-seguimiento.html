@@ -1,0 +1,91 @@
+<div class="overlay" [class.animar]="toggler">
+  <div class="modal modal-detalle-seguimiento flex-column md-gap" [class.animar]="toggler">
+    <header class="header-modal">
+      <div class="flex-column xs-gap">
+        <h2>{{ seguimiento?.nombre }}</h2>
+      </div>
+      <button class="close-button" (click)="cerrar.emit()">X</button>
+    </header>
+    <div class="contenido-modal flex-column md-gap">
+      <div class="grid-detalles">
+        <div class="detalle-card">
+          <span class="titulo-detalle">Tipo de transacción</span>
+          <span class="valor-detalle tipo">
+            {{ obtenerTextoTipoTransaccion(seguimiento?.tipotransaccion) }}
+          </span>
+        </div>
+        <div class="detalle-card">
+          <span class="titulo-detalle">Estado</span>
+          <span class="valor-detalle estado">
+            {{ obtenerTextoEstado(seguimiento?.estado) }}
+          </span>
+        </div>
+        <div class="detalle-card">
+          <span class="titulo-detalle">Responsable</span>
+          <span class="valor-detalle"
+            >{{ seguimiento?.responsable?.nombre }} {{ seguimiento?.responsable?.apellidouno }}
+            {{ seguimiento?.responsable?.apellidodos ?? '' }}</span
+          >
+        </div>
+        <div class="detalle-card">
+          <span class="titulo-detalle">Fecha de ejecución</span>
+          <span class="valor-detalle">
+            {{ seguimiento?.fechaejecucion | date: 'short' }}
+          </span>
+        </div>
+      </div>
+      <div class="seccion-info flex-column sm-gap">
+        <h3>Descripción</h3>
+        <div class="contenedor-texto">
+          {{ seguimiento?.descripcion }}
+        </div>
+      </div>
+      <div class="seccion-info flex-column sm-gap">
+        <h3>Resultado esperado</h3>
+        <div class="contenedor-texto">
+          {{ seguimiento?.resultadoesperado }}
+        </div>
+      </div>
+      <div class="seccion-info flex-column sm-gap">
+        <h3>Resultado obtenido</h3>
+        <div class="contenedor-texto">
+          {{ seguimiento?.resultadoobtenido }}
+        </div>
+      </div>
+      @if (
+        seguimiento?.involucradosseguimiento && seguimiento!.involucradosseguimiento!.length > 0
+      ) {
+        <div class="seccion-info flex-column sm-gap">
+          <h3>Participantes involucrados</h3>
+          <div class="lista-involucrados flex-column sm-gap">
+            @for (
+              participante of seguimiento?.involucradosseguimiento;
+              track participante.idpersona
+            ) {
+              <div class="participante-card">
+                <div style="display: flex; gap: 0.5rem">
+                  <span class="nombre-participante">
+                    {{ participante.nombre }}
+                    {{ participante.apellidouno }}
+                    {{ participante.apellidodos ?? '' }}
+                  </span>
+                  <span class="nombre-rol">
+                    {{ participante.nombrerol }}
+                  </span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+      <div class="grid-detalles">
+        <div class="detalle-card">
+          <h4>Fecha de creación</h4>
+          <span class="valor-detalle">
+            {{ seguimiento?.fechacreacion | date: 'short' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

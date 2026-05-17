@@ -1,5 +1,5 @@
 <modal-carga
-  [mensaje]="'Obteniendo seguimientos transaccionales...'"
+  [mensaje]="'Cargando seguimientos transaccionales...'"
   [toggler]="estanCargandoSeguimientos"
 ></modal-carga>
 <modal-editar-seguimiento-transaccional
@@ -9,10 +9,15 @@
   (editarSeguimiento)="editarListaSeguimientosTransaccionales($event)"
   [participantes]="datosTecnica()?.participantes!"
 ></modal-editar-seguimiento-transaccional>
+<modal-detalle-seguimiento
+  [toggler]="esModalDetalleSeguimientoVisible"
+  [seguimiento]="seguimientoSeleccionado"
+  (cerrar)="ocultarModalDetalleSeguimiento()"
+></modal-detalle-seguimiento>
 <section class="seguimiento-section flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Seguimiento transaccional</h1>
-    <h3>Subproceso: {{ datosTecnica()?.subproceso?.nombreproceso }}</h3>
+    <h3>Subproceso: {{ datosTecnica()?.subproceso?.nombresubproceso }}</h3>
   </div>
   <form class="formulario-seguimiento flex-column sm-gap" [formGroup]="formularioSeguimiento">
     <div class="input-wrapper flex-column sm-gap">
@@ -54,7 +59,11 @@
     <div class="input-wrapper-row">
       <div class="input-wrapper flex-column sm-gap">
         <label>Responsable</label>
-        <select class="custom-select" formControlName="idresponsable">
+        <select
+          class="custom-select"
+          formControlName="idresponsable"
+          (change)="actualizarValidezBusqueda()"
+        >
           @for (participante of datosTecnica()?.participantes; track participante.idpersona) {
             <option value="{{ participante.idpersona }}">
               {{ participante.nombre }}
@@ -63,6 +72,9 @@
             </option>
           }
         </select>
+        @if (controlCampoBusqueda?.hasError('responsableEnInvolucrados')) {
+          <div class="error-span">El responsable no puede estar en la lista de involucrados</div>
+        }
       </div>
       <div class="input-wrapper flex-column sm-gap">
         <label>Fecha de ejecución</label>
@@ -168,6 +180,7 @@
           [seguimiento]="seguimiento"
           (eliminar)="actualizarListaSeguimientosTransaccionales($event)"
           (editar)="mostrarModalEditarSeguimientoTransaccional(seguimiento)"
+          (click)="mostrarModalDetalleSeguimiento(seguimiento)"
         ></seguimiento-transaccional-card>
       } @empty {
         <div class="sin-seguimientos">No se encontraron seguimientos transaccionales asociados</div>

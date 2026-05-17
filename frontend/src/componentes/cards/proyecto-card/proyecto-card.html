@@ -7,22 +7,27 @@
         [style.backgroundColor]="obtenerColorFondo(datosProyecto.estado)"
         >{{ datosProyecto.estado === 'En_revisi_n' ? 'En revisión' : datosProyecto.estado }}</span
       >
-      <button type="button" class="crear-diagrama" (click)="crearDiagramaProyecto()">
-        Crear diagrama
-      </button>
+      <div class="menu-opciones" (click)="mostrarMenuOpciones()">
+        <img
+          src="https://img.icons8.com/?size=100&id=16252&format=png&color=000000"
+          alt="menu-icon"
+        />
+        @if (esMenuOpcionesVisible) {
+          <div class="menu-opciones-interno" (click)="$event.stopPropagation()">
+            <button (click)="crearDiagramaProyecto()">Crear diagrama</button>
+            <button (click)="generarEspecificacionesProyecto()">Generar especificaciones</button>
+            <button (click)="configurarProyecto()">Configurar proyecto</button>
+            <button (click)="eliminarProyecto()">Eliminar proyecto</button>
+            <button (click)="ocultarMenuOpciones()">Cerrar</button>
+          </div>
+        }
+      </div>
     </div>
     <h3>{{ datosProyecto.nombre }}</h3>
     <p>{{ datosProyecto.descripcion }}</p>
-    <div class="fecha-creacion">
-      <span>{{ (datosProyecto.fechaCreacion ?? datosProyecto.fechacreacion) | date }}</span>
-    </div>
     <div
       class="barra-estado"
       [style.backgroundColor]="obtenerColorFuente(datosProyecto.estado)"
     ></div>
-    <div class="opciones-proyecto">
-      <button (click)="configurarProyecto()" class="configurar">Configurar</button>
-      <button (click)="eliminarProyecto()">Eliminar</button>
-    </div>
   </div>
 </div>

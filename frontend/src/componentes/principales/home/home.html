@@ -1,25 +1,27 @@
 <div class="home-container">
   <header>
     <h1>Gestor de proyectos</h1>
-    <nav>
-      <ul>
-        <li>
-          <a href="#">¿Qué es?</a>
-        </li>
-        <li>
-          <a href="#">Precios</a>
-        </li>
-        <li>
-          <a href="#">Nuestra misión</a>
-        </li>
-        <li>
-          <a href="#">Sobre nosotros</a>
-        </li>
-      </ul>
-    </nav>
-    <button type="button" class="boton-tema" (click)="alternarTema()" title="Cambiar tema">
-      <img [src]="obtenerIconoTema()" alt="Cambiar tema" />
-    </button>
+    <div class="links">
+      <nav>
+        <ul>
+          <li>
+            <a href="#">¿Qué es?</a>
+          </li>
+          <li>
+            <a href="#">Precios</a>
+          </li>
+          <li>
+            <a href="#">Nuestra misión</a>
+          </li>
+          <li>
+            <a href="#">Sobre nosotros</a>
+          </li>
+        </ul>
+      </nav>
+      <button type="button" class="boton-tema" (click)="alternarTema()" title="Cambiar tema">
+        <img [src]="obtenerIconoTema()" alt="Cambiar tema" />
+      </button>
+    </div>
   </header>
   <section class="hero">
     <div class="hero-content">

@@ -27,42 +27,6 @@
   (seleccionarDiagrama)="irSeccionDiagramas($event)"
 ></modal-crear-diagrama>
 <section class="flex-column">
-  <div class="section-header flex-center">
-    <div class="hamburger-menu">
-      <img
-        src="https://img.icons8.com/?size=100&id=3096&format=png&color=#111c2d"
-        alt="hamburguer-menu"
-      />
-    </div>
-    <div class="more-options flex-center">
-      <input type="text" placeholder="Busca cualquier cosa..." class="search-input" />
-      <div class="modo" (click)="alternarTema()" title="Cambiar tema">
-        <img
-          [src]="
-            temaActual() === 'oscuro'
-              ? 'https://img.icons8.com/?size=100&id=15352&format=png&color=E5F3FB'
-              : 'https://img.icons8.com/?size=100&id=45474&format=png&color=111c2d'
-          "
-          alt="dark-mode-icon"
-        />
-      </div>
-      <div class="notificaciones">
-        <img
-          src="https://img.icons8.com/?size=100&id=11642&format=png&color=111c2d"
-          alt="notifications-icon"
-        />
-      </div>
-      <div class="info-perfil">
-        <div class="foto">
-          <img src="{{ usuario()?.usuario?.pfp }}" alt="default-pfp" />
-        </div>
-        <div class="datos-usuario flex-column">
-          <span class="username">{{ usuario()?.usuario?.nombre }}</span>
-          <span class="role">Rol</span>
-        </div>
-      </div>
-    </div>
-  </div>
   <header>
     <div>
       <h4 class="section-title">Mis proyectos</h4>
@@ -72,6 +36,13 @@
       Crear nuevo proyecto +
     </button>
   </header>
+  <div class="filtros">
+    <button (click)="establecerFiltro('Todos')">Todos</button>
+    <button (click)="establecerFiltro('Activo')">Activos</button>
+    <button (click)="establecerFiltro('Pausado')">Pausados</button>
+    <button (click)="establecerFiltro('Cancelado')">Cancelados</button>
+    <button (click)="establecerFiltro('En_revisi_n')">En revisión</button>
+  </div>
   @if (estaCargando()) {
     <div class="content-loading-wrapper">
       <div class="content-loading">
@@ -89,12 +60,13 @@
   }
   @if (!estaCargando() && proyectos().length > 0) {
     <div class="grid projects-section">
-      @for (proyecto of proyectos(); track $index) {
+      @for (proyecto of proyectosFiltrados(); track $index) {
         <proyecto-card
           [datosProyecto]="proyecto"
           (eliminar)="mostrarModalEliminarProyecto(); seleccionarProyecto(proyecto)"
           (configurar)="mostrarModalConfigurarProyecto(); seleccionarProyecto(proyecto)"
           (crearDiagrama)="seleccionarProyecto(proyecto); mostrarModalMenuDiagramas()"
+          (generarEspecificaciones)="seleccionarProyecto(proyecto); generarEspecificaciones()"
         ></proyecto-card>
       }
     </div>

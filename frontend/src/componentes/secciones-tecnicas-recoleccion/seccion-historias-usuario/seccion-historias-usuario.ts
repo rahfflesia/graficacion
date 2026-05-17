@@ -56,7 +56,10 @@ export class SeccionHistoriasUsuario implements OnInit {
         this.historias.set(historias);
       },
       error: () => {
-        this.toastr.error('Error al cargar las historias de usuario', '', { toastClass: 'toastr-error' });
+        this.toastr.error('Error al cargar las historias de usuario', '', {
+          toastClass: 'toastr-error',
+        });
+        this.estanCargandoHistorias = false;
       },
     });
   }
@@ -95,7 +98,9 @@ export class SeccionHistoriasUsuario implements OnInit {
         this.toastr.success('Historia de usuario creada', '', { toastClass: 'toastr-success' });
       },
       error: () => {
-        this.toastr.error('Error al crear la historia de usuario', '', { toastClass: 'toastr-error' });
+        this.toastr.error('Error al crear la historia de usuario', '', {
+          toastClass: 'toastr-error',
+        });
       },
     });
   }
@@ -132,8 +137,8 @@ export class SeccionHistoriasUsuario implements OnInit {
       next: (historiaActualizada) => {
         this.historias.update((lista) =>
           lista.map((h) =>
-            h.idhistoriausuario === historiaActualizada.idhistoriausuario ? historiaActualizada : h
-          )
+            h.idhistoriausuario === historiaActualizada.idhistoriausuario ? historiaActualizada : h,
+          ),
         );
         this.cancelarEdicion();
         this.toastr.success('Historia actualizada', '', { toastClass: 'toastr-success' });
@@ -148,7 +153,7 @@ export class SeccionHistoriasUsuario implements OnInit {
     this.api.eliminarHistoriaUsuario(historia.idhistoriausuario).subscribe({
       next: () => {
         this.historias.update((lista) =>
-          lista.filter((h) => h.idhistoriausuario !== historia.idhistoriausuario)
+          lista.filter((h) => h.idhistoriausuario !== historia.idhistoriausuario),
         );
         this.toastr.success('Historia eliminada', '', { toastClass: 'toastr-success' });
       },

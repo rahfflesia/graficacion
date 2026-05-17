@@ -7,10 +7,68 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: calc(255px + 1rem);
+  margin-left: calc(255px + 0.7rem);
 }
 
-main > *:not(router-outlet) {
+main > :not(.section-header):not(router-outlet) {
   display: flex;
   flex: 1;
+}
+
+.section-header {
+  background-color: var(--primary-color);
+  padding: 0.9rem 2rem;
+  border-bottom: var(--soft-border);
+  box-shadow: 0 8px 24px rgba(17, 28, 45, 0.03);
+}
+
+.hamburger-menu,
+.modo,
+.notificaciones {
+  width: 18px;
+  height: 18px;
+}
+
+.foto {
+  width: 30px;
+  height: 30px;
+}
+
+.foto > img {
+  border-radius: 50%;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-options {
+  display: flex;
+  gap: 2rem;
+}
+
+.info-perfil {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border: var(--soft-border);
+  border-radius: var(--border-radius);
+  padding: 0.35rem 0.7rem;
+  background-color: #fbfdff;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.role {
+  font-size: 0.7rem;
+  font-weight: 300;
+}
+
+.modo,
+.notificaciones {
+  cursor: pointer;
 }

@@ -6,10 +6,11 @@ import { Subproceso } from '../../../models/subprocesos.interface';
 import { AnalisisDocumento, DatosFormularioAnalisis } from '../../../models/analisisDocumento';
 import { Api } from '../../../servicios/api';
 import { ToastrService } from 'ngx-toastr';
+import { ModalCarga } from '../../modales/modal-carga/modal-carga';
 
 @Component({
   selector: 'seccion-analisis-documento',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ModalCarga],
   templateUrl: './seccion-analisis-documento.html',
   styleUrl: './seccion-analisis-documento.css',
 })
@@ -47,6 +48,8 @@ export class SeccionAnalisisDocumento {
     notas: [''],
     hallazgos: this.formBuilder.array([], [Validators.required]),
   });
+
+  estaCargando = true;
 
   constructor() {
     const datosNavegacion = this.router.currentNavigation();
@@ -89,8 +92,14 @@ export class SeccionAnalisisDocumento {
   cargarAnalisisExistentes() {
     if (!this.subproceso?.idsubproceso) return;
     this.api.obtenerAnalisisDocumentos(this.subproceso.idsubproceso).subscribe({
-      next: (lista) => this.analisisExistentes.set(lista),
-      error: (e) => console.error('Error al cargar análisis:', e),
+      next: (lista) => {
+        this.analisisExistentes.set(lista);
+        this.estaCargando = false;
+      },
+      error: (e) => {
+        console.error('Error al cargar análisis:', e);
+        this.estaCargando = false;
+      },
     });
   }
 

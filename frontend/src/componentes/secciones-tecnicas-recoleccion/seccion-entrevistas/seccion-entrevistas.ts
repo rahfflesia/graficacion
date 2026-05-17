@@ -19,6 +19,7 @@ import { ModalAgregarParticipante } from '../../modales/modal-agregar-participan
 import { FormEntrevistas } from '../../forms/form-entrevistas/form-entrevistas';
 import { ModalCarga } from '../../modales/modal-carga/modal-carga';
 import { finalize, timeout } from 'rxjs';
+import { ModalDetalleEntrevista } from '../../modales/modal-detalle-entrevista/modal-detalle-entrevista';
 
 interface DatosTecnicaEntrevista {
   subproceso: Subproceso;
@@ -34,6 +35,7 @@ interface DatosTecnicaEntrevista {
     ModalAgregarParticipante,
     FormEntrevistas,
     ModalCarga,
+    ModalDetalleEntrevista,
   ],
   templateUrl: './seccion-entrevistas.html',
   styleUrl: './seccion-entrevistas.css',
@@ -51,6 +53,10 @@ export class SeccionEntrevistas implements OnInit {
 
   esModalAgregarParticipanteVisible = false;
   estaCargando = false;
+  esModalDetalleEntrevistaVisible = false;
+
+  entrevistaSeleccionada: Entrevista | null = null;
+
   private readonly claveDatosTecnica = 'datosTecnicaActual';
 
   constructor() {
@@ -120,7 +126,9 @@ export class SeccionEntrevistas implements OnInit {
     }
   }
 
-  esDatosTecnicaValido(datosTecnica?: DatosTecnicaEntrevista): datosTecnica is DatosTecnicaEntrevista {
+  esDatosTecnicaValido(
+    datosTecnica?: DatosTecnicaEntrevista,
+  ): datosTecnica is DatosTecnicaEntrevista {
     return !!datosTecnica?.subproceso?.idsubproceso && Array.isArray(datosTecnica.participantes);
   }
 
@@ -160,5 +168,15 @@ export class SeccionEntrevistas implements OnInit {
 
   registrarParticipante(participanteRegistrado: Participante) {
     crear(this.participantes, participanteRegistrado);
+  }
+
+  abrirModalDetalleEntrevista(entrevista: Entrevista) {
+    this.entrevistaSeleccionada = entrevista;
+    this.esModalDetalleEntrevistaVisible = true;
+  }
+
+  cerrarModalDetalleEntrevista() {
+    this.esModalDetalleEntrevistaVisible = false;
+    this.entrevistaSeleccionada = null;
   }
 }

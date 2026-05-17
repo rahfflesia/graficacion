@@ -198,13 +198,15 @@ export class ModalEditarObservacion implements OnInit {
       ? this.formularioObservaciones.value.fechaHoraCaptura
       : this.observacion?.fechahoracaptura;
 
+    if (!fechaHoraCaptura) return;
+
     const observacionEditada: Observacion = {
       nombre: this.formularioObservaciones.value.nombreObservacion!,
       descripcion: this.formularioObservaciones.value.descripcionObservacion!,
       idobservador: parseInt(this.formularioObservaciones.value.idPersona!),
       lugar: this.formularioObservaciones.value.nombreLugar!,
       tipo: this.tipoObservacionSeleccionada(),
-      fechahoracaptura: fechaHoraCaptura as Date,
+      fechahoracaptura: new Date(fechaHoraCaptura),
       listaparticipantes: this.listaObservados,
     };
 

@@ -6,13 +6,9 @@
       <p>Resumen rápido de tus proyectos y su estado actual.</p>
     </div>
     <div class="dashboard-actions">
-      <button type="button" class="boton-tema" (click)="alternarTema()" title="Cambiar tema">
-        <img [src]="obtenerIconoTema()" alt="Cambiar tema" />
-      </button>
       <button class="default-button" (click)="irAProyectos()">Ver proyectos</button>
     </div>
   </header>
-
   @if (estaCargando()) {
     <div class="dashboard-loading">
       <strong>Cargando dashboard...</strong>

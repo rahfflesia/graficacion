@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 
-async function generarPrincipiosDeIngenieria() {
+async function generarPrincipiosDeIngenieria(ruta) {
   try {
     const contenido = `Principios de Ingeniería
 
@@ -140,13 +140,13 @@ Restricciones Generales
 - Prefiere código explícito sobre comportamiento mágico.
 - Evita funciones excesivamente largas.
 - Evita dependencias globales.`;
-    await fs.writeFile("principios_ingenieria.txt", contenido);
+    await fs.writeFile(`${ruta}/principios_ingenieria.txt`, contenido);
   } catch (error) {
     console.error("Error al crear el archivo", error);
   }
 }
 
-async function generarAntipatrones() {
+async function generarAntipatrones(ruta) {
   try {
     const contenido = `Antipatrones Prohibidos
 
@@ -177,13 +177,13 @@ async function generarAntipatrones() {
 - Uso innecesario de patrones de diseño
 
 - Métodos con demasiadas responsabilidades`;
-    await fs.writeFile("antipatrones.txt", contenido);
+    await fs.writeFile(`${ruta}/antipatrones.txt`, contenido);
   } catch (error) {
     console.error("Error al crear el archivo", error);
   }
 }
 
-async function generarFlujoTrabajoDesarrollo() {
+async function generarFlujoTrabajoDesarrollo(ruta) {
   try {
     const contenido = ` Flujo de trabajo
 
@@ -246,13 +246,13 @@ Refactorización
 - Refactorizar únicamente cuando aporte claridad, mantenibilidad o exista un patrón lo suficientemente obvio o repetido que merezca ser convertido en abstracción
 
 - No refactorizar código estable sin razón clara`;
-    await fs.writeFile("flujo_trabajo.txt", contenido);
+    await fs.writeFile(`${ruta}/flujo_trabajo.txt`, contenido);
   } catch (error) {
     console.error("Error al crear el archivo", error);
   }
 }
 
-async function generarInstruccionesAgente() {
+async function generarInstruccionesAgente(ruta) {
   try {
     const contenido = `Lee en el siguiente orden los archivos del proyecto
 
@@ -276,13 +276,13 @@ Leer los documentos en ese órden te permitirá entender mejor el contexto del p
 
 Recuerda seguir al pie de la letra lo especificado en cada archivo y si en algún momento existe ambiguedad elige consistencia sobre creatividad
 `;
-    await fs.writeFile("instrucciones_agente.txt", contenido);
+    await fs.writeFile(`${ruta}/instrucciones_agente.txt`, contenido);
   } catch (error) {
     console.error("Error al crear el archivo", error);
   }
 }
 
-async function generarConvencionesTecnicas() {
+async function generarConvencionesTecnicas(ruta) {
   try {
     const contenido = `Convenciones Técnicas
 
@@ -291,7 +291,6 @@ Mantener consistencia técnica, calidad de código, mantenibilidad y estabilidad
 
 Lenguaje y Configuración
 
-- Utilizar [Lenguaje principal del proyecto].
 - Utilizar tipado estricto cuando el lenguaje lo permita.
 - Evitar configuraciones ambiguas o implícitas.
 - Mantener consistencia en versiones y dependencias.
@@ -376,7 +375,7 @@ Consistencia
 - Respetar arquitectura y convenciones del proyecto.
 
 `;
-    await fs.writeFile("convenciones_tecnicas.txt", contenido);
+    await fs.writeFile(`${ruta}/convenciones_tecnicas.txt`, contenido);
   } catch (error) {
     console.error(
       "Error al generar el archivo de convenciones técnicas",
@@ -385,12 +384,80 @@ Consistencia
   }
 }
 
-async function generarArchivos() {
-  await generarAntipatrones();
-  await generarConvencionesTecnicas();
-  await generarFlujoTrabajoDesarrollo();
-  await generarInstruccionesAgente();
-  await generarPrincipiosDeIngenieria();
+async function generarArquitectura(ruta) {
+  try {
+    const contenido = `Arquitectura: cliente-servidor
+
+Utiliza una arquitectura cliente servidor, el frontend solo debe de encargarse de la presentación y consume endpoints, no implementes lógica de negocio compleja aquí ni dupliques lógica, 
+el backend se encarga de la lógica de negocio, ambos se van a comunicar mediante una API REST utilizando HTTP. Deben de utilizarse interfaces tipadas/DTOs.
+`;
+    await fs.writeFile(`${ruta}/arquitectura.txt`, contenido);
+  } catch (error) {
+    console.error("Error al generar el archivo de arquitectura");
+  }
+}
+
+async function generarTechStack(ruta) {
+  try {
+    const contenido = `Tech stack a utilizar:
+
+Frontend:
+- React + TS (Últimas versiones)
+- Para hacer peticiones utiliza APIs nativas del navegador (fetch y promesas)
+- Utiliza react router para las rutas de la aplicación
+- Para manejo del estado global utiliza la API por defecto de React (Context API) o si consideras que la app es lo suficientemente grande puedes utilizar Redux
+- Estilos: CSS Modules
+- Builder: Vite
+
+Backend:
+- Node.js + Express.js (Últimas versiones)
+- Base de datos: MySQL
+- ORM: Prisma
+
+Auth:
+- JWT + Bcrypt para hashing
+
+Testing:
+- Vitest + React Testing Library
+`;
+    await fs.writeFile(`${ruta}/tech_stack.txt`, contenido);
+  } catch (error) {
+    console.error("Error al generar el archivo de tech stack", error);
+  }
+}
+
+async function generarDiseño(ruta) {
+  try {
+    const contenido = `Diseño
+
+- Utiliza principalmente blanco y negro así como distintos tonos de rosa y morado para acentuar
+
+- Implementa modo oscuro e invierte los colores a sus equivalente utiliza HSL para que sea más fácil
+
+- Tipografía: Poppins
+
+- Prioriza mobile first
+
+- Utiliza transiciones y animaciones sutiles, recuerda priorizar el rendimiento por lo que es mejor si utilizas transform cuando sea posible
+
+- Prioriza una interfaz moderna y minimalista
+
+- Utiliza prácticas modernas de CSS como CSS variables y manten márgenes y espaciados consistentes en la aplicación, para esto puedes crear variables de tamaño sm, md, bg`;
+    await fs.writeFile(`${ruta}/diseño.txt`, contenido);
+  } catch (error) {
+    console.error("Error al generar el archivo de diseño", error);
+  }
+}
+
+async function generarArchivos(ruta) {
+  await generarAntipatrones(ruta);
+  await generarConvencionesTecnicas(ruta);
+  await generarFlujoTrabajoDesarrollo(ruta);
+  await generarInstruccionesAgente(ruta);
+  await generarPrincipiosDeIngenieria(ruta);
+  await generarArquitectura(ruta);
+  await generarTechStack(ruta);
+  await generarDiseño(ruta);
 }
 
 export default generarArchivos;

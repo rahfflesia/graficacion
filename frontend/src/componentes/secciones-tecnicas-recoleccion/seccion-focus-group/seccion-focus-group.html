@@ -1,11 +1,10 @@
+<modal-carga [toggler]="estaCargando" [mensaje]="'Cargando focus groups...'"></modal-carga>
 <section class="flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Focus Group</h1>
     <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
   </div>
-
   <form class="flex-column sm-gap" [formGroup]="formulario">
-    <!-- Nombre -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="fg-nombre">Nombre del Focus Group</label>
       <input
@@ -16,8 +15,6 @@
         formControlName="nombre"
       />
     </div>
-
-    <!-- Descripción -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="fg-descripcion">Descripción</label>
       <textarea
@@ -27,8 +24,6 @@
         formControlName="descripcion"
       ></textarea>
     </div>
-
-    <!-- Moderador -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="fg-moderador">Moderador</label>
       <select id="fg-moderador" class="custom-select" formControlName="idmoderador">
@@ -37,8 +32,6 @@
         }
       </select>
     </div>
-
-    <!-- Lugar -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="fg-lugar">Lugar</label>
       <input
@@ -49,14 +42,10 @@
         formControlName="lugar"
       />
     </div>
-
-    <!-- Fecha y hora -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="fg-fecha">Fecha y hora (opcional)</label>
       <input id="fg-fecha" type="datetime-local" class="search-input" formControlName="fechahora" />
     </div>
-
-    <!-- Temas -->
     <div class="temas-wrapper flex-column sm-gap">
       <div class="temas-header">
         <h3>Temas a discutir</h3>
@@ -64,7 +53,6 @@
           + Agregar tema
         </button>
       </div>
-
       <div formArrayName="temas" class="flex-column sm-gap">
         @for (tema of temasFormArray.controls; track $index; let i = $index) {
           <div class="tema-row">
@@ -82,8 +70,6 @@
         }
       </div>
     </div>
-
-    <!-- Participantes -->
     <div class="participantes-wrapper flex-column sm-gap">
       <h3>Participantes</h3>
       <div formArrayName="participantes" class="participantes-grid">
@@ -95,8 +81,6 @@
         }
       </div>
     </div>
-
-    <!-- Botones -->
     <div class="acciones-form">
       @if (focusGroupEnEdicion()) {
         <button
@@ -122,8 +106,6 @@
       }
     </div>
   </form>
-
-  <!-- Lista existente -->
   <h3>Focus Groups asociados</h3>
   <div class="lista-items flex-column sm-gap">
     @for (fg of focusGroupsExistentes(); track fg.idfocusgroup) {
@@ -132,16 +114,15 @@
           <span class="item-nombre">{{ fg.nombre }}</span>
           <span class="item-desc">{{ fg.descripcion }}</span>
           <div class="item-badges">
-            <span class="badge badge-lugar">📍 {{ fg.lugar }}</span>
+            <span class="badge badge-lugar">Lugar: {{ fg.lugar }}</span>
             <span class="badge badge-temas">{{ fg.temasfocusgroup.length }} tema(s)</span>
             <span class="badge badge-participantes">
-              👥 {{ fg.participantesfg.length }} participante(s)
+              {{ fg.participantesfg.length }} participante(s)
             </span>
             <span class="badge badge-moderador">
-              🎤 Mod: {{ nombreCompleto(fg.personas) }}
+              Moderador: {{ nombreCompleto(fg.personas) }}
             </span>
           </div>
-          <!-- Temas listados -->
           @if (fg.temasfocusgroup.length > 0) {
             <div class="temas-list">
               @for (t of fg.temasfocusgroup; track t.idtema) {
@@ -152,7 +133,9 @@
         </div>
         <div class="item-acciones">
           <button class="btn-editar" (click)="cargarParaEdicion(fg)">Editar</button>
-          <button class="btn-eliminar" (click)="eliminarFocusGroup(fg.idfocusgroup)">Eliminar</button>
+          <button class="btn-eliminar" (click)="eliminarFocusGroup(fg.idfocusgroup)">
+            Eliminar
+          </button>
         </div>
       </div>
     } @empty {

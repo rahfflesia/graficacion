@@ -1,0 +1,81 @@
+.modal-detalle-seguimiento {
+  width: min(900px, 95%);
+  max-height: 90vh;
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.contenido-modal {
+  width: 100%;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.grid-detalles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.detalle-card {
+  border: var(--soft-border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.titulo-detalle {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.valor-detalle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.seccion-info h3 {
+  font-size: 1rem;
+}
+
+.contenedor-texto {
+  border: var(--soft-border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.lista-involucrados {
+  width: 100%;
+}
+
+.participante-card {
+  border: var(--soft-border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nombre-participante {
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .modal-detalle-seguimiento {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .grid-detalles {
+    grid-template-columns: 1fr;
+  }
+}

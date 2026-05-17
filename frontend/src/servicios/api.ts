@@ -140,6 +140,9 @@ export class Api {
   private seguimientoTransaccionalObtenerUrl = 'obtener/';
   private seguimientoTransaccionalEliminarUrl = 'eliminar/';
 
+  private especificacionesUrl = 'especificaciones/';
+  private especificacionesObtenerUrl = 'obtener/';
+
   private obtenerOpcionesAutenticadas(): {
     withCredentials: true;
     headers?: { Authorization: string };
@@ -576,6 +579,12 @@ export class Api {
         this.seguimientoTransaccionalUrl +
         this.seguimientoTransaccionalEliminarUrl +
         idSeguimientoTransaccional,
+    );
+  }
+
+  obtenerEspecificaciones(idProyecto: number): Observable<{ mensaje: string; tipo: string }> {
+    return this.http.get<{ mensaje: string; tipo: string }>(
+      this.baseUrl + this.especificacionesUrl + this.especificacionesObtenerUrl + idProyecto,
     );
   }
 }

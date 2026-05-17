@@ -31,7 +31,7 @@ export class ParticipanteCard implements OnInit {
   formularioEditarParticipante = this.formBuilder.group({
     nombre: ['', [Validators.required]],
     apellidouno: ['', [Validators.required]],
-    apellidodos: ['', [Validators.required]],
+    apellidodos: [''],
     correo: ['', [Validators.required]],
     telefono: ['', [Validators.required]],
     idrol: ['', [Validators.required]],
@@ -98,7 +98,6 @@ export class ParticipanteCard implements OnInit {
       next: (participanteEditado) => {
         this.toastr.success('Se ha editado el participante correctamente');
         this.editar.emit(participanteEditado);
-        console.log(participanteEditado);
       },
       error: (error) => {
         console.error(error);
@@ -107,6 +106,7 @@ export class ParticipanteCard implements OnInit {
         });
       },
     });
+    this.ocultarMenuEditar();
   }
 
   eliminarParticipante() {

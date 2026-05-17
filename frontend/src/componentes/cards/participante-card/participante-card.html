@@ -1,8 +1,10 @@
 <div class="participante-card flex-column sm-gap">
   <div class="flex-between">
-    <h3>
-      {{ participante?.nombre }} {{ participante?.apellidouno }} {{ participante?.apellidodos }}
-    </h3>
+    @if (!estaEditando) {
+      <h4>
+        {{ participante?.nombre }} {{ participante?.apellidouno }} {{ participante?.apellidodos }}
+      </h4>
+    }
     @if (!estaBorrando && !estaEditando) {
       <div class="botones">
         <button class="gray-button" (click)="mostrarMenuEditar()">Editar</button>
@@ -89,20 +91,20 @@
     </div>
   }
   @if (!estaEditando && !estaBorrando) {
-    <div class="flex-between datos-participante">
+    <div class="datos-participante">
       <div class="correo-telefono">
         <span>
           <div class="light-dot"></div>
-          Correo: {{ participante?.correo }}
+          {{ participante?.correo }}
         </span>
         <span>
           <div class="light-dot"></div>
-          Teléfono: {{ participante?.telefono }}
+          {{ participante?.telefono }}
         </span>
       </div>
       <div class="rol">
         <div class="dark-dot"></div>
-        Rol: {{ participante?.nombrerol }}
+        {{ participante?.nombrerol }}
       </div>
     </div>
   }

@@ -1,11 +1,13 @@
+<modal-carga
+  [mensaje]="'Cargando analisis de documentos...'"
+  [toggler]="estaCargando"
+></modal-carga>
 <section class="flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Análisis de Documento</h1>
     <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
   </div>
-
   <form class="flex-column sm-gap" [formGroup]="formulario">
-    <!-- Nombre -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-nombre">Nombre del análisis</label>
       <input
@@ -16,8 +18,6 @@
         formControlName="nombre"
       />
     </div>
-
-    <!-- Descripción -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-descripcion">Descripción</label>
       <textarea
@@ -27,8 +27,6 @@
         formControlName="descripcion"
       ></textarea>
     </div>
-
-    <!-- Analista -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-analista">Analista responsable</label>
       <select id="ad-analista" class="custom-select" formControlName="idanalista">
@@ -37,8 +35,6 @@
         }
       </select>
     </div>
-
-    <!-- Tipo de documento -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-tipo">Tipo de documento</label>
       <select id="ad-tipo" class="custom-select" formControlName="tipodocumento">
@@ -47,8 +43,6 @@
         }
       </select>
     </div>
-
-    <!-- Fuente -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-fuente">Fuente / URL / Referencia</label>
       <input
@@ -59,14 +53,15 @@
         formControlName="fuente"
       />
     </div>
-
-    <!-- Fecha -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-fecha">Fecha de análisis (opcional)</label>
-      <input id="ad-fecha" type="datetime-local" class="search-input" formControlName="fechaanalisis" />
+      <input
+        id="ad-fecha"
+        type="datetime-local"
+        class="search-input"
+        formControlName="fechaanalisis"
+      />
     </div>
-
-    <!-- Notas -->
     <div class="input-wrapper flex-column sm-gap">
       <label for="ad-notas">Notas adicionales (opcional)</label>
       <textarea
@@ -76,8 +71,6 @@
         formControlName="notas"
       ></textarea>
     </div>
-
-    <!-- Hallazgos -->
     <div class="hallazgos-wrapper flex-column sm-gap">
       <div class="hallazgos-header">
         <h3>Hallazgos</h3>
@@ -85,7 +78,6 @@
           + Agregar hallazgo
         </button>
       </div>
-
       <div formArrayName="hallazgos" class="flex-column sm-gap">
         @for (h of hallazgosFormArray.controls; track $index; let i = $index) {
           <div class="hallazgo-row">
@@ -103,8 +95,6 @@
         }
       </div>
     </div>
-
-    <!-- Botones -->
     <div class="acciones-form">
       @if (analisisEnEdicion()) {
         <button
@@ -130,9 +120,7 @@
       }
     </div>
   </form>
-
-  <!-- Lista existente -->
-  <h3>Análisis asociados</h3>
+  <h3>Análisis asociados ({{ analisisExistentes().length }})</h3>
   <div class="lista-items flex-column sm-gap">
     @for (a of analisisExistentes(); track a.idanalisis) {
       <div class="item-card">
@@ -140,12 +128,14 @@
           <span class="item-nombre">{{ a.nombre }}</span>
           <span class="item-desc">{{ a.descripcion }}</span>
           <div class="item-badges">
-            <span class="badge badge-tipo">📄 {{ a.tipodocumento }}</span>
-            <span class="badge badge-analista">🔍 {{ nombreCompleto(a.personas) }}</span>
-            <span class="badge badge-hallazgos">{{ a.hallazgosanalisis.length }} hallazgo(s)</span>
+            <span class="badge badge-tipo">Tipo de documento: {{ a.tipodocumento }}</span>
+            <span class="badge badge-analista">Analista: {{ nombreCompleto(a.personas) }}</span>
+            <span class="badge badge-hallazgos"
+              >Hallazgos: {{ a.hallazgosanalisis.length }} hallazgo(s)</span
+            >
           </div>
           <a class="fuente-link" [href]="a.fuente" target="_blank" rel="noopener">
-            🔗 {{ a.fuente }}
+            Fuente/link: {{ a.fuente }}
           </a>
           @if (a.hallazgosanalisis.length > 0) {
             <div class="hallazgos-list">
@@ -155,7 +145,7 @@
             </div>
           }
           @if (a.notas) {
-            <span class="notas">📝 {{ a.notas }}</span>
+            <span class="notas">Notas: {{ a.notas }}</span>
           }
         </div>
         <div class="item-acciones">

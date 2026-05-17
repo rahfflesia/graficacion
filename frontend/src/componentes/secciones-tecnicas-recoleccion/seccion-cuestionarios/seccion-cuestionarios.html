@@ -1,9 +1,9 @@
+<modal-carga [mensaje]="'Cargando cuestionarios...'" [toggler]="estaCargando"></modal-carga>
 <section class="flex-column md-gap">
   <div class="flex-column sm-gap">
     <h1>Cuestionarios</h1>
     <h3>Subproceso: {{ subproceso?.nombresubproceso }}</h3>
   </div>
-
   <form class="flex-column sm-gap" [formGroup]="formularioCuestionario">
     <div class="input-wrapper flex-column sm-gap">
       <label for="nombre-cuestionario">Nombre del cuestionario</label>
@@ -15,7 +15,6 @@
         formControlName="nombreCuestionario"
       />
     </div>
-
     <div class="input-wrapper flex-column sm-gap">
       <label for="descripcion-cuestionario">Descripción</label>
       <textarea
@@ -25,7 +24,6 @@
         formControlName="descripcionCuestionario"
       ></textarea>
     </div>
-
     <div class="input-wrapper flex-column sm-gap">
       <label for="creador-cuestionario">Persona que creó el cuestionario</label>
       <select name="creador-cuestionario" class="custom-select" formControlName="idPersona">
@@ -37,7 +35,6 @@
         }
       </select>
     </div>
-
     <div class="preguntas-wrapper flex-column sm-gap">
       <div class="preguntas-header">
         <h3>Preguntas</h3>
@@ -45,7 +42,6 @@
           + Agregar pregunta
         </button>
       </div>
-
       <div formArrayName="preguntas">
         @for (pregunta of preguntasFormArray.controls; track $index; let i = $index) {
           <div class="pregunta-card flex-column sm-gap" [formGroupName]="i">
@@ -55,7 +51,6 @@
                 X
               </button>
             </div>
-
             <div class="input-wrapper flex-column sm-gap">
               <label>Texto de la pregunta</label>
               <input
@@ -65,7 +60,6 @@
                 formControlName="textoPregunta"
               />
             </div>
-
             <div class="input-wrapper flex-column sm-gap">
               <label>Tipo de pregunta</label>
               <select
@@ -78,7 +72,6 @@
                 <option value="Escala">Escala (1-5)</option>
               </select>
             </div>
-
             @if (obtenerTipoPregunta(i) === 'Opción_multiple') {
               <div class="opciones-wrapper flex-column sm-gap">
                 <label>Opciones de respuesta</label>
@@ -114,7 +107,6 @@
                 </button>
               </div>
             }
-
             @if (obtenerTipoPregunta(i) === 'Escala') {
               <div class="escala-preview">
                 <span class="escala-label">Vista previa de la escala:</span>
@@ -136,7 +128,6 @@
         }
       </div>
     </div>
-
     <div>
       @if (cuestionarioEnEdicion()) {
         <button
@@ -160,7 +151,6 @@
       }
     </div>
   </form>
-
   <h3>Cuestionarios asociados</h3>
   <div class="lista-cuestionarios flex-column sm-gap">
     @for (cuestionario of cuestionariosExistentes(); track cuestionario.idicuestionario) {
@@ -191,7 +181,6 @@
       <div class="sin-cuestionarios">No hay cuestionarios asociados a este subproceso.</div>
     }
   </div>
-
   @if (cuestionarioRespondiendo()) {
     <responder-cuestionario
       [cuestionario]="cuestionarioRespondiendo()!"

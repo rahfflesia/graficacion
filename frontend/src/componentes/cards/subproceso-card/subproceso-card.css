@@ -1,7 +1,7 @@
 .subproceso-card {
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  border: 1px solid lightgray;
+  border: var(--soft-border);
 }
 
 .botones,
@@ -52,6 +52,8 @@
 
 .checkbox-inner-wrapper {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -70,6 +72,7 @@
   display: flex;
   gap: 0.75rem;
   font-size: 0.8rem;
+  flex-wrap: wrap;
 }
 
 .tecnicas > * {
@@ -79,4 +82,13 @@
   border-radius: var(--border-radius);
   font-weight: 600;
   cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+}
+
+.fecha-creacion {
+  text-align: right;
+  font-weight: 500;
+  font-size: 0.7rem;
 }
