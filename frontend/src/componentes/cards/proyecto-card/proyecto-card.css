@@ -41,9 +41,9 @@
 }
 
 .opciones-proyecto > button:first-child:hover {
-  color: var(--primary-color);
-  background-color: var(--blue);
-  border-color: var(--blue);
+  color: var(--blue);
+  background-color: var(--lightblue);
+  border-color: rgba(8, 126, 208, 0.35);
   transform: translateY(-1px);
 }
 

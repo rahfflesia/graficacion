@@ -309,7 +309,7 @@
                   <button
                     class="default-button"
                     (click)="crearSubproceso()"
-                    [disabled]="formularioSubprocesos.invalid"
+                    [disabled]="!puedeCrearSubproceso()"
                   >
                     Crear subproceso
                   </button>
