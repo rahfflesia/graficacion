@@ -77,6 +77,7 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   estaModoEdicionActivado = false;
   indicePreguntaEditar: number | null = null;
+  intentoEnviarFormulario = false;
 
   ngOnInit(): void {
     this.inicializarCheckboxesEntrevistados();
@@ -94,6 +95,7 @@ export class FormEntrevistas implements OnInit, OnChanges {
   cargarDatosEntrevista() {
     if (!this.entrevista) return;
 
+    this.intentoEnviarFormulario = false;
     this.entrevistados = [];
     this.preguntasEntrevista = [];
     this.checkboxFormArray.controls.forEach((control) => control.setValue(false));
@@ -183,6 +185,17 @@ export class FormEntrevistas implements OnInit, OnChanges {
   }
 
   crearEntrevista() {
+    this.intentoEnviarFormulario = true;
+    this.formularioEntrevistas.markAllAsTouched();
+
+    if (
+      this.formularioEntrevistas.invalid ||
+      this.entrevistados.length < 1 ||
+      this.preguntasEntrevista.length < 1
+    ) {
+      return;
+    }
+
     // Copia para no mutar el formulario
     const copiaDatosEntrevista = { ...this.formularioEntrevistas.value };
     const datosFinalesEntrevista: Entrevista = {
@@ -225,6 +238,7 @@ export class FormEntrevistas implements OnInit, OnChanges {
   }
 
   reiniciarFormularioEntrevista() {
+    this.intentoEnviarFormulario = false;
     this.entrevistados = [];
     this.preguntasEntrevista = [];
     this.formularioEntrevistas.reset();
@@ -344,6 +358,17 @@ export class FormEntrevistas implements OnInit, OnChanges {
   }
 
   editarEntrevista() {
+    this.intentoEnviarFormulario = true;
+    this.formularioEntrevistas.markAllAsTouched();
+
+    if (
+      this.formularioEntrevistas.invalid ||
+      this.entrevistados.length < 1 ||
+      this.preguntasEntrevista.length < 1
+    ) {
+      return;
+    }
+
     const idEntrevista = this.entrevista?.entrevista.identrevista;
 
     if (!idEntrevista) {
@@ -467,6 +492,10 @@ export class FormEntrevistas implements OnInit, OnChanges {
 
   controlTieneError(nombreControl: string, nombreError: string) {
     return this.obtenerControlFormularioEntrevistas(nombreControl)?.hasError(nombreError);
+  }
+
+  debeMostrarMotivosFormularioIncompleto() {
+    return this.intentoEnviarFormulario;
   }
 
   obtenerMotivosFormularioIncompleto() {
