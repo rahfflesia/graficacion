@@ -255,11 +255,6 @@
           type="button"
           class="default-button"
           (click)="crearEntrevista()"
-          [disabled]="
-            formularioEntrevistas.invalid ||
-            entrevistados.length < 1 ||
-            preguntasEntrevista.length < 1
-          "
         >
           Crear entrevista
         </button>
@@ -269,20 +264,16 @@
           type="button"
           class="default-button"
           (click)="editarEntrevista()"
-          [disabled]="
-            formularioEntrevistas.invalid ||
-            entrevistados.length < 1 ||
-            preguntasEntrevista.length < 1
-          "
         >
           Editar entrevista
         </button>
       }
     }
     @if (
-      formularioEntrevistas.invalid ||
-      entrevistados.length < 1 ||
-      preguntasEntrevista.length < 1
+      debeMostrarMotivosFormularioIncompleto() &&
+      (formularioEntrevistas.invalid ||
+        entrevistados.length < 1 ||
+        preguntasEntrevista.length < 1)
     ) {
       <div class="flex-column xs-gap">
         @for (motivo of obtenerMotivosFormularioIncompleto(); track motivo) {
