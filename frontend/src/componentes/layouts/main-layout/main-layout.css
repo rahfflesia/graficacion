@@ -68,7 +68,31 @@ main > :not(.section-header):not(router-outlet) {
   font-weight: 300;
 }
 
+.username {
+  color: var(--font-color);
+}
+
+.role {
+  color: var(--muted-text);
+}
+
+:host-context(body.modo-oscuro) .info-perfil {
+  background-color: var(--primary-color);
+}
+
+:host-context(body.modo-oscuro) .info-perfil .username {
+  color: #eaf2ff;
+}
+
+:host-context(body.modo-oscuro) .info-perfil .role {
+  color: #9fb0c8;
+}
+
 .modo,
 .notificaciones {
   cursor: pointer;
+}
+
+:host-context(body.modo-oscuro) .hamburger-menu img {
+  filter: invert(1) brightness(1.15);
 }
