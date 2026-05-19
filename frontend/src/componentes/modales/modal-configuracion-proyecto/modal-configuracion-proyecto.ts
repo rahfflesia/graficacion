@@ -346,13 +346,6 @@ export class ModalConfiguracionProyecto implements OnChanges {
     this.tecnicasAsociadas.clear();
     const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
     controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
-    this.tecnicasAsociadas.updateValueAndValidity();
-  }
-
-  cargarTecnicas() {
-    this.tecnicasAsociadas.clear();
-    const controlesTecnica = this.tecnicasRecoleccion().map(() => new FormControl(false));
-    controlesTecnica.forEach((control) => this.tecnicasAsociadas.push(control));
     this.tecnicasSeleccionadasIds.set(new Set());
     this.actualizarValidacionTecnicas();
   }

@@ -127,6 +127,19 @@ p {
   background-color: rgb(235, 235, 235);
 }
 
+:host-context(body.modo-oscuro) .menu-opciones {
+  background-color: #111827;
+  border: 1px solid #334155;
+}
+
+:host-context(body.modo-oscuro) .menu-opciones img {
+  filter: invert(1) brightness(1.1);
+}
+
+:host-context(body.modo-oscuro) .menu-opciones:hover {
+  background-color: #172033;
+}
+
 .menu-opciones-interno {
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
